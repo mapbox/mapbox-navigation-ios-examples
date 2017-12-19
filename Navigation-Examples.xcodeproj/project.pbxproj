@@ -16,11 +16,14 @@
 		C58FB86C1FE89CEC00C4B491 /* ExampleContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB86B1FE89CEC00C4B491 /* ExampleContainerViewController.swift */; };
 		C58FB86E1FE89D9500C4B491 /* ExampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB86D1FE89D9500C4B491 /* ExampleTableViewController.swift */; };
 		C58FB8711FE8A43000C4B491 /* Basic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8701FE8A43000C4B491 /* Basic.swift */; };
+		C58FB8731FE98AEB00C4B491 /* CustomStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8721FE98AEB00C4B491 /* CustomStyle.swift */; };
+		C58FB8771FE98B0E00C4B491 /* WaypointArrivalScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8761FE98B0E00C4B491 /* WaypointArrivalScreen.swift */; };
+		C58FB8791FE9A0D900C4B491 /* WaypointConfirmation.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58FB8781FE9A0D900C4B491 /* WaypointConfirmation.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C58FB8561FE899B800C4B491 /* Navigation Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Navigation Examples.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C58FB8561FE899B800C4B491 /* Navigation-Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Navigation-Examples.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C58FB8591FE899B800C4B491 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C58FB85B1FE899B800C4B491 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C58FB85E1FE899B800C4B491 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -30,6 +33,9 @@
 		C58FB86B1FE89CEC00C4B491 /* ExampleContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleContainerViewController.swift; sourceTree = "<group>"; };
 		C58FB86D1FE89D9500C4B491 /* ExampleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleTableViewController.swift; sourceTree = "<group>"; };
 		C58FB8701FE8A43000C4B491 /* Basic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basic.swift; sourceTree = "<group>"; };
+		C58FB8721FE98AEB00C4B491 /* CustomStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStyle.swift; sourceTree = "<group>"; };
+		C58FB8761FE98B0E00C4B491 /* WaypointArrivalScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaypointArrivalScreen.swift; sourceTree = "<group>"; };
+		C58FB8781FE9A0D900C4B491 /* WaypointConfirmation.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaypointConfirmation.xib; sourceTree = "<group>"; };
 		C62FAD617742956394A8E758 /* Pods-Navigation Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation Examples.release.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation Examples/Pods-Navigation Examples.release.xcconfig"; sourceTree = "<group>"; };
 		F40FA9D3F8B99C0F7818DCAC /* Pods-Navigation Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation Examples.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation Examples/Pods-Navigation Examples.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -68,7 +74,7 @@
 		C58FB8571FE899B800C4B491 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C58FB8561FE899B800C4B491 /* Navigation Examples.app */,
+				C58FB8561FE899B800C4B491 /* Navigation-Examples.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -93,6 +99,9 @@
 			isa = PBXGroup;
 			children = (
 				C58FB8701FE8A43000C4B491 /* Basic.swift */,
+				C58FB8721FE98AEB00C4B491 /* CustomStyle.swift */,
+				C58FB8761FE98B0E00C4B491 /* WaypointArrivalScreen.swift */,
+				C58FB8781FE9A0D900C4B491 /* WaypointConfirmation.xib */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -108,9 +117,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C58FB8551FE899B800C4B491 /* Navigation Examples */ = {
+		C58FB8551FE899B800C4B491 /* Navigation-Examples */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C58FB8681FE899B800C4B491 /* Build configuration list for PBXNativeTarget "Navigation Examples" */;
+			buildConfigurationList = C58FB8681FE899B800C4B491 /* Build configuration list for PBXNativeTarget "Navigation-Examples" */;
 			buildPhases = (
 				AE8741EB2B6B63DBE64F3268 /* [CP] Check Pods Manifest.lock */,
 				C58FB8521FE899B800C4B491 /* Sources */,
@@ -123,9 +132,9 @@
 			);
 			dependencies = (
 			);
-			name = "Navigation Examples";
+			name = "Navigation-Examples";
 			productName = "Navigation Examples";
-			productReference = C58FB8561FE899B800C4B491 /* Navigation Examples.app */;
+			productReference = C58FB8561FE899B800C4B491 /* Navigation-Examples.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -144,7 +153,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C58FB8511FE899B800C4B491 /* Build configuration list for PBXProject "Navigation Examples" */;
+			buildConfigurationList = C58FB8511FE899B800C4B491 /* Build configuration list for PBXProject "Navigation-Examples" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -157,7 +166,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C58FB8551FE899B800C4B491 /* Navigation Examples */,
+				C58FB8551FE899B800C4B491 /* Navigation-Examples */,
 			);
 		};
 /* End PBXProject section */
@@ -168,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C58FB8641FE899B800C4B491 /* LaunchScreen.storyboard in Resources */,
+				C58FB8791FE9A0D900C4B491 /* WaypointConfirmation.xib in Resources */,
 				C58FB8611FE899B800C4B491 /* Assets.xcassets in Resources */,
 				C58FB85F1FE899B800C4B491 /* Main.storyboard in Resources */,
 			);
@@ -260,8 +270,10 @@
 			files = (
 				C58FB86E1FE89D9500C4B491 /* ExampleTableViewController.swift in Sources */,
 				C58FB85C1FE899B800C4B491 /* ViewController.swift in Sources */,
+				C58FB8771FE98B0E00C4B491 /* WaypointArrivalScreen.swift in Sources */,
 				C58FB86C1FE89CEC00C4B491 /* ExampleContainerViewController.swift in Sources */,
 				C58FB8711FE8A43000C4B491 /* Basic.swift in Sources */,
+				C58FB8731FE98AEB00C4B491 /* CustomStyle.swift in Sources */,
 				C58FB85A1FE899B800C4B491 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,7 +440,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C58FB8511FE899B800C4B491 /* Build configuration list for PBXProject "Navigation Examples" */ = {
+		C58FB8511FE899B800C4B491 /* Build configuration list for PBXProject "Navigation-Examples" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C58FB8661FE899B800C4B491 /* Debug */,
@@ -437,7 +449,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C58FB8681FE899B800C4B491 /* Build configuration list for PBXNativeTarget "Navigation Examples" */ = {
+		C58FB8681FE899B800C4B491 /* Build configuration list for PBXNativeTarget "Navigation-Examples" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C58FB8691FE899B800C4B491 /* Debug */,
