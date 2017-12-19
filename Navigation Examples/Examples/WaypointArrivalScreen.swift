@@ -35,7 +35,7 @@ class WaypointArrivalScreen: UIViewController, NavigationViewControllerDelegate,
     func navigationViewController(_ navigationViewController: NavigationViewController, didArriveAt waypoint: Waypoint) {
         // When the user arrives, present a view controller that prompts the user to continue to their next destination
         // This typ of screen could show information about a destination, pickup/dropoff confirmation, instructions upon arrival, etc.
-        guard let confirmationController = self.storyboard?.instantiateViewController(withIdentifier: "waypointConfirmation") as? WaypointConfirmationViewController else { return }
+        let confirmationController = Bundle.main.loadNibNamed("WaypointConfirmation", owner: nil, options: nil)![0] as! WaypointConfirmationViewController
         confirmationController.delegate = self
         
         navigationViewController.present(confirmationController, animated: true, completion: nil)
