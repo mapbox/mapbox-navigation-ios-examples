@@ -4,8 +4,7 @@ import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
 
-@objc(WaypointArrivalScreen)
-class WaypointArrivalScreen: UIViewController, NavigationViewControllerDelegate, WaypointConfirmationViewControllerDelegate {
+class WaypointArrivalScreenViewController: UIViewController, NavigationViewControllerDelegate, WaypointConfirmationViewControllerDelegate {
     
     override func viewDidLoad() {
         let waypointOne = Waypoint(coordinate: CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648))

@@ -13,31 +13,20 @@ import UIKit
 class ExampleContainerViewController: UIViewController {
     
     @IBOutlet weak var beginNavigation: UIButton!
-    var exampleToLoad: String = "Example Not Specified"
-    
-    var className: AnyClass?
+
+    var exampleClass: UIViewController.Type!
+    var exampleName: String = "Example Not found"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationItem.title = exampleToLoad
-        
-        let formattedClassName = exampleToLoad.replacingOccurrences(of: " ", with: "")
-        className = NSClassFromString(formattedClassName)
-        
-        if className == nil {
-            beginNavigation.isEnabled = false
-            beginNavigation.setTitle("Example Not Found", for: .normal)
-        }
+        self.navigationItem.title = exampleName
     }
     
     @IBAction func didTapBeginNavigation(_ sender: Any) {
-        if let viewController = className as? UIViewController.Type {
-            let vc = viewController.init()
-            self.addChildViewController(vc)
-            self.view.addSubview(vc.view)
-            vc.didMove(toParentViewController: self)
-        }
+        let viewController = exampleClass.init()
+        self.addChildViewController(viewController)
+        self.view.addSubview(viewController.view)
+        viewController.didMove(toParentViewController: self)
     }
 }
 

@@ -4,8 +4,7 @@ import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
 
-@objc(CustomStyle)
-class CustomStyle: UIViewController {
+class CustomStyleViewController: UIViewController {
     override func viewDidLoad() {
         let origin = CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648)
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
