@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/bobby/Documents/mapbox/Navigation Examples/Navigation-Examples.xcodeproj">
+      location = "group:Navigation-Examples.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

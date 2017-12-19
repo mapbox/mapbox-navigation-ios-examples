@@ -23,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFEC70FB9C884A4DDD80E7D9 /* Pods-Navigation-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples.release.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples.release.xcconfig"; sourceTree = "<group>"; };
 		C58FB8561FE899B800C4B491 /* Navigation-Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Navigation-Examples.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C58FB8591FE899B800C4B491 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C58FB85B1FE899B800C4B491 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -38,6 +39,7 @@
 		C58FB8781FE9A0D900C4B491 /* WaypointConfirmation.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaypointConfirmation.xib; sourceTree = "<group>"; };
 		C62FAD617742956394A8E758 /* Pods-Navigation Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation Examples.release.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation Examples/Pods-Navigation Examples.release.xcconfig"; sourceTree = "<group>"; };
 		F40FA9D3F8B99C0F7818DCAC /* Pods-Navigation Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation Examples.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation Examples/Pods-Navigation Examples.debug.xcconfig"; sourceTree = "<group>"; };
+		FE9EEF42C4F1DD67E96BC63A /* Pods-Navigation-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,8 @@
 			children = (
 				F40FA9D3F8B99C0F7818DCAC /* Pods-Navigation Examples.debug.xcconfig */,
 				C62FAD617742956394A8E758 /* Pods-Navigation Examples.release.xcconfig */,
+				FE9EEF42C4F1DD67E96BC63A /* Pods-Navigation-Examples.debug.xcconfig */,
+				BFEC70FB9C884A4DDD80E7D9 /* Pods-Navigation-Examples.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -192,7 +196,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Navigation Examples/Pods-Navigation Examples-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSPolly/AWSPolly.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
@@ -225,7 +229,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Navigation Examples/Pods-Navigation Examples-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AE8741EB2B6B63DBE64F3268 /* [CP] Check Pods Manifest.lock */ = {
@@ -239,7 +243,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Navigation Examples-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Navigation-Examples-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -258,7 +262,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Navigation Examples/Pods-Navigation Examples-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -409,7 +413,7 @@
 		};
 		C58FB8691FE899B800C4B491 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F40FA9D3F8B99C0F7818DCAC /* Pods-Navigation Examples.debug.xcconfig */;
+			baseConfigurationReference = FE9EEF42C4F1DD67E96BC63A /* Pods-Navigation-Examples.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -424,7 +428,7 @@
 		};
 		C58FB86A1FE899B800C4B491 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C62FAD617742956394A8E758 /* Pods-Navigation Examples.release.xcconfig */;
+			baseConfigurationReference = BFEC70FB9C884A4DDD80E7D9 /* Pods-Navigation-Examples.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
