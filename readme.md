@@ -11,6 +11,6 @@ _Work in progress_
 
 ## To add an example:
 
+1. Add the example to `/Examples`.
 1. Add the example name to the `Constants.swift`.
-1. Add corresponding example name and class name to `ExampleTableViewController.swift`.
 1. Run the app.

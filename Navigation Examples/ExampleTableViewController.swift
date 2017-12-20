@@ -33,20 +33,15 @@ class ExampleTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "TableToExampleSegue" {
             if let controller = segue.destination as? ExampleContainerViewController, let senderCell = sender as? UITableViewCell, let text = senderCell.textLabel?.text {
-                var exampleClass: UIViewController.Type?
                 
-                switch text {
-                case "Basic":
-                    exampleClass = BasicViewController.self
-                case "Waypoint Arrival Screen":
-                    exampleClass = WaypointArrivalScreenViewController.self
-                case "Custom Style":
-                    exampleClass = CustomStyleViewController.self
-                    default:
-                    assert(false, "Example not found")
+                guard let index = listOfExamples.index(where: {
+                    $0.name == text
+                }) else {
+                    assert(false, "Example \(text) not found")
+                    return
                 }
                 
-                controller.exampleClass = exampleClass
+                controller.exampleClass = listOfExamples[index].controller
                 controller.exampleName = text
             }
         }
