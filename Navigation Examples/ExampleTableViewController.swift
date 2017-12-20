@@ -24,7 +24,6 @@ class ExampleTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExampleCell", for: indexPath)
-        
         cell.textLabel?.text = listOfExamples[indexPath.row].name
         
         return cell
@@ -32,6 +31,7 @@ class ExampleTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "TableToExampleSegue", sender: self)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
