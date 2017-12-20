@@ -19,6 +19,7 @@
 		C58FB8731FE98AEB00C4B491 /* CustomStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8721FE98AEB00C4B491 /* CustomStyle.swift */; };
 		C58FB8771FE98B0E00C4B491 /* WaypointArrivalScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8761FE98B0E00C4B491 /* WaypointArrivalScreen.swift */; };
 		C58FB8791FE9A0D900C4B491 /* WaypointConfirmation.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58FB8781FE9A0D900C4B491 /* WaypointConfirmation.xib */; };
+		C5F130A01FE9B44600463E86 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1309F1FE9B44600463E86 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		C58FB8721FE98AEB00C4B491 /* CustomStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStyle.swift; sourceTree = "<group>"; };
 		C58FB8761FE98B0E00C4B491 /* WaypointArrivalScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaypointArrivalScreen.swift; sourceTree = "<group>"; };
 		C58FB8781FE9A0D900C4B491 /* WaypointConfirmation.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaypointConfirmation.xib; sourceTree = "<group>"; };
+		C5F1309F1FE9B44600463E86 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C62FAD617742956394A8E758 /* Pods-Navigation Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation Examples.release.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation Examples/Pods-Navigation Examples.release.xcconfig"; sourceTree = "<group>"; };
 		F40FA9D3F8B99C0F7818DCAC /* Pods-Navigation Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation Examples.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation Examples/Pods-Navigation Examples.debug.xcconfig"; sourceTree = "<group>"; };
 		FE9EEF42C4F1DD67E96BC63A /* Pods-Navigation-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples.debug.xcconfig"; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				C58FB85B1FE899B800C4B491 /* ViewController.swift */,
 				C58FB86D1FE89D9500C4B491 /* ExampleTableViewController.swift */,
 				C58FB86B1FE89CEC00C4B491 /* ExampleContainerViewController.swift */,
+				C5F1309F1FE9B44600463E86 /* Constants.swift */,
 				C58FB85D1FE899B800C4B491 /* Main.storyboard */,
 				C58FB8621FE899B800C4B491 /* LaunchScreen.storyboard */,
 				C58FB8601FE899B800C4B491 /* Assets.xcassets */,
@@ -272,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F130A01FE9B44600463E86 /* Constants.swift in Sources */,
 				C58FB86E1FE89D9500C4B491 /* ExampleTableViewController.swift in Sources */,
 				C58FB85C1FE899B800C4B491 /* ViewController.swift in Sources */,
 				C58FB8771FE98B0E00C4B491 /* WaypointArrivalScreen.swift in Sources */,
