@@ -16,7 +16,8 @@ class CustomStyleViewController: UIViewController {
                 return
             }
             
-            let navigationController = NavigationViewController(for: route, styles: [CustomDayStyle(), CustomNightStyle()])
+            // The third argument `locationManager` is optional
+            let navigationController = NavigationViewController(for: route, styles: [CustomDayStyle(), CustomNightStyle()], locationManager: navigationLocationManager(for: route))
             self.present(navigationController, animated: true, completion: nil)
         }
     }
