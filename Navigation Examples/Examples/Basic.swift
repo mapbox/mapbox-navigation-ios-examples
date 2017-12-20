@@ -16,7 +16,8 @@ class BasicViewController: UIViewController {
                 return
             }
             
-            let navigationController = NavigationViewController(for: route)
+            // The second argument `locationManager` is optional
+            let navigationController = NavigationViewController(for: route, locationManager: navigationLocationManager(for: route))
             self.present(navigationController, animated: true, completion: nil)
         }
     }

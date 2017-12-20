@@ -24,25 +24,25 @@ class ExampleTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExampleCell", for: indexPath)
-        
         cell.textLabel?.text = listOfExamples[indexPath.row].name
         
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "TableToExampleSegue", sender: self)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "TableToExampleSegue" {
-            if let controller = segue.destination as? ExampleContainerViewController, let senderCell = sender as? UITableViewCell, let text = senderCell.textLabel?.text {
+            if let controller = segue.destination as? ExampleContainerViewController,
+                let selectedCell = self.tableView.indexPathForSelectedRow {
+                let example = listOfExamples[selectedCell[1]]
                 
-                guard let index = listOfExamples.index(where: {
-                    $0.name == text
-                }) else {
-                    assert(false, "Example \(text) not found")
-                    return
-                }
-                
-                controller.exampleClass = listOfExamples[index].controller
-                controller.exampleName = text
+                controller.exampleClass = example.controller
+                controller.exampleName = example.name
+                controller.exampleDescription = example.description
             }
         }
     }
