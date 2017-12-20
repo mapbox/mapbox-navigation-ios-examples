@@ -104,6 +104,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ML5-Ps-XGz">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                                     <state key="normal" title="Begin Navigation"/>
+                                                    <connections>
+                                                        <action selector="didTapBeginNavigation:" destination="iC2-bI-Gbp" eventType="touchUpInside" id="Y97-n6-LV4"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
