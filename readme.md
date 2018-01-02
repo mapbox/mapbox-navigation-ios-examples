@@ -10,8 +10,10 @@ A collection of examples showing off the Mapbox Navigation SDK.
 1. `git clone git@github.com:mapbox/navigation-ios-examples.git`
 1. `cd navigation-ios-examples`
 1. `pod install`
+1. `open Navigation-Examples.xcworkspace/`
 1. Sign up or log in to your Mapbox account and grab a [Mapbox Access Token](https://www.mapbox.com/studio/account/tokens/).
 1. Open the Info.plist and paste your [Mapbox Access Token](https://www.mapbox.com/studio/account/tokens/) into `MGLMapboxAccessToken`. (Alternatively, if you plan to use this project as the basis for a public project on GitHub, place the access token in a plain text file named `.mapbox` or `mapbox` in your home directory instead of adding it to Info.plist.)
+1. Run the application
 
 ## Add an example:
 
