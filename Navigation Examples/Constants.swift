@@ -18,5 +18,10 @@ let listOfExamples: [NamedController] = [
         name: "Custom Style",
         description: "Demonstrates providing a custom map style and also stylizing components in the UI",
         controller: CustomStyleViewController.self
+    ),
+    (
+        name: "Advanced Implementation",
+        description: "Demonstrates providing a custom map style and also stylizing components in the UI. Long press on the map to begin.",
+        controller: AdvancedViewController.self
     )
 ]
