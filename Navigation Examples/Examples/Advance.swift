@@ -5,10 +5,26 @@ import MapboxDirections
 import Mapbox
 
 
-class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDelegate, VoiceControllerDelegate, NavigationMapViewDelegate {
+class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDelegate, VoiceControllerDelegate, NavigationMapViewDelegate, NavigationViewControllerDelegate {
     
     var mapView: NavigationMapView?
-    var route: Route?
+    var currentRoute: Route? {
+        get {
+            return routes?.first
+        }
+        set {
+            guard let selected = newValue else { routes?.remove(at: 0); return }
+            guard let routes = routes else { self.routes = [selected]; return }
+            self.routes = [selected] + routes.filter { $0 != selected }
+        }
+    }
+    var routes: [Route]? {
+        didSet {
+            guard let routes = routes, let current = routes.first else { mapView?.removeRoutes(); return }
+            mapView?.showRoutes(routes)
+            mapView?.showWaypoints(current)
+        }
+    }
     var startButton: UIButton?
     var locationManager = CLLocationManager()
     
@@ -43,8 +59,9 @@ class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationMa
     }
     
     @objc func tappedButton(sender: UIButton) {
-        guard let route = route else { return }
+        guard let route = currentRoute else { return }
         let navigationViewController = NavigationViewController(for: route)
+        navigationViewController.delegate = self
         present(navigationViewController, animated: true, completion: nil)
     }
     
@@ -65,11 +82,16 @@ class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationMa
         let options = NavigationRouteOptions(waypoints: [userWaypoint, destinationWaypoint])
         
         Directions.shared.calculate(options) { (waypoints, routes, error) in
-            guard let routes = routes, let route = routes.first else { return }
+            guard let routes = routes else { return }
+            self.routes = routes
             self.startButton?.isHidden = false
             self.mapView?.showRoutes(routes)
-            self.mapView?.showWaypoints(route)
-            self.route = route
+            self.mapView?.showWaypoints(self.currentRoute!)
         }
+    }
+    
+    // Delegate method called when the user selects a route
+    func navigationMapView(_ mapView: NavigationMapView, didSelect route: Route) {
+        self.currentRoute = route
     }
 }
