@@ -1,11 +1,3 @@
-//
-//  ExampleTableViewController.swift
-//  Navigation Examples
-//
-//  Created by Bobby Sudekum on 12/18/17.
-//  Copyright © 2017 Mapbox. All rights reserved.
-//
-
 import Foundation
 import UIKit
 
@@ -43,6 +35,7 @@ class ExampleTableViewController: UITableViewController {
                 controller.exampleClass = example.controller
                 controller.exampleName = example.name
                 controller.exampleDescription = example.description
+                controller.pushExampleToViewController = example.pushExampleToViewController
             }
         }
     }

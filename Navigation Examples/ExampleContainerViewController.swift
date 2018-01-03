@@ -1,15 +1,5 @@
-//
-//  ExampleContainerViewController.swift
-//  Navigation Examples
-//
-//  Created by Bobby Sudekum on 12/18/17.
-//  Copyright © 2017 Mapbox. All rights reserved.
-//
-
 import Foundation
 import UIKit
-import MapboxCoreNavigation
-import MapboxDirections
 
 var simulationIsEnabled = true
 
@@ -22,6 +12,7 @@ class ExampleContainerViewController: UITableViewController {
     var exampleName: String?
     var exampleDescription: String?
     var hasEnteredExample = false
+    var pushExampleToViewController = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,9 +28,10 @@ class ExampleContainerViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if hasEnteredExample {
-            let last = view.subviews.last
-            last?.removeFromSuperview()
-            hasEnteredExample = false
+            if let last = view.subviews.last {
+                last.removeFromSuperview()
+                hasEnteredExample = false
+            }
         }
     }
     
@@ -49,6 +41,9 @@ class ExampleContainerViewController: UITableViewController {
             self.addChildViewController(viewController)
             self.view.addSubview(viewController.view)
             viewController.didMove(toParentViewController: self)
+            if pushExampleToViewController {
+                self.navigationController?.pushViewController(viewController, animated: true)
+            }
             hasEnteredExample = true
         }
     }
