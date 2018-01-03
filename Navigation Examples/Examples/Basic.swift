@@ -16,8 +16,15 @@ class BasicViewController: UIViewController {
                 return
             }
             
-            // The second argument `locationManager` is optional
-            let navigationController = NavigationViewController(for: route, locationManager: navigationLocationManager(for: route))
+            let navigationController = NavigationViewController(for: route)
+            
+            // This allows the developer to simulate the route.
+            // Note: If copying and pasting this code in your own project,
+            // comment out `simulationIsEnabled` as it is defined elsewhere in this project.
+            if simulationIsEnabled {
+                navigationController.routeController.locationManager = SimulatedLocationManager(route: route)
+            }
+            
             self.present(navigationController, animated: true, completion: nil)
         }
     }

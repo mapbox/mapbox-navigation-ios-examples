@@ -62,6 +62,14 @@ class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationMa
         guard let route = currentRoute else { return }
         let navigationViewController = NavigationViewController(for: route)
         navigationViewController.delegate = self
+        
+        // This allows the developer to simulate the route.
+        // Note: If copying and pasting this code in your own project,
+        // comment out `simulationIsEnabled` as it is defined elsewhere in this project.
+        if simulationIsEnabled {
+            navigationViewController.routeController.locationManager = SimulatedLocationManager(route: route)
+        }
+        
         present(navigationViewController, animated: true, completion: nil)
     }
     

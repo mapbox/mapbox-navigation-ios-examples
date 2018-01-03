@@ -11,31 +11,35 @@ import UIKit
 import MapboxCoreNavigation
 import MapboxDirections
 
-var simulationIsEnabled = false
+var simulationIsEnabled = true
 
 class ExampleContainerViewController: UITableViewController {
     
     @IBOutlet weak var beginNavigation: UIButton!
-    @IBOutlet weak var simulateNavigation: UISwitch! {
-        didSet {
-            simulationIsEnabled = simulateNavigation.isOn
-        }
-    }
+    @IBOutlet weak var simulateNavigation: UISwitch!
     
     var exampleClass: UIViewController.Type?
     var exampleName: String?
     var exampleDescription: String?
+    var hasEnteredExample = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = exampleName
         
-        simulateNavigation.isOn = simulationIsEnabled
-        
         if exampleClass == nil {
             beginNavigation.setTitle("Example Not Found", for: .normal)
             beginNavigation.isEnabled = false
             simulateNavigation.isEnabled = false
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if hasEnteredExample {
+            let last = view.subviews.last
+            last?.removeFromSuperview()
+            hasEnteredExample = false
         }
     }
     
@@ -45,6 +49,7 @@ class ExampleContainerViewController: UITableViewController {
             self.addChildViewController(viewController)
             self.view.addSubview(viewController.view)
             viewController.didMove(toParentViewController: self)
+            hasEnteredExample = true
         }
     }
     
@@ -54,10 +59,6 @@ class ExampleContainerViewController: UITableViewController {
     }
     
     @IBAction func didToggleSimulateNavigation(_ sender: Any) {
-        simulateNavigation.isOn = !simulateNavigation.isOn
+        simulationIsEnabled = simulateNavigation.isOn
     }
-}
-
-func navigationLocationManager(for route: Route) -> NavigationLocationManager {
-    return simulationIsEnabled ? SimulatedLocationManager(route: route) : NavigationLocationManager()
 }
