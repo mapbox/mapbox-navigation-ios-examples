@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		089F2762E1A3C316681938D9 /* Pods_Navigation_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */; };
+		647501D41FFDAE4B007D4AB2 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647501D31FFDAE4B007D4AB2 /* CustomViewController.swift */; };
 		C58FB85A1FE899B800C4B491 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8591FE899B800C4B491 /* AppDelegate.swift */; };
 		C58FB85C1FE899B800C4B491 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB85B1FE899B800C4B491 /* ViewController.swift */; };
 		C58FB85F1FE899B800C4B491 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C58FB85D1FE899B800C4B491 /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		647501D31FFDAE4B007D4AB2 /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		BFEC70FB9C884A4DDD80E7D9 /* Pods-Navigation-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples.release.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples.release.xcconfig"; sourceTree = "<group>"; };
 		C58FB8561FE899B800C4B491 /* Navigation-Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Navigation-Examples.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C58FB8591FE899B800C4B491 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				C58FB86F1FE8A42500C4B491 /* Examples */,
 				C58FB8591FE899B800C4B491 /* AppDelegate.swift */,
 				C58FB85B1FE899B800C4B491 /* ViewController.swift */,
+				647501D31FFDAE4B007D4AB2 /* CustomViewController.swift */,
 				C58FB86D1FE89D9500C4B491 /* ExampleTableViewController.swift */,
 				C58FB86B1FE89CEC00C4B491 /* ExampleContainerViewController.swift */,
 				C5F1309F1FE9B44600463E86 /* Constants.swift */,
@@ -300,6 +303,7 @@
 				C5F130A61FEB2D7800463E86 /* Advance.swift in Sources */,
 				C58FB86C1FE89CEC00C4B491 /* ExampleContainerViewController.swift in Sources */,
 				C58FB8711FE8A43000C4B491 /* Basic.swift in Sources */,
+				647501D41FFDAE4B007D4AB2 /* CustomViewController.swift in Sources */,
 				C58FB8731FE98AEB00C4B491 /* CustomStyle.swift in Sources */,
 				C58FB85A1FE899B800C4B491 /* AppDelegate.swift in Sources */,
 			);
@@ -440,7 +444,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YF865JZSF2;
 				INFOPLIST_FILE = "Navigation Examples/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Mapbox.Navigation-Examples";
@@ -456,7 +460,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YF865JZSF2;
 				INFOPLIST_FILE = "Navigation Examples/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Mapbox.Navigation-Examples";
