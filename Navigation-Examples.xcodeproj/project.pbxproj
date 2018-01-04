@@ -16,11 +16,11 @@
 		C58FB86C1FE89CEC00C4B491 /* ExampleContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB86B1FE89CEC00C4B491 /* ExampleContainerViewController.swift */; };
 		C58FB86E1FE89D9500C4B491 /* ExampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB86D1FE89D9500C4B491 /* ExampleTableViewController.swift */; };
 		C58FB8711FE8A43000C4B491 /* Basic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8701FE8A43000C4B491 /* Basic.swift */; };
-		C58FB8731FE98AEB00C4B491 /* CustomStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8721FE98AEB00C4B491 /* CustomStyle.swift */; };
+		C58FB8731FE98AEB00C4B491 /* StyledUIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8721FE98AEB00C4B491 /* StyledUIElements.swift */; };
 		C58FB8771FE98B0E00C4B491 /* WaypointArrivalScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8761FE98B0E00C4B491 /* WaypointArrivalScreen.swift */; };
 		C58FB8791FE9A0D900C4B491 /* WaypointConfirmation.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58FB8781FE9A0D900C4B491 /* WaypointConfirmation.xib */; };
 		C5F130A01FE9B44600463E86 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1309F1FE9B44600463E86 /* Constants.swift */; };
-		C5F130A61FEB2D7800463E86 /* Advance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F130A51FEB2D7800463E86 /* Advance.swift */; };
+		C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F130A51FEB2D7800463E86 /* Advanced.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,11 +36,11 @@
 		C58FB86B1FE89CEC00C4B491 /* ExampleContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleContainerViewController.swift; sourceTree = "<group>"; };
 		C58FB86D1FE89D9500C4B491 /* ExampleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleTableViewController.swift; sourceTree = "<group>"; };
 		C58FB8701FE8A43000C4B491 /* Basic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basic.swift; sourceTree = "<group>"; };
-		C58FB8721FE98AEB00C4B491 /* CustomStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStyle.swift; sourceTree = "<group>"; };
+		C58FB8721FE98AEB00C4B491 /* StyledUIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledUIElements.swift; sourceTree = "<group>"; };
 		C58FB8761FE98B0E00C4B491 /* WaypointArrivalScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaypointArrivalScreen.swift; sourceTree = "<group>"; };
 		C58FB8781FE9A0D900C4B491 /* WaypointConfirmation.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaypointConfirmation.xib; sourceTree = "<group>"; };
 		C5F1309F1FE9B44600463E86 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		C5F130A51FEB2D7800463E86 /* Advance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advance.swift; sourceTree = "<group>"; };
+		C5F130A51FEB2D7800463E86 /* Advanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advanced.swift; sourceTree = "<group>"; };
 		C62FAD617742956394A8E758 /* Pods-Navigation Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation Examples.release.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation Examples/Pods-Navigation Examples.release.xcconfig"; sourceTree = "<group>"; };
 		F40FA9D3F8B99C0F7818DCAC /* Pods-Navigation Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation Examples.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation Examples/Pods-Navigation Examples.debug.xcconfig"; sourceTree = "<group>"; };
 		FE9EEF42C4F1DD67E96BC63A /* Pods-Navigation-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples.debug.xcconfig"; sourceTree = "<group>"; };
@@ -108,10 +108,10 @@
 			isa = PBXGroup;
 			children = (
 				C58FB8701FE8A43000C4B491 /* Basic.swift */,
-				C58FB8721FE98AEB00C4B491 /* CustomStyle.swift */,
+				C58FB8721FE98AEB00C4B491 /* StyledUIElements.swift */,
 				C58FB8761FE98B0E00C4B491 /* WaypointArrivalScreen.swift */,
 				C58FB8781FE9A0D900C4B491 /* WaypointConfirmation.xib */,
-				C5F130A51FEB2D7800463E86 /* Advance.swift */,
+				C5F130A51FEB2D7800463E86 /* Advanced.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -212,7 +212,6 @@
 				"${BUILT_PRODUCTS_DIR}/MapboxDirections.swift/MapboxDirections.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxNavigation/MapboxNavigation.framework",
-				"${BUILT_PRODUCTS_DIR}/OSRMTextInstructions/OSRMTextInstructions.framework",
 				"${BUILT_PRODUCTS_DIR}/Polyline/Polyline.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Solar/Solar.framework",
@@ -228,7 +227,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxDirections.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigation.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OSRMTextInstructions.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Polyline.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Solar.framework",
@@ -297,10 +295,10 @@
 				C58FB86E1FE89D9500C4B491 /* ExampleTableViewController.swift in Sources */,
 				C58FB85C1FE899B800C4B491 /* ViewController.swift in Sources */,
 				C58FB8771FE98B0E00C4B491 /* WaypointArrivalScreen.swift in Sources */,
-				C5F130A61FEB2D7800463E86 /* Advance.swift in Sources */,
+				C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */,
 				C58FB86C1FE89CEC00C4B491 /* ExampleContainerViewController.swift in Sources */,
 				C58FB8711FE8A43000C4B491 /* Basic.swift in Sources */,
-				C58FB8731FE98AEB00C4B491 /* CustomStyle.swift in Sources */,
+				C58FB8731FE98AEB00C4B491 /* StyledUIElements.swift in Sources */,
 				C58FB85A1FE899B800C4B491 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

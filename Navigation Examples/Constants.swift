@@ -22,9 +22,9 @@ let listOfExamples: [NamedController] = [
         pushExampleToViewController: false
     ),
     (
-        name: "Custom Style",
-        description: "Demonstrates how to display a custom map style and how to apply stylized components in the UI",
-        controller: CustomStyleViewController.self,
+        name: "Styled UI Elements",
+        description: "Demonstrates how to customize various UI elements and also change the map style.",
+        controller: CustomStyleUIElements.self,
         pushExampleToViewController: false
     ),
     (
