@@ -7,12 +7,14 @@ A collection of examples showing off the [Mapbox Navigation SDK](https://github.
 
 ## Installation
 
+_Installation with CocoaPods_ 
+
 1. `git clone git@github.com:mapbox/navigation-ios-examples.git`
 1. `cd navigation-ios-examples`
 1. `pod install`
 1. `open Navigation-Examples.xcworkspace/`
-1. Sign up or log in to your Mapbox account and grab a [Mapbox Access Token](https://www.mapbox.com/studio/account/tokens/).
-1. Open the Info.plist and paste your [Mapbox Access Token](https://www.mapbox.com/studio/account/tokens/) into `MGLMapboxAccessToken`. (Alternatively, if you plan to use this project as the basis for a public project on GitHub, place the access token in a plain text file named `.mapbox` or `mapbox` in your home directory instead of adding it to Info.plist.)
+1. Sign up or log in to your Mapbox account and grab a [Mapbox access token](https://www.mapbox.com/help/define-access-token/).
+1. Enter your Mapbox access token into the value of the `MGLMapboxAccessToken` key within the Info.plist file. Alternatively, if you plan to use this project as the basis for any open source application, [read this guide](https://www.mapbox.com/help/ios-private-access-token/) to learn how to best protect your access tokens.
 1. Run the application
 
 ## Add an example:
@@ -20,3 +22,12 @@ A collection of examples showing off the [Mapbox Navigation SDK](https://github.
 1. Add the example to [`/Examples`](https://github.com/mapbox/navigation-ios-examples/tree/master/Navigation%20Examples/Examples).
 1. Add the example name to the [`Constants.swift`](https://github.com/mapbox/navigation-ios-examples/blob/master/Navigation%20Examples/Constants.swift).
 1. Run the app.
+
+## Additional resources
+
+While we are not able to answer support questions in this repository, below are some helpful resources if you're just getting started with the Mapbox Navigation SDK for iOS: 
+
+- [Mapbox Navigation SDK for iOS documentation](https://www.mapbox.com/mapbox-navigation-ios/navigation/)
+- [Build a navigation app for iOS tutorial](https://www.mapbox.com/help/ios-navigation-sdk/)
+- [Mapbox help page](https://www.mapbox.com/help/)
+- [Mapbox navigation questions on Stack Overflow](http://stackoverflow.com/questions/tagged/mapbox+ios+navigation)

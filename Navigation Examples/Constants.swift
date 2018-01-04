@@ -11,31 +11,31 @@ typealias NamedController = (
 let listOfExamples: [NamedController] = [
     (
         name: "Advanced Implementation",
-        description: "Demonstrates providing a custom map style and also stylizing components in the UI. Long press on the map to begin.",
+        description: "Demonstrates how to display a custom map style and how to apply stylized components in the UI. Long press on the map to begin.",
         controller: AdvancedViewController.self,
         pushExampleToViewController: true
     ),
     (
         name: "Basic",
-        description: "A simple hello world example showing how to create a navigation experience in the fewest lines of code possible.",
+        description: "A basic hello world example showing how to create a navigation experience using the fewest lines of code possible.",
         controller: BasicViewController.self,
         pushExampleToViewController: false
     ),
     (
         name: "Custom Style",
-        description: "Demonstrates providing a custom map style and also stylizing components in the UI",
+        description: "Demonstrates how to display a custom map style and how to apply stylized components in the UI",
         controller: CustomStyleViewController.self,
         pushExampleToViewController: false
     ),
     (
         name: "Select Alternate Route",
-        description: "Demonstrates allowing the user to select an alternate route. Note: The Directions API will not always return alternate routes.",
+        description: "Allow the user to select an alternate route. Note: The Directions API will not always return alternate routes.",
         controller: AdvancedViewController.self,
         pushExampleToViewController: true
     ),
     (
         name: "Waypoint Arrival Screen",
-        description: "Demonstrates providing a UIView for the user upon arriving at a waypoint.",
+        description: "Demonstrates how to provide a custom UIView for the user upon arriving at a waypoint.",
         controller: WaypointArrivalScreenViewController.self,
         pushExampleToViewController: false
     )
