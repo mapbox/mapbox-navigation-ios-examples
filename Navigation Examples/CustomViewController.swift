@@ -30,9 +30,17 @@ class CustomViewController: UIViewController {
             
             let navigationController = NavigationViewController(for: route)
             navigationController.routeController.locationManager = SimulatedLocationManager(route: route)
+            
+            let navigationView = navigationController.view!
+            navigationView.translatesAutoresizingMaskIntoConstraints = false
             self.addChildViewController(navigationController)
-            self.embeddedNavigationView.addSubview(navigationController.view)
-            navigationController.didMove(toParentViewController: self)
+            self.embeddedNavigationView.addSubview(navigationView)
+            
+            guard let superNavigationView = navigationView.superview else { return }
+            navigationView.topAnchor.constraint(equalTo: superNavigationView.topAnchor).isActive = true
+            navigationView.leftAnchor.constraint(equalTo: superNavigationView.leftAnchor).isActive = true
+            navigationView.bottomAnchor.constraint(equalTo: superNavigationView.bottomAnchor).isActive = true
+            navigationView.rightAnchor.constraint(equalTo: superNavigationView.rightAnchor).isActive = true
         }
         
     }
