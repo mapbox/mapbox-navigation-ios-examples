@@ -75,10 +75,10 @@
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dG6-bY-cnf">
-                                <rect key="frame" x="44" y="50" width="724" height="254"/>
+                                <rect key="frame" x="0.0" y="50" width="812" height="254"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VtM-o2-vOc">
-                                        <rect key="frame" x="256.66666666666669" y="112" width="211" height="30"/>
+                                        <rect key="frame" x="300.66666666666669" y="112" width="211" height="30"/>
                                         <state key="normal" title="Load NavigationViewController"/>
                                         <connections>
                                             <action selector="startEmbeddedNavigation:" destination="PKh-kn-3UC" eventType="touchUpInside" id="d8L-AP-3Xm"/>
@@ -99,7 +99,7 @@
                         <constraints>
                             <constraint firstItem="Reh-on-d72" firstAttribute="trailing" secondItem="yKL-Wh-mjK" secondAttribute="trailing" id="4KU-Vb-xlZ"/>
                             <constraint firstItem="nDC-Iu-KJI" firstAttribute="leading" secondItem="yKL-Wh-mjK" secondAttribute="leading" id="5Rz-HJ-fcM"/>
-                            <constraint firstItem="4kZ-GU-VpJ" firstAttribute="trailing" secondItem="dG6-bY-cnf" secondAttribute="trailing" id="9yt-NB-5YK"/>
+                            <constraint firstAttribute="trailing" secondItem="dG6-bY-cnf" secondAttribute="trailing" id="9yt-NB-5YK"/>
                             <constraint firstItem="Reh-on-d72" firstAttribute="leading" secondItem="yKL-Wh-mjK" secondAttribute="leading" id="CDS-Y3-Baa"/>
                             <constraint firstItem="XIm-mV-Xww" firstAttribute="leading" secondItem="yKL-Wh-mjK" secondAttribute="leading" id="KyP-4P-JdH"/>
                             <constraint firstItem="4kZ-GU-VpJ" firstAttribute="bottom" secondItem="XIm-mV-Xww" secondAttribute="bottom" id="L2T-DV-EWD"/>
@@ -114,7 +114,7 @@
                             <constraint firstItem="9gT-X8-jEo" firstAttribute="top" secondItem="4kZ-GU-VpJ" secondAttribute="bottom" id="fFs-eA-KRM"/>
                             <constraint firstAttribute="trailing" secondItem="9gT-X8-jEo" secondAttribute="trailing" id="lPb-Ls-WPr"/>
                             <constraint firstItem="dG6-bY-cnf" firstAttribute="top" secondItem="nDC-Iu-KJI" secondAttribute="bottom" id="vsk-VM-95q"/>
-                            <constraint firstItem="dG6-bY-cnf" firstAttribute="leading" secondItem="4kZ-GU-VpJ" secondAttribute="leading" id="yel-PZ-QRM"/>
+                            <constraint firstItem="dG6-bY-cnf" firstAttribute="leading" secondItem="yKL-Wh-mjK" secondAttribute="leading" id="yel-PZ-QRM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4kZ-GU-VpJ"/>
                     </view>
