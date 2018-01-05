@@ -3,8 +3,10 @@ import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
 
-class EmbeddedExampleViewController: UIViewController  {
+class EmbeddedExampleViewController: UIViewController, NavigationViewControllerDelegate  {
  
+    @IBOutlet weak var reroutedLabel: UILabel!
+    @IBOutlet weak var enableReroutes: UISwitch!
     @IBOutlet weak var loadButton: UIButton!
     @IBOutlet weak var container: UIView!
     var route: Route?
@@ -15,10 +17,17 @@ class EmbeddedExampleViewController: UIViewController  {
         return NavigationRouteOptions(coordinates: [origin, destination])
     }()
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(EmbeddedExampleViewController.flashReroutedLabel(_:)), name: .routeControllerDidReroute, object: nil)
+        reroutedLabel.isHidden = true
         calculateDirections()
     }
+
     
     func calculateDirections() {
         Directions.shared.calculate(options) { (waypoints, routes, error) in
@@ -30,9 +39,21 @@ class EmbeddedExampleViewController: UIViewController  {
             self.loadButton.isEnabled = true
         }
     }
+    @objc func flashReroutedLabel(_ sender: Any) {
+        reroutedLabel.isHidden = false
+        reroutedLabel.alpha = 1.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseIn, animations: {
+                self.reroutedLabel.alpha = 0.0
+            }, completion: { _ in
+                self.reroutedLabel.isHidden = true
+            })
+        }
+    }
     
     @IBAction func startEmbeddedNavigation(_ sender: Any) {
         let nav = NavigationViewController(for: route!)
+        nav.delegate = self
         addChildViewController(nav)
         container.addSubview(nav.view)
         nav.view.translatesAutoresizingMaskIntoConstraints = false
@@ -45,5 +66,10 @@ class EmbeddedExampleViewController: UIViewController  {
         self.didMove(toParentViewController: self)
     }
 
+    //MARK: - NavigationViewControllerDelegate
+    
+    func navigationViewController(_ navigationViewController: NavigationViewController, shouldRerouteFrom location: CLLocation) -> Bool {
+        return enableReroutes.isOn
+    }
 }
 
