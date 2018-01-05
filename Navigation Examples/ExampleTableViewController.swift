@@ -22,7 +22,7 @@ class ExampleTableViewController: UITableViewController {
             
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "NavBarExampleCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "EmbeddedExampleCell", for: indexPath)
             cell.textLabel?.text = "Embedded Example"
             return cell
         }
@@ -35,16 +35,15 @@ class ExampleTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "TableToExampleSegue" {
-            if let controller = segue.destination as? ExampleContainerViewController,
-                let selectedCell = self.tableView.indexPathForSelectedRow {
-                let example = listOfExamples[selectedCell[1]]
-                
-                controller.exampleClass = example.controller
-                controller.exampleName = example.name
-                controller.exampleDescription = example.description
-                controller.pushExampleToViewController = example.pushExampleToViewController
-            }
-        }
+        guard segue.identifier == "TableToExampleSegue",
+            let controller = segue.destination as? ExampleContainerViewController,
+            let selectedCell = self.tableView.indexPathForSelectedRow else { return }
+        
+        let example = listOfExamples[selectedCell[1]]
+        
+        controller.exampleClass = example.controller
+        controller.exampleName = example.name
+        controller.exampleDescription = example.description
+        controller.pushExampleToViewController = example.pushExampleToViewController
     }
 }

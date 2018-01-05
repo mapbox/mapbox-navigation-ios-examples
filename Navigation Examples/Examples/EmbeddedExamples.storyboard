@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="PKh-kn-3UC">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Embedded Example View Controller-->
+        <scene sceneID="WHG-C4-o8g">
+            <objects>
+                <viewController id="PKh-kn-3UC" customClass="EmbeddedExampleViewController" customModule="Navigation_Examples" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yKL-Wh-mjK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nDC-Iu-KJI" userLabel="Top View">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+                                <color key="backgroundColor" red="0.85089617969999998" green="0.0" blue="0.85087728500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XIm-mV-Xww" userLabel="Bottom View" colorLabel="IBBuiltInLabel-Yellow">
+                                <rect key="frame" x="0.0" y="567" width="375" height="100"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dG6-bY-cnf">
+                                <rect key="frame" x="0.0" y="120" width="375" height="447"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VtM-o2-vOc">
+                                        <rect key="frame" x="82" y="186" width="211" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Load NavigationViewController"/>
+                                        <connections>
+                                            <action selector="startEmbeddedNavigation:" destination="PKh-kn-3UC" eventType="touchUpInside" id="d8L-AP-3Xm"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="nDC-Iu-KJI" firstAttribute="leading" secondItem="4kZ-GU-VpJ" secondAttribute="leading" id="5Rz-HJ-fcM"/>
+                            <constraint firstItem="4kZ-GU-VpJ" firstAttribute="trailing" secondItem="dG6-bY-cnf" secondAttribute="trailing" id="9yt-NB-5YK"/>
+                            <constraint firstItem="nDC-Iu-KJI" firstAttribute="bottom" secondItem="4kZ-GU-VpJ" secondAttribute="top" constant="100" id="EUR-zS-a53"/>
+                            <constraint firstItem="XIm-mV-Xww" firstAttribute="leading" secondItem="4kZ-GU-VpJ" secondAttribute="leading" id="KyP-4P-JdH"/>
+                            <constraint firstAttribute="bottom" secondItem="XIm-mV-Xww" secondAttribute="bottom" id="L2T-DV-EWD"/>
+                            <constraint firstItem="XIm-mV-Xww" firstAttribute="top" secondItem="dG6-bY-cnf" secondAttribute="bottom" id="Mj3-PY-NX0"/>
+                            <constraint firstItem="4kZ-GU-VpJ" firstAttribute="trailing" secondItem="XIm-mV-Xww" secondAttribute="trailing" id="Noe-nB-EiJ"/>
+                            <constraint firstItem="4kZ-GU-VpJ" firstAttribute="trailing" secondItem="nDC-Iu-KJI" secondAttribute="trailing" id="Pkn-oC-1Q6"/>
+                            <constraint firstItem="nDC-Iu-KJI" firstAttribute="top" secondItem="yKL-Wh-mjK" secondAttribute="top" id="PmH-cB-isY"/>
+                            <constraint firstItem="dG6-bY-cnf" firstAttribute="top" secondItem="nDC-Iu-KJI" secondAttribute="bottom" id="vsk-VM-95q"/>
+                            <constraint firstItem="4kZ-GU-VpJ" firstAttribute="bottom" secondItem="XIm-mV-Xww" secondAttribute="top" constant="100" id="xkk-xa-7Be"/>
+                            <constraint firstItem="dG6-bY-cnf" firstAttribute="leading" secondItem="4kZ-GU-VpJ" secondAttribute="leading" id="yel-PZ-QRM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="4kZ-GU-VpJ"/>
+                    </view>
+                    <connections>
+                        <outlet property="container" destination="dG6-bY-cnf" id="IA9-p4-d4E"/>
+                        <outlet property="loadButton" destination="VtM-o2-vOc" id="PoN-rB-ylp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WEk-tT-9iT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-306.39999999999998" y="720.08995502248877"/>
+        </scene>
+    </scenes>
+</document>
