@@ -53,6 +53,14 @@ class EmbeddedExampleViewController: UIViewController, NavigationViewControllerD
     
     @IBAction func startEmbeddedNavigation(_ sender: Any) {
         let nav = NavigationViewController(for: route!)
+        
+        // This allows the developer to simulate the route.
+        // Note: If copying and pasting this code in your own project,
+        // comment out `simulationIsEnabled` as it is defined elsewhere in this project.
+        if simulationIsEnabled {
+            nav.routeController.locationManager = SimulatedLocationManager(route: route!)
+        }
+        
         nav.delegate = self
         addChildViewController(nav)
         container.addSubview(nav.view)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="PKh-kn-3UC">
-    <device id="retina5_9" orientation="landscape">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,14 +15,14 @@
             <objects>
                 <viewController id="PKh-kn-3UC" customClass="EmbeddedExampleViewController" customModule="Navigation_Examples" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yKL-Wh-mjK">
-                        <rect key="frame" x="0.0" y="0.0" width="812" height="375"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nDC-Iu-KJI" userLabel="Top View">
-                                <rect key="frame" x="0.0" y="0.0" width="812" height="50"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rerouted!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="P47-oH-MGJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="812" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="59"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -41,10 +41,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XIm-mV-Xww" userLabel="Bottom View" colorLabel="IBBuiltInLabel-Yellow">
-                                <rect key="frame" x="0.0" y="304" width="812" height="50"/>
+                                <rect key="frame" x="0.0" y="678" width="375" height="100"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="WKq-jW-v7R">
-                                        <rect key="frame" x="254.66666666666666" y="9.6666666666666856" width="303.33333333333337" height="31"/>
+                                        <rect key="frame" x="36.333333333333343" y="34.666666666666629" width="303.33333333333326" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Reroutes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="te8-aX-urv">
                                                 <rect key="frame" x="0.0" y="0.0" width="242.33333333333334" height="31"/>
@@ -71,14 +71,14 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9gT-X8-jEo" userLabel="Bottom Safe Mask">
-                                <rect key="frame" x="0.0" y="354" width="812" height="21"/>
+                                <rect key="frame" x="0.0" y="778" width="375" height="34"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dG6-bY-cnf">
-                                <rect key="frame" x="0.0" y="50" width="812" height="254"/>
+                                <rect key="frame" x="0.0" y="144" width="375" height="534"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VtM-o2-vOc">
-                                        <rect key="frame" x="300.66666666666669" y="112" width="211" height="30"/>
+                                        <rect key="frame" x="82.333333333333314" y="252" width="211" height="30"/>
                                         <state key="normal" title="Load NavigationViewController"/>
                                         <connections>
                                             <action selector="startEmbeddedNavigation:" destination="PKh-kn-3UC" eventType="touchUpInside" id="d8L-AP-3Xm"/>
@@ -91,7 +91,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Reh-on-d72" userLabel="Top Safe Mask">
-                                <rect key="frame" x="0.0" y="0.0" width="812" height="0.0"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.85089617969999998" green="0.0" blue="0.85087728500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
