@@ -25,6 +25,13 @@ let listOfExamples: [NamedController] = [
         pushExampleToViewController: false
     ),
     (
+        name: "Embedded View Controller",
+        description: "Demonstrates how to embed a NavigationViewController within a parent view controller.",
+        controller: EmbeddedExampleViewController.self,
+        storyboard: UIStoryboard(name: "EmbeddedExamples", bundle: nil),
+        pushExampleToViewController: true
+    ),
+    (
         name: "Styled UI Elements",
         description: "Demonstrates how to customize various UI elements and also change the map style.",
         controller: CustomStyleUIElements.self,
@@ -44,12 +51,5 @@ let listOfExamples: [NamedController] = [
         controller: WaypointArrivalScreenViewController.self,
         storyboard: nil,
         pushExampleToViewController: false
-    ),
-    (
-        name: "Embedded View Controller",
-        description: "Demonstrates how to embed a NavigationViewController within a parent view controller.",
-        controller: EmbeddedExampleViewController.self,
-        storyboard: UIStoryboard(name: "EmbeddedExamples", bundle: nil),
-        pushExampleToViewController: true
-    ),
+    )
 ]
