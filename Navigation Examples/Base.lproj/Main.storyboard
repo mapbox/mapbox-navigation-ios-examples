@@ -36,26 +36,6 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EmbeddedExampleCell" textLabel="1wX-O1-A7u" style="IBUITableViewCellStyleDefault" id="IDl-yP-Iyo">
-                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IDl-yP-Iyo" id="7fb-hd-8ld">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1wX-O1-A7u">
-                                            <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="L94-ix-bYM" kind="show" id="XVR-Eh-O5i"/>
-                                </connections>
-                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="SBH-ea-5IL" id="Ebh-Kw-b38"/>
@@ -70,14 +50,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TfG-mz-Pov" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-305" y="24"/>
-        </scene>
-        <!--EmbeddedExamples-->
-        <scene sceneID="G6b-aM-Jma">
-            <objects>
-                <viewControllerPlaceholder storyboardName="EmbeddedExamples" id="L94-ix-bYM" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="exB-wi-90a" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="374" y="-395"/>
         </scene>
         <!--Example Container View Controller-->
         <scene sceneID="Erd-pl-mlh">

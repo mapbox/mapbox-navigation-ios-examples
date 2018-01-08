@@ -7,29 +7,20 @@ class ExampleTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 1 ? 1 : listOfExamples.count
+        return listOfExamples.count
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ExampleCell", for: indexPath)
-            
-            cell.textLabel?.text = listOfExamples[indexPath.row].name
-            
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "EmbeddedExampleCell", for: indexPath)
-            cell.textLabel?.text = "Embedded Example"
-            return cell
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ExampleCell", for: indexPath)
+        cell.textLabel?.text = listOfExamples[indexPath.row].name
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.section == 0 else { return } //Embedded Example has segue set-up in Storyboard
         performSegue(withIdentifier: "TableToExampleSegue", sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
     }
