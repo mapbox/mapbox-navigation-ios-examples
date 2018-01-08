@@ -77,17 +77,16 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dG6-bY-cnf">
                                 <rect key="frame" x="0.0" y="144" width="375" height="534"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VtM-o2-vOc">
-                                        <rect key="frame" x="82.333333333333314" y="252" width="211" height="30"/>
-                                        <state key="normal" title="Load NavigationViewController"/>
-                                        <connections>
-                                            <action selector="startEmbeddedNavigation:" destination="PKh-kn-3UC" eventType="touchUpInside" id="d8L-AP-3Xm"/>
-                                        </connections>
-                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fetching Directions..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p9c-Uc-yUJ">
+                                        <rect key="frame" x="106.00000000000001" y="257.33333333333331" width="162.33333333333337" height="20.333333333333314"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="VtM-o2-vOc" firstAttribute="centerX" secondItem="dG6-bY-cnf" secondAttribute="centerX" id="260-8g-Pxv"/>
-                                    <constraint firstItem="VtM-o2-vOc" firstAttribute="centerY" secondItem="dG6-bY-cnf" secondAttribute="centerY" id="M4n-RX-Lif"/>
+                                    <constraint firstItem="p9c-Uc-yUJ" firstAttribute="centerX" secondItem="dG6-bY-cnf" secondAttribute="centerX" id="46h-OM-fxU"/>
+                                    <constraint firstItem="p9c-Uc-yUJ" firstAttribute="centerY" secondItem="dG6-bY-cnf" secondAttribute="centerY" id="aaB-m7-9i7"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Reh-on-d72" userLabel="Top Safe Mask">
@@ -121,7 +120,6 @@
                     <connections>
                         <outlet property="container" destination="dG6-bY-cnf" id="IA9-p4-d4E"/>
                         <outlet property="enableReroutes" destination="PXz-3A-5uj" id="M6E-t4-IVI"/>
-                        <outlet property="loadButton" destination="VtM-o2-vOc" id="PoN-rB-ylp"/>
                         <outlet property="reroutedLabel" destination="P47-oH-MGJ" id="Gfl-5f-WoV"/>
                     </connections>
                 </viewController>

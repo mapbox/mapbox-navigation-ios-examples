@@ -7,7 +7,6 @@ class EmbeddedExampleViewController: UIViewController, NavigationViewControllerD
  
     @IBOutlet weak var reroutedLabel: UILabel!
     @IBOutlet weak var enableReroutes: UISwitch!
-    @IBOutlet weak var loadButton: UIButton!
     @IBOutlet weak var container: UIView!
     var route: Route?
 
@@ -36,7 +35,7 @@ class EmbeddedExampleViewController: UIViewController, NavigationViewControllerD
                 return
             }
             self.route = route
-            self.loadButton.isEnabled = true
+            self.startEmbeddedNavigation()
         }
     }
     @objc func flashReroutedLabel(_ sender: Any) {
@@ -51,7 +50,7 @@ class EmbeddedExampleViewController: UIViewController, NavigationViewControllerD
         }
     }
     
-    @IBAction func startEmbeddedNavigation(_ sender: Any) {
+    func startEmbeddedNavigation() {
         let nav = NavigationViewController(for: route!)
         
         // This allows the developer to simulate the route.
