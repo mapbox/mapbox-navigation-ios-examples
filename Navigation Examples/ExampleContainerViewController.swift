@@ -11,6 +11,7 @@ class ExampleContainerViewController: UITableViewController {
     var exampleClass: UIViewController.Type?
     var exampleName: String?
     var exampleDescription: String?
+    var exampleStoryboard: UIStoryboard?
     var hasEnteredExample = false
     var pushExampleToViewController = false
     
@@ -36,16 +37,29 @@ class ExampleContainerViewController: UITableViewController {
     }
     
     @IBAction func didTapBeginNavigation(_ sender: Any) {
-        if let exampleClass = exampleClass {
-            let viewController = exampleClass.init()
-            self.addChildViewController(viewController)
-            self.view.addSubview(viewController.view)
-            viewController.didMove(toParentViewController: self)
-            if pushExampleToViewController {
-                self.navigationController?.pushViewController(viewController, animated: true)
-            }
-            hasEnteredExample = true
+        let controller = instantiate(example: exampleClass!, from: exampleStoryboard)
+        embed(controller: controller, shouldPush: pushExampleToViewController)
+    }
+    
+    private func instantiate<T: UIViewController>(example: T.Type, from storyboard: UIStoryboard? = nil) -> T {
+        if let storyboard = storyboard {
+            let viewController: T = storyboard.instantiateInitialViewController() as! T
+            return viewController
+        } else {
+            let viewController: T = example.init()
+            return viewController
         }
+    }
+    
+    private func embed(controller: UIViewController, shouldPush: Bool) {
+        addChildViewController(controller)
+        view.addSubview(controller.view)
+
+        controller.didMove(toParentViewController: self)
+        if shouldPush {
+            navigationController?.pushViewController(controller, animated: true)
+        }
+        hasEnteredExample = true
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {

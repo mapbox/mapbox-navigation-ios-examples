@@ -44,6 +44,7 @@ class ExampleTableViewController: UITableViewController {
         controller.exampleClass = example.controller
         controller.exampleName = example.name
         controller.exampleDescription = example.description
+        controller.exampleStoryboard = example.storyboard
         controller.pushExampleToViewController = example.pushExampleToViewController
     }
 }
