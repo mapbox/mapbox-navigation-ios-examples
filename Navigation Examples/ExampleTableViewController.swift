@@ -17,7 +17,6 @@ class ExampleTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExampleCell", for: indexPath)
         cell.textLabel?.text = listOfExamples[indexPath.row].name
-        
         return cell
     }
     
@@ -27,16 +26,16 @@ class ExampleTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "TableToExampleSegue" {
-            if let controller = segue.destination as? ExampleContainerViewController,
-                let selectedCell = self.tableView.indexPathForSelectedRow {
-                let example = listOfExamples[selectedCell[1]]
-                
-                controller.exampleClass = example.controller
-                controller.exampleName = example.name
-                controller.exampleDescription = example.description
-                controller.pushExampleToViewController = example.pushExampleToViewController
-            }
-        }
+        guard segue.identifier == "TableToExampleSegue",
+            let controller = segue.destination as? ExampleContainerViewController,
+            let selectedCell = self.tableView.indexPathForSelectedRow else { return }
+        
+        let example = listOfExamples[selectedCell[1]]
+        
+        controller.exampleClass = example.controller
+        controller.exampleName = example.name
+        controller.exampleDescription = example.description
+        controller.exampleStoryboard = example.storyboard
+        controller.pushExampleToViewController = example.pushExampleToViewController
     }
 }
