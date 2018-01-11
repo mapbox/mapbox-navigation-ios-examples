@@ -19,8 +19,8 @@ _Installation with CocoaPods_
 
 ## Add an example:
 
-1. Add the example to [`/Examples`](https://github.com/mapbox/navigation-ios-examples/tree/master/Navigation%20Examples/Examples).
-1. Add the example name to the [`Constants.swift`](https://github.com/mapbox/navigation-ios-examples/blob/master/Navigation%20Examples/Constants.swift).
+1. Add the example to [`/Examples`](https://github.com/mapbox/navigation-ios-examples/tree/master/Navigation-Examples/Examples).
+1. Add the example name to the [`Constants.swift`](https://github.com/mapbox/navigation-ios-examples/blob/master/Navigation-Examples/Constants.swift).
 1. Run the app.
 
 ## Additional resources
