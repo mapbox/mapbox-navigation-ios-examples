@@ -1,2 +1,4 @@
 /Pods
 /Navigation-Examples.xcworkspace
+xcuserdata/
+*.xcuserstate
