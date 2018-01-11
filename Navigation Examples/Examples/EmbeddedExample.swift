@@ -41,13 +41,11 @@ class EmbeddedExampleViewController: UIViewController, NavigationViewControllerD
     @objc func flashReroutedLabel(_ sender: Any) {
         reroutedLabel.isHidden = false
         reroutedLabel.alpha = 1.0
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseIn, animations: {
-                self.reroutedLabel.alpha = 0.0
-            }, completion: { _ in
-                self.reroutedLabel.isHidden = true
-            })
-        }
+        UIView.animate(withDuration: 1.0, delay: 1, options: .curveEaseIn, animations: {
+            self.reroutedLabel.alpha = 0.0
+        }, completion: { _ in
+            self.reroutedLabel.isHidden = true
+        })
     }
     
     func startEmbeddedNavigation() {
