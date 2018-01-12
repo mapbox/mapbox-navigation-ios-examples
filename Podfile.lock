@@ -26,7 +26,7 @@ PODS:
 
 DEPENDENCIES:
   - Mapbox-iOS-SDK (~> 3.7)
-  - MapboxNavigation (~> 0.11)
+  - MapboxNavigation (~> 0.12)
 
 SPEC CHECKSUMS:
   AWSCore: 5bb072a6b5b185f43ddbd239d6554d2f8a285ad2
@@ -41,6 +41,6 @@ SPEC CHECKSUMS:
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   Turf: 6c169618fa671e3f8a7b764b5b3332053ad6110e
 
-PODFILE CHECKSUM: ff94eb7f4c9669bf7be8210f84745bfc863fe0e8
+PODFILE CHECKSUM: d6dc95d7929bd0c574fdbadb10301b947ffa66c6
 
 COCOAPODS: 1.4.0.rc.1
