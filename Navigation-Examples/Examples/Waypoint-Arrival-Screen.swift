@@ -20,6 +20,7 @@ class WaypointArrivalScreenViewController: UIViewController, NavigationViewContr
             }
             
             let navigationController = NavigationViewController(for: route)
+            navigationController.delegate = self
             
             // This allows the developer to simulate the route.
             // Note: If copying and pasting this code in your own project,
