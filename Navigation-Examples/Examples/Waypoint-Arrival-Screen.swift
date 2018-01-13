@@ -7,6 +7,8 @@ import MapboxDirections
 class WaypointArrivalScreenViewController: UIViewController, NavigationViewControllerDelegate {
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         let waypointOne = Waypoint(coordinate: CLLocationCoordinate2DMake(37.777655950348475, -122.43199467658997))
         let waypointTwo = Waypoint(coordinate: CLLocationCoordinate2DMake(37.776087132342745, -122.4329173564911))
         let waypointThree = Waypoint(coordinate: CLLocationCoordinate2DMake(37.775357832637184, -122.43493974208832))
