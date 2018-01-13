@@ -4,7 +4,7 @@ import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
 
-class WaypointArrivalScreenViewController: UIViewController, NavigationViewControllerDelegate, WaypointConfirmationViewControllerDelegate {
+class WaypointArrivalScreenViewController: UIViewController, NavigationViewControllerDelegate {
     
     override func viewDidLoad() {
         let waypointOne = Waypoint(coordinate: CLLocationCoordinate2DMake(37.777655950348475, -122.43199467658997))
@@ -40,35 +40,13 @@ class WaypointArrivalScreenViewController: UIViewController, NavigationViewContr
         return false
     }
     
+    // Show an alert when arriving at the waypoint
     func navigationViewController(_ navigationViewController: NavigationViewController, didArriveAt waypoint: Waypoint) {
-        // When the user arrives, present a view controller that prompts the user to continue to their next destination
-        // This typ of screen could show information about a destination, pickup/dropoff confirmation, instructions upon arrival, etc.
-        let confirmationController = Bundle.main.loadNibNamed("WaypointConfirmation", owner: nil, options: nil)![0] as! WaypointConfirmationViewController
-        confirmationController.delegate = self
-        
-        navigationViewController.present(confirmationController, animated: true, completion: nil)
-    }
-    
-    func confirmationControllerDidConfirm(_ confirmationController: WaypointConfirmationViewController) {
-        confirmationController.dismiss(animated: true, completion: {
-            guard let navigationViewController = self.presentedViewController as? NavigationViewController else { return }
-            
-            guard navigationViewController.routeController.routeProgress.route.legs.count > navigationViewController.routeController.routeProgress.legIndex + 1 else { return }
+        let alert = UIAlertController(title: "Arrived at \(String(describing: waypoint.name))", message: "Would you like to continue?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+            // Begin the next leg once the driver confirms
             navigationViewController.routeController.routeProgress.legIndex += 1
-        })
+        }))
+        navigationViewController.present(alert, animated: true, completion: nil)
     }
 }
-
-protocol WaypointConfirmationViewControllerDelegate: NSObjectProtocol {
-    func confirmationControllerDidConfirm(_ controller: WaypointConfirmationViewController)
-}
-
-class WaypointConfirmationViewController: UIViewController {
-    
-    weak var delegate: WaypointConfirmationViewControllerDelegate?
-    
-    @IBAction func continueButtonPressed(_ sender: Any) {
-        delegate?.confirmationControllerDidConfirm(self)
-    }
-}
-
