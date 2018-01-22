@@ -35,20 +35,15 @@ class WaypointArrivalScreenViewController: UIViewController, NavigationViewContr
         }
     }
     
-    // By default, when the user arrives at a waypoint, the next leg starts immediately.
-    // If however you would like to pause and allow the user to provide input, set this delegate method to false.
-    // This does however require you to increment the leg count on your own. See the example below in `confirmationControllerDidConfirm()`.
-    func navigationViewController(_ navigationViewController: NavigationViewController, shouldIncrementLegWhenArrivingAtWaypoint waypoint: Waypoint) -> Bool {
-        return false
-    }
-    
-    // Show an alert when arriving at the waypoint
-    func navigationViewController(_ navigationViewController: NavigationViewController, didArriveAt waypoint: Waypoint) {
+    // Show an alert when arriving at the waypoint and wait until the user to start next leg.
+    func navigationViewController(_ navigationViewController: NavigationViewController, didArriveAt waypoint: Waypoint) -> Bool {
         let alert = UIAlertController(title: "Arrived at \(String(describing: waypoint.name))", message: "Would you like to continue?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
             // Begin the next leg once the driver confirms
             navigationViewController.routeController.routeProgress.legIndex += 1
         }))
         navigationViewController.present(alert, animated: true, completion: nil)
+        
+        return false
     }
 }
