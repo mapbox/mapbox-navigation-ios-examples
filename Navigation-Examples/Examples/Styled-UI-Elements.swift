@@ -96,9 +96,8 @@ class CustomDayStyle: DayStyle {
         TimeRemainingLabel.appearance().textColor = lightGrayColor
         TimeRemainingLabel.appearance().trafficLowColor = darkBackgroundColor
         TimeRemainingLabel.appearance().trafficUnknownColor = darkGrayColor
-        WayNameLabel.appearance().backgroundColor = .clear
         WayNameLabel.appearance().textColor = blueColor
-        WayNameView.appearance().backgroundColor = secondaryBackgroundColor
+        WayNameLabel.appearance().backgroundColor = secondaryBackgroundColor
     }
 }
 
