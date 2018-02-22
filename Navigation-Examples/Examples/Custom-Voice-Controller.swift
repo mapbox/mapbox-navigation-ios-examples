@@ -35,10 +35,6 @@ class CustomVoiceControllerUI: UIViewController {
             self.present(navigationController, animated: true, completion: nil)
         }
     }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: .routeControllerDidPassSpokenInstructionPoint, object: nil)
-    }
 }
 
 class CustomVoiceController: MapboxVoiceController {
