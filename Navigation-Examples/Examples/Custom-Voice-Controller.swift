@@ -43,6 +43,8 @@ class CustomVoiceControllerUI: UIViewController {
 
 class CustomVoiceController: MapboxVoiceController {
     
+    // You will need audio files for as many or few cases as you'd like to handle
+    // This example just covers left, right and straight.
     let turnLeft = NSDataAsset(name: "turnleft")!.data
     let turnRight = NSDataAsset(name: "turnright")!.data
     let straight = NSDataAsset(name: "continuestraight")!.data

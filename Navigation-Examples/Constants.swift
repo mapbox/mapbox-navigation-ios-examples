@@ -54,7 +54,7 @@ let listOfExamples: [NamedController] = [
     ),
     (
         name: "Custom Voice Controller",
-        description: "Implement your own voice controller.",
+        description: "Add custom audio recordings for your instructions.",
         controller: CustomVoiceControllerUI.self,
         storyboard: nil,
         pushExampleToViewController: false
