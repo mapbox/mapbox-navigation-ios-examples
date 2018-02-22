@@ -8,10 +8,6 @@ import AVFoundation
 class CustomVoiceControllerUI: UIViewController {
     
     let voiceController = CustomVoiceController()
-
-    let turnLeft = NSDataAsset(name: "turnleft")!.data
-    let turnRight = NSDataAsset(name: "turnright")!.data
-    let straight = NSDataAsset(name: "continuestraight")!.data
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,8 +15,6 @@ class CustomVoiceControllerUI: UIViewController {
         let origin = CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648)
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
         let options = NavigationRouteOptions(coordinates: [origin, destination])
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(didPassSpokenInstructionPoint(notification:)), name: .routeControllerDidPassSpokenInstructionPoint, object: nil)
         
         Directions.shared.calculate(options) { (waypoints, routes, error) in
             guard let route = routes?.first, error == nil else {
@@ -45,11 +39,18 @@ class CustomVoiceControllerUI: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self, name: .routeControllerDidPassSpokenInstructionPoint, object: nil)
     }
+}
+
+class CustomVoiceController: MapboxVoiceController {
     
-    @objc open func didPassSpokenInstructionPoint(notification: NSNotification) {
+    let turnLeft = NSDataAsset(name: "turnleft")!.data
+    let turnRight = NSDataAsset(name: "turnright")!.data
+    let straight = NSDataAsset(name: "continuestraight")!.data
+    
+    override func didPassSpokenInstructionPoint(notification: NSNotification) {
         let routeProgress = notification.userInfo![RouteControllerNotificationUserInfoKey.routeProgressKey] as! RouteProgress
         let soundForInstruction = audio(for: routeProgress.currentLegProgress.currentStep)
-        voiceController.play(soundForInstruction)
+        play(soundForInstruction)
     }
     
     func audio(for step: RouteStep) -> Data {
@@ -61,12 +62,6 @@ class CustomVoiceControllerUI: UIViewController {
         default:
             return straight
         }
-    }
-}
-
-class CustomVoiceController: MapboxVoiceController {
-    override func didPassSpokenInstructionPoint(notification: NSNotification) {
-        return
     }
 }
 
