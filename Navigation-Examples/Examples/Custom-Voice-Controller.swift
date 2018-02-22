@@ -7,10 +7,12 @@ import AVFoundation
 
 class CustomVoiceControllerUI: UIViewController {
     
-    let voiceController = CustomVoiceController()
+    var voiceController: CustomVoiceController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        voiceController = CustomVoiceController()
         
         let origin = CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648)
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
@@ -34,6 +36,11 @@ class CustomVoiceControllerUI: UIViewController {
             
             self.present(navigationController, animated: true, completion: nil)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        voiceController = nil
     }
 }
 
