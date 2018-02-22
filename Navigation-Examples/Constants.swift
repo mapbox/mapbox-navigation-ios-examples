@@ -51,5 +51,12 @@ let listOfExamples: [NamedController] = [
         controller: WaypointArrivalScreenViewController.self,
         storyboard: nil,
         pushExampleToViewController: false
+    ),
+    (
+        name: "Custom Voice Controller",
+        description: "Implement your own voice controller.",
+        controller: CustomVoiceControllerUI.self,
+        storyboard: nil,
+        pushExampleToViewController: false
     )
 ]
