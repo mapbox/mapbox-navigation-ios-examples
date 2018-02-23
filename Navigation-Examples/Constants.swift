@@ -25,6 +25,13 @@ let listOfExamples: [NamedController] = [
         pushExampleToViewController: false
     ),
     (
+        name: "Custom Destination Marker",
+        description: "Use a custom image for styling the destination marker.",
+        controller: CustomDestinationMarkerController.self,
+        storyboard: nil,
+        pushExampleToViewController: false
+    ),
+    (
         name: "Embedded View Controller",
         description: "Demonstrates how to embed a NavigationViewController within a parent view controller.",
         controller: EmbeddedExampleViewController.self,
