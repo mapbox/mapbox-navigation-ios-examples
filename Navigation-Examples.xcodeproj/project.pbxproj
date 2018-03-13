@@ -23,6 +23,7 @@
 		C58FB8731FE98AEB00C4B491 /* Styled-UI-Elements.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8721FE98AEB00C4B491 /* Styled-UI-Elements.swift */; };
 		C58FB8771FE98B0E00C4B491 /* Waypoint-Arrival-Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8761FE98B0E00C4B491 /* Waypoint-Arrival-Screen.swift */; };
 		C59094C3203E3B9100EB2417 /* Custom-Voice-Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59094C2203E3B9100EB2417 /* Custom-Voice-Controller.swift */; };
+		C5C0D63820589422003A3B1D /* Custom-Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C0D63720589422003A3B1D /* Custom-Server.swift */; };
 		C5F130A01FE9B44600463E86 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1309F1FE9B44600463E86 /* Constants.swift */; };
 		C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F130A51FEB2D7800463E86 /* Advanced.swift */; };
 /* End PBXBuildFile section */
@@ -47,6 +48,7 @@
 		C58FB8721FE98AEB00C4B491 /* Styled-UI-Elements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Styled-UI-Elements.swift"; sourceTree = "<group>"; };
 		C58FB8761FE98B0E00C4B491 /* Waypoint-Arrival-Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Waypoint-Arrival-Screen.swift"; sourceTree = "<group>"; };
 		C59094C2203E3B9100EB2417 /* Custom-Voice-Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Voice-Controller.swift"; sourceTree = "<group>"; };
+		C5C0D63720589422003A3B1D /* Custom-Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Server.swift"; sourceTree = "<group>"; };
 		C5F1309F1FE9B44600463E86 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C5F130A51FEB2D7800463E86 /* Advanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advanced.swift; sourceTree = "<group>"; };
 		FE9EEF42C4F1DD67E96BC63A /* Pods-Navigation-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples.debug.xcconfig"; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				C5F130A51FEB2D7800463E86 /* Advanced.swift */,
 				C59094C2203E3B9100EB2417 /* Custom-Voice-Controller.swift */,
 				C52BAA772040D5030086EC6B /* CustomDestinationMarker.swift */,
+				C5C0D63720589422003A3B1D /* Custom-Server.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 			files = (
 				C5F130A01FE9B44600463E86 /* Constants.swift in Sources */,
 				C58FB86E1FE89D9500C4B491 /* ExampleTableViewController.swift in Sources */,
+				C5C0D63820589422003A3B1D /* Custom-Server.swift in Sources */,
 				C58FB85C1FE899B800C4B491 /* ViewController.swift in Sources */,
 				C58FB8771FE98B0E00C4B491 /* Waypoint-Arrival-Screen.swift in Sources */,
 				C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */,
