@@ -55,6 +55,12 @@ class CustomServerViewController: UIViewController, NavigationViewControllerDele
             // Use `Directions.calculateRoutes(:matchOptions:completionHandler:)` for navigating on a map matching response.
             //
             let matchOptions = NavigationMatchOptions(coordinates: routeCoordinates)
+            
+            // This defines the waypoints on the route.
+            // We want the user to navigate from the first coordinate to the last coordinate without any stops in between.
+            // You can specify more intermediate waypoints here if'd you like.
+            matchOptions.waypointIndices = IndexSet([0, routeCoordinates.count - 1])
+            
             Directions.shared.calculateRoutes(matching: matchOptions) { (waypoints, routes, error) in
                 guard let route = routes?.first, error == nil else { return }
                 
