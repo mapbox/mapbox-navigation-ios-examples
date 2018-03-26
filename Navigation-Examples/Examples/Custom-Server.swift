@@ -52,7 +52,7 @@ class CustomServerViewController: UIViewController, NavigationViewControllerDele
             
             //
             // ❗️IMPORTANT❗️
-            // Use `Directions.calculateRoutes(:matchOptions:completionHandler:)` for navigating on a map matching response.
+            // Use `Directions.calculateRoutes(matching:completionHandler:)` for navigating on a map matching response.
             //
             let matchOptions = NavigationMatchOptions(coordinates: routeCoordinates)
             
