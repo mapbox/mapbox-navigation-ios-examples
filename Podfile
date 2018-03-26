@@ -2,5 +2,6 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'Navigation-Examples' do
-  pod 'MapboxNavigation', '~> 0.14'
+  pod 'MapboxCoreNavigation', '~> 0.16'
+  pod 'MapboxNavigation', '~> 0.16'
 end

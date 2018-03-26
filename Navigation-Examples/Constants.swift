@@ -65,5 +65,12 @@ let listOfExamples: [NamedController] = [
         controller: CustomVoiceControllerUI.self,
         storyboard: nil,
         pushExampleToViewController: false
+    ),
+    (
+        name: "Custom Directions Server",
+        description: "Use a custom directions server with the Navigation SDK via the Mapbox Map Matching SDK.",
+        controller: CustomServerViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: false
     )
 ]
