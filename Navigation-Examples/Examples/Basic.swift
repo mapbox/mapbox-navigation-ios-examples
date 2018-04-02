@@ -4,7 +4,7 @@ import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
 
-class BasicViewController: UIViewController {
+class BasicViewController: UIViewController, RouteControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,6 +19,7 @@ class BasicViewController: UIViewController {
             }
             
             let navigationController = NavigationViewController(for: route)
+            navigationController.routeController.delegate = self
             
             // This allows the developer to simulate the route.
             // Note: If copying and pasting this code in your own project,
@@ -28,6 +29,12 @@ class BasicViewController: UIViewController {
             }
             
             self.present(navigationController, animated: true, completion: nil)
+        }
+    }
+    
+    func routeController(_ routeController: RouteController, didUpdate locations: [CLLocation]) {
+        if let nextIntersection = routeController.routeProgress.currentLegProgress.currentStepProgress.upcomingIntersection {
+            print(nextIntersection.location)
         }
     }
 }
