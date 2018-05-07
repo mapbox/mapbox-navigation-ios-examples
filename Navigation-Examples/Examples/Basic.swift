@@ -4,7 +4,7 @@ import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
 
-class BasicViewController: UIViewController {
+class BasicViewController: UIViewController, VoiceControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,6 +19,7 @@ class BasicViewController: UIViewController {
             }
             
             let navigationController = NavigationViewController(for: route)
+            navigationController.voiceController?.voiceControllerDelegate = self
             
             // This allows the developer to simulate the route.
             // Note: If copying and pasting this code in your own project,
@@ -29,5 +30,9 @@ class BasicViewController: UIViewController {
             
             self.present(navigationController, animated: true, completion: nil)
         }
+    }
+    
+    func voiceController(_ voiceController: RouteVoiceController, willSpeak instruction: SpokenInstruction, routeProgress: RouteProgress) -> SpokenInstruction? {
+        return SpokenInstruction(distanceAlongStep: instruction.distanceAlongStep, text: "New Instruction!", ssmlText: "<speak>New Instruction!</speak>")
     }
 }
