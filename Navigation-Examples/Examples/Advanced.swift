@@ -5,7 +5,7 @@ import MapboxDirections
 import Mapbox
 
 
-class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDelegate, VoiceControllerDelegate, NavigationMapViewDelegate, NavigationViewControllerDelegate {
+class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDelegate {
     
     var mapView: NavigationMapView?
     var currentRoute: Route? {
@@ -75,7 +75,7 @@ class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationMa
     @objc func tappedButton(sender: UIButton) {
         guard let route = currentRoute else { return }
         let navigationViewController = NavigationViewController(for: route)
-        navigationViewController.delegate = self
+        navigationViewController.delegate = self as? NavigationViewControllerDelegate
         
         // This allows the developer to simulate the route.
         // Note: If copying and pasting this code in your own project,
@@ -111,8 +111,9 @@ class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationMa
             self.mapView?.showWaypoints(self.currentRoute!)
         }
     }
-    
-    // Delegate method called when the user selects a route
+}
+
+extension AdvancedViewController: NavigationMapViewDelegate {
     func navigationMapView(_ mapView: NavigationMapView, didSelect route: Route) {
         self.currentRoute = route
     }
