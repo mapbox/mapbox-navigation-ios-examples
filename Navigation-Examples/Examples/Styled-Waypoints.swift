@@ -22,8 +22,8 @@ class StyledWaypointsViewController: UIViewController, NavigationMapViewDelegate
             }
             
             let navigationController = NavigationViewController(for: route)
-            let navigationMapView = NavigationMapView()
-            navigationMapView.navigationMapDelegate = self
+
+            navigationController.mapView?.navigationMapDelegate = self
             
             // This allows the developer to simulate the route.
             // Note: If copying and pasting this code in your own project,
@@ -46,16 +46,16 @@ class StyledWaypointsViewController: UIViewController, NavigationMapViewDelegate
             pointFeatures.append(point)
         }
         
-        let source = MGLShapeCollectionFeature(shapes: pointFeatures)
+        let shapeSource = MGLShapeCollectionFeature(shapes: pointFeatures)
         
-        return source
+        return shapeSource
     }
     
     func navigationMapView(_ mapView: NavigationMapView, waypointStyleLayerWithIdentifier identifier: String, source: MGLSource) -> MGLStyleLayer? {
         let waypointStyleLayer = MGLCircleStyleLayer(identifier: identifier, source: source)
-        
         // TODO: Style waypoints here based on "title" attribute
         waypointStyleLayer.circleColor = MGLStyleValue(rawValue: UIColor.red)
+        waypointStyleLayer.circleRadius = MGLStyleValue(rawValue: 8)
         return waypointStyleLayer
     }
     
