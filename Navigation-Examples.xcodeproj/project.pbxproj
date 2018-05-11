@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0547980D20A6363E00FE6628 /* Styled-Waypoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0547980C20A6363E00FE6628 /* Styled-Waypoints.swift */; };
 		0E4DB43E555307E85D094271 /* Pods_Navigation_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */; };
 		8D6D36A720001F0400C2B61B /* EmbeddedExamples.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D6D36A620001F0400C2B61B /* EmbeddedExamples.storyboard */; };
 		8DF510741FEB08F70049DB9C /* Embedded-Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF510731FEB08F70049DB9C /* Embedded-Navigation.swift */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0547980C20A6363E00FE6628 /* Styled-Waypoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Styled-Waypoints.swift"; sourceTree = "<group>"; };
 		8D6D36A620001F0400C2B61B /* EmbeddedExamples.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EmbeddedExamples.storyboard; sourceTree = "<group>"; };
 		8DF510731FEB08F70049DB9C /* Embedded-Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Embedded-Navigation.swift"; sourceTree = "<group>"; };
 		8DF510761FEB0CA00049DB9C /* MapboxNavigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxNavigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,6 +125,7 @@
 				C59094C2203E3B9100EB2417 /* Custom-Voice-Controller.swift */,
 				C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */,
 				C5C0D63720589422003A3B1D /* Custom-Server.swift */,
+				0547980C20A6363E00FE6628 /* Styled-Waypoints.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 				C58FB8541FE899B800C4B491 /* Resources */,
 				2417DF2EA3911D0DF486D567 /* [CP] Embed Pods Frameworks */,
 				C543192F1FFC41470066A20A /* Apply Mapbox Access Token */,
+				E83E5798D7C7816DDBBBD0CD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -276,6 +280,21 @@
 			shellPath = /bin/sh;
 			shellScript = "# This Run Script build phase helps to keep the navigation SDK’s developers from exposing their own access tokens during development. See <https://www.mapbox.com/help/ios-private-access-token/> for more information. If you are developing an application privately, you may add the MGLMapboxAccessToken key directly to your Info.plist file and delete this build phase.\n\ntoken_file=~/.mapbox\ntoken_file2=~/mapbox\ntoken=\"$(cat $token_file 2>/dev/null || cat $token_file2 2>/dev/null)\"\nif [ \"$token\" ]; then\nplutil -replace MGLMapboxAccessToken -string $token \"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nelse\necho 'warning: Missing Mapbox access token'\nopen 'https://www.mapbox.com/studio/account/tokens/'\necho \"warning: Get an access token from <https://www.mapbox.com/studio/account/tokens/>, then create a new file at $token_file or $token_file2 that contains the access token.\"\nfi\n";
 		};
+		E83E5798D7C7816DDBBBD0CD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -288,6 +307,7 @@
 				C5C0D63820589422003A3B1D /* Custom-Server.swift in Sources */,
 				C58FB85C1FE899B800C4B491 /* ViewController.swift in Sources */,
 				C58FB8771FE98B0E00C4B491 /* Waypoint-Arrival-Screen.swift in Sources */,
+				0547980D20A6363E00FE6628 /* Styled-Waypoints.swift in Sources */,
 				C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */,
 				C58FB86C1FE89CEC00C4B491 /* ExampleContainerViewController.swift in Sources */,
 				C59094C3203E3B9100EB2417 /* Custom-Voice-Controller.swift in Sources */,
