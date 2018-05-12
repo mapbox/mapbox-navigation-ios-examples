@@ -4,7 +4,7 @@ import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
 
-class StyledWaypointsViewController: UIViewController, NavigationMapViewDelegate {
+class StyledWaypointsViewController: UIViewController, NavigationViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,8 +22,7 @@ class StyledWaypointsViewController: UIViewController, NavigationMapViewDelegate
             }
             
             let navigationController = NavigationViewController(for: route)
-
-            navigationController.mapView?.navigationMapDelegate = self
+            navigationController.delegate = self
             
             // This allows the developer to simulate the route.
             // Note: If copying and pasting this code in your own project,
@@ -46,9 +45,8 @@ class StyledWaypointsViewController: UIViewController, NavigationMapViewDelegate
             pointFeatures.append(point)
         }
         
-        let shapeSource = MGLShapeCollectionFeature(shapes: pointFeatures)
-        
-        return shapeSource
+        let shapeCollection = MGLShapeCollectionFeature(shapes: pointFeatures)
+        return shapeCollection
     }
     
     func navigationMapView(_ mapView: NavigationMapView, waypointStyleLayerWithIdentifier identifier: String, source: MGLSource) -> MGLStyleLayer? {
