@@ -4,7 +4,7 @@ import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
 
-class CustomServerViewController: UIViewController, NavigationViewControllerDelegate {
+class CustomServerViewController: UIViewController {
     
     let routeOptions = NavigationRouteOptions(coordinates: [
         CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648),
@@ -35,7 +35,9 @@ class CustomServerViewController: UIViewController, NavigationViewControllerDele
             self.present(self.navigationViewController!, animated: true, completion: nil)
         }
     }
-    
+}
+
+extension CustomServerViewController: NavigationViewControllerDelegate {
     // Never reroute internally. Instead,
     // 1. Fetch a route from your server
     // 2. Map Match the coordinates from your server
@@ -72,4 +74,3 @@ class CustomServerViewController: UIViewController, NavigationViewControllerDele
         return true
     }
 }
-
