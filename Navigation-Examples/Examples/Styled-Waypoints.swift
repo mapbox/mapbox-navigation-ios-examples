@@ -49,16 +49,25 @@ class StyledWaypointsViewController: UIViewController, NavigationViewControllerD
         return shapeCollection
     }
     
-    func navigationMapView(_ mapView: NavigationMapView, waypointStyleLayerWithIdentifier identifier: String, source: MGLSource) -> MGLStyleLayer? {
+
+    func navigationViewController(_ navigationViewController: NavigationViewController, waypointStyleLayerWithIdentifier identifier: String, source: MGLSource) -> MGLStyleLayer? {
+        
         let waypointStyleLayer = MGLCircleStyleLayer(identifier: identifier, source: source)
-        // TODO: Style waypoints here based on "title" attribute
-        waypointStyleLayer.circleColor = MGLStyleValue(rawValue: UIColor.red)
-        waypointStyleLayer.circleRadius = MGLStyleValue(rawValue: 8)
+        waypointStyleLayer.circleColor = NSExpression(forConstantValue: UIColor.yellow)
+        waypointStyleLayer.circleRadius = NSExpression(forConstantValue: 12)
+        waypointStyleLayer.circleStrokeColor = NSExpression(forConstantValue: UIColor.black)
+        waypointStyleLayer.circleStrokeWidth = NSExpression(forConstantValue: 2)
+        
         return waypointStyleLayer
     }
     
-    func navigationMapView(_ mapView: NavigationMapView, waypointSymbolStyleLayerWithIdentifier identifier: String, source: MGLSource) -> MGLStyleLayer? {
-        return nil
+    func navigationViewController(_ navigationViewController: NavigationViewController, waypointSymbolStyleLayerWithIdentifier identifier: String, source: MGLSource) -> MGLStyleLayer? {
+
+        let waypointSymbolStyleLayer = MGLSymbolStyleLayer(identifier: identifier, source: source)
+        waypointSymbolStyleLayer.text = NSExpression(forKeyPath: "title")
+        waypointSymbolStyleLayer.textColor = NSExpression(forConstantValue: UIColor.white)
+
+        return waypointSymbolStyleLayer
     }
 }
 
