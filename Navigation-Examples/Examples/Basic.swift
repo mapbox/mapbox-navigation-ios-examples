@@ -12,6 +12,8 @@ class BasicViewController: UIViewController {
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
         let options = NavigationRouteOptions(coordinates: [origin, destination])
         
+        var dataToSend: String = "Hello"
+        
         Directions.shared.calculate(options) { (waypoints, routes, error) in
             guard let route = routes?.first, error == nil else {
                 print(error!.localizedDescription)
@@ -19,6 +21,8 @@ class BasicViewController: UIViewController {
             }
             
             let navigationController = NavigationViewController(for: route)
+            
+            navigationController.dataToReceive = dataToSend
             
             // This allows the developer to simulate the route.
             // Note: If copying and pasting this code in your own project,
@@ -30,4 +34,8 @@ class BasicViewController: UIViewController {
             self.present(navigationController, animated: true, completion: nil)
         }
     }
+}
+
+class NavigationViewController: UIViewController {
+    var dataToReceive: String?
 }
