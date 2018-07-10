@@ -27,7 +27,7 @@ _Installation with CocoaPods_
 
 While we are not able to answer support questions in this repository, below are some helpful resources if you're just getting started with the Mapbox Navigation SDK for iOS: 
 
-- [Mapbox Navigation SDK for iOS documentation](https://www.mapbox.com/mapbox-navigation-ios/navigation/)
+- [Mapbox Navigation SDK for iOS examples](https://www.mapbox.com/ios-sdk/navigation/examples/)
 - [Build a navigation app for iOS tutorial](https://www.mapbox.com/help/ios-navigation-sdk/)
 - [Mapbox help page](https://www.mapbox.com/help/)
 - [Mapbox navigation questions on Stack Overflow](http://stackoverflow.com/questions/tagged/mapbox+ios+navigation)
