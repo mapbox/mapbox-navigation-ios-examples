@@ -18,8 +18,8 @@ PODS:
   - Turf (0.2.0)
 
 DEPENDENCIES:
-  - MapboxCoreNavigation (~> 0.18)
-  - MapboxNavigation (~> 0.18)
+  - MapboxCoreNavigation (~> 0.19)
+  - MapboxNavigation (~> 0.19)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -44,6 +44,6 @@ SPEC CHECKSUMS:
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   Turf: 65817136031583da7ea2b43e6611dd10ddbdab2f
 
-PODFILE CHECKSUM: fd5185ffc3ee858d1caa995c008df4bd9a890d07
+PODFILE CHECKSUM: 278a06311937a19412510d7ac08cdaf2430cfa12
 
 COCOAPODS: 1.5.3
