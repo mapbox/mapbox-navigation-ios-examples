@@ -1,15 +1,15 @@
 PODS:
-  - Mapbox-iOS-SDK (4.3.0)
-  - MapboxCoreNavigation (0.20.1):
-    - MapboxDirections.swift (~> 0.22.0)
-    - MapboxMobileEvents (~> 0.5)
-    - Turf (~> 0.2)
-  - MapboxDirections.swift (0.22.0):
+  - Mapbox-iOS-SDK (4.0.4)
+  - MapboxCoreNavigation (0.18.1):
+    - MapboxDirections.swift (~> 0.21.0)
+    - MapboxMobileEvents (~> 0.4)
+    - Turf (~> 0.1)
+  - MapboxDirections.swift (0.21.0):
     - Polyline (~> 4.2)
   - MapboxMobileEvents (0.5.0)
-  - MapboxNavigation (0.20.1):
-    - Mapbox-iOS-SDK (~> 4.3)
-    - MapboxCoreNavigation (= 0.20.1)
+  - MapboxNavigation (0.18.1):
+    - Mapbox-iOS-SDK (~> 4.0)
+    - MapboxCoreNavigation (= 0.18.1)
     - MapboxSpeech (~> 0.0.1)
     - Solar (~> 2.1)
   - MapboxSpeech (0.0.1)
@@ -18,11 +18,12 @@ PODS:
   - Turf (0.2.0)
 
 DEPENDENCIES:
-  - MapboxCoreNavigation (~> 0.20)
-  - MapboxNavigation (~> 0.20)
+  - Mapbox-iOS-SDK (= 4.0.4)
+  - MapboxCoreNavigation (= 0.18.1)
+  - MapboxNavigation (= 0.18.1)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - Mapbox-iOS-SDK
     - MapboxCoreNavigation
     - MapboxDirections.swift
@@ -34,16 +35,16 @@ SPEC REPOS:
     - Turf
 
 SPEC CHECKSUMS:
-  Mapbox-iOS-SDK: 7d8d510088ba7900d11aa3ceb98f563b040efca1
-  MapboxCoreNavigation: a6565187afd3c9b25294b3e35602d5e4800ee375
-  MapboxDirections.swift: 67da008c3bff72ab68b0fc166185eebda23303be
+  Mapbox-iOS-SDK: fe8725bb5a60daf4eac1361ee538bdd52dfc089f
+  MapboxCoreNavigation: 3754c160e928dbcd58720de808b1f67db52b20e6
+  MapboxDirections.swift: 14d32d1601834e15c930cbab4201e57b0f7a2218
   MapboxMobileEvents: e4aa629e4e2e3c250b5dadc15b63d67b91469a79
-  MapboxNavigation: accbeb575081eeccd4b11186626eb7eb1a444394
+  MapboxNavigation: 619fda6eb4b4ce48df8676041f017e4698c8dc35
   MapboxSpeech: 6cc9b3d53adc2988af3ebc704dd17907b84a3f9f
   Polyline: 3d69f75bb136357e27291d439d0436c6ebda57a4
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   Turf: 65817136031583da7ea2b43e6611dd10ddbdab2f
 
-PODFILE CHECKSUM: ac10f08606d4676ab27692bf42231fe998a6413c
+PODFILE CHECKSUM: df1fae9f05e0ce537d3d1f47fb78be6fc6c3caf7
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.3
