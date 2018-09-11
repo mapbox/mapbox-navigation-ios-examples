@@ -7,12 +7,55 @@ import MapboxDirections
 class CustomDestinationMarkerController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let origin = CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648)
-        let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
-        let options = NavigationRouteOptions(coordinates: [origin, destination])
-        
-        Directions.shared.calculate(options) { (waypoints, routes, error) in
+
+        let routeCoordinates = [
+            CLLocationCoordinate2D(latitude: 59.3379254707993,  longitude: 18.0768391763866),
+            CLLocationCoordinate2D(latitude: 59.3376613543215,  longitude: 18.0758977499228),
+            CLLocationCoordinate2D(latitude: 59.3371292341531,  longitude: 18.0754779388695),
+            CLLocationCoordinate2D(latitude: 59.3368658096911,  longitude: 18.0752713263541),
+            CLLocationCoordinate2D(latitude: 59.3366161271274,  longitude: 18.0758013323718),
+            CLLocationCoordinate2D(latitude: 59.3363847683606,  longitude: 18.0769377012062),
+            CLLocationCoordinate2D(latitude: 59.3369299420601,  longitude: 18.0779707637829),
+            CLLocationCoordinate2D(latitude: 59.3374784940673,  longitude: 18.0789771102838),
+            CLLocationCoordinate2D(latitude: 59.3376624022706,  longitude: 18.0796752015449),
+            CLLocationCoordinate2D(latitude: 59.3382345065107,  longitude: 18.0801207199294),
+            CLLocationCoordinate2D(latitude:  59.338728497517,  longitude: 18.0793407846583),
+            CLLocationCoordinate2D(latitude:  59.3390538588298, longitude:  18.0777368583247),
+            CLLocationCoordinate2D(latitude:  59.3389021418961, longitude:  18.0769242264769),
+            CLLocationCoordinate2D(latitude:  59.3383325439362, longitude:  18.0764655674924),
+            CLLocationCoordinate2D(latitude:  59.3381526945276, longitude:  18.0757203959448),
+            CLLocationCoordinate2D(latitude:  59.3383085323927, longitude:  18.0749662844197),
+            CLLocationCoordinate2D(latitude:  59.3386507394432, longitude:  18.0749292910378),
+            CLLocationCoordinate2D(latitude:  59.3396600470949, longitude:  18.0757133256584),
+            CLLocationCoordinate2D(latitude:  59.3402031271014, longitude:  18.0770724776848),
+            CLLocationCoordinate2D(latitude:  59.3399246668736, longitude:  18.0784376357593),
+            CLLocationCoordinate2D(latitude:  59.3393711961939, longitude:  18.0786765675365),
+            CLLocationCoordinate2D(latitude:  59.3383675368975, longitude:  18.0778982052741),
+            CLLocationCoordinate2D(latitude:  59.3379254707993, longitude:  18.0768391763866),
+            CLLocationCoordinate2D(latitude:  59.3376613543215, longitude:  18.0758977499228),
+            CLLocationCoordinate2D(latitude:  59.3371292341531, longitude:  18.0754779388695),
+            CLLocationCoordinate2D(latitude:  59.3368658096911, longitude:  18.0752713263541),
+            CLLocationCoordinate2D(latitude:  59.3366161271274, longitude:  18.0758013323718),
+            CLLocationCoordinate2D(latitude:  59.3363847683606, longitude:  18.0769377012062),
+            CLLocationCoordinate2D(latitude:  59.3369299420601, longitude:  18.0779707637829),
+            CLLocationCoordinate2D(latitude:  59.3374784940673, longitude:  18.0789771102838),
+            CLLocationCoordinate2D(latitude:  59.3376624022706, longitude:  18.0796752015449),
+            CLLocationCoordinate2D(latitude:  59.3382345065107, longitude:  18.0801207199294),
+            CLLocationCoordinate2D(latitude:  59.338728497517,  longitude: 18.0793407846583),
+            CLLocationCoordinate2D(latitude:  59.3390538588298, longitude:  18.0777368583247),
+            CLLocationCoordinate2D(latitude:  59.3389021418961, longitude:  18.0769242264769),
+            CLLocationCoordinate2D(latitude:  59.3383325439362, longitude:  18.0764655674924),
+            CLLocationCoordinate2D(latitude:  59.3381526945276, longitude:  18.0757203959448),
+            CLLocationCoordinate2D(latitude:  59.3383085323927, longitude:  18.0749662844197),
+            CLLocationCoordinate2D(latitude:  59.3386507394432, longitude:  18.0749292910378),
+            CLLocationCoordinate2D(latitude:  59.3396600470949, longitude:  18.0757133256584)
+        ]
+
+        let routeOptions = NavigationMatchOptions(coordinates: routeCoordinates, profileIdentifier: .automobile)
+        routeOptions.waypointIndices = IndexSet([0, routeCoordinates.count - 1])
+        routeOptions.includesSteps = true
+
+        Directions.shared.calculateRoutes(matching: routeOptions) { (waypoints, routes, error) in
             guard let route = routes?.first, error == nil else {
                 print(error!.localizedDescription)
                 return
