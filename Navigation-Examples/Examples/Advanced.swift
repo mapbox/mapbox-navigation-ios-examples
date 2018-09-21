@@ -74,15 +74,11 @@ class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationMa
     
     @objc func tappedButton(sender: UIButton) {
         guard let route = currentRoute else { return }
-        let navigationViewController = NavigationViewController(for: route)
-        navigationViewController.delegate = self
+        // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
+        let locationManager = simulationIsEnabled ? SimulatedLocationManager(route: route) : nil
         
-        // This allows the developer to simulate the route.
-        // Note: If copying and pasting this code in your own project,
-        // comment out `simulationIsEnabled` as it is defined elsewhere in this project.
-        if simulationIsEnabled {
-            navigationViewController.routeController.locationManager = SimulatedLocationManager(route: route)
-        }
+        let navigationViewController = NavigationViewController(for: route, locationManager: locationManager)
+        navigationViewController.delegate = self
         
         present(navigationViewController, animated: true, completion: nil)
     }

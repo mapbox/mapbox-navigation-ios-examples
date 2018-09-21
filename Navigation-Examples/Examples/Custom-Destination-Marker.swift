@@ -18,15 +18,11 @@ class CustomDestinationMarkerController: UIViewController {
                 return
             }
             
-            let navigationController = NavigationViewController(for: route)
-            navigationController.delegate = self
+            // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
+            let locationManager = simulationIsEnabled ? SimulatedLocationManager(route: route) : nil
             
-            // This allows the developer to simulate the route.
-            // Note: If copying and pasting this code in your own project,
-            // comment out `simulationIsEnabled` as it is defined elsewhere in this project.
-            if simulationIsEnabled {
-                navigationController.routeController.locationManager = SimulatedLocationManager(route: route)
-            }
+            let navigationController = NavigationViewController(for: route, locationManager: locationManager)
+            navigationController.delegate = self
             
             self.present(navigationController, animated: true, completion: nil)
         }

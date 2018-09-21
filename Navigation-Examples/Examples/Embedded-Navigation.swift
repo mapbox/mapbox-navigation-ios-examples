@@ -50,14 +50,10 @@ class EmbeddedExampleViewController: UIViewController {
     }
     
     func startEmbeddedNavigation() {
-        let nav = NavigationViewController(for: route!)
+        // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
+        let locationManager = simulationIsEnabled ? SimulatedLocationManager(route: route!) : nil
         
-        // This allows the developer to simulate the route.
-        // Note: If copying and pasting this code in your own project,
-        // comment out `simulationIsEnabled` as it is defined elsewhere in this project.
-        if simulationIsEnabled {
-            nav.routeController.locationManager = SimulatedLocationManager(route: route!)
-        }
+        let nav = NavigationViewController(for: route!, locationManager: locationManager)
         
         nav.delegate = self
         addChildViewController(nav)

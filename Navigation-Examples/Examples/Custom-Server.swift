@@ -22,15 +22,11 @@ class CustomServerViewController: UIViewController {
                 return
             }
             
-            self.navigationViewController = NavigationViewController(for: route)
-            self.navigationViewController?.delegate = self
+            // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
+            let locationManager = simulationIsEnabled ? SimulatedLocationManager(route: route) : nil
             
-            // This allows the developer to simulate the route.
-            // Note: If copying and pasting this code in your own project,
-            // comment out `simulationIsEnabled` as it is defined elsewhere in this project.
-            if simulationIsEnabled {
-                self.navigationViewController?.routeController.locationManager = SimulatedLocationManager(route: route)
-            }
+            self.navigationViewController = NavigationViewController(for: route, locationManager: locationManager)
+            self.navigationViewController?.delegate = self
             
             self.present(self.navigationViewController!, animated: true, completion: nil)
         }
