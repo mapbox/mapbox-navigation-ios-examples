@@ -22,9 +22,9 @@ class WaypointArrivalScreenViewController: UIViewController {
             }
             
             // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-            let locationManager = simulationIsEnabled ? SimulatedLocationManager(route: route) : nil
+            let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
             
-            let navigationController = NavigationViewController(for: route, locationManager: locationManager)
+            let navigationController = NavigationViewController(for: route, navigationService: navigationService)
             navigationController.delegate = self
             
             self.present(navigationController, animated: true, completion: nil)
@@ -38,7 +38,7 @@ extension WaypointArrivalScreenViewController: NavigationViewControllerDelegate 
         let alert = UIAlertController(title: "Arrived at \(String(describing: waypoint.name))", message: "Would you like to continue?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
             // Begin the next leg once the driver confirms
-            navigationViewController.routeController.routeProgress.legIndex += 1
+            navigationViewController.navigationService.routeProgress.legIndex += 1
         }))
         navigationViewController.present(alert, animated: true, completion: nil)
         

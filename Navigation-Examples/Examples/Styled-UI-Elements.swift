@@ -19,9 +19,9 @@ class CustomStyleUIElements: UIViewController {
             }
             
             // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-            let locationManager = simulationIsEnabled ? SimulatedLocationManager(route: route) : nil
-            
-            let navigationController = NavigationViewController(for: route, styles: [CustomDayStyle(), CustomNightStyle()], locationManager: locationManager)
+            let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+
+            let navigationController = NavigationViewController(for: route, styles: [CustomDayStyle(), CustomNightStyle()], navigationService: navigationService)
             
             self.present(navigationController, animated: true, completion: nil)
         }
