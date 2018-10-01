@@ -51,9 +51,10 @@ class EmbeddedExampleViewController: UIViewController {
     
     func startEmbeddedNavigation() {
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let locationManager = simulationIsEnabled ? SimulatedLocationManager(route: route!) : nil
+        guard let route = route else { return }
+        let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
         
-        let nav = NavigationViewController(for: route!, locationManager: locationManager)
+        let nav = NavigationViewController(for: route, navigationService: navigationService)
         
         nav.delegate = self
         addChildViewController(nav)
