@@ -25,7 +25,7 @@ class CustomServerViewController: UIViewController {
             // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
             let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
             
-            let navigationController = NavigationViewController(for: route, navigationService: navigationService)
+            self.navigationViewController = NavigationViewController(for: route, navigationService: navigationService)
             self.navigationViewController?.delegate = self
             
             self.present(self.navigationViewController!, animated: true, completion: nil)
