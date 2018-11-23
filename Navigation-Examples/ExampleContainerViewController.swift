@@ -52,10 +52,10 @@ class ExampleContainerViewController: UITableViewController {
     }
     
     private func embed(controller: UIViewController, shouldPush: Bool) {
-        addChildViewController(controller)
+        addChild(controller)
         view.addSubview(controller.view)
 
-        controller.didMove(toParentViewController: self)
+        controller.didMove(toParent: self)
         if shouldPush {
             navigationController?.pushViewController(controller, animated: true)
         }

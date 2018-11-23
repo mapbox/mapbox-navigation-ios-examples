@@ -57,7 +57,7 @@ class EmbeddedExampleViewController: UIViewController {
         let nav = NavigationViewController(for: route, navigationService: navigationService)
         
         nav.delegate = self
-        addChildViewController(nav)
+        addChild(nav)
         container.addSubview(nav.view)
         nav.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -66,7 +66,7 @@ class EmbeddedExampleViewController: UIViewController {
             nav.view.topAnchor.constraint(equalTo: container.topAnchor, constant: 0),
             nav.view.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: 0)
             ])
-        self.didMove(toParentViewController: self)
+        self.didMove(toParent: self)
     }
 }
 
