@@ -76,8 +76,8 @@ class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationMa
         guard let route = currentRoute else { return }
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
         let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
-        
-        let navigationViewController = NavigationViewController(for: route, navigationService: navigationService)
+        let navigationOptions = NavigationOptions(navigationService: navigationService)
+        let navigationViewController = NavigationViewController(for: route, options: navigationOptions)
         navigationViewController.delegate = self
         
         present(navigationViewController, animated: true, completion: nil)
