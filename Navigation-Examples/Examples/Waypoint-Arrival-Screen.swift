@@ -23,11 +23,11 @@ class WaypointArrivalScreenViewController: UIViewController {
             
             // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
             let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+            let navigationOptions = NavigationOptions(navigationService: navigationService)
+            let navigationViewController = NavigationViewController(for: route, options: navigationOptions)
+            navigationViewController.delegate = self
             
-            let navigationController = NavigationViewController(for: route, navigationService: navigationService)
-            navigationController.delegate = self
-            
-            self.present(navigationController, animated: true, completion: nil)
+            self.present(navigationViewController, animated: true, completion: nil)
         }
     }
 }

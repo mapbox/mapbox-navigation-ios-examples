@@ -53,18 +53,18 @@ class EmbeddedExampleViewController: UIViewController {
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
         guard let route = route else { return }
         let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+        let navigationOptions = NavigationOptions(navigationService: navigationService)
+        let navigationViewController = NavigationViewController(for: route, options: navigationOptions)
         
-        let nav = NavigationViewController(for: route, navigationService: navigationService)
-        
-        nav.delegate = self
-        addChild(nav)
-        container.addSubview(nav.view)
-        nav.view.translatesAutoresizingMaskIntoConstraints = false
+        navigationViewController.delegate = self
+        addChild(navigationViewController)
+        container.addSubview(navigationViewController.view)
+        navigationViewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            nav.view.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 0),
-            nav.view.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: 0),
-            nav.view.topAnchor.constraint(equalTo: container.topAnchor, constant: 0),
-            nav.view.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: 0)
+            navigationViewController.view.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 0),
+            navigationViewController.view.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: 0),
+            navigationViewController.view.topAnchor.constraint(equalTo: container.topAnchor, constant: 0),
+            navigationViewController.view.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: 0)
             ])
         self.didMove(toParent: self)
     }

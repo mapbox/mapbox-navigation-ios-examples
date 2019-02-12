@@ -26,10 +26,10 @@ class CustomVoiceControllerUI: UIViewController {
             
             // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
             let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+            let navigationOptions = NavigationOptions(navigationService: navigationService, voiceController: self.voiceController)
+            let navigationViewController = NavigationViewController(for: route, options: navigationOptions)
             
-            let navigationController = NavigationViewController(for: route, navigationService: navigationService, voiceController: self.voiceController)
-            
-            self.present(navigationController, animated: true, completion: nil)
+            self.present(navigationViewController, animated: true, completion: nil)
         }
     }
     

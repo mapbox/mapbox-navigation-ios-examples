@@ -20,10 +20,10 @@ class CustomStyleUIElements: UIViewController {
             
             // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
             let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
-
-            let navigationController = NavigationViewController(for: route, styles: [CustomDayStyle(), CustomNightStyle()], navigationService: navigationService)
+            let navigationOptions = NavigationOptions(styles: [CustomDayStyle(), CustomNightStyle()], navigationService: navigationService)
+            let navigationViewController = NavigationViewController(for: route, options: navigationOptions)
             
-            self.present(navigationController, animated: true, completion: nil)
+            self.present(navigationViewController, animated: true, completion: nil)
         }
     }
 }
@@ -51,7 +51,6 @@ class CustomDayStyle: DayStyle {
         super.apply()
         ArrivalTimeLabel.appearance().textColor = lightGrayColor
         BottomBannerView.appearance().backgroundColor = secondaryBackgroundColor
-        BottomBannerContentView.appearance().backgroundColor = secondaryBackgroundColor
         Button.appearance().textColor = #colorLiteral(red: 0.9842069745, green: 0.9843751788, blue: 0.9841964841, alpha: 1)
         CancelButton.appearance().tintColor = lightGrayColor
         DistanceLabel.appearance(whenContainedInInstancesOf: [InstructionsBannerView.self]).unitTextColor = secondaryLabelColor
@@ -119,7 +118,6 @@ class CustomNightStyle: NightStyle {
         super.apply()
         DistanceRemainingLabel.appearance().normalTextColor = primaryTextColor
         BottomBannerView.appearance().backgroundColor = secondaryBackgroundColor
-        BottomBannerContentView.appearance().backgroundColor = secondaryBackgroundColor
         FloatingButton.appearance().backgroundColor = #colorLiteral(red: 0.1434620917, green: 0.1434366405, blue: 0.1819391251, alpha: 0.9037466989)
         TimeRemainingLabel.appearance().textColor = primaryTextColor
         TimeRemainingLabel.appearance().trafficLowColor = primaryTextColor

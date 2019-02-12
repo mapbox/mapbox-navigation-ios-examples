@@ -24,8 +24,8 @@ class CustomServerViewController: UIViewController {
             
             // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
             let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
-            
-            self.navigationViewController = NavigationViewController(for: route, navigationService: navigationService)
+            let navigationOptions = NavigationOptions(navigationService: navigationService)
+            self.navigationViewController = NavigationViewController(for: route, options: navigationOptions)
             self.navigationViewController?.delegate = self
             
             self.present(self.navigationViewController!, animated: true, completion: nil)
@@ -54,10 +54,12 @@ extension CustomServerViewController: NavigationViewControllerDelegate {
             //
             let matchOptions = NavigationMatchOptions(coordinates: routeCoordinates)
             
-            // This defines the waypoints on the route.
+            // By default, each waypoint separates two legs, so the user stops at each waypoint.
             // We want the user to navigate from the first coordinate to the last coordinate without any stops in between.
-            // You can specify more intermediate waypoints here if'd you like.
-            matchOptions.waypointIndices = IndexSet([0, routeCoordinates.count - 1])
+            // You can specify more intermediate waypoints here if you’d like.
+            for waypoint in matchOptions.waypoints.dropFirst().dropLast() {
+                waypoint.separatesLegs = false
+            }
             
             Directions.shared.calculateRoutes(matching: matchOptions) { (waypoints, routes, error) in
                 guard let route = routes?.first, error == nil else { return }

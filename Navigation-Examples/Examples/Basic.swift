@@ -20,10 +20,10 @@ class BasicViewController: UIViewController {
             
             // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
             let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+            let navigationOptions = NavigationOptions(navigationService: navigationService)
+            let navigationViewController = NavigationViewController(for: route, options: navigationOptions)
             
-            let navigationController = NavigationViewController(for: route, navigationService: navigationService)
-            
-            self.present(navigationController, animated: true, completion: nil)
+            self.present(navigationViewController, animated: true, completion: nil)
         }
     }
 }
