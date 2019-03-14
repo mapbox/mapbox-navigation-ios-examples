@@ -218,6 +218,8 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples-frameworks.sh",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/826E141E-8875-3C3B-A106-2B772F8A0684.bcsymbolmap",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/D2C1B547-E1DE-365D-A6EF-DB16EE1D4375.bcsymbolmap",
 				"${BUILT_PRODUCTS_DIR}/MapboxCoreNavigation/MapboxCoreNavigation.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxDirections.swift/MapboxDirections.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
@@ -233,6 +235,8 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
 				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
+				"${BUILT_PRODUCTS_DIR}/826E141E-8875-3C3B-A106-2B772F8A0684.bcsymbolmap",
+				"${BUILT_PRODUCTS_DIR}/D2C1B547-E1DE-365D-A6EF-DB16EE1D4375.bcsymbolmap",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreNavigation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxDirections.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",

@@ -12,7 +12,6 @@ class CustomVoiceControllerUI: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        voiceController = CustomVoiceController()
         
         let origin = CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648)
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
@@ -26,6 +25,7 @@ class CustomVoiceControllerUI: UIViewController {
             
             // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
             let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+            self.voiceController = CustomVoiceController(navigationService: navigationService)
             let navigationOptions = NavigationOptions(navigationService: navigationService, voiceController: self.voiceController)
             let navigationViewController = NavigationViewController(for: route, options: navigationOptions)
             
