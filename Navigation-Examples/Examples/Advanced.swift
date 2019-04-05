@@ -42,7 +42,7 @@ class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationMa
         mapView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mapView?.userTrackingMode = .follow
         mapView?.delegate = self
-        mapView?.navigationMapDelegate = self
+        mapView?.navigationMapViewDelegate = self
         
         let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         mapView?.addGestureRecognizer(gesture)
