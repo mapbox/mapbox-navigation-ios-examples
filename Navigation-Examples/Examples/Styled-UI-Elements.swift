@@ -62,7 +62,6 @@ class CustomDayStyle: DayStyle {
         FloatingButton.appearance().backgroundColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
         FloatingButton.appearance().tintColor = blueColor
         InstructionsBannerView.appearance().backgroundColor = backgroundColor
-        InstructionsBannerContentView.appearance().backgroundColor = backgroundColor
         LanesView.appearance().backgroundColor = darkBackgroundColor
         LaneView.appearance().primaryColor = #colorLiteral(red: 0.9842069745, green: 0.9843751788, blue: 0.9841964841, alpha: 1)
         ManeuverView.appearance().backgroundColor = backgroundColor
