@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  DocsCode
-//
-//  Created by Nadia Barbosa on 9/19/17.
-//  Copyright © 2017 Mapbox. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain
