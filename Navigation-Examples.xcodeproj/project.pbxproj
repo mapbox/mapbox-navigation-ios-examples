@@ -8,15 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		0E4DB43E555307E85D094271 /* Pods_Navigation_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */; };
-		8D6D36A720001F0400C2B61B /* EmbeddedExamples.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D6D36A620001F0400C2B61B /* EmbeddedExamples.storyboard */; };
 		8DF510741FEB08F70049DB9C /* Embedded-Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF510731FEB08F70049DB9C /* Embedded-Navigation.swift */; };
 		8DF510751FEB0CA00049DB9C /* MapboxNavigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DF510761FEB0CA00049DB9C /* MapboxNavigation.framework */; };
+		9613F58522E0306500D34E24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961FC4E822E0260A00C72877 /* Assets.xcassets */; };
+		9613F58822E030AC00D34E24 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9613F58622E030AC00D34E24 /* LaunchScreen.storyboard */; };
+		9613F58922E030AC00D34E24 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9613F58722E030AC00D34E24 /* Main.storyboard */; };
+		961FC51422E0268800C72877 /* NavigationTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961FC4EE22E0260A00C72877 /* NavigationTutorialViewController.swift */; };
+		961FC51522E0268800C72877 /* NavigationTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 961FC4EF22E0260A00C72877 /* NavigationTutorialViewController.m */; };
+		961FC51622E0268B00C72877 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961FC4F122E0260A00C72877 /* AppDelegate.swift */; };
+		9639244A22E02A520010FE73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C58FB85D1FE899B800C4B491 /* Main.storyboard */; };
+		9639244B22E02A820010FE73 /* EmbeddedExamples.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D6D36A620001F0400C2B61B /* EmbeddedExamples.storyboard */; };
+		B40ADDC9ABB7E7F6703997CA /* Pods_DocsCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B796D93B6E7934BFD326FA8 /* Pods_DocsCode.framework */; };
 		C52BAA782040D5030086EC6B /* Custom-Destination-Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */; };
 		C58FB85A1FE899B800C4B491 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8591FE899B800C4B491 /* AppDelegate.swift */; };
 		C58FB85C1FE899B800C4B491 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB85B1FE899B800C4B491 /* ViewController.swift */; };
-		C58FB85F1FE899B800C4B491 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C58FB85D1FE899B800C4B491 /* Main.storyboard */; };
 		C58FB8611FE899B800C4B491 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C58FB8601FE899B800C4B491 /* Assets.xcassets */; };
-		C58FB8641FE899B800C4B491 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C58FB8621FE899B800C4B491 /* LaunchScreen.storyboard */; };
 		C58FB86C1FE89CEC00C4B491 /* ExampleContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB86B1FE89CEC00C4B491 /* ExampleContainerViewController.swift */; };
 		C58FB86E1FE89D9500C4B491 /* ExampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB86D1FE89D9500C4B491 /* ExampleTableViewController.swift */; };
 		C58FB8711FE8A43000C4B491 /* Basic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8701FE8A43000C4B491 /* Basic.swift */; };
@@ -29,10 +35,25 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		01D167067A6027DCA4D44BF3 /* Pods-Navigation-Examples-DocsCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples-DocsCode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples-DocsCode/Pods-Navigation-Examples-DocsCode.debug.xcconfig"; sourceTree = "<group>"; };
 		020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E6EDEBB177F0E6643EC4DB9 /* Pods-Navigation-Examples-DocsCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples-DocsCode.release.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples-DocsCode/Pods-Navigation-Examples-DocsCode.release.xcconfig"; sourceTree = "<group>"; };
 		8D6D36A620001F0400C2B61B /* EmbeddedExamples.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EmbeddedExamples.storyboard; sourceTree = "<group>"; };
 		8DF510731FEB08F70049DB9C /* Embedded-Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Embedded-Navigation.swift"; sourceTree = "<group>"; };
 		8DF510761FEB0CA00049DB9C /* MapboxNavigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxNavigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9613F58622E030AC00D34E24 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9613F58722E030AC00D34E24 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		961FC4E722E0260A00C72877 /* DocsCode-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DocsCode-Bridging-Header.h"; sourceTree = "<group>"; };
+		961FC4E822E0260A00C72877 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		961FC4EE22E0260A00C72877 /* NavigationTutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTutorialViewController.swift; sourceTree = "<group>"; };
+		961FC4EF22E0260A00C72877 /* NavigationTutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationTutorialViewController.m; sourceTree = "<group>"; };
+		961FC4F022E0260A00C72877 /* NavigationTutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationTutorialViewController.h; sourceTree = "<group>"; };
+		961FC4F122E0260A00C72877 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		961FC4F222E0260A00C72877 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		961FC4FE22E0265300C72877 /* DocsCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocsCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A4F31D3A4350E716451A486 /* Pods-DocsCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocsCode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DocsCode/Pods-DocsCode.debug.xcconfig"; sourceTree = "<group>"; };
+		9B796D93B6E7934BFD326FA8 /* Pods_DocsCode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DocsCode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B33B5E4C0AD283368D51EEDA /* Pods-DocsCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocsCode.release.xcconfig"; path = "Pods/Target Support Files/Pods-DocsCode/Pods-DocsCode.release.xcconfig"; sourceTree = "<group>"; };
 		BFEC70FB9C884A4DDD80E7D9 /* Pods-Navigation-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples.release.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples.release.xcconfig"; sourceTree = "<group>"; };
 		C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Destination-Marker.swift"; sourceTree = "<group>"; };
 		C58FB8561FE899B800C4B491 /* Navigation-Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Navigation-Examples.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,6 +76,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		961FC4FB22E0265300C72877 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B40ADDC9ABB7E7F6703997CA /* Pods_DocsCode.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C58FB8531FE899B800C4B491 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,14 +101,43 @@
 			children = (
 				FE9EEF42C4F1DD67E96BC63A /* Pods-Navigation-Examples.debug.xcconfig */,
 				BFEC70FB9C884A4DDD80E7D9 /* Pods-Navigation-Examples.release.xcconfig */,
+				9A4F31D3A4350E716451A486 /* Pods-DocsCode.debug.xcconfig */,
+				B33B5E4C0AD283368D51EEDA /* Pods-DocsCode.release.xcconfig */,
+				01D167067A6027DCA4D44BF3 /* Pods-Navigation-Examples-DocsCode.debug.xcconfig */,
+				1E6EDEBB177F0E6643EC4DB9 /* Pods-Navigation-Examples-DocsCode.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		961FC4E622E0260A00C72877 /* DocsCode */ = {
+			isa = PBXGroup;
+			children = (
+				961FC4ED22E0260A00C72877 /* NavigationTutorial */,
+				961FC4F122E0260A00C72877 /* AppDelegate.swift */,
+				961FC4E822E0260A00C72877 /* Assets.xcassets */,
+				961FC4E722E0260A00C72877 /* DocsCode-Bridging-Header.h */,
+				961FC4F222E0260A00C72877 /* Info.plist */,
+				9613F58622E030AC00D34E24 /* LaunchScreen.storyboard */,
+				9613F58722E030AC00D34E24 /* Main.storyboard */,
+			);
+			path = DocsCode;
+			sourceTree = "<group>";
+		};
+		961FC4ED22E0260A00C72877 /* NavigationTutorial */ = {
+			isa = PBXGroup;
+			children = (
+				961FC4EE22E0260A00C72877 /* NavigationTutorialViewController.swift */,
+				961FC4EF22E0260A00C72877 /* NavigationTutorialViewController.m */,
+				961FC4F022E0260A00C72877 /* NavigationTutorialViewController.h */,
+			);
+			path = NavigationTutorial;
 			sourceTree = "<group>";
 		};
 		C58FB84D1FE899B800C4B491 = {
 			isa = PBXGroup;
 			children = (
 				C58FB8581FE899B800C4B491 /* Navigation-Examples */,
+				961FC4E622E0260A00C72877 /* DocsCode */,
 				C58FB8571FE899B800C4B491 /* Products */,
 				1DB15F41255AE89621E98535 /* Pods */,
 				DE25A5BE57093A8DAF382733 /* Frameworks */,
@@ -90,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				C58FB8561FE899B800C4B491 /* Navigation-Examples.app */,
+				961FC4FE22E0265300C72877 /* DocsCode.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,6 +191,7 @@
 			children = (
 				8DF510761FEB0CA00049DB9C /* MapboxNavigation.framework */,
 				020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */,
+				9B796D93B6E7934BFD326FA8 /* Pods_DocsCode.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -139,6 +199,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		961FC4FD22E0265300C72877 /* DocsCode */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 961FC51122E0265400C72877 /* Build configuration list for PBXNativeTarget "DocsCode" */;
+			buildPhases = (
+				42E7FBF777C5D4065585B7CA /* [CP] Check Pods Manifest.lock */,
+				961FC4FA22E0265300C72877 /* Sources */,
+				961FC4FB22E0265300C72877 /* Frameworks */,
+				961FC4FC22E0265300C72877 /* Resources */,
+				FA181ECD975B2CC291FDD3C8 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DocsCode;
+			productName = DocsCode;
+			productReference = 961FC4FE22E0265300C72877 /* DocsCode.app */;
+			productType = "com.apple.product-type.application";
+		};
 		C58FB8551FE899B800C4B491 /* Navigation-Examples */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C58FB8681FE899B800C4B491 /* Build configuration list for PBXNativeTarget "Navigation-Examples" */;
@@ -169,6 +248,10 @@
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = Mapbox;
 				TargetAttributes = {
+					961FC4FD22E0265300C72877 = {
+						CreatedOnToolsVersion = 10.2.1;
+						ProvisioningStyle = Automatic;
+					};
 					C58FB8551FE899B800C4B491 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1010;
@@ -190,19 +273,29 @@
 			projectRoot = "";
 			targets = (
 				C58FB8551FE899B800C4B491 /* Navigation-Examples */,
+				961FC4FD22E0265300C72877 /* DocsCode */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		961FC4FC22E0265300C72877 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9613F58922E030AC00D34E24 /* Main.storyboard in Resources */,
+				9613F58522E0306500D34E24 /* Assets.xcassets in Resources */,
+				9613F58822E030AC00D34E24 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C58FB8541FE899B800C4B491 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C58FB8641FE899B800C4B491 /* LaunchScreen.storyboard in Resources */,
 				C58FB8611FE899B800C4B491 /* Assets.xcassets in Resources */,
-				8D6D36A720001F0400C2B61B /* EmbeddedExamples.storyboard in Resources */,
-				C58FB85F1FE899B800C4B491 /* Main.storyboard in Resources */,
+				9639244A22E02A520010FE73 /* Main.storyboard in Resources */,
+				9639244B22E02A820010FE73 /* EmbeddedExamples.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +346,28 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		42E7FBF777C5D4065585B7CA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DocsCode-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		AE8741EB2B6B63DBE64F3268 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -286,9 +401,63 @@
 			shellPath = /bin/sh;
 			shellScript = "# This Run Script build phase helps to keep the navigation SDK’s developers from exposing their own access tokens during development. See <https://www.mapbox.com/help/ios-private-access-token/> for more information. If you are developing an application privately, you may add the MGLMapboxAccessToken key directly to your Info.plist file and delete this build phase.\n\ntoken_file=~/.mapbox\ntoken_file2=~/mapbox\ntoken=\"$(cat $token_file 2>/dev/null || cat $token_file2 2>/dev/null)\"\nif [ \"$token\" ]; then\n  plutil -replace MGLMapboxAccessToken -string $token \"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nelse\n  echo 'warning: Missing Mapbox access token'\n  open 'https://www.mapbox.com/account/access-tokens/'\n  echo \"warning: Get an access token from <https://www.mapbox.com/account/access-tokens/>, then create a new file at $token_file or $token_file2 that contains the access token.\"\nfi\n";
 		};
+		FA181ECD975B2CC291FDD3C8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DocsCode/Pods-DocsCode-frameworks.sh",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/E3F066DB-FB3F-3DB3-ADCA-FD22D28B3593.bcsymbolmap",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/314B394E-4B8A-3249-ACB5-C8B038156249.bcsymbolmap",
+				"${BUILT_PRODUCTS_DIR}/MapboxCoreNavigation/MapboxCoreNavigation.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxDirections.swift/MapboxDirections.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxNavigation/MapboxNavigation.framework",
+				"${PODS_ROOT}/MapboxNavigationNative/MapboxNavigationNative.framework",
+				"${PODS_ROOT}/MapboxNavigationNative/MapboxNavigationNative.framework.dSYM",
+				"${BUILT_PRODUCTS_DIR}/MapboxSpeech/MapboxSpeech.framework",
+				"${BUILT_PRODUCTS_DIR}/Polyline/Polyline.framework",
+				"${BUILT_PRODUCTS_DIR}/Solar/Solar.framework",
+				"${BUILT_PRODUCTS_DIR}/Turf/Turf.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
+				"${BUILT_PRODUCTS_DIR}/E3F066DB-FB3F-3DB3-ADCA-FD22D28B3593.bcsymbolmap",
+				"${BUILT_PRODUCTS_DIR}/314B394E-4B8A-3249-ACB5-C8B038156249.bcsymbolmap",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreNavigation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxDirections.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigationNative.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/MapboxNavigationNative.framework.dSYM",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxSpeech.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Polyline.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Solar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Turf.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DocsCode/Pods-DocsCode-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		961FC4FA22E0265300C72877 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				961FC51622E0268B00C72877 /* AppDelegate.swift in Sources */,
+				961FC51422E0268800C72877 /* NavigationTutorialViewController.swift in Sources */,
+				961FC51522E0268800C72877 /* NavigationTutorialViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C58FB8521FE899B800C4B491 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -331,6 +500,43 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		961FC51222E0265400C72877 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A4F31D3A4350E716451A486 /* Pods-DocsCode.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GJZR2MEM28;
+				INFOPLIST_FILE = DocsCode/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.nav.DocsCode;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		961FC51322E0265400C72877 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B33B5E4C0AD283368D51EEDA /* Pods-DocsCode.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GJZR2MEM28;
+				INFOPLIST_FILE = DocsCode/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.nav.DocsCode;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		C58FB8661FE899B800C4B491 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -477,6 +683,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		961FC51122E0265400C72877 /* Build configuration list for PBXNativeTarget "DocsCode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				961FC51222E0265400C72877 /* Debug */,
+				961FC51322E0265400C72877 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C58FB8511FE899B800C4B491 /* Build configuration list for PBXProject "Navigation-Examples" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
