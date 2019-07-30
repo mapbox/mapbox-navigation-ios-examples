@@ -72,5 +72,12 @@ let listOfExamples: [NamedController] = [
         controller: CustomServerViewController.self,
         storyboard: nil,
         pushExampleToViewController: false
+    ),
+    (
+        name: "Offline Navigation",
+        description: "Demonstrates how to download map tiles and route tiles for offline use.",
+        controller: OfflineNavigationViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
     )
 ]
