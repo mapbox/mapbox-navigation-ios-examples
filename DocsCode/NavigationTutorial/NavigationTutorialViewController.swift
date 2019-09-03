@@ -111,6 +111,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     // Present the navigation view controller when the callout is selected
     func mapView(_ mapView: MGLMapView, tapOnCalloutFor annotation: MGLAnnotation) {
         let navigationViewController = NavigationViewController(for: directionsRoute!)
+        navigationViewController.modalPresentationStyle = .fullScreen
         self.present(navigationViewController, animated: true, completion: nil)
     }
     // #-end-code-snippet: navigation callout-functions-swift

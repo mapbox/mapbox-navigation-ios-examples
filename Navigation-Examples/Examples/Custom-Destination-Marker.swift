@@ -22,6 +22,7 @@ class CustomDestinationMarkerController: UIViewController {
             let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
             let navigationOptions = NavigationOptions(navigationService: navigationService)
             let navigationViewController = NavigationViewController(for: route, options: navigationOptions)
+            navigationViewController.modalPresentationStyle = .fullScreen
             navigationViewController.mapView?.delegate = self
             
             self.present(navigationViewController, animated: true, completion: nil)
