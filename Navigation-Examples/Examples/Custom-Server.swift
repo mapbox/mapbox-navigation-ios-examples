@@ -26,6 +26,7 @@ class CustomServerViewController: UIViewController {
             let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
             let navigationOptions = NavigationOptions(navigationService: navigationService)
             self.navigationViewController = NavigationViewController(for: route, options: navigationOptions)
+            self.navigationViewController?.modalPresentationStyle = .fullScreen
             self.navigationViewController?.delegate = self
             
             self.present(self.navigationViewController!, animated: true, completion: nil)

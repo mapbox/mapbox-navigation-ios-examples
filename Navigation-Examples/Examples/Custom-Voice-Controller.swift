@@ -28,6 +28,7 @@ class CustomVoiceControllerUI: UIViewController {
             self.voiceController = CustomVoiceController(navigationService: navigationService)
             let navigationOptions = NavigationOptions(navigationService: navigationService, voiceController: self.voiceController)
             let navigationViewController = NavigationViewController(for: route, options: navigationOptions)
+            navigationViewController.modalPresentationStyle = .fullScreen
             
             self.present(navigationViewController, animated: true, completion: nil)
         }
