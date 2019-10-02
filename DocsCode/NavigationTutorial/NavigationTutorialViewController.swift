@@ -24,7 +24,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
 
         // Allow the map to display the user's location
         mapView.showsUserLocation = true
-        mapView.setUserTrackingMode(.follow, animated: true)
+        mapView.setUserTrackingMode(.follow, animated: true, completionHandler: nil)
 
         // Add a gesture recognizer to the map view
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))

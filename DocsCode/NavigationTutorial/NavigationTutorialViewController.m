@@ -30,7 +30,7 @@
     
     // Allow the map view to display the user's location
     self.mapView.showsUserLocation = YES;
-    [self.mapView setUserTrackingMode:MGLUserTrackingModeFollow animated:YES];
+    [self.mapView setUserTrackingMode:MGLUserTrackingModeFollow animated:YES completionHandler:nil];
     
     // Add a gesture recognizer to the map view
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didLongPress:)];
