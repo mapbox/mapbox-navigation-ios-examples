@@ -15,22 +15,26 @@ class CustomVoiceControllerUI: UIViewController {
         
         let origin = CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648)
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
-        let options = NavigationRouteOptions(coordinates: [origin, destination])
+        let routeOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        Directions.shared.calculate(options) { (waypoints, routes, error) in
-            guard let route = routes?.first, error == nil else {
-                print(error!.localizedDescription)
-                return
+        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let response):
+                guard let route = response.routes?.first, let strongSelf = self else {
+                    return
+                }
+                
+                // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
+                let navigationService = MapboxNavigationService(route: route, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+                strongSelf.voiceController = CustomVoiceController(navigationService: navigationService)
+                let navigationOptions = NavigationOptions(navigationService: navigationService, voiceController: strongSelf.voiceController)
+                let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions, navigationOptions: navigationOptions)
+                navigationViewController.modalPresentationStyle = .fullScreen
+                
+                strongSelf.present(navigationViewController, animated: true, completion: nil)
             }
-            
-            // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-            let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
-            self.voiceController = CustomVoiceController(navigationService: navigationService)
-            let navigationOptions = NavigationOptions(navigationService: navigationService, voiceController: self.voiceController)
-            let navigationViewController = NavigationViewController(for: route, options: navigationOptions)
-            navigationViewController.modalPresentationStyle = .fullScreen
-            
-            self.present(navigationViewController, animated: true, completion: nil)
         }
     }
     
@@ -49,9 +53,10 @@ class CustomVoiceController: MapboxVoiceController {
     let straight = NSDataAsset(name: "continuestraight")!.data
     
     override func didPassSpokenInstructionPoint(notification: NSNotification) {
-        let routeProgress = notification.userInfo![RouteControllerNotificationUserInfoKey.routeProgressKey] as! RouteProgress
+        let routeProgress = notification.userInfo![RouteController.NotificationUserInfoKey.routeProgressKey] as! RouteProgress
         let soundForInstruction = audio(for: routeProgress.currentLegProgress.currentStep)
-        play(soundForInstruction)
+        let instruction = notification.userInfo![RouteController.NotificationUserInfoKey.spokenInstructionKey] as! SpokenInstruction
+        play(instruction: instruction, data: soundForInstruction)
     }
     
     func audio(for step: RouteStep) -> Data {

@@ -8,6 +8,7 @@ import Mapbox
 class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDelegate, NavigationMapViewDelegate, NavigationViewControllerDelegate {
     
     var mapView: NavigationMapView?
+    var routeOptions: NavigationRouteOptions?
     var currentRoute: Route? {
         get {
             return routes?.first
@@ -21,8 +22,8 @@ class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationMa
     var routes: [Route]? {
         didSet {
             guard let routes = routes, let current = routes.first else { mapView?.removeRoutes(); return }
-            mapView?.showRoutes(routes)
-            mapView?.showWaypoints(current)
+            mapView?.show(routes)
+            mapView?.showWaypoints(on: current)
         }
     }
     var startButton: UIButton?
@@ -73,11 +74,11 @@ class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationMa
 
     
     @objc func tappedButton(sender: UIButton) {
-        guard let route = currentRoute else { return }
+        guard let route = currentRoute, let routeOptions = routeOptions else { return }
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+        let navigationService = MapboxNavigationService(route: route, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route, options: navigationOptions)
+        let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions, navigationOptions: navigationOptions)
         navigationViewController.delegate = self
         
         present(navigationViewController, animated: true, completion: nil)
@@ -97,14 +98,22 @@ class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationMa
         let userWaypoint = Waypoint(location: userLocation, heading: mapView?.userLocation?.heading, name: "user")
         let destinationWaypoint = Waypoint(coordinate: destination)
         
-        let options = NavigationRouteOptions(waypoints: [userWaypoint, destinationWaypoint])
+        let routeOptions = NavigationRouteOptions(waypoints: [userWaypoint, destinationWaypoint])
         
-        Directions.shared.calculate(options) { (waypoints, routes, error) in
-            guard let routes = routes else { return }
-            self.routes = routes
-            self.startButton?.isHidden = false
-            self.mapView?.showRoutes(routes)
-            self.mapView?.showWaypoints(self.currentRoute!)
+        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let response):
+                guard let routes = response.routes, let strongSelf = self else {
+                    return
+                }
+                strongSelf.routeOptions = routeOptions
+                strongSelf.routes = routes
+                strongSelf.startButton?.isHidden = false
+                strongSelf.mapView?.show(routes)
+                strongSelf.mapView?.showWaypoints(on: strongSelf.currentRoute!)
+            }
         }
     }
     

@@ -10,7 +10,7 @@ class EmbeddedExampleViewController: UIViewController {
     @IBOutlet weak var container: UIView!
     var route: Route?
 
-    lazy var options: NavigationRouteOptions = {
+    lazy var routeOptions: NavigationRouteOptions = {
         let origin = CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648)
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
         return NavigationRouteOptions(coordinates: [origin, destination])
@@ -30,13 +30,18 @@ class EmbeddedExampleViewController: UIViewController {
 
     
     func calculateDirections() {
-        Directions.shared.calculate(options) { (waypoints, routes, error) in
-            guard let route = routes?.first, error == nil else {
-                print(error!.localizedDescription)
-                return
+        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let response):
+                guard let route = response.routes?.first, let strongSelf = self else {
+                    return
+                }
+                
+                strongSelf.route = route
+                strongSelf.startEmbeddedNavigation()
             }
-            self.route = route
-            self.startEmbeddedNavigation()
         }
     }
     @objc func flashReroutedLabel(_ sender: Any) {
@@ -52,9 +57,9 @@ class EmbeddedExampleViewController: UIViewController {
     func startEmbeddedNavigation() {
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
         guard let route = route else { return }
-        let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+        let navigationService = MapboxNavigationService(route: route, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route, options: navigationOptions)
+        let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions, navigationOptions: navigationOptions)
         
         navigationViewController.delegate = self
         addChild(navigationViewController)

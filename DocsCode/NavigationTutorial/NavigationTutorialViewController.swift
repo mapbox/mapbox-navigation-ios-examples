@@ -8,7 +8,8 @@ import MapboxDirections
 class ViewController: UIViewController, MGLMapViewDelegate {
     // #-code-snippet: navigation vc-variables-swift
     var mapView: NavigationMapView!
-    var directionsRoute: Route?
+    var routeOptions: NavigationRouteOptions?
+    var route: Route?
     // #-end-code-snippet: navigation vc-variables-swift
 
     // #-code-snippet: navigation view-did-load-swift
@@ -66,23 +67,27 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         let destination = Waypoint(coordinate: destination, coordinateAccuracy: -1, name: "Finish")
 
         // Specify that the route is intended for automobiles avoiding traffic
-        let options = NavigationRouteOptions(waypoints: [origin, destination], profileIdentifier: .automobileAvoidingTraffic)
+        let routeOptions = NavigationRouteOptions(waypoints: [origin, destination], profileIdentifier: .automobileAvoidingTraffic)
 
         // Generate the route object and draw it on the map
-        _ = Directions.shared.calculate(options) { [unowned self] (waypoints, routes, error) in
-            self.directionsRoute = routes?.first
+        _ = Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+            guard case let .success(response) = result, let route = response.routes?.first, let strongSelf = self else {
+                return
+            }
+            strongSelf.route = route
+            strongSelf.routeOptions = routeOptions
             // Draw the route on the map after creating it
-            self.drawRoute(route: self.directionsRoute!)
+            strongSelf.drawRoute(route: route)
         }
     }
     // #-end-code-snippet: navigation calculate-route-swift
 
     // #-code-snippet: navigation draw-route-swift
     func drawRoute(route: Route) {
-        guard route.coordinateCount > 0 else { return }
+        guard let routeShape = route.shape, routeShape.coordinates.count > 0 else { return }
         // Convert the route’s coordinates into a polyline
-        var routeCoordinates = route.coordinates!
-        let polyline = MGLPolylineFeature(coordinates: &routeCoordinates, count: route.coordinateCount)
+        var routeCoordinates = routeShape.coordinates
+        let polyline = MGLPolylineFeature(coordinates: &routeCoordinates, count: UInt(routeCoordinates.count))
 
         // If there's already a route line on the map, reset its shape to the new route
         if let source = mapView.style?.source(withIdentifier: "route-source") as? MGLShapeSource {
@@ -110,7 +115,10 @@ class ViewController: UIViewController, MGLMapViewDelegate {
 
     // Present the navigation view controller when the callout is selected
     func mapView(_ mapView: MGLMapView, tapOnCalloutFor annotation: MGLAnnotation) {
-        let navigationViewController = NavigationViewController(for: directionsRoute!)
+        guard let route = route, let routeOptions = routeOptions else {
+            return
+        }
+        let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions)
         navigationViewController.modalPresentationStyle = .fullScreen
         self.present(navigationViewController, animated: true, completion: nil)
     }
