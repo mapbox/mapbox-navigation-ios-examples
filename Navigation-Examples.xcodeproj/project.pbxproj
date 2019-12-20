@@ -17,7 +17,6 @@
 		9613F58822E030AC00D34E24 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9613F58622E030AC00D34E24 /* LaunchScreen.storyboard */; };
 		9613F58922E030AC00D34E24 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9613F58722E030AC00D34E24 /* Main.storyboard */; };
 		961FC51422E0268800C72877 /* NavigationTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961FC4EE22E0260A00C72877 /* NavigationTutorialViewController.swift */; };
-		961FC51522E0268800C72877 /* NavigationTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 961FC4EF22E0260A00C72877 /* NavigationTutorialViewController.m */; };
 		961FC51622E0268B00C72877 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961FC4F122E0260A00C72877 /* AppDelegate.swift */; };
 		9639244A22E02A520010FE73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C58FB85D1FE899B800C4B491 /* Main.storyboard */; };
 		9639244B22E02A820010FE73 /* EmbeddedExamples.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D6D36A620001F0400C2B61B /* EmbeddedExamples.storyboard */; };
@@ -52,8 +51,6 @@
 		961FC4E722E0260A00C72877 /* DocsCode-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DocsCode-Bridging-Header.h"; sourceTree = "<group>"; };
 		961FC4E822E0260A00C72877 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		961FC4EE22E0260A00C72877 /* NavigationTutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTutorialViewController.swift; sourceTree = "<group>"; };
-		961FC4EF22E0260A00C72877 /* NavigationTutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationTutorialViewController.m; sourceTree = "<group>"; };
-		961FC4F022E0260A00C72877 /* NavigationTutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationTutorialViewController.h; sourceTree = "<group>"; };
 		961FC4F122E0260A00C72877 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		961FC4F222E0260A00C72877 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		961FC4FE22E0265300C72877 /* DocsCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocsCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,8 +140,6 @@
 			isa = PBXGroup;
 			children = (
 				961FC4EE22E0260A00C72877 /* NavigationTutorialViewController.swift */,
-				961FC4EF22E0260A00C72877 /* NavigationTutorialViewController.m */,
-				961FC4F022E0260A00C72877 /* NavigationTutorialViewController.h */,
 			);
 			path = NavigationTutorial;
 			sourceTree = "<group>";
@@ -473,7 +468,6 @@
 			files = (
 				961FC51622E0268B00C72877 /* AppDelegate.swift in Sources */,
 				961FC51422E0268800C72877 /* NavigationTutorialViewController.swift in Sources */,
-				961FC51522E0268800C72877 /* NavigationTutorialViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
