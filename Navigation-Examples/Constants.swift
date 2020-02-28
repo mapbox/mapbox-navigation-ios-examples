@@ -72,5 +72,12 @@ let listOfExamples: [NamedController] = [
         controller: CustomServerViewController.self,
         storyboard: nil,
         pushExampleToViewController: false
+    ),
+    (
+        name: "Custom Top & Bottom Bars",
+        description: "Use a custom UI for top and bottom bars during navigation.",
+        controller: CustomBarsViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: false
     )
 ]
