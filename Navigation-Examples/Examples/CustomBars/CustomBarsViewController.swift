@@ -27,12 +27,10 @@ class CustomBarsViewController: UIViewController {
             let bottomBanner = CustomBottomBarViewController()
             let navigationOptions = NavigationOptions(navigationService: navigationService,
                                                       topBanner: CustomTopBarViewController(),
-                                                      bottomBanner:  bottomBanner
-            )
-            let navigationViewController = NavigationViewController(for: route, options: navigationOptions)
-            
+                                                      bottomBanner:  bottomBanner)
+            let navigationViewController = NavigationViewController(for: route,
+                                                                    options: navigationOptions)
             bottomBanner.navigationViewController = navigationViewController
-            navigationOptions.bottomBanner = bottomBanner
             
             navigationViewController.modalPresentationStyle = .fullScreen
             
@@ -41,11 +39,15 @@ class CustomBarsViewController: UIViewController {
     }
 }
 
-class CustomTopBarViewController: ContainerViewController {
-    let totallyLegitDesignerProvidedOffset: CGFloat = 42
+// MARK: - CustomTopBarViewController
 
-    lazy var instructionsBannerOffsetConstraint = {
+class CustomTopBarViewController: ContainerViewController {
+    private lazy var instructionsBannerTopOffsetConstraint = {
         return instructionsBannerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
+    }()
+    private lazy var centerOffset: CGFloat = calculateCenterOffset(with: view.bounds.size)
+    private lazy var instructionsBannerCenterOffsetConstraint = {
+        return instructionsBannerView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0)
     }()
     
     // You can Include one of the existing Views to display route-specific info
@@ -62,17 +64,38 @@ class CustomTopBarViewController: ContainerViewController {
         view.addSubview(instructionsBannerView)
         
         setupConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         updateConstraints()
     }
     
     private func setupConstraints() {
-        instructionsBannerView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
-        instructionsBannerOffsetConstraint.isActive = true
+        instructionsBannerCenterOffsetConstraint.isActive = true
+        instructionsBannerTopOffsetConstraint.isActive = true
     }
     
     private func updateConstraints() {
-        
-        instructionsBannerOffsetConstraint.constant = (traitCollection.verticalSizeClass == .compact ? 10 : 44)
+        instructionsBannerCenterOffsetConstraint.constant = centerOffset
+        instructionsBannerTopOffsetConstraint.constant = (traitCollection.verticalSizeClass == .compact ? 10 : 44)
+    }
+    
+    // MARK: - Device rotation
+    
+    private func calculateCenterOffset(with size: CGSize) -> CGFloat {
+        return (size.height < size.width ? -size.width / 4 : 0)
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        centerOffset = calculateCenterOffset(with: size)
+    }
+    
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateConstraints()
     }
     
     // MARK: - NavigationServiceDelegate implementation
@@ -89,12 +112,9 @@ class CustomTopBarViewController: ContainerViewController {
     public func navigationService(_ service: NavigationService, didRerouteAlong route: Route, at location: CLLocation?, proactive: Bool) {
         instructionsBannerView.updateDistance(for: service.routeProgress.currentLegProgress.currentStepProgress)
     }
-    
-    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        updateConstraints()
-    }
 }
+
+// MARK: - CustomBottomBarViewController
 
 class CustomBottomBarViewController: ContainerViewController, CustomBottomBannerViewDelegate {
     

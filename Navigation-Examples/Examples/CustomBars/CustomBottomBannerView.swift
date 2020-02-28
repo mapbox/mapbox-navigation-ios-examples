@@ -29,9 +29,9 @@ class CustomBottomBannerView: UIView {
         }
     }
     
-    var eta: String {
+    var eta: String? {
         get {
-            return etaLabel.text ?? ""
+            return etaLabel.text
         }
         set {
             etaLabel.text = newValue
