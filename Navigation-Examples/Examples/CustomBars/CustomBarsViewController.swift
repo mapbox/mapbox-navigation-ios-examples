@@ -44,6 +44,10 @@ class CustomBarsViewController: UIViewController {
 class CustomTopBarViewController: ContainerViewController {
     let totallyLegitDesignerProvidedOffset: CGFloat = 42
 
+    lazy var instructionsBannerOffsetConstraint = {
+        return instructionsBannerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
+    }()
+    
     // You can Include one of the existing Views to display route-specific info
     lazy var instructionsBannerView: InstructionsBannerView = {
         let banner = InstructionsBannerView()
@@ -58,11 +62,17 @@ class CustomTopBarViewController: ContainerViewController {
         view.addSubview(instructionsBannerView)
         
         setupConstraints()
+        updateConstraints()
     }
     
     private func setupConstraints() {
         instructionsBannerView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
-        instructionsBannerView.topAnchor.constraint(equalTo: view.topAnchor, constant: totallyLegitDesignerProvidedOffset - view.safeAreaInsets.top).isActive = true
+        instructionsBannerOffsetConstraint.isActive = true
+    }
+    
+    private func updateConstraints() {
+        
+        instructionsBannerOffsetConstraint.constant = (traitCollection.verticalSizeClass == .compact ? 10 : 44)
     }
     
     // MARK: - NavigationServiceDelegate implementation
@@ -80,6 +90,10 @@ class CustomTopBarViewController: ContainerViewController {
         instructionsBannerView.updateDistance(for: service.routeProgress.currentLegProgress.currentStepProgress)
     }
     
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateConstraints()
+    }
 }
 
 class CustomBottomBarViewController: ContainerViewController, CustomBottomBannerViewDelegate {
