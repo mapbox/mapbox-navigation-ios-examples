@@ -18,7 +18,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="53"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="61"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UnZ-uM-cz4">
@@ -53,6 +53,7 @@
                 <constraint firstItem="C9n-of-NKz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="2U6-ap-wKQ"/>
                 <constraint firstItem="C9n-of-NKz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="Eb1-y2-oVw"/>
                 <constraint firstAttribute="trailing" secondItem="UnZ-uM-cz4" secondAttribute="trailing" constant="8" id="GwD-xf-Dmy"/>
+                <constraint firstAttribute="bottom" secondItem="UnZ-uM-cz4" secondAttribute="bottom" constant="8" id="aqS-RQ-DOV"/>
                 <constraint firstItem="IGF-K7-nHE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="di3-uR-0Xq"/>
                 <constraint firstItem="UnZ-uM-cz4" firstAttribute="top" secondItem="C9n-of-NKz" secondAttribute="bottom" constant="8" id="qGV-Qj-d89"/>
                 <constraint firstItem="UnZ-uM-cz4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="s32-aP-oQC"/>

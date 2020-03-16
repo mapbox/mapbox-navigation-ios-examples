@@ -128,17 +128,29 @@ class CustomBottomBarViewController: ContainerViewController, CustomBottomBanner
         return banner
     }()
     
-    override func viewDidLoad() {
+    override func loadView() {
+        super.loadView()
+        
         view.addSubview(bannerView)
+        
+        let safeArea = view.layoutMarginsGuide
+        NSLayoutConstraint.activate([
+            bannerView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            bannerView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            bannerView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            bannerView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
+        ])
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupConstraints()
     }
     
     private func setupConstraints() {
-        view.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        bannerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        bannerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        bannerView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 0).isActive = true
-        bannerView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 0).isActive = true
+        if let superview = view.superview?.superview {
+            view.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        }
     }
     
     // MARK: - NavigationServiceDelegate implementation
