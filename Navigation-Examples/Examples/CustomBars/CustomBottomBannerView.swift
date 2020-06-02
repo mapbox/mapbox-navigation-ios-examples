@@ -1,11 +1,3 @@
-//
-//  CustomBottomBannerView.swift
-//  Navigation-Examples
-//
-//  Created by Viktor Kononov on 2/28/20.
-//  Copyright © 2020 Mapbox. All rights reserved.
-//
-
 import UIKit
 import MapboxNavigation
 
