@@ -1,5 +1,7 @@
 # Mapbox Navigation SDK Examples
 
+[![CircleCI](https://circleci.com/gh/mapbox/navigation-ios-examples.svg?style=svg)](https://circleci.com/gh/mapbox/navigation-ios-examples)
+
 A collection of examples showing off the [Mapbox Navigation SDK](https://github.com/mapbox/mapbox-navigation-ios).
 
 ![](https://user-images.githubusercontent.com/1058624/34502971-fac695b4-efca-11e7-9eb1-426f38bd89bf.gif)
