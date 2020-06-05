@@ -407,6 +407,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 			);
 			name = "Apply Mapbox Access Token";
 			outputFileListPaths = (
@@ -441,6 +442,7 @@
 			files = (
 			);
 			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 			);
 			name = "Apply Mapbox Access Token";
 			outputPaths = (
