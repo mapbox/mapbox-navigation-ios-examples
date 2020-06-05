@@ -43,6 +43,7 @@
 		2B521D4D24090A3A00984CF8 /* CustomBarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarsViewController.swift; sourceTree = "<group>"; };
 		2B521D4F2409240E00984CF8 /* CustomBottomBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomBannerView.swift; sourceTree = "<group>"; };
 		2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomBottomBannerView.xib; sourceTree = "<group>"; };
+		8AD2F2132489B5C800F81353 /* apply-mapbox-access-token.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "apply-mapbox-access-token.sh"; sourceTree = "<group>"; };
 		8D6D36A620001F0400C2B61B /* EmbeddedExamples.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EmbeddedExamples.storyboard; sourceTree = "<group>"; };
 		8DF510731FEB08F70049DB9C /* Embedded-Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Embedded-Navigation.swift"; sourceTree = "<group>"; };
 		8DF510761FEB0CA00049DB9C /* MapboxNavigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxNavigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,6 +123,14 @@
 			path = CustomBars;
 			sourceTree = "<group>";
 		};
+		8A5BBF6A2489B0A000FA4960 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				8AD2F2132489B5C800F81353 /* apply-mapbox-access-token.sh */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
 		961FC4E622E0260A00C72877 /* DocsCode */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +158,7 @@
 			children = (
 				C58FB8581FE899B800C4B491 /* Navigation-Examples */,
 				961FC4E622E0260A00C72877 /* DocsCode */,
+				8A5BBF6A2489B0A000FA4960 /* Scripts */,
 				C58FB8571FE899B800C4B491 /* Products */,
 				1DB15F41255AE89621E98535 /* Pods */,
 				DE25A5BE57093A8DAF382733 /* Frameworks */,
@@ -220,6 +230,7 @@
 				961FC4FB22E0265300C72877 /* Frameworks */,
 				961FC4FC22E0265300C72877 /* Resources */,
 				FA181ECD975B2CC291FDD3C8 /* [CP] Embed Pods Frameworks */,
+				8AAD08F22486DA4700664446 /* Apply Mapbox Access Token */,
 			);
 			buildRules = (
 			);
@@ -388,6 +399,25 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		8AAD08F22486DA4700664446 /* Apply Mapbox Access Token */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Apply Mapbox Access Token";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$SRCROOT/Scripts/apply-mapbox-access-token.sh\n";
+		};
 		AE8741EB2B6B63DBE64F3268 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -419,7 +449,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# This Run Script build phase helps to keep the navigation SDK’s developers from exposing their own access tokens during development. See <https://www.mapbox.com/help/ios-private-access-token/> for more information. If you are developing an application privately, you may add the MGLMapboxAccessToken key directly to your Info.plist file and delete this build phase.\n\ntoken_file=~/.mapbox\ntoken_file2=~/mapbox\ntoken=\"$(cat $token_file 2>/dev/null || cat $token_file2 2>/dev/null)\"\nif [ \"$token\" ]; then\n  plutil -replace MGLMapboxAccessToken -string $token \"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nelse\n  echo 'warning: Missing Mapbox access token'\n  open 'https://www.mapbox.com/account/access-tokens/'\n  echo \"warning: Get an access token from <https://www.mapbox.com/account/access-tokens/>, then create a new file at $token_file or $token_file2 that contains the access token.\"\nfi\n";
+			shellScript = "$SRCROOT/Scripts/apply-mapbox-access-token.sh\n";
 		};
 		FA181ECD975B2CC291FDD3C8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
