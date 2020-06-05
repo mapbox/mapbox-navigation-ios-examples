@@ -1,0 +1,36 @@
+version: 2.1
+
+jobs:
+  build-job:
+    parameters:
+      xcode:
+        type: string
+        default: "11.4"
+      device:
+        type: string
+        default: "iPhone 8 Plus"
+      ios:
+        type: string
+        default: "13.4"
+    macos:
+      xcode: << parameters.xcode >>
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: pod install
+      - run:
+          name: Navigation-Examples
+          command: xcodebuild -workspace Navigation-Examples.xcworkspace -scheme Navigation-Examples -sdk iphonesimulator -configuration Release -destination "platform=iOS Simulator,name=<< parameters.device >>,OS=<< parameters.ios >>" clean build
+      - run:
+          name: DocsCode
+          command: xcodebuild -workspace Navigation-Examples.xcworkspace -scheme DocsCode -sdk iphonesimulator -configuration Release -destination "platform=iOS Simulator,name=<< parameters.device >>,OS=<< parameters.ios >>" clean build
+
+workflows:
+  workflow:
+    jobs:
+      - build-job:
+          name: "Xcode_11.5_iOS_13.5"
+          xcode: "11.5.0"
+          ios: "13.5"
+          device: "iPhone 11 Pro"
