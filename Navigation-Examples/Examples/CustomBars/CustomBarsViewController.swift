@@ -10,31 +10,33 @@ class CustomBarsViewController: UIViewController {
         
         let origin = CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648)
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
-        let options = NavigationRouteOptions(coordinates: [origin, destination])
+        let routeOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        Directions.shared.calculate(options) { (waypoints, routes, error) in
-            guard let route = routes?.first, error == nil else {
-                print(error!.localizedDescription)
-                return
+        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let response):
+                guard let route = response.routes?.first, let strongSelf = self else {
+                    return
+                }
+                
+                // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
+                let navigationService = MapboxNavigationService(route: route, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+                
+                // Pass your custom implementations of `topBanner` and/or `bottomBanner` to `NavigationOptions`
+                // If you do not specify them explicitly, `TopBannerViewController` and `BottomBannerViewController` will be used by default.
+                // Those are `Open`, so you can also check thier source for more examples of using standard UI controls!
+                let topBanner = CustomTopBarViewController()
+                let bottomBanner = CustomBottomBarViewController()
+                let navigationOptions = NavigationOptions(navigationService: navigationService, topBanner: topBanner, bottomBanner: bottomBanner)
+                let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions, navigationOptions: navigationOptions)
+                bottomBanner.navigationViewController = navigationViewController
+                
+                navigationViewController.modalPresentationStyle = .fullScreen
+                
+                strongSelf.present(navigationViewController, animated: true, completion: nil)
             }
-            
-            // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-            let navigationService = MapboxNavigationService(route: route, simulating: simulationIsEnabled ? .always : .onPoorGPS)
-            
-            // Pass your custom implementations of `topBanner` and/or `bottomBanner` to `NavigationOptions`
-            // If you do not specify them explicitly, `TopBannerViewController` and `BottomBannerViewController` will be used by default.
-            // Those are `Open`, so you can also check thier source for more examples of using standard UI controls!
-            let bottomBanner = CustomBottomBarViewController()
-            let navigationOptions = NavigationOptions(navigationService: navigationService,
-                                                      topBanner: CustomTopBarViewController(),
-                                                      bottomBanner:  bottomBanner)
-            let navigationViewController = NavigationViewController(for: route,
-                                                                    options: navigationOptions)
-            bottomBanner.navigationViewController = navigationViewController
-            
-            navigationViewController.modalPresentationStyle = .fullScreen
-            
-            self.present(navigationViewController, animated: true, completion: nil)
         }
     }
 }
