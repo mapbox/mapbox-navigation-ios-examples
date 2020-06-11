@@ -23,7 +23,6 @@
 		B40ADDC9ABB7E7F6703997CA /* Pods_DocsCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B796D93B6E7934BFD326FA8 /* Pods_DocsCode.framework */; };
 		C52BAA782040D5030086EC6B /* Custom-Destination-Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */; };
 		C58FB85A1FE899B800C4B491 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8591FE899B800C4B491 /* AppDelegate.swift */; };
-		C58FB85C1FE899B800C4B491 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB85B1FE899B800C4B491 /* ViewController.swift */; };
 		C58FB8611FE899B800C4B491 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C58FB8601FE899B800C4B491 /* Assets.xcassets */; };
 		C58FB86C1FE89CEC00C4B491 /* ExampleContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB86B1FE89CEC00C4B491 /* ExampleContainerViewController.swift */; };
 		C58FB86E1FE89D9500C4B491 /* ExampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB86D1FE89D9500C4B491 /* ExampleTableViewController.swift */; };
@@ -62,7 +61,6 @@
 		C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Destination-Marker.swift"; sourceTree = "<group>"; };
 		C58FB8561FE899B800C4B491 /* Navigation-Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Navigation-Examples.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C58FB8591FE899B800C4B491 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C58FB85B1FE899B800C4B491 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C58FB85E1FE899B800C4B491 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C58FB8601FE899B800C4B491 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C58FB8631FE899B800C4B491 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -179,7 +177,6 @@
 			children = (
 				C58FB86F1FE8A42500C4B491 /* Examples */,
 				C58FB8591FE899B800C4B491 /* AppDelegate.swift */,
-				C58FB85B1FE899B800C4B491 /* ViewController.swift */,
 				C58FB86D1FE89D9500C4B491 /* ExampleTableViewController.swift */,
 				C58FB86B1FE89CEC00C4B491 /* ExampleContainerViewController.swift */,
 				C5F1309F1FE9B44600463E86 /* Constants.swift */,
@@ -525,7 +522,6 @@
 				C58FB86E1FE89D9500C4B491 /* ExampleTableViewController.swift in Sources */,
 				C5C0D63820589422003A3B1D /* Custom-Server.swift in Sources */,
 				2B521D4E24090A3A00984CF8 /* CustomBarsViewController.swift in Sources */,
-				C58FB85C1FE899B800C4B491 /* ViewController.swift in Sources */,
 				2B521D502409240E00984CF8 /* CustomBottomBannerView.swift in Sources */,
 				C58FB8771FE98B0E00C4B491 /* Waypoint-Arrival-Screen.swift in Sources */,
 				C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */,
