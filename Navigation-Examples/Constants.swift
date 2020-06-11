@@ -12,7 +12,11 @@ typealias NamedController = (
 let listOfExamples: [NamedController] = [
     (
         name: "Advanced Implementation",
-        description: "Demonstrates how to display a custom map style and how to apply stylized components in the UI. Long press on the map to begin.",
+        description:"""
+        Demonstrates how to display a custom map style and how to apply stylized components in the UI.
+        Example also allows user to select an alternate route. Long press on the map to begin.
+        Note: The Directions API will not always return alternate routes.
+        """,
         controller: AdvancedViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
@@ -44,13 +48,6 @@ let listOfExamples: [NamedController] = [
         controller: CustomStyleUIElements.self,
         storyboard: nil,
         pushExampleToViewController: false
-    ),
-    (
-        name: "Select Alternate Route",
-        description: "Allow the user to select an alternate route. Note: The Directions API will not always return alternate routes.",
-        controller: AdvancedViewController.self,
-        storyboard: nil,
-        pushExampleToViewController: true
     ),
     (
         name: "Waypoint Arrival Screen",
