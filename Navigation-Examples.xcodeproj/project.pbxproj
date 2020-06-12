@@ -11,6 +11,8 @@
 		2B521D4E24090A3A00984CF8 /* CustomBarsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B521D4D24090A3A00984CF8 /* CustomBarsViewController.swift */; };
 		2B521D502409240E00984CF8 /* CustomBottomBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B521D4F2409240E00984CF8 /* CustomBottomBannerView.swift */; };
 		2B521D522409242A00984CF8 /* CustomBottomBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */; };
+		8A96379C2492B366008DEF2A /* Route-Deserialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A96379A2492B366008DEF2A /* Route-Deserialization.swift */; };
+		8A96379D2492B366008DEF2A /* route.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A96379B2492B366008DEF2A /* route.json */; };
 		8DF510741FEB08F70049DB9C /* Embedded-Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF510731FEB08F70049DB9C /* Embedded-Navigation.swift */; };
 		8DF510751FEB0CA00049DB9C /* MapboxNavigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DF510761FEB0CA00049DB9C /* MapboxNavigation.framework */; };
 		9613F58522E0306500D34E24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961FC4E822E0260A00C72877 /* Assets.xcassets */; };
@@ -42,6 +44,8 @@
 		2B521D4D24090A3A00984CF8 /* CustomBarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarsViewController.swift; sourceTree = "<group>"; };
 		2B521D4F2409240E00984CF8 /* CustomBottomBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomBannerView.swift; sourceTree = "<group>"; };
 		2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomBottomBannerView.xib; sourceTree = "<group>"; };
+		8A96379A2492B366008DEF2A /* Route-Deserialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Route-Deserialization.swift"; sourceTree = "<group>"; };
+		8A96379B2492B366008DEF2A /* route.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = route.json; sourceTree = "<group>"; };
 		8AD2F2132489B5C800F81353 /* apply-mapbox-access-token.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "apply-mapbox-access-token.sh"; sourceTree = "<group>"; };
 		8D6D36A620001F0400C2B61B /* EmbeddedExamples.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EmbeddedExamples.storyboard; sourceTree = "<group>"; };
 		8DF510731FEB08F70049DB9C /* Embedded-Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Embedded-Navigation.swift"; sourceTree = "<group>"; };
@@ -200,6 +204,8 @@
 				C59094C2203E3B9100EB2417 /* Custom-Voice-Controller.swift */,
 				C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */,
 				C5C0D63720589422003A3B1D /* Custom-Server.swift */,
+				8A96379A2492B366008DEF2A /* Route-Deserialization.swift */,
+				8A96379B2492B366008DEF2A /* route.json */,
 				2B521D5324094F2500984CF8 /* CustomBars */,
 			);
 			path = Examples;
@@ -314,6 +320,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A96379D2492B366008DEF2A /* route.json in Resources */,
 				2B521D522409242A00984CF8 /* CustomBottomBannerView.xib in Resources */,
 				C58FB8611FE899B800C4B491 /* Assets.xcassets in Resources */,
 				9639244A22E02A520010FE73 /* Main.storyboard in Resources */,
@@ -522,6 +529,7 @@
 				C58FB86E1FE89D9500C4B491 /* ExampleTableViewController.swift in Sources */,
 				C5C0D63820589422003A3B1D /* Custom-Server.swift in Sources */,
 				2B521D4E24090A3A00984CF8 /* CustomBarsViewController.swift in Sources */,
+				8A96379C2492B366008DEF2A /* Route-Deserialization.swift in Sources */,
 				2B521D502409240E00984CF8 /* CustomBottomBannerView.swift in Sources */,
 				C58FB8771FE98B0E00C4B491 /* Waypoint-Arrival-Screen.swift in Sources */,
 				C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */,

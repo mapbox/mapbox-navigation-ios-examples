@@ -76,5 +76,12 @@ let listOfExamples: [NamedController] = [
         controller: CustomBarsViewController.self,
         storyboard: nil,
         pushExampleToViewController: false
+    ),
+    (
+        name: "Route Deserialization",
+        description: "Demonstrates how to initialize a Route and deserialize it from JSON.",
+        controller: RouteDeserializationViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: false
     )
 ]
