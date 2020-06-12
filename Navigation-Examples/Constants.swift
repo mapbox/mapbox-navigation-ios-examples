@@ -83,5 +83,12 @@ let listOfExamples: [NamedController] = [
         controller: RouteDeserializationViewController.self,
         storyboard: nil,
         pushExampleToViewController: false
+    ),
+    (
+        name: "Route Initialization",
+        description: "Demonstrates how to initialize a Route using initialization API.",
+        controller: RouteInitializationViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: false
     )
 ]
