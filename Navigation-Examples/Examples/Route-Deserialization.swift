@@ -1,4 +1,3 @@
-import Foundation
 import UIKit
 import MapboxCoreNavigation
 import MapboxNavigation
@@ -15,10 +14,8 @@ class RouteDeserializationViewController: UIViewController {
         let destination = CLLocationCoordinate2DMake(37.777407, -122.399814)
         let routeOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        let JSONData = JSONFromFileNamed(name: "route")
-        let JSONObject = try! JSONSerialization.jsonObject(with: JSONData, options: [])
-        let routeData = try! JSONSerialization.data(withJSONObject: JSONObject, options: [])
-        
+        // Load previously serialized Route object in JSON format and deserialize it.
+        let routeData = JSONFromFileNamed(name: "route")
         let decoder = JSONDecoder()
         decoder.userInfo[.options] = routeOptions
         let route: Route? = try! decoder.decode(Route.self, from: routeData)
