@@ -17,6 +17,8 @@ class RouteInitializationViewController: UIViewController {
         let expectedTravelTime: TimeInterval = 24.6
         let routeCoordinates = [origin, destination]
         let distanceAlongArrivalStep = 18.7
+        
+        // Add two spoken instructions about an upcoming maneuver.
         let departureSpokenInstruction = SpokenInstruction(distanceAlongStep: distance,
                                                            text: "Head northwest on 5th Street, then you have arrived at your destination",
                                                            ssmlText: "")
@@ -24,16 +26,16 @@ class RouteInitializationViewController: UIViewController {
                                                          text: "You have arrived at your destination",
                                                          ssmlText: "")
         
+        // Add two instruction banners which give visual cue about a given `RouteStep`.
         let departureVisualInstructionBanner = createVisualInstructionBanner(text: "You will arrive",
                                                                              distanceAlongStep: distance)
         let arrivalVisualInstructionBanner = createVisualInstructionBanner(text: "You have arrived",
                                                                            distanceAlongStep: distanceAlongArrivalStep)
         
+        // For simplification RouteLeg contains only two steps: for departure and arrival.
         let departureStep = createRouteStep(maneuverLocation: origin,
                                             maneuverType: .depart,
                                             instructions: "Head northwest on 5th Street",
-                                            initialHeading: 316.0,
-                                            finalHeading: 0.0,
                                             distance: distance,
                                             expectedTravelTime: expectedTravelTime,
                                             instructionsSpokenAlongStep: [departureSpokenInstruction, arrivalSpokenInstruction],
@@ -43,8 +45,6 @@ class RouteInitializationViewController: UIViewController {
         let arrivalStep = createRouteStep(maneuverLocation: destination,
                                           maneuverType: .arrive,
                                           instructions: "You have arrived at your destination",
-                                          initialHeading: 0.0,
-                                          finalHeading: 315.0,
                                           distance: 0,
                                           expectedTravelTime: 0)
         arrivalStep.shape = LineString([destination])
@@ -57,6 +57,8 @@ class RouteInitializationViewController: UIViewController {
         let routeOptions = NavigationRouteOptions(coordinates: routeCoordinates)
         routeLeg.source = routeOptions.waypoints[0]
         routeLeg.destination = routeOptions.waypoints[1]
+        
+        // It's also possible to configure `RouteLeg` with information related to traffic congestion, expected travel time etc.
         routeLeg.segmentCongestionLevels = [
             .heavy,
             .low,
@@ -71,7 +73,10 @@ class RouteInitializationViewController: UIViewController {
             0.9
         ]
         
+        // Here `Route` object is created manually without calling Directions API directly.
         let route = Route(legs: [routeLeg], shape: LineString(routeCoordinates), distance: distance, expectedTravelTime: expectedTravelTime)
+        
+        // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
         let navigationService = MapboxNavigationService(route: route, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
         let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions, navigationOptions: navigationOptions)
@@ -84,8 +89,6 @@ class RouteInitializationViewController: UIViewController {
     private func createRouteStep(maneuverLocation: CLLocationCoordinate2D,
                                  maneuverType: ManeuverType,
                                  instructions: String,
-                                 initialHeading: CLLocationDirection,
-                                 finalHeading: CLLocationDirection,
                                  distance: CLLocationDistance,
                                  expectedTravelTime: TimeInterval,
                                  instructionsSpokenAlongStep: [SpokenInstruction]? = nil,
@@ -96,8 +99,8 @@ class RouteInitializationViewController: UIViewController {
                                   maneuverType: maneuverType,
                                   maneuverDirection: .straightAhead,
                                   instructions: instructions,
-                                  initialHeading: initialHeading,
-                                  finalHeading: finalHeading,
+                                  initialHeading: 0.0,
+                                  finalHeading: 0.0,
                                   drivingSide: .right,
                                   exitCodes: [],
                                   exitNames: [],
