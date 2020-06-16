@@ -41,8 +41,12 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         let point = sender.location(in: mapView)
         let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
 
-        // Calculate the route from the user's location to the set destination
-        calculateRoute(from: mapView.userLocation!.coordinate, to: coordinate)
+        if let origin = mapView.userLocation?.coordinate {
+            // Calculate the route from the user's location to the set destination
+            calculateRoute(from: origin, to: coordinate)
+        } else {
+            print("Failed to get user location, make sure to allow location access for this application.")
+        }
     }
     // #-end-code-snippet: navigation long-press-swift
 
