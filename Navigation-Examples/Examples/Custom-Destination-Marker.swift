@@ -35,8 +35,9 @@ class CustomDestinationMarkerController: UIViewController {
 }
 
 extension CustomDestinationMarkerController: MGLMapViewDelegate {
-    func navigationViewController(_ navigationViewController: NavigationViewController, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
-        var annotationImage = navigationViewController.mapView!.dequeueReusableAnnotationImage(withIdentifier: "marker")
+
+    func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
+        var annotationImage = mapView.dequeueReusableAnnotationImage(withIdentifier: "marker")
         
         if annotationImage == nil {
             // Leaning Tower of Pisa by Stefan Spieler from the Noun Project.
