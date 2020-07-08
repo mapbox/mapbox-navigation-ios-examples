@@ -1,59 +1,74 @@
 PODS:
   - Mapbox-iOS-SDK (5.9.0):
     - MapboxMobileEvents (= 0.10.2)
-  - MapboxAccounts (2.2.0)
-  - MapboxCoreNavigation (0.40.0):
-    - MapboxAccounts (~> 2.2.0)
-    - MapboxDirections (~> 0.31.0)
+  - MapboxAccounts (2.3.0)
+  - MapboxCoreNavigation (1.0.0-beta.1):
+    - MapboxAccounts (~> 2.3.0)
+    - MapboxDirections (~> 0.32.0)
     - MapboxMobileEvents (~> 0.10.2)
-    - MapboxNavigationNative (~> 6.2.1)
-    - Turf (~> 0.3.0)
-  - MapboxDirections (0.31.0):
+    - MapboxNavigationNative (~> 14.1.5)
+    - Turf (~> 0.5.0)
+  - MapboxDirections (0.32.0):
     - Polyline (~> 4.2)
-    - Turf (~> 0.3)
+    - Turf (~> 0.5)
   - MapboxMobileEvents (0.10.2)
-  - MapboxNavigation (0.40.0):
+  - MapboxNavigation (1.0.0-beta.1):
     - Mapbox-iOS-SDK (~> 5.6)
-    - MapboxCoreNavigation (= 0.40.0)
+    - MapboxCoreNavigation (= 1.0.0-beta.1)
     - MapboxMobileEvents (~> 0.10.2)
     - MapboxSpeech (~> 0.3.0)
     - Solar (~> 2.1)
-  - MapboxNavigationNative (6.2.1)
+  - MapboxNavigationNative (14.1.5)
   - MapboxSpeech (0.3.0)
   - Polyline (4.2.1)
   - Solar (2.1.0)
-  - Turf (0.3.0)
+  - Turf (0.5.0)
 
 DEPENDENCIES:
-  - MapboxNavigation (~> 0.40.0)
+  - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, tag `v1.0.0-beta.1`)
+  - MapboxNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, tag `v1.0.0-beta.1`)
 
 SPEC REPOS:
   trunk:
     - Mapbox-iOS-SDK
     - MapboxAccounts
-    - MapboxCoreNavigation
     - MapboxDirections
     - MapboxMobileEvents
-    - MapboxNavigation
     - MapboxNavigationNative
     - MapboxSpeech
     - Polyline
     - Solar
     - Turf
 
+EXTERNAL SOURCES:
+  MapboxCoreNavigation:
+    :git: https://github.com/mapbox/mapbox-navigation-ios.git
+    :tag: v1.0.0-beta.1
+  MapboxNavigation:
+    :git: https://github.com/mapbox/mapbox-navigation-ios.git
+    :tag: v1.0.0-beta.1
+
+CHECKOUT OPTIONS:
+  MapboxCoreNavigation:
+    :git: https://github.com/mapbox/mapbox-navigation-ios.git
+    :tag: v1.0.0-beta.1
+  MapboxNavigation:
+    :git: https://github.com/mapbox/mapbox-navigation-ios.git
+    :tag: v1.0.0-beta.1
+
 SPEC CHECKSUMS:
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956
-  MapboxAccounts: 3c04a1df56c1ac4ff714619296fb47310cf70ad0
-  MapboxCoreNavigation: 2856c46bd064bb11c406ba00191d579cda424efa
-  MapboxDirections: 0b97aa320d7cddbe72d6513becc07dd747935240
+  MapboxAccounts: 84abfdde95d9dc483f604c1b0fe1861edf691ce7
+  MapboxCoreNavigation: f6ee6f4093a5fd02619bd9d3fc35b1e8cefe61b2
+  MapboxDirections: 7f36b3e9ef6a53fc997c114a341ab4da721756bd
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
-  MapboxNavigation: 42bae50b0381dce317c85884ba0de38fc68a4814
-  MapboxNavigationNative: 11dc22140f4698d3f26989f2b6379dc81ef0d4c1
+  MapboxNavigation: 041ea970d7355db6901eec275aa6430760760d4e
+  MapboxNavigationNative: a4bb15f37b174b3bd998bb06e745bad64d4bcefa
   MapboxSpeech: 403415e932e084cf290b9d55c49ab7ea210b9595
   Polyline: 0e9890790292741c8186201a536b6bb6a78d02dd
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
-  Turf: c6bdf62d6a70c647874f295dd1cf4eefc0c3e9e6
+  Turf: bdcfefe60df3ca8dc5f742681c178e47f8c5a567
 
-PODFILE CHECKSUM: 4bcfc549cd6a1c7d97850e47bce382d6a23d7662
+PODFILE CHECKSUM: 2c490b8d8a523b942db04bffc53c02571567ca9c
 
 COCOAPODS: 1.9.3
