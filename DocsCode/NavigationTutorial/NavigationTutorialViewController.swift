@@ -41,27 +41,18 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         let point = sender.location(in: mapView)
         let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
 
-        // Create a basic point annotation and add it to the map
-        let annotation = MGLPointAnnotation()
-        annotation.coordinate = coordinate
-        annotation.title = "Start navigation"
-        mapView.addAnnotation(annotation)
-
-        // Calculate the route from the user's location to the set destination
-        calculateRoute(from: (mapView.userLocation!.coordinate), to: annotation.coordinate) { (route, error) in
-            if error != nil {
-                print("Error calculating route")
-            }
+        if let origin = mapView.userLocation?.coordinate {
+            // Calculate the route from the user's location to the set destination
+            calculateRoute(from: origin, to: coordinate)
+        } else {
+            print("Failed to get user location, make sure to allow location access for this application.")
         }
     }
     // #-end-code-snippet: navigation long-press-swift
 
     // #-code-snippet: navigation calculate-route-swift
     // Calculate route to be used for navigation
-    func calculateRoute(from origin: CLLocationCoordinate2D,
-                        to destination: CLLocationCoordinate2D,
-                        completion: @escaping (Route?, Error?) -> ()) {
-
+    func calculateRoute(from origin: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D) {
         // Coordinate accuracy is how close the route must come to the waypoint in order to be considered viable. It is measured in meters. A negative value indicates that the route is viable regardless of how far the route is from the waypoint.
         let origin = Waypoint(coordinate: origin, coordinateAccuracy: -1, name: "Start")
         let destination = Waypoint(coordinate: destination, coordinateAccuracy: -1, name: "Finish")
@@ -70,14 +61,30 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         let routeOptions = NavigationRouteOptions(waypoints: [origin, destination], profileIdentifier: .automobileAvoidingTraffic)
 
         // Generate the route object and draw it on the map
-        _ = Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
-            guard case let .success(response) = result, let route = response.routes?.first, let strongSelf = self else {
-                return
+        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let response):
+                guard let route = response.routes?.first, let strongSelf = self else {
+                    return
+                }
+                
+                strongSelf.route = route
+                strongSelf.routeOptions = routeOptions
+                
+                // Draw the route on the map after creating it
+                strongSelf.drawRoute(route: route)
+                
+                // Show destination waypoint on the map
+                strongSelf.mapView.showWaypoints(on: route)
+                
+                // Display callout view on destination annotation
+                if let annotation = strongSelf.mapView.annotations?.first as? MGLPointAnnotation {
+                    annotation.title = "Start navigation"
+                    strongSelf.mapView.selectAnnotation(annotation, animated: true, completionHandler: nil)
+                }
             }
-            strongSelf.route = route
-            strongSelf.routeOptions = routeOptions
-            // Draw the route on the map after creating it
-            strongSelf.drawRoute(route: route)
         }
     }
     // #-end-code-snippet: navigation calculate-route-swift
