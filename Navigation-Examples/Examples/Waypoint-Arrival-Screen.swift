@@ -40,13 +40,25 @@ class WaypointArrivalScreenViewController: UIViewController {
 extension WaypointArrivalScreenViewController: NavigationViewControllerDelegate {
     // Show an alert when arriving at the waypoint and wait until the user to start next leg.
     func navigationViewController(_ navigationViewController: NavigationViewController, didArriveAt waypoint: Waypoint) -> Bool {
-        let alert = UIAlertController(title: "Arrived at \(String(describing: waypoint.name))", message: "Would you like to continue?", preferredStyle: .alert)
+        let isFinalLeg = navigationViewController.navigationService.routeProgress.isFinalLeg
+        if isFinalLeg {
+            return true
+        }
+        
+        let alert = UIAlertController(title: "Arrived at \(waypoint.name ?? "Unknown").", message: "Would you like to continue?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
             // Begin the next leg once the driver confirms
-            navigationViewController.navigationService.routeProgress.legIndex += 1
+            if !isFinalLeg {
+                navigationViewController.navigationService.routeProgress.legIndex += 1
+                navigationViewController.navigationService.start()
+            }
         }))
         navigationViewController.present(alert, animated: true, completion: nil)
         
         return false
+    }
+    
+    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
+        dismiss(animated: true, completion: nil)
     }
 }
