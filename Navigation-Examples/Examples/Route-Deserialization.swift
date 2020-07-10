@@ -18,7 +18,7 @@ class RouteDeserializationViewController: UIViewController {
         let routeData = JSONFromFileNamed(name: "route")
         let decoder = JSONDecoder()
         decoder.userInfo[.options] = routeOptions
-        let route: Route? = try! decoder.decode(Route.self, from: routeData)
+        let route: Route? = try? decoder.decode(Route.self, from: routeData)
         
         if let route = route {
             let navigationService = MapboxNavigationService(route: route, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
