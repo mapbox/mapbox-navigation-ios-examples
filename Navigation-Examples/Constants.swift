@@ -14,7 +14,7 @@ let listOfExamples: [NamedController] = [
         name: "Advanced Implementation",
         description:"""
         Demonstrates how to display a custom map style and how to apply stylized components in the UI.
-        Example also allows user to select an alternate route. Long press on the map to begin.
+        This example also allows the user to select an alternate route. Long press on the map to begin.
         Note: The Directions API will not always return alternate routes.
         """,
         controller: AdvancedViewController.self,
@@ -86,7 +86,7 @@ let listOfExamples: [NamedController] = [
     ),
     (
         name: "Route Initialization",
-        description: "Demonstrates how to initialize a Route using initialization API.",
+        description: "Demonstrates how to initialize a Route using initializers in code.",
         controller: RouteInitializationViewController.self,
         storyboard: nil,
         pushExampleToViewController: false
