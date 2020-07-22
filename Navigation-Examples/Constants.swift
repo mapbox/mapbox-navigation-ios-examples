@@ -12,7 +12,11 @@ typealias NamedController = (
 let listOfExamples: [NamedController] = [
     (
         name: "Advanced Implementation",
-        description: "Demonstrates how to display a custom map style and how to apply stylized components in the UI. Long press on the map to begin.",
+        description:"""
+        Demonstrates how to display a custom map style and how to apply stylized components in the UI.
+        This example also allows the user to select an alternate route. Long press on the map to begin.
+        Note: The Directions API will not always return alternate routes.
+        """,
         controller: AdvancedViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
@@ -46,13 +50,6 @@ let listOfExamples: [NamedController] = [
         pushExampleToViewController: false
     ),
     (
-        name: "Select Alternate Route",
-        description: "Allow the user to select an alternate route. Note: The Directions API will not always return alternate routes.",
-        controller: AdvancedViewController.self,
-        storyboard: nil,
-        pushExampleToViewController: true
-    ),
-    (
         name: "Waypoint Arrival Screen",
         description: "Demonstrates how to provide a custom UIView for the user upon arriving at a waypoint.",
         controller: WaypointArrivalScreenViewController.self,
@@ -77,6 +74,20 @@ let listOfExamples: [NamedController] = [
         name: "Custom Top & Bottom Bars",
         description: "Use a custom UI for top and bottom bars during navigation.",
         controller: CustomBarsViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: false
+    ),
+    (
+        name: "Route Deserialization",
+        description: "Demonstrates how to initialize a Route and deserialize it from JSON.",
+        controller: RouteDeserializationViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: false
+    ),
+    (
+        name: "Route Initialization",
+        description: "Demonstrates how to initialize a Route using initializers in code.",
+        controller: RouteInitializationViewController.self,
         storyboard: nil,
         pushExampleToViewController: false
     )
