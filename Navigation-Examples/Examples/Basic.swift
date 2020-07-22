@@ -26,6 +26,8 @@ class BasicViewController: UIViewController {
                 let navigationOptions = NavigationOptions(navigationService: navigationService)
                 let navigationViewController = NavigationViewController(for: route, routeOptions: options, navigationOptions: navigationOptions)
                 navigationViewController.modalPresentationStyle = .fullScreen
+                // Render part of the route that has been traversed with full transparency, to give the illusion of a disappearing route.
+                navigationViewController.mapView?.routeLineTracksTraversal = true
                 
                 strongSelf.present(navigationViewController, animated: true, completion: nil)
             }
