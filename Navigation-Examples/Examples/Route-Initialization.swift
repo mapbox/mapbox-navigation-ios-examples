@@ -40,7 +40,14 @@ class RouteInitializationViewController: UIViewController {
                                             expectedTravelTime: expectedTravelTime,
                                             instructionsSpokenAlongStep: [departureSpokenInstruction, arrivalSpokenInstruction],
                                             instructionsDisplayedAlongStep: [departureVisualInstructionBanner, arrivalVisualInstructionBanner])
-        departureStep.shape = LineString(routeCoordinates)
+        
+        let departureStepCoordinates = [
+            origin,
+            CLLocationCoordinate2D(latitude: 37.777368, longitude: -122.399767),
+            destination
+        ]
+        
+        departureStep.shape = LineString(departureStepCoordinates)
         
         let arrivalStep = createRouteStep(maneuverLocation: destination,
                                           maneuverType: .arrive,
