@@ -136,6 +136,7 @@ class RouteInitializationViewController: UIViewController {
                                                               primary: visualInstruction,
                                                               secondary: nil,
                                                               tertiary: nil,
+                                                              quaternary: nil,
                                                               drivingSide: .right)
         
         return visualInstructionBanner
