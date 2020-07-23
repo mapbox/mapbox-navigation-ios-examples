@@ -4,7 +4,7 @@
 
 A collection of examples showing off the [Mapbox Navigation SDK](https://github.com/mapbox/mapbox-navigation-ios).
 
-![](https://user-images.githubusercontent.com/1058624/34502971-fac695b4-efca-11e7-9eb1-426f38bd89bf.gif)
+![](https://user-images.githubusercontent.com/1496498/88243585-ae760000-cc45-11ea-8ed5-c61e44b43961.gif)
 
 
 ## Installation
