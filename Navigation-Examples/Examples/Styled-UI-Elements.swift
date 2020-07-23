@@ -25,9 +25,9 @@ class CustomStyleUIElements: UIViewController {
                 let navigationService = MapboxNavigationService(route: route, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 let navigationOptions = NavigationOptions(styles: [CustomDayStyle(), CustomNightStyle()], navigationService: navigationService)
                 let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions, navigationOptions: navigationOptions)
+                navigationViewController.modalPresentationStyle = .fullScreen
                 // Render part of the route that has been traversed with full transparency, to give the illusion of a disappearing route.
                 navigationViewController.mapView?.routeLineTracksTraversal = true
-                navigationViewController.modalPresentationStyle = .fullScreen
                 
                 strongSelf.present(navigationViewController, animated: true, completion: nil)
             }
