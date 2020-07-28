@@ -88,4 +88,8 @@ extension CustomServerViewController: NavigationViewControllerDelegate {
         
         return true
     }
+    
+    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
+        dismiss(animated: true, completion: nil)
+    }
 }

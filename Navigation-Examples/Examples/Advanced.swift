@@ -72,7 +72,6 @@ class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationMa
         
     }
 
-    
     @objc func tappedButton(sender: UIButton) {
         guard let route = currentRoute, let routeOptions = routeOptions else { return }
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
@@ -120,5 +119,9 @@ class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationMa
     // Delegate method called when the user selects a route
     func navigationMapView(_ mapView: NavigationMapView, didSelect route: Route) {
         self.currentRoute = route
+    }
+    
+    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
+        dismiss(animated: true, completion: nil)
     }
 }
