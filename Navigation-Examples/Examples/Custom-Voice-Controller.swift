@@ -30,9 +30,9 @@ class CustomVoiceControllerUI: UIViewController {
                 // `MultiplexedSpeechSynthesizer` will provide "a backup" functionality to cover cases, which
                 // our custom implementation cannot handle.
                 let speechSynthesizer = MultiplexedSpeechSynthesizer([CustomVoiceController(), SystemSpeechSynthesizer()] as? [SpeechSynthesizing])
-                let routeController = RouteVoiceController(navigationService: navigationService, speechSynthesizer: speechSynthesizer)
+                let routeVoiceController = RouteVoiceController(navigationService: navigationService, speechSynthesizer: speechSynthesizer)
                 // Remember to pass our `Voice Controller` to `Navigation Options`!
-                let navigationOptions = NavigationOptions(navigationService: navigationService, voiceController: routeController)
+                let navigationOptions = NavigationOptions(navigationService: navigationService, voiceController: routeVoiceController)
                 
                 let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions, navigationOptions: navigationOptions)
                 navigationViewController.modalPresentationStyle = .fullScreen
