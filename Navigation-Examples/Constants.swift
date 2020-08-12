@@ -90,5 +90,12 @@ let listOfExamples: [NamedController] = [
         controller: RouteInitializationViewController.self,
         storyboard: nil,
         pushExampleToViewController: false
+    ),
+    (
+        name: "Building Extrusion",
+        description: "Demonstrates how to highlight building extrusion.",
+        controller: BuildingExtrusionViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
     )
 ]
