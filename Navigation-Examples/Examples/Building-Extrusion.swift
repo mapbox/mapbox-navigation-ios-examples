@@ -4,7 +4,7 @@ import MapboxNavigation
 import MapboxDirections
 import Mapbox
 
-class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate {
+class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate, MGLMapViewDelegate {
     
     var mapView: NavigationMapView?
     
@@ -46,7 +46,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         mapView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mapView?.userTrackingMode = .follow
         mapView?.navigationMapViewDelegate = self
-        
+        mapView?.delegate = self
         mapView?.buildingHighlightingEnabled = true
                 
         // To make sure that buildings are rendered increase zoomLevel to value which is higher than 16.0.
@@ -120,7 +120,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     
     func changeToNightStyle() {
         mapView?.style?.transition = MGLTransition(duration: 1.0, delay: 1.0)
-        mapView?.styleURL = URL(string: "mapbox://styles/mapbox/navigation-guidance-night-v4")!
+        mapView?.styleURL = MGLStyle.navigationNightStyleURL
     }
     
     func unhighlightBuildings() {
@@ -180,5 +180,11 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     
     func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - MGLMapViewDelegate methods
+    
+    func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {
+        removeRoutes()
     }
 }
