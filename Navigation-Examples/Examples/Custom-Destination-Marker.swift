@@ -27,6 +27,7 @@ class CustomDestinationMarkerController: UIViewController {
                 let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions, navigationOptions: navigationOptions)
                 navigationViewController.modalPresentationStyle = .fullScreen
                 navigationViewController.mapView?.delegate = strongSelf
+                navigationViewController.mapView?.routeLineTracksTraversal = true
                 
                 strongSelf.present(navigationViewController, animated: true, completion: nil)
             }
