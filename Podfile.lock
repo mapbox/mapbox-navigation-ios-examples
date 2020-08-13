@@ -53,10 +53,10 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   MapboxCoreNavigation:
-    :commit: cffd80886f3d8031aa8cda084693dbb6b8de1c52
+    :commit: 35efc3acaff20993f6d7081a19e4a1b44cf2a877
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
   MapboxNavigation:
-    :commit: cffd80886f3d8031aa8cda084693dbb6b8de1c52
+    :commit: 35efc3acaff20993f6d7081a19e4a1b44cf2a877
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
 
 SPEC CHECKSUMS:

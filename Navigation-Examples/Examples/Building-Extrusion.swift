@@ -47,7 +47,8 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         mapView?.userTrackingMode = .follow
         mapView?.navigationMapViewDelegate = self
         mapView?.delegate = self
-                
+        mapView?.style?.transition = MGLTransition(duration: 1.0, delay: 1.0)
+        
         // To make sure that buildings are rendered increase zoomLevel to value which is higher than 16.0.
         // More details can be found here: https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v8/#building
         mapView?.zoomLevel = 17.0
@@ -79,13 +80,13 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         typealias ActionHandler = (UIAlertAction) -> Void
         
         let startNavigation: (UIAlertAction) -> Void = { _ in self.startNavigation()}
-        let changeToNightStyle: (UIAlertAction) -> Void = { _ in self.changeToNightStyle()}
+        let toggleDayNightStyle: (UIAlertAction) -> Void = { _ in self.toggleDayNightStyle()}
         let unhighlightBuildings: (UIAlertAction) -> Void = { _ in self.unhighlightBuildings()}
         let removeRoutes: (UIAlertAction) -> Void = { _ in self.removeRoutes()}
         
         let actions: [(String, UIAlertAction.Style, ActionHandler?)] = [
             ("Start Navigation", .default, startNavigation),
-            ("Change To Night Style", .default, changeToNightStyle),
+            ("Toggle Day/Night Style", .default, toggleDayNightStyle),
             ("Unhighlight Buildings", .default, unhighlightBuildings),
             ("Remove Routes", .default, removeRoutes),
             ("Cancel", .cancel, nil)
@@ -116,16 +117,19 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         // Set `highlightDestinationBuildings` to allow building highighting.
         navigationViewController.highlightDestinationBuildings = true
         
-        // Set `highlightBuildingsIn3D` to building highighting in either 2D or 3D mode.
+        // Set `highlightBuildingsIn3D` to allow building highighting in either 2D or 3D mode.
         // In case if `highlightDestinationBuildings` is set to `false` changing this property will not have any effect.
         navigationViewController.highlightBuildingsIn3D = true
         
         present(navigationViewController, animated: true, completion: nil)
     }
     
-    func changeToNightStyle() {
-        mapView?.style?.transition = MGLTransition(duration: 1.0, delay: 1.0)
-        mapView?.styleURL = MGLStyle.navigationNightStyleURL
+    func toggleDayNightStyle() {
+        if mapView?.styleURL == MGLStyle.navigationNightStyleURL {
+            mapView?.styleURL = MGLStyle.navigationDayStyleURL
+        } else {
+            mapView?.styleURL = MGLStyle.navigationNightStyleURL
+        }
     }
     
     func unhighlightBuildings() {
