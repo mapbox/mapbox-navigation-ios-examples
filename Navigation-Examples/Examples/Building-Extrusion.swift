@@ -47,7 +47,6 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         mapView?.userTrackingMode = .follow
         mapView?.navigationMapViewDelegate = self
         mapView?.delegate = self
-        mapView?.buildingHighlightingEnabled = true
                 
         // To make sure that buildings are rendered increase zoomLevel to value which is higher than 16.0.
         // More details can be found here: https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v8/#building
@@ -93,8 +92,8 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         ]
         
         actions
-        .map { payload in UIAlertAction(title: payload.0, style: payload.1, handler: payload.2) }
-        .forEach(alertController.addAction(_:))
+            .map { payload in UIAlertAction(title: payload.0, style: payload.1, handler: payload.2) }
+            .forEach(alertController.addAction(_:))
         
         present(alertController, animated: true, completion: nil)
     }
@@ -107,6 +106,8 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions, navigationOptions: navigationOptions)
         navigationViewController.mapView?.routeLineTracksTraversal = true
         navigationViewController.delegate = self
+        navigationViewController.modalPresentationStyle = .fullScreen
+        navigationViewController.mapView?.styleURL = self.mapView?.styleURL
         
         // Set `highlightDestinationBuildings` to allow building highighting.
         navigationViewController.highlightDestinationBuildings = true
@@ -137,12 +138,12 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         guard let destination = mapView?.convert(gesture.location(in: mapView), toCoordinateFrom: mapView) else { return }
         
         requestRoute(destination: destination)
-        mapView?.highlightBuildings(for: [destination], in3D: false)
+        mapView?.highlightBuildings(for: [destination], in3D: true)
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
         guard let destination = mapView?.convert(gesture.location(in: mapView), toCoordinateFrom: mapView) else { return }
-        mapView?.highlightBuildings(for: [destination], in3D: false)
+        mapView?.highlightBuildings(for: [destination], in3D: true)
     }
     
     func requestRoute(destination: CLLocationCoordinate2D) {
