@@ -95,6 +95,10 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
             .map { payload in UIAlertAction(title: payload.0, style: payload.1, handler: payload.2) }
             .forEach(alertController.addAction(_:))
         
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.barButtonItem = navigationItem.rightBarButtonItem
+        }
+        
         present(alertController, animated: true, completion: nil)
     }
     
