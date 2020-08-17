@@ -114,12 +114,9 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         navigationViewController.modalPresentationStyle = .fullScreen
         navigationViewController.mapView?.styleURL = self.mapView?.styleURL
         
-        // Set `highlightDestinationBuildings` to allow building highighting.
-        navigationViewController.highlightDestinationBuildings = true
-        
-        // Set `highlightBuildingsIn3D` to allow building highighting in either 2D or 3D mode.
-        // In case if `highlightDestinationBuildings` is set to `false` changing this property will not have any effect.
-        navigationViewController.highlightBuildingsIn3D = true
+        // Set `waypointStyle` to either `.building` or `.extrudedBuilding` to allow
+        // building highighting in 2D or 3D respectively.
+        navigationViewController.waypointStyle = .extrudedBuilding
         
         present(navigationViewController, animated: true, completion: nil)
     }
@@ -146,12 +143,12 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         guard let destination = mapView?.convert(gesture.location(in: mapView), toCoordinateFrom: mapView) else { return }
         
         requestRoute(destination: destination)
-        mapView?.highlightBuildings(for: [destination], in3D: true)
+        mapView?.highlightBuildings(at: [destination], in3D: true)
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
         guard let destination = mapView?.convert(gesture.location(in: mapView), toCoordinateFrom: mapView) else { return }
-        mapView?.highlightBuildings(for: [destination], in3D: true)
+        mapView?.highlightBuildings(at: [destination], in3D: true)
     }
     
     func requestRoute(destination: CLLocationCoordinate2D) {
