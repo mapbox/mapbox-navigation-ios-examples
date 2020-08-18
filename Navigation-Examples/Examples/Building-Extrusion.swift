@@ -87,10 +87,10 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         
         typealias ActionHandler = (UIAlertAction) -> Void
         
-        let startNavigation: (UIAlertAction) -> Void = { _ in self.startNavigation()}
-        let toggleDayNightStyle: (UIAlertAction) -> Void = { _ in self.toggleDayNightStyle()}
-        let unhighlightBuildings: (UIAlertAction) -> Void = { _ in self.unhighlightBuildings()}
-        let removeRoutes: (UIAlertAction) -> Void = { _ in self.routes = nil}
+        let startNavigation: ActionHandler = { _ in self.startNavigation() }
+        let toggleDayNightStyle: ActionHandler = { _ in self.toggleDayNightStyle() }
+        let unhighlightBuildings: ActionHandler = { _ in self.unhighlightBuildings() }
+        let removeRoutes: ActionHandler = { _ in self.routes = nil }
         
         let actions: [(String, UIAlertAction.Style, ActionHandler?)] = [
             ("Start Navigation", .default, startNavigation),
