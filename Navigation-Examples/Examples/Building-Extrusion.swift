@@ -4,7 +4,7 @@ import MapboxNavigation
 import MapboxDirections
 import Mapbox
 
-class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate, MGLMapViewDelegate {
+class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate, UIGestureRecognizerDelegate {
     
     var mapView: NavigationMapView?
     
@@ -15,7 +15,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
             return routes?.first
         }
         set {
-            guard let selected = newValue else { routes?.remove(at: 0); return }
+            guard let selected = newValue else { routes = nil; return }
             guard let routes = routes else { self.routes = [selected]; return }
             self.routes = [selected] + routes.filter { $0 != selected }
         }
@@ -23,12 +23,20 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     
     var routes: [Route]? {
         didSet {
-            guard let routes = routes, let current = routes.first else { mapView?.removeRoutes(); return }
+            guard let routes = routes, let currentRoute = routes.first else {
+                mapView?.removeRoutes()
+                mapView?.removeWaypoints()
+                waypoints.removeAll()
+                return
+            }
+
             mapView?.show(routes)
-            mapView?.showWaypoints(on: current)
+            mapView?.showWaypoints(on: currentRoute)
         }
     }
-        
+
+    var waypoints: [Waypoint] = []
+
     // MARK: - UIViewController lifecycle methods
     
     override func viewDidLoad() {
@@ -46,7 +54,6 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         mapView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mapView?.userTrackingMode = .follow
         mapView?.navigationMapViewDelegate = self
-        mapView?.delegate = self
         mapView?.style?.transition = MGLTransition(duration: 1.0, delay: 1.0)
         
         // To make sure that buildings are rendered increase zoomLevel to value which is higher than 16.0.
@@ -70,6 +77,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         mapView?.addGestureRecognizer(longPressGestureRecognizer)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        tapGestureRecognizer.delegate = self
         mapView?.addGestureRecognizer(tapGestureRecognizer)
     }
 
@@ -82,7 +90,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         let startNavigation: (UIAlertAction) -> Void = { _ in self.startNavigation()}
         let toggleDayNightStyle: (UIAlertAction) -> Void = { _ in self.toggleDayNightStyle()}
         let unhighlightBuildings: (UIAlertAction) -> Void = { _ in self.unhighlightBuildings()}
-        let removeRoutes: (UIAlertAction) -> Void = { _ in self.removeRoutes()}
+        let removeRoutes: (UIAlertAction) -> Void = { _ in self.routes = nil}
         
         let actions: [(String, UIAlertAction.Style, ActionHandler?)] = [
             ("Start Navigation", .default, startNavigation),
@@ -93,7 +101,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         ]
         
         actions
-            .map { payload in UIAlertAction(title: payload.0, style: payload.1, handler: payload.2) }
+            .map({ payload in UIAlertAction(title: payload.0, style: payload.1, handler: payload.2) })
             .forEach(alertController.addAction(_:))
         
         if let popoverController = alertController.popoverPresentationController {
@@ -104,8 +112,11 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     }
     
     func startNavigation() {
-        guard let route = currentRoute, let routeOptions = routeOptions else { return }
-        
+        guard let route = currentRoute, let routeOptions = routeOptions else {
+            presentAlert(message: "Please select at least one destination coordinate to start navigation.")
+            return
+        }
+
         let navigationService = MapboxNavigationService(route: route, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
         let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions, navigationOptions: navigationOptions)
@@ -130,48 +141,70 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     }
     
     func unhighlightBuildings() {
+        waypoints.forEach({ $0.targetCoordinate = nil })
         mapView?.unhighlightBuildings()
-    }
-    
-    func removeRoutes() {
-        mapView?.removeRoutes()
-        mapView?.removeWaypoints()
     }
     
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .began else { return }
-        guard let destination = mapView?.convert(gesture.location(in: mapView), toCoordinateFrom: mapView) else { return }
-        
-        requestRoute(destination: destination)
-        mapView?.highlightBuildings(at: [destination], in3D: true)
+
+        createWaypoints(for: mapView?.convert(gesture.location(in: mapView), toCoordinateFrom: mapView))
+        requestRoute()
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+        // In case if route is already shown on map do not allow selection of buildings other than final destination.
+        if let _ = currentRoute, let _ = routeOptions { return }
         guard let destination = mapView?.convert(gesture.location(in: mapView), toCoordinateFrom: mapView) else { return }
         mapView?.highlightBuildings(at: [destination], in3D: true)
     }
-    
-    func requestRoute(destination: CLLocationCoordinate2D) {
-        guard let userLocation = mapView?.userLocation!.location else { return }
-        let userWaypoint = Waypoint(location: userLocation, heading: mapView?.userLocation?.heading, name: "user")
-        let destinationWaypoint = Waypoint(coordinate: destination)
-        
-        // Make sure to set `targetCoordinate` of building you'd like to highlight
-        destinationWaypoint.targetCoordinate = destination
 
-        let routeOptions = NavigationRouteOptions(waypoints: [userWaypoint, destinationWaypoint])
+    func createWaypoints(for destinationCoordinate: CLLocationCoordinate2D?) {
+        guard let destinationCoordinate = destinationCoordinate else { return }
+        guard let userLocation = mapView?.userLocation?.location else {
+            presentAlert(message: "User location is not valid. Make sure to enable Location Services.")
+            return
+        }
+
+        // Unhighlight all buildings in case if there are no previous destination waypoints.
+        if waypoints.isEmpty {
+            unhighlightBuildings()
+        }
         
+        // In case if origin waypoint is not present in list of waypoints - add it.
+        let userLocationName = "User location"
+        let userWaypoint = Waypoint(coordinate: userLocation.coordinate, name: userLocationName)
+        if waypoints.first?.name != userLocationName {
+            waypoints.insert(userWaypoint, at: 0)
+        }
+
+        // Add destination waypoint to list of waypoints.
+        let waypoint = Waypoint(coordinate: destinationCoordinate)
+        waypoint.targetCoordinate = destinationCoordinate
+        waypoints.append(waypoint)
+    }
+
+    func requestRoute() {
+        let routeOptions = NavigationRouteOptions(waypoints: waypoints)
         Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
             switch result {
             case .failure(let error):
-                print(error.localizedDescription)
+                self?.presentAlert(message: error.localizedDescription)
+
+                // In case if direction calculation failed - remove last destination waypoint.
+                self?.waypoints.removeLast()
             case .success(let response):
-                guard let routes = response.routes, let strongSelf = self else { return }
-                
-                strongSelf.routeOptions = routeOptions
-                strongSelf.routes = routes
-                strongSelf.mapView?.show(routes)
-                strongSelf.mapView?.showWaypoints(on: strongSelf.currentRoute!)
+                guard let routes = response.routes else { return }
+                self?.routeOptions = routeOptions
+                self?.routes = routes
+                self?.mapView?.show(routes)
+                if let currentRoute = self?.currentRoute {
+                    self?.mapView?.showWaypoints(on: currentRoute)
+                }
+
+                if let coordinates = self?.waypoints.compactMap({ $0.targetCoordinate }) {
+                    self?.mapView?.highlightBuildings(at: coordinates, in3D: true)
+                }
             }
         }
     }
@@ -184,13 +217,43 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     
     // MARK: - NavigationViewControllerDelegate methods
     
+    func navigationViewController(_ navigationViewController: NavigationViewController, didArriveAt waypoint: Waypoint) -> Bool {
+        if navigationViewController.navigationService.router.routeProgress.isFinalLeg {
+            return true
+        }
+        
+        // In case of intermediate waypoint - proceed to next leg only after specific delay.
+        let delay = 5.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
+            guard let navigationService = (self.presentedViewController as? NavigationViewController)?.navigationService else { return }
+            guard let router = navigationService.router, router.route.legs.count > router.routeProgress.legIndex + 1 else { return }
+            router.routeProgress.legIndex += 1
+            
+            navigationService.start()
+        })
+        
+        return false
+    }
+    
     func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
         dismiss(animated: true, completion: nil)
     }
-    
-    // MARK: - MGLMapViewDelegate methods
-    
-    func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {
-        removeRoutes()
+
+    // MARK: - UIGestureRecognizerDelegate methods
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // Allow both route selection and building extrusion when tapping on screen.
+        return true
+    }
+
+    // MARK: - Utility methods
+
+    func presentAlert(_ title: String? = nil, message: String? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            alertController.dismiss(animated: true, completion: nil)
+        }))
+
+        present(alertController, animated: true, completion: nil)
     }
 }
