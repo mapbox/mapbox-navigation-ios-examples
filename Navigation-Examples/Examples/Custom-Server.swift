@@ -9,7 +9,7 @@ class CustomServerViewController: UIViewController {
     let routeOptions = NavigationRouteOptions(coordinates: [
         CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648),
         CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
-        ])
+    ])
 
     var navigationViewController: NavigationViewController?
     
@@ -27,9 +27,9 @@ class CustomServerViewController: UIViewController {
                 }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-                let navigationService = MapboxNavigationService(route: route, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+                let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 let navigationOptions = NavigationOptions(navigationService: navigationService)
-                strongSelf.navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions, navigationOptions: navigationOptions)
+                strongSelf.navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
                 strongSelf.navigationViewController?.modalPresentationStyle = .fullScreen
                 strongSelf.navigationViewController?.delegate = strongSelf
                 
@@ -80,7 +80,7 @@ extension CustomServerViewController: NavigationViewControllerDelegate {
                         }
                         
                         // Set the route
-                        self?.navigationViewController?.route = route
+                        self?.navigationViewController?.navigationService.indexedRoute = (route, 0)
                     }
                 }
             }

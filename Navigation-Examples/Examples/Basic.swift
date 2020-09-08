@@ -22,12 +22,13 @@ class BasicViewController: UIViewController {
                 }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-                let navigationService = MapboxNavigationService(route: route, routeOptions: options, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+                // Since first route is retrieved from response `routeIndex` is set to 0.
+                let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: options, simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 let navigationOptions = NavigationOptions(navigationService: navigationService)
-                let navigationViewController = NavigationViewController(for: route, routeOptions: options, navigationOptions: navigationOptions)
+                let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: options, navigationOptions: navigationOptions)
                 navigationViewController.modalPresentationStyle = .fullScreen
                 // Render part of the route that has been traversed with full transparency, to give the illusion of a disappearing route.
-                navigationViewController.mapView?.routeLineTracksTraversal = true
+                navigationViewController.routeLineTracksTraversal = true
                 
                 strongSelf.present(navigationViewController, animated: true, completion: nil)
             }

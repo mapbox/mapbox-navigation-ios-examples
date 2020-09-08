@@ -117,10 +117,10 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
             return
         }
 
-        let navigationService = MapboxNavigationService(route: route, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+        let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions, navigationOptions: navigationOptions)
-        navigationViewController.mapView?.routeLineTracksTraversal = true
+        let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
+        navigationViewController.routeLineTracksTraversal = true
         navigationViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen
         navigationViewController.mapView?.styleURL = self.mapView?.styleURL
