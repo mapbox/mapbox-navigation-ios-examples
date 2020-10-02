@@ -28,7 +28,6 @@ class EmbeddedExampleViewController: UIViewController {
         calculateDirections()
     }
 
-    
     func calculateDirections() {
         Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
             switch result {
@@ -44,6 +43,7 @@ class EmbeddedExampleViewController: UIViewController {
             }
         }
     }
+    
     @objc func flashReroutedLabel(_ sender: Any) {
         reroutedLabel.isHidden = false
         reroutedLabel.alpha = 1.0
@@ -57,9 +57,9 @@ class EmbeddedExampleViewController: UIViewController {
     func startEmbeddedNavigation() {
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
         guard let route = route else { return }
-        let navigationService = MapboxNavigationService(route: route, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+        let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions, navigationOptions: navigationOptions)
+        let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
         
         navigationViewController.delegate = self
         addChild(navigationViewController)
@@ -70,7 +70,7 @@ class EmbeddedExampleViewController: UIViewController {
             navigationViewController.view.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: 0),
             navigationViewController.view.topAnchor.constraint(equalTo: container.topAnchor, constant: 0),
             navigationViewController.view.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: 0)
-            ])
+        ])
         self.didMove(toParent: self)
     }
 }
@@ -78,5 +78,9 @@ class EmbeddedExampleViewController: UIViewController {
 extension EmbeddedExampleViewController: NavigationViewControllerDelegate {
     func navigationViewController(_ navigationViewController: NavigationViewController, shouldRerouteFrom location: CLLocation) -> Bool {
         return enableReroutes.isOn
+    }
+    
+    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
+        navigationController?.popViewController(animated: true)
     }
 }

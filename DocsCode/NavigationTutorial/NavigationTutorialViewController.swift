@@ -125,7 +125,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         guard let route = route, let routeOptions = routeOptions else {
             return
         }
-        let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions)
+        let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions)
         navigationViewController.modalPresentationStyle = .fullScreen
         self.present(navigationViewController, animated: true, completion: nil)
     }

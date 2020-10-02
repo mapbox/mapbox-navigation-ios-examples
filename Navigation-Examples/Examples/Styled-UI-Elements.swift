@@ -22,18 +22,18 @@ class CustomStyleUIElements: UIViewController {
                 }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-                let navigationService = MapboxNavigationService(route: route, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+                let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 let navigationOptions = NavigationOptions(styles: [CustomDayStyle(), CustomNightStyle()], navigationService: navigationService)
-                let navigationViewController = NavigationViewController(for: route, routeOptions: routeOptions, navigationOptions: navigationOptions)
+                let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
                 navigationViewController.modalPresentationStyle = .fullScreen
+                // Render part of the route that has been traversed with full transparency, to give the illusion of a disappearing route.
+                navigationViewController.routeLineTracksTraversal = true
                 
                 strongSelf.present(navigationViewController, animated: true, completion: nil)
             }
         }
     }
 }
-
-
 
 class CustomDayStyle: DayStyle {
     
@@ -86,6 +86,8 @@ class CustomDayStyle: DayStyle {
         NavigationMapView.appearance().trafficModerateColor = #colorLiteral(red: 1, green: 0.6184511781, blue: 0, alpha: 1)
         NavigationMapView.appearance().trafficSevereColor = #colorLiteral(red: 0.7458544374, green: 0.0006075350102, blue: 0, alpha: 1)
         NavigationMapView.appearance().trafficUnknownColor = blueColor
+        // Customize the color that appears on the traversed section of a route
+        NavigationMapView.appearance().traversedRouteColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 0.5)
         PrimaryLabel.appearance(whenContainedInInstancesOf: [InstructionsBannerView.self]).normalTextColor = primaryLabelColor
         PrimaryLabel.appearance(whenContainedInInstancesOf: [StepInstructionsView.self]).normalTextColor = darkGrayColor
         ResumeButton.appearance().backgroundColor = secondaryBackgroundColor
@@ -99,7 +101,6 @@ class CustomDayStyle: DayStyle {
         WayNameView.appearance().backgroundColor = secondaryBackgroundColor
     }
 }
-
 
 class CustomNightStyle: NightStyle {
     
