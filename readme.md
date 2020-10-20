@@ -10,13 +10,19 @@ A collection of examples showing off the [Mapbox Navigation SDK](https://github.
 
 _Installation with CocoaPods_ 
 
-1. `git clone git@github.com:mapbox/navigation-ios-examples.git`
+1. `git clone https://github.com/mapbox/navigation-ios-examples.git`
 1. `cd navigation-ios-examples`
-1. `pod install`
-1. `open Navigation-Examples.xcworkspace/`
+1. Go to your [Mapbox account dashboard](https://account.mapbox.com/) and create an access token that has the `DOWNLOADS:READ` scope. **PLEASE NOTE: This is not the same as your production Mapbox API token. Make sure to keep it private and do not insert it into any Info.plist file.** Create a file named `.netrc` in your home directory if it doesn’t already exist, then add the following lines to the end of the file:
+   ```
+   machine api.mapbox.com 
+     login mapbox
+     password PRIVATE_MAPBOX_API_TOKEN
+   ```
+   where _PRIVATE_MAPBOX_API_TOKEN_ is your Mapbox API token with the `DOWNLOADS:READ` scope. 
+1. Run `pod repo update && pod install` and open the resulting Navigation-Examples.xcworkspace.
 1. Sign up or log in to your Mapbox account and grab a [Mapbox access token](https://www.mapbox.com/help/define-access-token/).
-1. Enter your Mapbox access token into the value of the `MGLMapboxAccessToken` key within the Info.plist file. Alternatively, if you plan to use this project as the basis for any open source application, [read this guide](https://www.mapbox.com/help/ios-private-access-token/) to learn how to best protect your access tokens.
-1. Run the application
+1. Enter your Mapbox access token into the value of the `MGLMapboxAccessToken` key within the Info.plist file. Alternatively, if you plan to use this project as the basis for any open source application, [read this guide](https://docs.mapbox.com/help/troubleshooting/private-access-token-android-and-ios/#ios) to learn how to best protect your access tokens.
+1. Building and run the Navigation-Examples scheme.
 
 ## Add an example:
 
