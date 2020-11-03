@@ -47,6 +47,7 @@ class CustomBottomBannerView: UIView {
         
         cancelButton.backgroundColor = .systemGray
         cancelButton.layer.cornerRadius = 5
+        cancelButton.setTitleColor(.darkGray, for: .highlighted)
         
         backgroundColor = UIColor.black.withAlphaComponent(0.3)
         layer.cornerRadius = 10
