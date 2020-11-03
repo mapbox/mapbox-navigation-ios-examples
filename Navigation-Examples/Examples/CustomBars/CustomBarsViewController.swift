@@ -38,7 +38,7 @@ class CustomBarsViewController: UIViewController {
                 let verticalOffset: CGFloat = 50.0
                 let horizontalOffset: CGFloat = 10.0
                 
-                // It's possible to change custom top and bottom banner constrints. `MGLMapView` components like
+                // It's possible to change custom top and bottom banner constraints. `MGLMapView` components like
                 // `logoView` and `attributionButton` will have to be updated separately as well.
                 topBanner.view.topAnchor.constraint(equalTo: parentSafeArea.topAnchor).isActive = true
                 
