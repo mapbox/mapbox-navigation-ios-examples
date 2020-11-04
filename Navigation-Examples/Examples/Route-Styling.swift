@@ -17,9 +17,7 @@ extension UIColor {
 class RouteStylingViewController: UIViewController, NavigationMapViewDelegate {
     
     var mapView: NavigationMapView?
-    
-    var routeOptions: NavigationRouteOptions?
-    
+        
     var currentRoute: Route? {
         get {
             return routes?.first
@@ -147,15 +145,10 @@ class RouteStylingViewController: UIViewController, NavigationMapViewDelegate {
                 self?.waypoints.removeLast()
             case .success(let response):
                 guard let routes = response.routes else { return }
-                self?.routeOptions = routeOptions
                 self?.routes = routes
                 self?.mapView?.show(routes)
                 if let currentRoute = self?.currentRoute {
                     self?.mapView?.showWaypoints(on: currentRoute)
-                }
-
-                if let coordinates = self?.waypoints.compactMap({ $0.targetCoordinate }) {
-                    self?.mapView?.highlightBuildings(at: coordinates, in3D: true)
                 }
             }
         }

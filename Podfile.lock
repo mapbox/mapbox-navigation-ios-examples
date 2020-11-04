@@ -53,10 +53,10 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   MapboxCoreNavigation:
-    :commit: 0dde7cbb985ff390e1bbd5d81035b682fad6d4b2
+    :commit: c6cb11a1c235d213c018a977363624d809a0615b
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
   MapboxNavigation:
-    :commit: 0dde7cbb985ff390e1bbd5d81035b682fad6d4b2
+    :commit: c6cb11a1c235d213c018a977363624d809a0615b
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
 
 SPEC CHECKSUMS:
@@ -73,6 +73,6 @@ SPEC CHECKSUMS:
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   Turf: 29b37f6d67f184a7b2d00f594c3e20b3e5474b7d
 
-PODFILE CHECKSUM: 344e73e813b14fc8e2700f7a8b718bc5285c5788
+PODFILE CHECKSUM: 4c22ffcbdee3c8b41be485c95b19efada71141e9
 
 COCOAPODS: 1.10.0.rc.1
