@@ -34,21 +34,17 @@ class CustomBarsViewController: UIViewController {
                 bottomBanner.navigationViewController = navigationViewController
                 
                 let parentSafeArea = navigationViewController.view.safeAreaLayoutGuide
-                let bannerHeight: CGFloat = 150.0
-                let verticalOffset: CGFloat = 50.0
+                let bannerHeight: CGFloat = 80.0
+                let verticalOffset: CGFloat = 20.0
                 let horizontalOffset: CGFloat = 10.0
                 
-                // It's possible to change custom top and bottom banner constraints. `MGLMapView` components like
-                // `logoView` and `attributionButton` will have to be updated separately as well.
+                // To change top and bottom banner size and position change layout constraints directly.
                 topBanner.view.topAnchor.constraint(equalTo: parentSafeArea.topAnchor).isActive = true
                 
                 bottomBanner.view.heightAnchor.constraint(equalToConstant: bannerHeight).isActive = true
                 bottomBanner.view.bottomAnchor.constraint(equalTo: parentSafeArea.bottomAnchor, constant: -verticalOffset).isActive = true
                 bottomBanner.view.leadingAnchor.constraint(equalTo: parentSafeArea.leadingAnchor, constant: horizontalOffset).isActive = true
                 bottomBanner.view.trailingAnchor.constraint(equalTo: parentSafeArea.trailingAnchor, constant: -horizontalOffset).isActive = true
-
-                navigationViewController.mapView?.logoViewMargins = CGPoint(x: horizontalOffset, y: bannerHeight + verticalOffset + horizontalOffset)
-                navigationViewController.mapView?.attributionButtonMargins = CGPoint(x: horizontalOffset, y: bannerHeight + verticalOffset + horizontalOffset)
 
                 navigationViewController.modalPresentationStyle = .fullScreen
                 
