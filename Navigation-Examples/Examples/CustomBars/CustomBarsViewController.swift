@@ -33,6 +33,19 @@ class CustomBarsViewController: UIViewController {
                 let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
                 bottomBanner.navigationViewController = navigationViewController
                 
+                let parentSafeArea = navigationViewController.view.safeAreaLayoutGuide
+                let bannerHeight: CGFloat = 80.0
+                let verticalOffset: CGFloat = 20.0
+                let horizontalOffset: CGFloat = 10.0
+                
+                // To change top and bottom banner size and position change layout constraints directly.
+                topBanner.view.topAnchor.constraint(equalTo: parentSafeArea.topAnchor).isActive = true
+                
+                bottomBanner.view.heightAnchor.constraint(equalToConstant: bannerHeight).isActive = true
+                bottomBanner.view.bottomAnchor.constraint(equalTo: parentSafeArea.bottomAnchor, constant: -verticalOffset).isActive = true
+                bottomBanner.view.leadingAnchor.constraint(equalTo: parentSafeArea.leadingAnchor, constant: horizontalOffset).isActive = true
+                bottomBanner.view.trailingAnchor.constraint(equalTo: parentSafeArea.trailingAnchor, constant: -horizontalOffset).isActive = true
+
                 navigationViewController.modalPresentationStyle = .fullScreen
                 
                 strongSelf.present(navigationViewController, animated: true, completion: nil)
@@ -45,7 +58,7 @@ class CustomBarsViewController: UIViewController {
 
 class CustomTopBarViewController: ContainerViewController {
     private lazy var instructionsBannerTopOffsetConstraint = {
-        return instructionsBannerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
+        return instructionsBannerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10)
     }()
     private lazy var centerOffset: CGFloat = calculateCenterOffset(with: view.bounds.size)
     private lazy var instructionsBannerCenterOffsetConstraint = {
@@ -59,6 +72,7 @@ class CustomTopBarViewController: ContainerViewController {
         banner.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
         banner.layer.cornerRadius = 25
         banner.layer.opacity = 0.75
+        banner.separatorView.isHidden = true
         return banner
     }()
     
@@ -81,13 +95,12 @@ class CustomTopBarViewController: ContainerViewController {
     
     private func updateConstraints() {
         instructionsBannerCenterOffsetConstraint.constant = centerOffset
-        instructionsBannerTopOffsetConstraint.constant = (traitCollection.verticalSizeClass == .compact ? 10 : 44)
     }
     
     // MARK: - Device rotation
     
     private func calculateCenterOffset(with size: CGSize) -> CGFloat {
-        return (size.height < size.width ? -size.width / 4 : 0)
+        return (size.height < size.width ? -size.width / 5 : 0)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
