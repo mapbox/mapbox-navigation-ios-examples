@@ -3,6 +3,7 @@ import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
 import Mapbox
+import Turf
 
 extension UIColor {
     
@@ -36,6 +37,8 @@ class RouteStylingViewController: UIViewController, NavigationMapViewDelegate {
                 mapView?.removeWaypoints()
                 waypoints.removeAll()
                 routeColors.removeAll()
+                isMainRoute = true
+                
                 return
             }
 
@@ -47,6 +50,8 @@ class RouteStylingViewController: UIViewController, NavigationMapViewDelegate {
     var waypoints: [Waypoint] = []
     
     var routeColors: [String: (Bool, UIColor)] = [:]
+    
+    var isMainRoute: Bool = true
 
     // MARK: - UIViewController lifecycle methods
     
@@ -161,6 +166,8 @@ class RouteStylingViewController: UIViewController, NavigationMapViewDelegate {
     }
     
     func navigationMapView(_ mapView: NavigationMapView, mainRouteStyleLayerWithIdentifier identifier: String, source: MGLSource) -> MGLStyleLayer? {
+        guard let source = source as? MGLShapeSource else { return nil }
+        
         let layer = MGLLineStyleLayer(identifier: identifier, source: source)
         layer.predicate = NSPredicate(format: "isAlternateRoute == false")
 
@@ -174,7 +181,13 @@ class RouteStylingViewController: UIViewController, NavigationMapViewDelegate {
         layer.lineWidth = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($zoomLevel, 'linear', nil, %@)", MBRouteLineWidthByZoomLevel.multiplied(by: 0.8))
         layer.lineJoin = NSExpression(forConstantValue: "round")
         layer.lineCap = NSExpression(forConstantValue: "miter")
-
+        
+        if let mainRoute = routes?.first,
+           let shape = source.shape as? MGLShapeCollectionFeature,
+           let congestionSegments = shape.shapes as? Array<MGLPolylineFeature> {
+            layer.lineGradient = routeLineGradient(mainRoute, congestionSegments: congestionSegments)
+        }
+        
         return layer
     }
 
@@ -242,6 +255,23 @@ class RouteStylingViewController: UIViewController, NavigationMapViewDelegate {
         return layer
     }
     
+    func navigationMapView(_ mapView: NavigationMapView, shapeFor routes: [Route]) -> MGLShape? {
+        guard let route = routes.first else { return nil }
+        
+        if isMainRoute {
+            isMainRoute = false
+        }
+        
+        return MGLShapeCollectionFeature(shapes: shapes(route))
+    }
+
+    func navigationMapView(_ mapView: NavigationMapView, simplifiedShapeFor route: Route) -> MGLShape? {
+        let mainRoute = MGLPolylineFeature(route.shape!)
+        mainRoute.attributes["isAlternateRoute"] = false
+
+        return MGLShapeCollectionFeature(shapes: [mainRoute])
+    }
+    
     // MARK: - Utility methods
 
     func presentAlert(_ title: String? = nil, message: String? = nil) {
@@ -251,5 +281,94 @@ class RouteStylingViewController: UIViewController, NavigationMapViewDelegate {
         }))
 
         present(alertController, animated: true, completion: nil)
+    }
+    
+    private func congestionColor(_ congestionLevel: CongestionLevel?) -> UIColor {
+        switch congestionLevel {
+        case .low:
+            return #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        case .moderate:
+            return #colorLiteral(red: 1, green: 0.5843137255, blue: 0, alpha: 1)
+        case .heavy:
+            return #colorLiteral(red: 1, green: 0.3019607843, blue: 0.3019607843, alpha: 1)
+        case .severe:
+            return #colorLiteral(red: 0.5607843137, green: 0.1411764706, blue: 0.2784313725, alpha: 1)
+        default:
+            return #colorLiteral(red: 0.337254902, green: 0.6588235294, blue: 0.9843137255, alpha: 0.949406036)
+        }
+    }
+    
+    func routeLineGradient(_ route: Route, congestionSegments: [MGLPolylineFeature]) -> NSExpression? {
+        var gradientStops = [CGFloat: UIColor]()
+        var distanceTraveled = 0.0
+
+        for (index, line) in congestionSegments.enumerated() {
+            line.getCoordinates(line.coordinates, range: NSMakeRange(0, Int(line.pointCount)))
+
+            let buffPtr = UnsafeMutableBufferPointer(start: line.coordinates, count: Int(line.pointCount))
+            guard let distance = LineString(Array(buffPtr)).distance() else { return nil }
+            guard let congestionLevel = line.attributes["congestion"] as? String else { return nil }
+            let associatedCongestionColor = congestionColor(CongestionLevel(rawValue: congestionLevel))
+
+            if index == congestionSegments.startIndex {
+                distanceTraveled = distanceTraveled + distance
+
+                let segmentEndPercentTraveled = CGFloat(distanceTraveled / route.distance)
+                gradientStops[segmentEndPercentTraveled.nextDown] = associatedCongestionColor
+                continue
+            }
+
+            if index == congestionSegments.endIndex - 1 {
+                let segmentEndPercentTraveled = CGFloat(1.0)
+                gradientStops[segmentEndPercentTraveled.nextDown] = associatedCongestionColor
+                continue
+            }
+
+            let segmentStartPercentTraveled = CGFloat(distanceTraveled / route.distance)
+            gradientStops[segmentStartPercentTraveled.nextUp] = associatedCongestionColor
+
+            distanceTraveled = distanceTraveled + distance
+
+            let segmentEndPercentTraveled = CGFloat(distanceTraveled / route.distance)
+            gradientStops[segmentEndPercentTraveled.nextDown] = associatedCongestionColor
+        }
+        
+        if !gradientStops.isEmpty {
+            return NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($lineProgress, 'linear', nil, %@)", NSDictionary(dictionary: gradientStops))
+        }
+        
+        return nil
+    }
+
+    func shapes(_ route: Route) -> [MGLPolylineFeature] {
+        var shape: [MGLPolylineFeature] = []
+        
+        for leg in route.legs {
+            let coordinates: [CLLocationCoordinate2D] = leg.steps.enumerated().reduce([]) { allCoordinates, current in
+                let step = current.element
+                let stepCoordinates = step.shape!.coordinates
+                
+                return current.offset == 0 ? stepCoordinates : allCoordinates + stepCoordinates.suffix(from: 1)
+            }
+            
+            let segments: [CongestionLevel] = [.low, .moderate, .heavy, .severe, .unknown]
+            
+            if coordinates.count >= segments.count * 2 {
+                let chunkSize = coordinates.count / 4
+                let totalSize = coordinates.count
+                let arrayChunk = stride(from: 0, to: totalSize, by: chunkSize).map {
+                    Array(coordinates[$0..<Swift.min($0 + chunkSize, totalSize)])
+                }
+                
+                for (index, element) in arrayChunk.enumerated() {
+                    let polyline = MGLPolylineFeature(coordinates: [element[element.startIndex], element[element.endIndex - 1]], count: 2)
+                    polyline.attributes[MBCongestionAttribute] = String(describing: segments[index])
+                    polyline.attributes["isAlternateRoute"] = !isMainRoute
+                    shape.append(polyline)
+                }
+            }
+        }
+        
+        return shape
     }
 }
