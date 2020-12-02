@@ -15,7 +15,7 @@ extension UIColor {
     }
 }
 
-class RouteStylingViewController: UIViewController, NavigationMapViewDelegate {
+class RouteLineStylingViewController: UIViewController, NavigationMapViewDelegate {
     
     var mapView: NavigationMapView?
         

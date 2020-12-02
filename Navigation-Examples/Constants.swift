@@ -99,9 +99,9 @@ let listOfExamples: [NamedController] = [
         pushExampleToViewController: true
     ),
     (
-        name: "Route Styling",
-        description: "Demonstrates how to style main and alternative routes.",
-        controller: RouteStylingViewController.self,
+        name: "Route Line Styling",
+        description: "Demonstrates how to style main and alternative route lines.",
+        controller: RouteLineStylingViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
     )
