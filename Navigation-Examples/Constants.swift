@@ -97,5 +97,12 @@ let listOfExamples: [NamedController] = [
         controller: BuildingExtrusionViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
+    ),
+    (
+        name: "Route Line Styling",
+        description: "Demonstrates how to style main and alternative route lines.",
+        controller: RouteLineStylingViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
     )
 ]
