@@ -167,90 +167,15 @@ class RouteLineStylingViewController: UIViewController, NavigationMapViewDelegat
     func navigationMapView(_ mapView: NavigationMapView, mainRouteStyleLayerWithIdentifier identifier: String, source: MGLSource) -> MGLStyleLayer? {
         let layer = MGLLineStyleLayer(identifier: identifier, source: source)
         layer.predicate = NSPredicate(format: "isAlternateRoute == false")
-
-        let element = routeColors[identifier]
-        let color = #colorLiteral(red: 0.337254902, green: 0.6588235294, blue: 0.9843137255, alpha: 1)
-        if element == nil {
-            routeColors[identifier] = (true, color)
-        }
-
-        layer.lineColor = NSExpression(forConstantValue: color)
         layer.lineWidth = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($zoomLevel, 'linear', nil, %@)", MBRouteLineWidthByZoomLevel.multiplied(by: 0.8))
         layer.lineJoin = NSExpression(forConstantValue: "round")
         layer.lineCap = NSExpression(forConstantValue: "miter")
 
         // In case if congestion segments are available - draw them.
-        if let mainRoute = routes?.first,
-           let source = source as? MGLShapeSource,
-           let shape = source.shape as? MGLShapeCollectionFeature,
-           let congestionSegments = shape.shapes as? Array<MGLPolylineFeature> {
+        if let mainRoute = routes?.first, let congestionSegments = addCongestion(mainRoute) {
             layer.lineGradient = routeLineGradient(mainRoute, congestionSegments: congestionSegments)
         }
         
-        return layer
-    }
-
-    func navigationMapView(_ mapView: NavigationMapView, mainRouteCasingStyleLayerWithIdentifier identifier: String, source: MGLSource) -> MGLStyleLayer? {
-        let layer = MGLLineStyleLayer(identifier: identifier, source: source)
-        layer.predicate = NSPredicate(format: "isAlternateRoute == false")
-
-        let element = routeColors[identifier]
-        let color = #colorLiteral(red: 0.1843137255, green: 0.4784313725, blue: 0.7764705882, alpha: 1)
-        if element == nil {
-            routeColors[identifier] = (true, color)
-        }
-
-        layer.lineColor = NSExpression(forConstantValue: color)
-        layer.lineWidth = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($zoomLevel, 'linear', nil, %@)", MBRouteLineWidthByZoomLevel.multiplied(by: 1.2))
-        layer.lineJoin = NSExpression(forConstantValue: "round")
-        layer.lineCap = NSExpression(forConstantValue: "miter")
-
-        return layer
-    }
-
-    func navigationMapView(_ mapView: NavigationMapView, alternativeRouteStyleLayerWithIdentifier identifier: String, source: MGLSource) -> MGLStyleLayer? {
-        let layer = MGLLineStyleLayer(identifier: identifier, source: source)
-        layer.predicate = NSPredicate(format: "isAlternateRoute == true")
-
-        let element = routeColors[identifier]
-        var color = UIColor.gray
-        if let element = element {
-            if element.0 == false {
-                color = element.1
-            }
-        } else {
-            color = UIColor.random
-            routeColors[identifier] = (false, color)
-        }
-
-        layer.lineColor = NSExpression(forConstantValue: color)
-        layer.lineWidth = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($zoomLevel, 'linear', nil, %@)", MBRouteLineWidthByZoomLevel.multiplied(by: 0.8))
-        layer.lineJoin = NSExpression(forConstantValue: "round")
-        layer.lineCap = NSExpression(forConstantValue: "miter")
-
-        return layer
-    }
-
-    func navigationMapView(_ mapView: NavigationMapView, alternativeRouteCasingStyleLayerWithIdentifier identifier: String, source: MGLSource) -> MGLStyleLayer? {
-        let layer = MGLLineStyleLayer(identifier: identifier, source: source)
-        layer.predicate = NSPredicate(format: "isAlternateRoute == true")
-
-        let element = routeColors[identifier]
-        var color = UIColor.darkGray
-        if let element = element {
-            if element.0 == false {
-                color = element.1
-            }
-        } else {
-            color = UIColor.random
-            routeColors[identifier] = (false, color)
-        }
-
-        layer.lineColor = NSExpression(forConstantValue: color)
-        layer.lineWidth = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($zoomLevel, 'linear', nil, %@)", MBRouteLineWidthByZoomLevel.multiplied(by: 1.2))
-        layer.lineJoin = NSExpression(forConstantValue: "round")
-        layer.lineCap = NSExpression(forConstantValue: "miter")
-
         return layer
     }
     
@@ -258,13 +183,6 @@ class RouteLineStylingViewController: UIViewController, NavigationMapViewDelegat
         guard let mainRoute = routes.first else { return nil }
         
         return MGLShapeCollectionFeature(shapes: shape(mainRoute))
-    }
-
-    func navigationMapView(_ mapView: NavigationMapView, simplifiedShapeFor route: Route) -> MGLShape? {
-        let mainRoute = MGLPolylineFeature(route.shape!)
-        mainRoute.attributes["isAlternateRoute"] = false
-
-        return MGLShapeCollectionFeature(shapes: [mainRoute])
     }
     
     // MARK: - Utility methods
@@ -277,74 +195,186 @@ class RouteLineStylingViewController: UIViewController, NavigationMapViewDelegat
 
         present(alertController, animated: true, completion: nil)
     }
+
+    /**
+     Method which allows to provide a custom congestion level for whole main route.
+     */
+    func shape(_ route: Route) -> [MGLPolylineFeature] {
+        let mainRoute = MGLPolylineFeature(route.shape!)
+        mainRoute.attributes["isAlternateRoute"] = false
+
+        return [mainRoute]
+    }
     
-    func congestionColor(_ congestionLevel: CongestionLevel?) -> UIColor {
+    func combine(_ coordinates: [CLLocationCoordinate2D], with congestions: [CongestionLevel]) -> [CongestionSegment] {
+        var segments: [CongestionSegment] = []
+        segments.reserveCapacity(congestions.count)
+        for (firstSegment, congestionLevel) in zip(zip(coordinates, coordinates.suffix(from: 1)), congestions) {
+            let coordinates = [firstSegment.0, firstSegment.1]
+            if segments.last?.1 == congestionLevel {
+                segments[segments.count - 1].0 += coordinates
+            } else {
+                segments.append((coordinates, congestionLevel))
+            }
+        }
+        return segments
+    }
+    
+    typealias CongestionSegment = ([CLLocationCoordinate2D], CongestionLevel)
+    
+    func routeLineGradient(_ route: Route, fractionTraveled: Double = 0.0, congestionSegments: [MGLPolylineFeature]) -> NSExpression? {
+        var gradientStops = [CGFloat: UIColor]()
+        
+        /**
+         We will keep track of this value as we iterate through
+         the various congestion segments.
+         */
+        var distanceTraveled = fractionTraveled
+        
+        /**
+         To create the stops dictionary that represents the route line expressed
+         as gradients, for every congestion segment we need one pair of dictionary
+         entries to represent the color to be displayed between that range. Depending
+         on the index of the congestion segment, the pair's first or second key
+         will have a buffer value added or subtracted to make room for a gradient
+         transition between congestion segments.
+         
+         green       gradient       red
+         transition
+         |-----------|~~~~~~~~~~~~|----------|
+         0         0.499        0.501       1.0
+         */
+        for (index, line) in congestionSegments.enumerated() {
+            line.getCoordinates(line.coordinates, range: NSMakeRange(0, Int(line.pointCount)))
+            // `UnsafeMutablePointer` is needed here to get the line’s coordinates.
+            let buffPtr = UnsafeMutableBufferPointer(start: line.coordinates, count: Int(line.pointCount))
+            let lineCoordinates = Array(buffPtr)
+            
+            // Get congestion color for the stop.
+            let congestionLevel = line.attributes["congestion"] as? String
+            let associatedCongestionColor = congestionColor(for: congestionLevel)
+            
+            // Measure the line length of the traffic segment.
+            let lineString = LineString(lineCoordinates)
+            guard let distance = lineString.distance() else { return nil }
+            
+            /**
+             If this is the first congestion segment, then the starting
+             percentage point will be zero.
+             */
+            if index == congestionSegments.startIndex {
+                distanceTraveled = distanceTraveled + distance
+                
+                let segmentEndPercentTraveled = CGFloat((distanceTraveled / route.distance))
+                gradientStops[segmentEndPercentTraveled.nextDown] = associatedCongestionColor
+                continue
+            }
+            
+            /**
+             If this is the last congestion segment, then the ending
+             percentage point will be 1.0, to represent 100%.
+             */
+            if index == congestionSegments.endIndex - 1 {
+                let segmentEndPercentTraveled = CGFloat(1.0)
+                gradientStops[segmentEndPercentTraveled.nextDown] = associatedCongestionColor
+                continue
+            }
+            
+            /**
+             If this is not the first or last congestion segment, then
+             the starting and ending percent values traveled for this segment
+             will be a fractional amount more/less than the actual values.
+             */
+            let segmentStartPercentTraveled = CGFloat((distanceTraveled / route.distance))
+            gradientStops[segmentStartPercentTraveled.nextUp] = associatedCongestionColor
+            
+            distanceTraveled = distanceTraveled + distance
+            
+            let segmentEndPercentTraveled = CGFloat((distanceTraveled / route.distance))
+            gradientStops[segmentEndPercentTraveled.nextDown] = associatedCongestionColor
+        }
+        
+        let percentTraveled = CGFloat(fractionTraveled)
+        
+        // Filter out only the stops that are greater than or equal to the percent of the route traveled.
+        var filteredGradientStops = gradientStops.filter { key, value in
+            return key >= percentTraveled
+        }
+        
+        // Then, get the lowest value from the above and fade the range from zero that lowest value,
+        // which represents the % of the route traveled.
+        if let minStop = filteredGradientStops.min(by: { $0.0 < $1.0 }) {
+            filteredGradientStops[0.0] = .clear
+            filteredGradientStops[percentTraveled.nextDown] = .clear
+            filteredGradientStops[percentTraveled] = minStop.value
+        }
+        
+        // It's not possible to create line gradient in case if there are no route gradient stops.
+        if !filteredGradientStops.isEmpty {
+            // Dictionary usage is causing crashes in Release mode (when built with optimization SWIFT_OPTIMIZATION_LEVEL = -O flag).
+            // Even though Dictionary contains valid objects prior to passing it to NSExpression:
+            // [0.4109119609930762: UIExtendedSRGBColorSpace 0.952941 0.65098 0.309804 1,
+            // 0.4109119609930761: UIExtendedSRGBColorSpace 0.337255 0.658824 0.984314 1]
+            // keys become nil in NSExpression arguments list:
+            // [0.4109119609930762 = nil,
+            // 0.4109119609930761 = nil]
+            // Passing NSDictionary with all data from original Dictionary to NSExpression fixes issue.
+            return NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($lineProgress, 'linear', nil, %@)", NSDictionary(dictionary: filteredGradientStops))
+        }
+        return nil
+    }
+    
+    func congestionColor(for congestionLevel: String?) -> UIColor {
         switch congestionLevel {
-        case .low:
-            return #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
-        case .moderate:
+        case "low":
+            return #colorLiteral(red: 0.337254902, green: 0.6588235294, blue: 0.9843137255, alpha: 0.949406036)
+        case "moderate":
             return #colorLiteral(red: 1, green: 0.5843137255, blue: 0, alpha: 1)
-        case .heavy:
+        case "heavy":
             return #colorLiteral(red: 1, green: 0.3019607843, blue: 0.3019607843, alpha: 1)
-        case .severe:
+        case "severe":
             return #colorLiteral(red: 0.5607843137, green: 0.1411764706, blue: 0.2784313725, alpha: 1)
         default:
             return #colorLiteral(red: 0.337254902, green: 0.6588235294, blue: 0.9843137255, alpha: 0.949406036)
         }
     }
     
-    /**
-     Method which allows to convert array of congestion levels into `NSExpression`, which can be later consumed by `MGLLineStyleLayer`.
-     */
-    func routeLineGradient(_ route: Route, congestionSegments: [MGLPolylineFeature]) -> NSExpression? {
-        var gradientStops = [CGFloat: UIColor]()
-        var traversedDistance = 0.0
-        
-        for segment in congestionSegments {
-            segment.getCoordinates(segment.coordinates, range: NSMakeRange(0, Int(segment.pointCount)))
-            
-            let buffPtr = UnsafeMutableBufferPointer(start: segment.coordinates, count: Int(segment.pointCount))
-            guard let distance = LineString(Array(buffPtr)).distance() else { return nil }
-            guard let congestionLevel = segment.attributes[MBCongestionAttribute] as? String else { return nil }
-            let associatedCongestionColor = congestionColor(CongestionLevel(rawValue: congestionLevel))
-            
-            let segmentStart = CGFloat(traversedDistance / route.distance)
-            gradientStops[segmentStart] = associatedCongestionColor
-            
-            traversedDistance = traversedDistance + distance
-            
-            let segmentEnd = CGFloat(traversedDistance / route.distance)
-            gradientStops[segmentEnd] = associatedCongestionColor
-        }
-        
-        if !gradientStops.isEmpty {
-            return NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($lineProgress, 'linear', nil, %@)", NSDictionary(dictionary: gradientStops))
-        }
-        
-        return nil
-    }
+    func addCongestion(_ route: Route) -> [MGLPolylineFeature]? {
+        guard let coordinates = route.shape?.coordinates else { return nil }
 
-    /**
-     Method which allows to provide a custom congestion level for whole main route.
-     */
-    func shape(_ route: Route) -> [MGLPolylineFeature] {
-        var shape: [MGLPolylineFeature] = []
-        
+        var linesPerLeg: [MGLPolylineFeature] = []
+
         for leg in route.legs {
-            let coordinates: [CLLocationCoordinate2D] = leg.steps.enumerated().reduce([]) { allCoordinates, current in
-                let stepCoordinates = current.element.shape!.coordinates
+            let lines: [MGLPolylineFeature]
+            if let legCongestion = leg.segmentCongestionLevels, legCongestion.count < coordinates.count {
+                // The last coord of the preceding step, is shared with the first coord of the next step, we don't need both.
+                let legCoordinates: [CLLocationCoordinate2D] = leg.steps.enumerated().reduce([]) { allCoordinates, current in
+                    let index = current.offset
+                    let step = current.element
+                    let stepCoordinates = step.shape!.coordinates
+                    
+                    return index == 0 ? stepCoordinates : allCoordinates + stepCoordinates.suffix(from: 1)
+                }
                 
-                return current.offset == 0 ? stepCoordinates : allCoordinates + stepCoordinates.suffix(from: 1)
+                let mergedCongestionSegments = combine(legCoordinates, with: legCongestion)
+                
+                lines = mergedCongestionSegments.map { (congestionSegment: CongestionSegment) -> MGLPolylineFeature in
+                    let polyline = MGLPolylineFeature(coordinates: congestionSegment.0, count: UInt(congestionSegment.0.count))
+                    polyline.attributes[MBCongestionAttribute] = String(describing: congestionSegment.1)
+                    return polyline
+                }
+            } else {
+                // If there is no congestion, don't try and add it
+                lines = [MGLPolylineFeature(route.shape!)]
             }
             
-            if let congestionLevel = CongestionLevel.allCases.randomElement() {
-                let polyline = MGLPolylineFeature(coordinates: coordinates, count: UInt(coordinates.count))
-                polyline.attributes[MBCongestionAttribute] = String(describing: congestionLevel)
-                polyline.attributes["isAlternateRoute"] = false
-                shape.append(polyline)
+            for line in lines {
+                line.attributes["isAlternateRoute"] = false
             }
+            
+            linesPerLeg.append(contentsOf: lines)
         }
-        
-        return shape
+
+        return linesPerLeg
     }
 }
