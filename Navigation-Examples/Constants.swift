@@ -104,5 +104,12 @@ let listOfExamples: [NamedController] = [
         controller: RouteLineStylingViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
+    ),
+    (
+        name: "Turn-by-Turn Route Line Styling",
+        description: "Demonstrates how to style route lines in turn-by-turn navigation mode using appearance methods to override the traffic coloring defaults. Long press on the map to begin.",
+        controller: NavigationViewRouteLineStylingViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
     )
 ]
