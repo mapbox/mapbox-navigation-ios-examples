@@ -7,6 +7,7 @@ token_file2=~/mapbox
 token="$(cat $token_file 2>/dev/null || cat $token_file2 2>/dev/null)"
 if [ "$token" ]; then
   plutil -replace MGLMapboxAccessToken -string $token "$TARGET_BUILD_DIR/$INFOPLIST_PATH"
+  plutil -replace MBXAccessToken -string $token "$TARGET_BUILD_DIR/$INFOPLIST_PATH"
 else
   echo 'warning: Missing Mapbox access token'
   open 'https://www.mapbox.com/account/access-tokens/'
