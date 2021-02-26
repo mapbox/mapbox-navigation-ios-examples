@@ -2,6 +2,7 @@ import Foundation
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
+import MapboxMaps
 
 class EmbeddedExampleViewController: UIViewController {
  
@@ -82,5 +83,13 @@ extension EmbeddedExampleViewController: NavigationViewControllerDelegate {
     
     func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func navigationViewController(_ navigationViewController: NavigationViewController, waypointSymbolLayerWithIdentifier identifier: String, sourceIdentifier: String) -> SymbolLayer? {
+        return nil
+    }
+    
+    func navigationViewController(_ navigationViewController: NavigationViewController, waypointCircleLayerWithIdentifier identifier: String, sourceIdentifier: String) -> CircleLayer? {
+        return nil
     }
 }
