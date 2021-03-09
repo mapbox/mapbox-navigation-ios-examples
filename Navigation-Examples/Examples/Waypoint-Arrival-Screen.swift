@@ -62,12 +62,4 @@ extension WaypointArrivalScreenViewController: NavigationViewControllerDelegate 
     func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
         dismiss(animated: true, completion: nil)
     }
-    
-    func navigationViewController(_ navigationViewController: NavigationViewController, waypointCircleLayerWithIdentifier identifier: String, sourceIdentifier: String) -> CircleLayer? {
-        return nil
-    }
-    
-    func navigationViewController(_ navigationViewController: NavigationViewController, waypointSymbolLayerWithIdentifier identifier: String, sourceIdentifier: String) -> SymbolLayer? {
-        return nil
-    }
 }
