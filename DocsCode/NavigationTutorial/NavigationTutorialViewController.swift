@@ -122,14 +122,6 @@ class ViewController: UIViewController {
                 
                 // Show destination waypoint on the map
                 strongSelf.navigationMapView.showWaypoints(on: route)
-                
-                // Display callout view on destination annotation
-//                if var annotation = strongSelf.navigationMapView.mapView.annotationManager.annotations.first?.value as? PointAnnotation {
-//                    strongSelf.navigationMapView.mapView.annotationManager.userInteractionEnabled = true
-//                    print("!!! annotation: \(String(describing: strongSelf.navigationMapView.mapView.annotationManager.annotations.first?.value))")
-//                    annotation.title = "Start navigation"
-//                    strongSelf.navigationMapView.mapView.annotationManager.selectAnnotation(annotation)
-//                }
             }
         }
     }
