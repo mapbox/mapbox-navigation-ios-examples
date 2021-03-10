@@ -3,6 +3,7 @@ import UIKit
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
+import MapboxMaps
 
 class CustomDestinationMarkerController: UIViewController {
     
@@ -29,34 +30,19 @@ class CustomDestinationMarkerController: UIViewController {
                 navigationViewController.modalPresentationStyle = .fullScreen
                 navigationViewController.routeLineTracksTraversal = true
                 
-                strongSelf.present(navigationViewController, animated: true, completion: nil)
+                strongSelf.present(navigationViewController, animated: true) {
+                    navigationViewController.navigationMapView?.mapView.annotationManager.annotations.forEach {
+                        if var t = $0.value as? PointAnnotation {
+                            t.image = UIImage(named: "marker")
+                            do {
+                                try navigationViewController.navigationMapView?.mapView.annotationManager.updateAnnotation(t)
+                            } catch {
+                                NSLog("Error occured: \(error.localizedDescription)")
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
-
-// extension CustomDestinationMarkerController: MGLMapViewDelegate {
-//
-//     func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
-//         var annotationImage = mapView.dequeueReusableAnnotationImage(withIdentifier: "marker")
-//
-//         if annotationImage == nil {
-//             // Leaning Tower of Pisa by Stefan Spieler from the Noun Project.
-//             var image = UIImage(named: "marker")!
-//
-//             // The anchor point of an annotation is currently always the center. To
-//             // shift the anchor point to the bottom of the annotation, the image
-//             // asset includes transparent bottom padding equal to the original image
-//             // height.
-//             //
-//             // To make this padding non-interactive, we create another image object
-//             // with a custom alignment rect that excludes the padding.
-//             image = image.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: image.size.height / 2, right: 0))
-//
-//             // Initialize the ‘pisa’ annotation image with the UIImage we just loaded.
-//             annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: "marker")
-//         }
-//
-//         return annotationImage
-//     }
-// }
