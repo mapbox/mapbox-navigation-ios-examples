@@ -31,11 +31,12 @@ class CustomDestinationMarkerController: UIViewController {
                 navigationViewController.routeLineTracksTraversal = true
                 
                 strongSelf.present(navigationViewController, animated: true) {
+                    // upon completion, update each annotation image to the custom image
                     navigationViewController.navigationMapView?.mapView.annotationManager.annotations.forEach {
-                        if var t = $0.value as? PointAnnotation {
-                            t.image = UIImage(named: "marker")
+                        if var annotation = $0.value as? PointAnnotation {
+                            annotation.image = UIImage(named: "marker")
                             do {
-                                try navigationViewController.navigationMapView?.mapView.annotationManager.updateAnnotation(t)
+                                try navigationViewController.navigationMapView?.mapView.annotationManager.updateAnnotation(annotation)
                             } catch {
                                 NSLog("Error occured: \(error.localizedDescription)")
                             }
