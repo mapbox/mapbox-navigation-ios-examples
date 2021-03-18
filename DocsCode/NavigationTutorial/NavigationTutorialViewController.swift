@@ -50,16 +50,6 @@ class ViewController: UIViewController {
         startButton.clipsToBounds = true
         startButton.setNeedsDisplay()
     }
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        if #available(iOS 14.0, *) {
-            if manager.authorizationStatus != .denied {
-                
-            }
-        } else {
-            // Fallback on earlier versions
-        }
-    }
     // #-end-code-snippet: navigation view-did-load-swift
     
     // #-code-snippet: navigation display-start-button-swift
