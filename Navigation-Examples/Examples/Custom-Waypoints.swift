@@ -24,9 +24,6 @@ class CustomWaypointsViewController: UIViewController, CLLocationManagerDelegate
     var startButton: UIButton!
     var locationManager = CLLocationManager()
     
-    private typealias RouteRequestSuccess = (([Route]) -> Void)
-    private typealias RouteRequestFailure = ((NSError) -> Void)
-    
     // MARK: - UIViewController lifecycle methods
     
     override func viewDidLoad() {
