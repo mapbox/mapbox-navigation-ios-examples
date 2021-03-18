@@ -1,4 +1,3 @@
-import Foundation
 import UIKit
 import MapboxCoreNavigation
 import MapboxNavigation
@@ -6,41 +5,149 @@ import MapboxDirections
 import MapboxMaps
 import Turf
 
-class CustomWaypointsViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate {
+class CustomWaypointsViewController: UIViewController, CLLocationManagerDelegate {
+    
+    var navigationMapView: NavigationMapView!
+    var navigationRouteOptions: NavigationRouteOptions!
+    
+    var waypoints: [Waypoint] = [] {
+        didSet {
+            waypoints.forEach {
+                $0.coordinateAccuracy = -1
+            }
+        }
+    }
+    
+    var routes: [Route]? {
+        didSet {
+            guard let routes = routes, let current = routes.first else {
+                navigationMapView.removeRoutes();
+                return
+            }
+            
+            navigationMapView.show(routes)
+            navigationMapView.showWaypoints(on: current)
+        }
+    }
+    var startButton: UIButton!
+    var locationManager = CLLocationManager()
+    
+    private typealias RouteRequestSuccess = (([Route]) -> Void)
+    private typealias RouteRequestFailure = ((NSError) -> Void)
+    
+    // MARK: - UIViewController lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        
+        navigationMapView = NavigationMapView(frame: view.bounds)
+        navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        navigationMapView.delegate = self
+        navigationMapView.mapView.update {
+            $0.location.showUserLocation = true
+        }
+        
+        // TODO: Provide a reliable way of setting camera to current coordinate.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if let coordinate = self.navigationMapView.mapView.locationManager.latestLocation?.coordinate {
+                self.navigationMapView.mapView.cameraManager.setCamera(centerCoordinate: coordinate, zoom: 13.0)
+            }
+        }
+        
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        navigationMapView.addGestureRecognizer(gesture)
+        
+        view.addSubview(navigationMapView)
+        
+        startButton = UIButton()
+        startButton.setTitle("Start Navigation", for: .normal)
+        startButton.translatesAutoresizingMaskIntoConstraints = false
+        startButton.backgroundColor = .blue
+        startButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        startButton.addTarget(self, action: #selector(tappedButton(sender:)), for: .touchUpInside)
+        startButton.isHidden = true
+        view.addSubview(startButton)
+        
+        startButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        startButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        view.setNeedsLayout()
+    }
+    
+    // Override layout lifecycle callback to be able to style the start button.
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        startButton.layer.cornerRadius = startButton.bounds.midY
+        startButton.clipsToBounds = true
+        startButton.setNeedsDisplay()
+    }
 
-        let origin = CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648)
-        let firstWaypoint = CLLocationCoordinate2DMake(37.77671493551678, -122.42370544507409)
-        let secondWaypoint = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
-        let options = NavigationRouteOptions(coordinates: [origin, firstWaypoint, secondWaypoint])
+    @objc func tappedButton(sender: UIButton) {
+        guard let route = routes?.first, let navigationRouteOptions = navigationRouteOptions else { return }
+        // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
+        let navigationService = MapboxNavigationService(route: route,
+                                                        routeIndex: 0,
+                                                        routeOptions: navigationRouteOptions,
+                                                        simulating: simulationIsEnabled ? .always : .onPoorGPS)
+        let navigationOptions = NavigationOptions(navigationService: navigationService)
+        let navigationViewController = NavigationViewController(for: route, routeIndex: 0,
+                                                                routeOptions: navigationRouteOptions,
+                                                                navigationOptions: navigationOptions)
+        navigationViewController.delegate = self
+        
+        present(navigationViewController, animated: true, completion: nil)
+    }
+    
+    @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else { return }
+        let gestureLocation = gesture.location(in: navigationMapView)
+        let destinationCoordinate = navigationMapView.mapView.coordinate(for: gestureLocation,
+                                                                         in: navigationMapView)
+        
+        if waypoints.count > 1 {
+            waypoints = Array(waypoints.dropFirst())
+        }
+        
+        let waypoint = Waypoint(coordinate: destinationCoordinate, name: "Dropped Pin #\(waypoints.endIndex + 1)")
+        waypoints.append(waypoint)
+                
+        requestRoute()
+    }
 
-        Directions.shared.calculate(options) { [weak self] (session, result) in
+    func requestRoute() {
+        guard waypoints.count > 0 else { return }
+        guard let userLocation = navigationMapView.mapView.locationManager.latestLocation else { return }
+        let userWaypoint = Waypoint(location: userLocation.internalLocation)
+        waypoints.insert(userWaypoint, at: 0)
+        let navigationRouteOptions = NavigationRouteOptions(waypoints: waypoints)
+        
+        Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let response):
-                guard let route = response.routes?.first, let strongSelf = self else {
-                    return
-                }
-
-                // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-                // Since first route is retrieved from response `routeIndex` is set to 0.
-                let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: options, simulating: simulationIsEnabled ? .always : .onPoorGPS)
-                let navigationOptions = NavigationOptions(navigationService: navigationService)
-                let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: options, navigationOptions: navigationOptions)
-                navigationViewController.navigationMapView?.delegate = self
-                navigationViewController.modalPresentationStyle = .fullScreen
-                // Render part of the route that has been traversed with full transparency, to give the illusion of a disappearing route.
-                navigationViewController.routeLineTracksTraversal = true
-
-                strongSelf.present(navigationViewController, animated: true, completion: nil)
+                guard let routes = response.routes,
+                      let currentRoute = routes.first,
+                      let self = self else { return }
+                
+                self.navigationRouteOptions = navigationRouteOptions
+                self.routes = routes
+                self.startButton?.isHidden = false
+                self.navigationMapView.show(routes)
+                self.navigationMapView.showWaypoints(on: currentRoute)
             }
         }
     }
+    
+    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
+        dismiss(animated: true, completion: nil)
+    }
 
     // MARK: - Styling methods
-    func customCircleLayer(with identifier: String, sourceIdentifier: String) -> CircleLayer? {
+    func customCircleLayer(with identifier: String, sourceIdentifier: String) -> CircleLayer {
         var circleLayer = CircleLayer(id: identifier)
         circleLayer.source = sourceIdentifier
         let opacity = Exp(.switchCase) {
@@ -61,7 +168,7 @@ class CustomWaypointsViewController: UIViewController, NavigationMapViewDelegate
         return circleLayer
     }
 
-    func customSymbolLayer(with identifier: String, sourceIdentifier: String) -> SymbolLayer? {
+    func customSymbolLayer(with identifier: String, sourceIdentifier: String) -> SymbolLayer {
         var symbolLayer = SymbolLayer(id: identifier)
         symbolLayer.source = sourceIdentifier
         symbolLayer.layout?.textField = .expression(Exp(.toString){
@@ -84,7 +191,7 @@ class CustomWaypointsViewController: UIViewController, NavigationMapViewDelegate
         return symbolLayer
     }
 
-    func customWaypointShape(shapeFor waypoints: [Waypoint], legIndex: Int) -> FeatureCollection? {
+    func customWaypointShape(shapeFor waypoints: [Waypoint], legIndex: Int) -> FeatureCollection {
         var features = [Feature]()
         for (waypointIndex, waypoint) in waypoints.enumerated() {
             var feature = Feature(Point(waypoint.coordinate))
@@ -96,8 +203,10 @@ class CustomWaypointsViewController: UIViewController, NavigationMapViewDelegate
         }
         return FeatureCollection(features: features)
     }
+}
 
-    // MARK: - NavigationMapViewDelegate methods
+// MARK: Delegate methods
+extension CustomWaypointsViewController: NavigationMapViewDelegate {
     func navigationMapView(_ navigationMapView: NavigationMapView, waypointCircleLayerWithIdentifier identifier: String, sourceIdentifier: String) -> CircleLayer? {
         return customCircleLayer(with: identifier, sourceIdentifier: sourceIdentifier)
     }
@@ -109,8 +218,9 @@ class CustomWaypointsViewController: UIViewController, NavigationMapViewDelegate
     func navigationMapView(_ navigationMapView: NavigationMapView, shapeFor waypoints: [Waypoint], legIndex: Int) -> FeatureCollection? {
         return customWaypointShape(shapeFor: waypoints, legIndex: legIndex)
     }
+}
 
-    // MARK: - NavigationViewControllerDelegate methods
+extension CustomWaypointsViewController: NavigationViewControllerDelegate {
     func navigationViewController(_ navigationViewController: NavigationViewController, waypointCircleLayerWithIdentifier identifier: String, sourceIdentifier: String) -> CircleLayer? {
         return customCircleLayer(with: identifier, sourceIdentifier: sourceIdentifier)
     }

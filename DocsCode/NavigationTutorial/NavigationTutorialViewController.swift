@@ -9,6 +9,7 @@ import Turf
 class ViewController: UIViewController {
     // #-code-snippet: navigation vc-variables-swift
     var navigationMapView: NavigationMapView!
+    var navigationViewController: NavigationViewController!
     var routeOptions: NavigationRouteOptions?
     var route: Route?
     var startButton: UIButton!
@@ -19,12 +20,21 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         navigationMapView = NavigationMapView(frame: view.bounds)
+        navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(navigationMapView)
 
         // Allow the map to display the user's location
         navigationMapView.showsUserLocation = true
-        // TODO: DEAL WITH ZOOM WITH USER TRACKING MODE
-
+        
+        // Zoom and center user's location on the map
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if let coordinate = self.navigationMapView.mapView.locationManager.latestLocation?.coordinate {
+                self.navigationMapView.mapView.cameraManager.setCamera(to: CameraOptions(center: coordinate, zoom: 13),
+                                                                  animated: true,
+                                                                  completion: nil)
+            }
+        }
+        
         // Add a gesture recognizer to the map view
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
         navigationMapView.addGestureRecognizer(longPress)
@@ -39,6 +49,16 @@ class ViewController: UIViewController {
         startButton.layer.cornerRadius = startButton.bounds.midY
         startButton.clipsToBounds = true
         startButton.setNeedsDisplay()
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        if #available(iOS 14.0, *) {
+            if manager.authorizationStatus != .denied {
+                
+            }
+        } else {
+            // Fallback on earlier versions
+        }
     }
     // #-end-code-snippet: navigation view-did-load-swift
     
@@ -83,7 +103,7 @@ class ViewController: UIViewController {
     @objc func tappedButton(sender: UIButton) {
         guard let route = route, let navigationRouteOptions = routeOptions else { return }
         
-        let navigationViewController = NavigationViewController(for: route, routeIndex: 0,
+        navigationViewController = NavigationViewController(for: route, routeIndex: 0,
                                                                 routeOptions: navigationRouteOptions)
         navigationViewController.modalPresentationStyle = .fullScreen
         
@@ -134,7 +154,7 @@ class ViewController: UIViewController {
         let sourceIdentifier = "routeStyle"
         
         // Convert the route’s coordinates into a linestring feature
-        let feature = Feature.init(geometry: Geometry.lineString(routeShape))
+        let feature = Feature(LineString(routeShape.coordinates))
         
         // If there's already a route line on the map, update its shape to the new route
         if let _ = try? mapView.style.getSource(identifier: sourceIdentifier, type: GeoJSONSource.self).get() {
