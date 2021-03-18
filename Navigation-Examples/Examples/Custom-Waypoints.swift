@@ -10,14 +10,6 @@ class CustomWaypointsViewController: UIViewController, CLLocationManagerDelegate
     var navigationMapView: NavigationMapView!
     var navigationRouteOptions: NavigationRouteOptions!
     
-    var waypoints: [Waypoint] = [] {
-        didSet {
-            waypoints.forEach {
-                $0.coordinateAccuracy = -1
-            }
-        }
-    }
-    
     var routes: [Route]? {
         didSet {
             guard let routes = routes, let current = routes.first else {
@@ -57,9 +49,6 @@ class CustomWaypointsViewController: UIViewController, CLLocationManagerDelegate
             }
         }
         
-        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        navigationMapView.addGestureRecognizer(gesture)
-        
         view.addSubview(navigationMapView)
         
         startButton = UIButton()
@@ -74,6 +63,8 @@ class CustomWaypointsViewController: UIViewController, CLLocationManagerDelegate
         startButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
         startButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         view.setNeedsLayout()
+        
+        requestRoute()
     }
     
     // Override layout lifecycle callback to be able to style the start button.
@@ -100,29 +91,12 @@ class CustomWaypointsViewController: UIViewController, CLLocationManagerDelegate
         
         present(navigationViewController, animated: true, completion: nil)
     }
-    
-    @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
-        guard gesture.state == .began else { return }
-        let gestureLocation = gesture.location(in: navigationMapView)
-        let destinationCoordinate = navigationMapView.mapView.coordinate(for: gestureLocation,
-                                                                         in: navigationMapView)
-        
-        if waypoints.count > 1 {
-            waypoints = Array(waypoints.dropFirst())
-        }
-        
-        let waypoint = Waypoint(coordinate: destinationCoordinate, name: "Dropped Pin #\(waypoints.endIndex + 1)")
-        waypoints.append(waypoint)
-                
-        requestRoute()
-    }
 
     func requestRoute() {
-        guard waypoints.count > 0 else { return }
-        guard let userLocation = navigationMapView.mapView.locationManager.latestLocation else { return }
-        let userWaypoint = Waypoint(location: userLocation.internalLocation)
-        waypoints.insert(userWaypoint, at: 0)
-        let navigationRouteOptions = NavigationRouteOptions(waypoints: waypoints)
+        let origin = CLLocationCoordinate2DMake(37.773, -122.411)
+        let firstWaypoint = CLLocationCoordinate2DMake(37.763252389415186, -122.40061448679577)
+        let secondWaypoint = CLLocationCoordinate2DMake(37.76259647118012, -122.42072747880516)
+        let navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, firstWaypoint, secondWaypoint])
         
         Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
             switch result {
