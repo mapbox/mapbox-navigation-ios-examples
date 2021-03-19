@@ -4,7 +4,7 @@ import MapboxNavigation
 import MapboxDirections
 import MapboxMaps
 
-class AdvancedViewController: UIViewController, CLLocationManagerDelegate, NavigationMapViewDelegate, NavigationViewControllerDelegate {
+class AdvancedViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate {
     
     var navigationMapView: NavigationMapView!
     var navigationRouteOptions: NavigationRouteOptions!
@@ -30,19 +30,13 @@ class AdvancedViewController: UIViewController, CLLocationManagerDelegate, Navig
             navigationMapView.showWaypoints(on: current)
         }
     }
-    var startButton: UIButton!
-    var locationManager = CLLocationManager()
     
-    private typealias RouteRequestSuccess = (([Route]) -> Void)
-    private typealias RouteRequestFailure = ((NSError) -> Void)
+    var startButton: UIButton!
     
     // MARK: - UIViewController lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
         
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
