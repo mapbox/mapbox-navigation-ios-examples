@@ -5,7 +5,7 @@ import MapboxDirections
 import MapboxMaps
 import Turf
 
-class CustomWaypointsViewController: UIViewController, CLLocationManagerDelegate {
+class CustomWaypointsViewController: UIViewController {
     
     var navigationMapView: NavigationMapView!
     var navigationRouteOptions: NavigationRouteOptions!
@@ -22,28 +22,17 @@ class CustomWaypointsViewController: UIViewController, CLLocationManagerDelegate
         }
     }
     var startButton: UIButton!
-    var locationManager = CLLocationManager()
     
     // MARK: - UIViewController lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.delegate = self
         navigationMapView.mapView.update {
             $0.location.showUserLocation = true
-        }
-        
-        // TODO: Provide a reliable way of setting camera to current coordinate.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            if let coordinate = self.navigationMapView.mapView.locationManager.latestLocation?.coordinate {
-                self.navigationMapView.mapView.cameraManager.setCamera(centerCoordinate: coordinate, zoom: 13.0)
-            }
         }
         
         view.addSubview(navigationMapView)
