@@ -57,6 +57,13 @@ let listOfExamples: [NamedController] = [
         pushExampleToViewController: false
     ),
     (
+        name: "Custom Waypoint Styling",
+        description: "Demonstrates how to customize waypoint styling.",
+        controller: CustomWaypointsViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
+    ),
+    (
         name: "Custom Voice Controller",
         description: "Add custom audio recordings for your instructions.",
         controller: CustomVoiceControllerUI.self,
