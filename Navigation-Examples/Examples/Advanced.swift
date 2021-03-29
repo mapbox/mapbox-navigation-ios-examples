@@ -42,7 +42,7 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.delegate = self
         navigationMapView.mapView.update {
-            $0.location.showUserLocation = true
+            $0.location.puckType = .puck2D()
         }
         
         // TODO: Provide a reliable way of setting camera to current coordinate.
