@@ -29,7 +29,7 @@ class LocationSnappingViewController: UIViewController {
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.mapView.update {
-            $0.location.showUserLocation = true
+            $0.location.puckType = .puck2D()
         }
         
         // TODO: Provide a reliable way of setting camera to current coordinate.
