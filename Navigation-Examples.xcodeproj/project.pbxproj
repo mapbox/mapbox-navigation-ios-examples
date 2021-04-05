@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E4DB43E555307E85D094271 /* Pods_Navigation_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */; };
+		11B6E81726176F3600872E4D /* ObservingElectronicHorizonEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B6E81626176F3600872E4D /* ObservingElectronicHorizonEventsViewController.swift */; };
 		11DC36F226161DAF0042CD4A /* Location-Snapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DC36F126161DAF0042CD4A /* Location-Snapping.swift */; };
 		2B521D4E24090A3A00984CF8 /* CustomBarsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B521D4D24090A3A00984CF8 /* CustomBarsViewController.swift */; };
 		2B521D502409240E00984CF8 /* CustomBottomBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B521D4F2409240E00984CF8 /* CustomBottomBannerView.swift */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		01D167067A6027DCA4D44BF3 /* Pods-Navigation-Examples-DocsCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples-DocsCode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples-DocsCode/Pods-Navigation-Examples-DocsCode.debug.xcconfig"; sourceTree = "<group>"; };
 		020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		11B6E81626176F3600872E4D /* ObservingElectronicHorizonEventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservingElectronicHorizonEventsViewController.swift; sourceTree = "<group>"; };
 		11DC36F126161DAF0042CD4A /* Location-Snapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location-Snapping.swift"; sourceTree = "<group>"; };
 		1E6EDEBB177F0E6643EC4DB9 /* Pods-Navigation-Examples-DocsCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples-DocsCode.release.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples-DocsCode/Pods-Navigation-Examples-DocsCode.release.xcconfig"; sourceTree = "<group>"; };
 		2B521D4D24090A3A00984CF8 /* CustomBarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarsViewController.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				B480E423261E4C3500C16FA0 /* Predictive-Caching.swift */,
 				B480E427261E4C4600C16FA0 /* Route-Alerts.swift */,
 				11DC36F126161DAF0042CD4A /* Location-Snapping.swift */,
+				11B6E81626176F3600872E4D /* ObservingElectronicHorizonEventsViewController.swift */,
 				8AC9129E2494118400B6941E /* TestData */,
 				2B521D5324094F2500984CF8 /* CustomBars */,
 			);
@@ -544,6 +547,7 @@
 				C59094C3203E3B9100EB2417 /* Custom-Voice-Controller.swift in Sources */,
 				C52BAA782040D5030086EC6B /* Custom-Destination-Marker.swift in Sources */,
 				8DF510741FEB08F70049DB9C /* Embedded-Navigation.swift in Sources */,
+				11B6E81726176F3600872E4D /* ObservingElectronicHorizonEventsViewController.swift in Sources */,
 				C58FB8711FE8A43000C4B491 /* Basic.swift in Sources */,
 				C58FB8731FE98AEB00C4B491 /* Styled-UI-Elements.swift in Sources */,
 				C58FB85A1FE899B800C4B491 /* AppDelegate.swift in Sources */,
