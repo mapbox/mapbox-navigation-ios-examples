@@ -4,7 +4,7 @@ import MapboxCoreNavigation
 import MapboxMaps
 
 class LocationSnappingViewController: UIViewController {
-    private var navigationMapView: NavigationMapView!
+    private lazy var navigationMapView = NavigationMapView(frame: view.bounds)
     private let toggleButton = UIButton()
     private let passiveLocationProvider = PassiveLocationManager(dataSource: PassiveLocationDataSource())
     
@@ -25,8 +25,7 @@ class LocationSnappingViewController: UIViewController {
         setupSnappingToggle()
     }
     
-    func setupNavigationMapView() {
-        navigationMapView = NavigationMapView(frame: view.bounds)
+    private func setupNavigationMapView() {
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.mapView.update {
             $0.location.puckType = .puck2D()
@@ -44,7 +43,7 @@ class LocationSnappingViewController: UIViewController {
         view.addSubview(navigationMapView)
     }
     
-    func setupSnappingToggle() {
+    private func setupSnappingToggle() {
         toggleButton.layer.cornerRadius = 5
         toggleButton.translatesAutoresizingMaskIntoConstraints = false
         isSnappingEnabled = false
@@ -58,7 +57,7 @@ class LocationSnappingViewController: UIViewController {
         toggleButton.titleLabel?.font = UIFont.systemFont(ofSize: 25)
     }
     
-    @objc func toggleSnapping() {
+    @objc private func toggleSnapping() {
         isSnappingEnabled.toggle()
     }
 }
