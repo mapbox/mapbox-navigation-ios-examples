@@ -133,11 +133,11 @@ class CustomWaypointsViewController: UIViewController {
     func customSymbolLayer(with identifier: String, sourceIdentifier: String) -> SymbolLayer {
         var symbolLayer = SymbolLayer(id: identifier)
         symbolLayer.source = sourceIdentifier
-        symbolLayer.layout?.textField = .expression(Exp(.toString){
-                                                        Exp(.get){
-                                                            "name"
-                                                        }
-                                                    })
+        symbolLayer.layout?.textField = .expression(Exp(.toString) {
+            Exp(.get) {
+                "name"
+            }
+        })
         symbolLayer.layout?.textSize = .constant(.init(10))
         symbolLayer.paint?.textOpacity = .expression(Exp(.switchCase) {
             Exp(.any) {
