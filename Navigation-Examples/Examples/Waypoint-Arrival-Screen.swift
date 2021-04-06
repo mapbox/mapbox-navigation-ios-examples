@@ -3,6 +3,7 @@ import UIKit
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
+import MapboxMaps
 
 class WaypointArrivalScreenViewController: UIViewController {
     

@@ -2,6 +2,7 @@ import Foundation
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
+import MapboxMaps
 
 class EmbeddedExampleViewController: UIViewController {
  

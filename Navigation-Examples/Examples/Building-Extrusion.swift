@@ -2,13 +2,12 @@ import UIKit
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
-import Mapbox
+import MapboxMaps
 
 class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate, UIGestureRecognizerDelegate {
+    var navigationMapView: NavigationMapView!
     
-    var mapView: NavigationMapView?
-    
-    var routeOptions: NavigationRouteOptions?
+    var navigationRouteOptions: NavigationRouteOptions!
     
     var currentRoute: Route? {
         get {
@@ -24,14 +23,14 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     var routes: [Route]? {
         didSet {
             guard let routes = routes, let currentRoute = routes.first else {
-                mapView?.removeRoutes()
-                mapView?.removeWaypoints()
+                navigationMapView.removeRoutes()
+                navigationMapView.removeWaypoints()
                 waypoints.removeAll()
                 return
             }
 
-            mapView?.show(routes)
-            mapView?.showWaypoints(on: currentRoute)
+            navigationMapView.show(routes)
+            navigationMapView.showWaypoints(on: currentRoute)
         }
     }
 
@@ -50,17 +49,23 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     // MARK: - Setting-up methods
     
     func setupNavigationMapView() {
-        mapView = NavigationMapView(frame: view.bounds)
-        mapView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mapView?.userTrackingMode = .follow
-        mapView?.navigationMapViewDelegate = self
-        mapView?.style?.transition = MGLTransition(duration: 1.0, delay: 1.0)
+        navigationMapView = NavigationMapView(frame: view.bounds)
+        navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        navigationMapView.delegate = self
+        navigationMapView.mapView.update {
+            $0.location.puckType = .puck2D()
+        }
         
-        // To make sure that buildings are rendered increase zoomLevel to value which is higher than 16.0.
-        // More details can be found here: https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v8/#building
-        mapView?.zoomLevel = 17.0
+        // TODO: Provide a reliable way of setting camera to current coordinate.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if let coordinate = self.navigationMapView.mapView.locationManager.latestLocation?.coordinate {
+                // To make sure that buildings are rendered increase zoomLevel to value which is higher than 16.0.
+                // More details can be found here: https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v8/#building
+                self.navigationMapView.mapView.cameraManager.setCamera(centerCoordinate: coordinate, zoom: 17.0)
+            }
+        }
         
-        view.addSubview(mapView!)
+        view.addSubview(navigationMapView)
     }
     
     func setupPerformActionBarButtonItem() {
@@ -74,11 +79,11 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     
     func setupGestureRecognizers() {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        mapView?.addGestureRecognizer(longPressGestureRecognizer)
+        navigationMapView.addGestureRecognizer(longPressGestureRecognizer)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         tapGestureRecognizer.delegate = self
-        mapView?.addGestureRecognizer(tapGestureRecognizer)
+        navigationMapView.addGestureRecognizer(tapGestureRecognizer)
     }
 
     @objc func performAction(_ sender: Any) {
@@ -112,18 +117,24 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     }
     
     func startNavigation() {
-        guard let route = currentRoute, let routeOptions = routeOptions else {
+        guard let route = currentRoute, let navigationRouteOptions = navigationRouteOptions else {
             presentAlert(message: "Please select at least one destination coordinate to start navigation.")
             return
         }
 
-        let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+        let navigationService = MapboxNavigationService(route: route,
+                                                        routeIndex: 0,
+                                                        routeOptions: navigationRouteOptions,
+                                                        simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
+        let navigationViewController = NavigationViewController(for: route,
+                                                                routeIndex: 0,
+                                                                routeOptions: navigationRouteOptions,
+                                                                navigationOptions: navigationOptions)
         navigationViewController.routeLineTracksTraversal = true
         navigationViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen
-        navigationViewController.mapView?.styleURL = self.mapView?.styleURL
+        navigationViewController.navigationMapView?.mapView.style.styleURL = navigationMapView.mapView.style.styleURL
         
         // Set `waypointStyle` to either `.building` or `.extrudedBuilding` to allow
         // building highighting in 2D or 3D respectively.
@@ -133,39 +144,38 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     }
     
     func toggleDayNightStyle() {
-        if mapView?.styleURL == MGLStyle.navigationNightStyleURL {
-            mapView?.styleURL = MGLStyle.navigationDayStyleURL
+        if navigationMapView.mapView?.style.styleURL.url == MapboxMaps.Style.navigationNightStyleURL {
+            navigationMapView.mapView?.style.styleURL = StyleURL.custom(url: MapboxMaps.Style.navigationDayStyleURL)
         } else {
-            mapView?.styleURL = MGLStyle.navigationNightStyleURL
+            navigationMapView.mapView?.style.styleURL = StyleURL.custom(url: MapboxMaps.Style.navigationNightStyleURL)
         }
     }
     
     func unhighlightBuildings() {
         waypoints.forEach({ $0.targetCoordinate = nil })
-        mapView?.unhighlightBuildings()
+        navigationMapView.unhighlightBuildings()
     }
     
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .began else { return }
 
-        createWaypoints(for: mapView?.convert(gesture.location(in: mapView), toCoordinateFrom: mapView))
+        createWaypoints(for: navigationMapView.mapView.coordinate(for: gesture.location(in: navigationMapView.mapView)))
         requestRoute()
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
         // In case if route is already shown on map do not allow selection of buildings other than final destination.
-        if let _ = currentRoute, let _ = routeOptions { return }
-        guard let destination = mapView?.convert(gesture.location(in: mapView), toCoordinateFrom: mapView) else { return }
-        mapView?.highlightBuildings(at: [destination], in3D: true)
+        if let _ = currentRoute, let _ = navigationRouteOptions { return }
+        navigationMapView.highlightBuildings(at: [navigationMapView.mapView.coordinate(for: gesture.location(in: navigationMapView.mapView))], in3D: true)
     }
 
     func createWaypoints(for destinationCoordinate: CLLocationCoordinate2D?) {
         guard let destinationCoordinate = destinationCoordinate else { return }
-        guard let userLocation = mapView?.userLocation?.location else {
+        guard let userLocation = navigationMapView.mapView.locationManager.latestLocation?.internalLocation else {
             presentAlert(message: "User location is not valid. Make sure to enable Location Services.")
             return
         }
-
+        
         // Unhighlight all buildings in case if there are no previous destination waypoints.
         if waypoints.isEmpty {
             unhighlightBuildings()
@@ -177,7 +187,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         if waypoints.first?.name != userLocationName {
             waypoints.insert(userWaypoint, at: 0)
         }
-
+        
         // Add destination waypoint to list of waypoints.
         let waypoint = Waypoint(coordinate: destinationCoordinate)
         waypoint.targetCoordinate = destinationCoordinate
@@ -185,8 +195,8 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     }
 
     func requestRoute() {
-        let routeOptions = NavigationRouteOptions(waypoints: waypoints)
-        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+        let navigationRouteOptions = NavigationRouteOptions(waypoints: waypoints)
+        Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
             switch result {
             case .failure(let error):
                 self?.presentAlert(message: error.localizedDescription)
@@ -195,15 +205,15 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
                 self?.waypoints.removeLast()
             case .success(let response):
                 guard let routes = response.routes else { return }
-                self?.routeOptions = routeOptions
+                self?.navigationRouteOptions = navigationRouteOptions
                 self?.routes = routes
-                self?.mapView?.show(routes)
+                self?.navigationMapView.show(routes)
                 if let currentRoute = self?.currentRoute {
-                    self?.mapView?.showWaypoints(on: currentRoute)
+                    self?.navigationMapView.showWaypoints(on: currentRoute)
                 }
 
                 if let coordinates = self?.waypoints.compactMap({ $0.targetCoordinate }) {
-                    self?.mapView?.highlightBuildings(at: coordinates, in3D: true)
+                    self?.navigationMapView.highlightBuildings(at: coordinates, in3D: true)
                 }
             }
         }

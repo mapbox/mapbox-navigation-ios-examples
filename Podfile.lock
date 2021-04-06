@@ -1,63 +1,81 @@
 PODS:
-  - Mapbox-iOS-SDK (6.2.1):
-    - MapboxMobileEvents (~> 0.10.4)
-  - MapboxAccounts (2.3.0)
-  - MapboxCommon (4.0.1)
-  - MapboxCoreNavigation (1.0.0):
-    - MapboxAccounts (~> 2.3.0)
-    - MapboxDirections (~> 1.0)
+  - MapboxCommon (10.0.2)
+  - MapboxCoreMaps (10.0.0-beta.17):
+    - MapboxCommon (= 10.0.2)
+  - MapboxCoreNavigation (2.0.0-beta.3):
+    - MapboxDirections-pre (= 2.0.0-alpha.2)
     - MapboxMobileEvents (~> 0.10.2)
-    - MapboxNavigationNative (~> 18.0.5)
-    - Turf (~> 1.0)
-  - MapboxDirections (1.0.0):
-    - Polyline (~> 4.2)
-    - Turf (~> 1.0)
-  - MapboxMobileEvents (0.10.4)
-  - MapboxNavigation (1.0.0):
-    - Mapbox-iOS-SDK (~> 6.0)
-    - MapboxCoreNavigation (= 1.0.0)
+    - MapboxNavigationNative (~> 47.0)
+    - Turf (= 2.0.0-alpha.3)
+  - MapboxDirections-pre (2.0.0-alpha.2):
+    - Polyline (~> 5.0)
+    - Turf (~> 2.0.0-alpha.3)
+  - MapboxMaps (10.0.0-beta.16):
+    - MapboxCommon (= 10.0.2)
+    - MapboxCoreMaps (= 10.0.0-beta.17)
+    - MapboxMobileEvents (= 0.10.8)
+    - Turf (= 2.0.0-alpha.3)
+  - MapboxMobileEvents (0.10.8)
+  - MapboxNavigation (2.0.0-beta.3):
+    - MapboxCoreNavigation (= 2.0.0-beta.3)
+    - MapboxMaps (= 10.0.0-beta.16)
     - MapboxMobileEvents (~> 0.10.2)
-    - MapboxSpeech (~> 1.0)
+    - MapboxSpeech-pre (= 2.0.0-alpha.1)
     - Solar (~> 2.1)
-  - MapboxNavigationNative (18.0.5):
-    - MapboxCommon (= 4.0.1)
-  - MapboxSpeech (1.0.0)
-  - Polyline (4.2.1)
+  - MapboxNavigationNative (47.0.0):
+    - MapboxCommon (= 10.0.2)
+  - MapboxSpeech-pre (2.0.0-alpha.1)
+  - Polyline (5.0.2)
   - Solar (2.1.0)
-  - Turf (1.0.0)
+  - Turf (2.0.0-alpha.3)
 
 DEPENDENCIES:
-  - MapboxNavigation (~> 1.0)
+  - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `release-v2.0`)
+  - MapboxNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `release-v2.0`)
 
 SPEC REPOS:
   trunk:
-    - Mapbox-iOS-SDK
-    - MapboxAccounts
     - MapboxCommon
-    - MapboxCoreNavigation
-    - MapboxDirections
+    - MapboxCoreMaps
+    - MapboxDirections-pre
+    - MapboxMaps
     - MapboxMobileEvents
-    - MapboxNavigation
     - MapboxNavigationNative
-    - MapboxSpeech
+    - MapboxSpeech-pre
     - Polyline
     - Solar
     - Turf
 
+EXTERNAL SOURCES:
+  MapboxCoreNavigation:
+    :branch: release-v2.0
+    :git: https://github.com/mapbox/mapbox-navigation-ios.git
+  MapboxNavigation:
+    :branch: release-v2.0
+    :git: https://github.com/mapbox/mapbox-navigation-ios.git
+
+CHECKOUT OPTIONS:
+  MapboxCoreNavigation:
+    :commit: 7d787f32b6b302d4e7d7556c53c0cf6e75e36a63
+    :git: https://github.com/mapbox/mapbox-navigation-ios.git
+  MapboxNavigation:
+    :commit: 7d787f32b6b302d4e7d7556c53c0cf6e75e36a63
+    :git: https://github.com/mapbox/mapbox-navigation-ios.git
+
 SPEC CHECKSUMS:
-  Mapbox-iOS-SDK: c5a2ec3a3a0a77ee0ba78f91380e83898cb6aa41
-  MapboxAccounts: 84abfdde95d9dc483f604c1b0fe1861edf691ce7
-  MapboxCommon: 50fb1be5136cb30f123b7e2fbe4b2ea2e86f2216
-  MapboxCoreNavigation: 04d44485e8da4d5ded816dcd7e419edabf71cbb7
-  MapboxDirections: 35c071db30397f06708ae305287f10395586e154
-  MapboxMobileEvents: 3dc72ea23e62d4afd64d3242f04686405b4a0e98
-  MapboxNavigation: 699145d57aa95ebfe14e5de34d45b133d0c46e5d
-  MapboxNavigationNative: d2b70c1d60a10aeb25c3b3c483b59332b4773a03
-  MapboxSpeech: 4b3aea42e35d056fae1d7ad847a9fc0f412d911e
-  Polyline: 0e9890790292741c8186201a536b6bb6a78d02dd
+  MapboxCommon: f7f4e0040500d221ef7a9b4d81e7debb77d10ce1
+  MapboxCoreMaps: fd16bda557bec7a6daebcc2a5ff1e916e1d701ea
+  MapboxCoreNavigation: d0286ee82a6cb06d6c8ed451d2d96c2729e09e40
+  MapboxDirections-pre: 96571d86a2483ebc5c5f9a77a8184a8f10daf545
+  MapboxMaps: cfb0ac7313208981dc35e69876658cf87209484a
+  MapboxMobileEvents: 36ff53b135aac486eed94b61f813c7967a0c2c6f
+  MapboxNavigation: 8963ccbec3d32c0b4ab2519398905443c850575c
+  MapboxNavigationNative: 5d2423d9187ab94af837c36c00f86da3c8604485
+  MapboxSpeech-pre: aeb16de604d07ceb4195150c3359d5401bb298e6
+  Polyline: fce41d72e1146c41c6d081f7656827226f643dff
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
-  Turf: 29b37f6d67f184a7b2d00f594c3e20b3e5474b7d
+  Turf: ec9b01ef9386ab53545a1f763b7296c9ce3590d1
 
-PODFILE CHECKSUM: 0547fff4bcc53559322826a262cde454f9182c7e
+PODFILE CHECKSUM: 08ee95eefa37720b886316a708310b6234d09e59
 
-COCOAPODS: 1.10.0.rc.1
+COCOAPODS: 1.10.1
