@@ -5,6 +5,7 @@ import MapboxMaps
 import Turf
 
 class ObservingElectronicHorizonEventsViewController: UIViewController {
+
     private lazy var navigationMapView = NavigationMapView(frame: view.bounds)
 
     private let upcomingIntersectionLabel = UILabel()
@@ -16,10 +17,6 @@ class ObservingElectronicHorizonEventsViewController: UIViewController {
         setupNavigationMapView()
         setupUpcomingIntersectionLabel()
         subscribeToElectronicHorizonUpdates()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.setupMostProbablePathStyle()
-        }
-
     }
 
     func setupNavigationMapView() {
@@ -27,6 +24,9 @@ class ObservingElectronicHorizonEventsViewController: UIViewController {
         navigationMapView.mapView.locationManager.overrideLocationProvider(with: passiveLocationManager)
         navigationMapView.mapView.update {
             $0.location.puckType = .puck2D()
+        }
+        navigationMapView.mapView.on(.styleLoaded) { _ in
+            self.setupMostProbablePathStyle()
         }
         
         // TODO: Provide a reliable way of setting camera to current coordinate.
@@ -51,7 +51,7 @@ class ObservingElectronicHorizonEventsViewController: UIViewController {
             upcomingIntersectionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             upcomingIntersectionLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
         ])
-        upcomingIntersectionLabel.backgroundColor = .white
+        upcomingIntersectionLabel.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
         upcomingIntersectionLabel.layer.cornerRadius = 5
         upcomingIntersectionLabel.numberOfLines = 0
     }
@@ -110,7 +110,7 @@ class ObservingElectronicHorizonEventsViewController: UIViewController {
             if let predictedCrossStreet = predictedCrossStreet {
                 statusString += "\nUpcoming intersection with:\n\(predictedCrossStreet)"
             } else {
-                statusString += "No upcoming intersections"
+                statusString += "\nNo upcoming intersections"
             }
         }
 
@@ -155,7 +155,7 @@ class ObservingElectronicHorizonEventsViewController: UIViewController {
                 RouteLineWidthByZoomLevel.mapValues { $0 * 0.5 }
             }
         )
-        layer.paint?.lineColor = .constant(.init(color: UIColor.cyan.withAlphaComponent(0.9)))
+        layer.paint?.lineColor = .constant(.init(color: UIColor.green.withAlphaComponent(0.9)))
         layer.layout?.lineCap = .constant(.round)
         layer.layout?.lineJoin = .constant(.miter)
         layer.minZoom = 9
