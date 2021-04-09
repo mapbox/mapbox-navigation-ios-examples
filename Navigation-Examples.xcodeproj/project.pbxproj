@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E4DB43E555307E85D094271 /* Pods_Navigation_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */; };
+		11DC36F226161DAF0042CD4A /* Location-Snapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DC36F126161DAF0042CD4A /* Location-Snapping.swift */; };
 		2B521D4E24090A3A00984CF8 /* CustomBarsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B521D4D24090A3A00984CF8 /* CustomBarsViewController.swift */; };
 		2B521D502409240E00984CF8 /* CustomBottomBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B521D4F2409240E00984CF8 /* CustomBottomBannerView.swift */; };
 		2B521D522409242A00984CF8 /* CustomBottomBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		01D167067A6027DCA4D44BF3 /* Pods-Navigation-Examples-DocsCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples-DocsCode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples-DocsCode/Pods-Navigation-Examples-DocsCode.debug.xcconfig"; sourceTree = "<group>"; };
 		020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		11DC36F126161DAF0042CD4A /* Location-Snapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location-Snapping.swift"; sourceTree = "<group>"; };
 		1E6EDEBB177F0E6643EC4DB9 /* Pods-Navigation-Examples-DocsCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples-DocsCode.release.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples-DocsCode/Pods-Navigation-Examples-DocsCode.release.xcconfig"; sourceTree = "<group>"; };
 		2B521D4D24090A3A00984CF8 /* CustomBarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarsViewController.swift; sourceTree = "<group>"; };
 		2B521D4F2409240E00984CF8 /* CustomBottomBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomBannerView.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				8A96379A2492B366008DEF2A /* Route-Deserialization.swift */,
 				8AC9129C2494106100B6941E /* Route-Initialization.swift */,
 				8A33629524E4844E0086C647 /* Building-Extrusion.swift */,
+				11DC36F126161DAF0042CD4A /* Location-Snapping.swift */,
 				8AC9129E2494118400B6941E /* TestData */,
 				2B521D5324094F2500984CF8 /* CustomBars */,
 			);
@@ -519,6 +522,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5F130A01FE9B44600463E86 /* Constants.swift in Sources */,
+				11DC36F226161DAF0042CD4A /* Location-Snapping.swift in Sources */,
 				C58FB86E1FE89D9500C4B491 /* ExampleTableViewController.swift in Sources */,
 				C5C0D63820589422003A3B1D /* Custom-Server.swift in Sources */,
 				C3893F1C25F96BDC0058A987 /* Custom-Waypoints.swift in Sources */,
