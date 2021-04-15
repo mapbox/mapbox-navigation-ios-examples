@@ -24,7 +24,9 @@ class ViewController: UIViewController {
         view.addSubview(navigationMapView)
 
         // Allow the map to display the user's location
-        navigationMapView.showsUserLocation = true
+        navigationMapView.mapView.update {
+            $0.location.puckType = .puck2D()
+        }
         
         // Zoom and center user's location on the map
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {

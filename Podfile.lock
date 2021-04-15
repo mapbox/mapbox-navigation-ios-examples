@@ -2,12 +2,12 @@ PODS:
   - MapboxCommon (10.0.2)
   - MapboxCoreMaps (10.0.0-beta.17):
     - MapboxCommon (= 10.0.2)
-  - MapboxCoreNavigation (2.0.0-beta.3):
-    - MapboxDirections-pre (= 2.0.0-alpha.2)
+  - MapboxCoreNavigation (2.0.0-beta.5):
+    - MapboxDirections-pre (= 2.0.0-beta.3)
     - MapboxMobileEvents (~> 0.10.2)
     - MapboxNavigationNative (~> 47.0)
     - Turf (= 2.0.0-alpha.3)
-  - MapboxDirections-pre (2.0.0-alpha.2):
+  - MapboxDirections-pre (2.0.0-beta.3):
     - Polyline (~> 5.0)
     - Turf (~> 2.0.0-alpha.3)
   - MapboxMaps (10.0.0-beta.16):
@@ -16,8 +16,8 @@ PODS:
     - MapboxMobileEvents (= 0.10.8)
     - Turf (= 2.0.0-alpha.3)
   - MapboxMobileEvents (0.10.8)
-  - MapboxNavigation (2.0.0-beta.3):
-    - MapboxCoreNavigation (= 2.0.0-beta.3)
+  - MapboxNavigation (2.0.0-beta.5):
+    - MapboxCoreNavigation (= 2.0.0-beta.5)
     - MapboxMaps (= 10.0.0-beta.16)
     - MapboxMobileEvents (~> 0.10.2)
     - MapboxSpeech-pre (= 2.0.0-alpha.1)
@@ -56,20 +56,20 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   MapboxCoreNavigation:
-    :commit: 7d787f32b6b302d4e7d7556c53c0cf6e75e36a63
+    :commit: d6f0a1c1ebcfdde62875ceb7f0112862559e6082
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
   MapboxNavigation:
-    :commit: 7d787f32b6b302d4e7d7556c53c0cf6e75e36a63
+    :commit: d6f0a1c1ebcfdde62875ceb7f0112862559e6082
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
 
 SPEC CHECKSUMS:
   MapboxCommon: f7f4e0040500d221ef7a9b4d81e7debb77d10ce1
   MapboxCoreMaps: fd16bda557bec7a6daebcc2a5ff1e916e1d701ea
-  MapboxCoreNavigation: d0286ee82a6cb06d6c8ed451d2d96c2729e09e40
-  MapboxDirections-pre: 96571d86a2483ebc5c5f9a77a8184a8f10daf545
+  MapboxCoreNavigation: 8d07fc4d2c2c0409f68b0b0c5be948569c4de6dc
+  MapboxDirections-pre: 221ad1f4ee428346923654f55898c5a7c6e79ecb
   MapboxMaps: cfb0ac7313208981dc35e69876658cf87209484a
   MapboxMobileEvents: 36ff53b135aac486eed94b61f813c7967a0c2c6f
-  MapboxNavigation: 8963ccbec3d32c0b4ab2519398905443c850575c
+  MapboxNavigation: d3ab2106fc1959a15c95a569f3196c97f0fc2daf
   MapboxNavigationNative: 5d2423d9187ab94af837c36c00f86da3c8604485
   MapboxSpeech-pre: aeb16de604d07ceb4195150c3359d5401bb298e6
   Polyline: fce41d72e1146c41c6d081f7656827226f643dff
