@@ -106,6 +106,20 @@ let listOfExamples: [NamedController] = [
         pushExampleToViewController: true
     ),
     (
+        name: "Predictive Caching",
+        description: "Demonstrates how to use predictive caching for navigation.",
+        controller: PredictiveCachingViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: false
+    ),
+    (
+        name: "Route Alerts",
+        description: "Demonstrates how to display route alerts.",
+        controller: RouteAlertsViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: false
+    ),
+    (
         name: "Snapping locations in standalone map view",
         description: "Demonstrates how to snap user location to the road network in a map view outside of active turn-by-turn navigation. Simulate Navigation option isn't supported here, instead you can use location simulation inside of the Simulator (Features ‣ Location ‣ \"City Bicycle Ride\") to see the difference with and without snapping.",
         controller: LocationSnappingViewController.self,
