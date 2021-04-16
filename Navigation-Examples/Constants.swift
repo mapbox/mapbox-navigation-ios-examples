@@ -120,7 +120,7 @@ let listOfExamples: [NamedController] = [
         pushExampleToViewController: false
     ),
     (
-        name: "Snapping locations in NavigationMapView",
+        name: "Location snapping",
         description: "Demonstrates how to snap user location to the road network in a map view outside of active turn-by-turn navigation. Simulate Navigation option isn't supported here, instead you can use location simulation inside of the Simulator (Features ‣ Location ‣ \"City Bicycle Ride\") to see the difference with and without snapping.",
         controller: LocationSnappingViewController.self,
         storyboard: nil,
