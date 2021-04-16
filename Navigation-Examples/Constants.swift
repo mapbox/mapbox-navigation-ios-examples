@@ -120,7 +120,7 @@ let listOfExamples: [NamedController] = [
         pushExampleToViewController: false
     ),
     (
-        name: "Snapping locations in standalone map view",
+        name: "Snapping locations in NavigationMapView",
         description: "Demonstrates how to snap user location to the road network in a map view outside of active turn-by-turn navigation. Simulate Navigation option isn't supported here, instead you can use location simulation inside of the Simulator (Features ‣ Location ‣ \"City Bicycle Ride\") to see the difference with and without snapping.",
         controller: LocationSnappingViewController.self,
         storyboard: nil,
@@ -141,7 +141,7 @@ let listOfExamples: [NamedController] = [
         pushExampleToViewController: true
     ),
     (
-        name: "Custom route lines styling",
+        name: "Route Lines Styling",
         description: "Demonstrates how to provide cystom styling for route lines.",
         controller: CustomRouteLinesViewController.self,
         storyboard: nil,
