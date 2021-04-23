@@ -47,8 +47,9 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
         
         // TODO: Provide a reliable way of setting camera to current coordinate.
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            if let coordinate = self.navigationMapView.mapView.locationManager.latestLocation?.coordinate {
-                self.navigationMapView.mapView.cameraManager.setCamera(centerCoordinate: coordinate, zoom: 13.0)
+            if let coordinate = self.navigationMapView.mapView.location.latestLocation?.coordinate {
+                let cameraOptions = CameraOptions(center: coordinate, zoom: 13.0)
+                self.navigationMapView.mapView.camera.setCamera(to: cameraOptions)
             }
         }
         
@@ -104,7 +105,7 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
     }
 
     func requestRoute(destination: CLLocationCoordinate2D) {
-        guard let userLocation = navigationMapView.mapView.locationManager.latestLocation else { return }
+        guard let userLocation = navigationMapView.mapView.location.latestLocation else { return }
         let userWaypoint = Waypoint(location: userLocation.internalLocation, heading: userLocation.heading, name: "user")
         let destinationWaypoint = Waypoint(coordinate: destination)
         let navigationRouteOptions = NavigationRouteOptions(waypoints: [userWaypoint, destinationWaypoint])

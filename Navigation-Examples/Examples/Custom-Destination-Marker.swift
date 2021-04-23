@@ -32,11 +32,11 @@ class CustomDestinationMarkerController: UIViewController {
                 
                 strongSelf.present(navigationViewController, animated: true) {
                     // upon completion, update each annotation image to the custom image
-                    navigationViewController.navigationMapView?.mapView.annotationManager.annotations.forEach {
+                    navigationViewController.navigationMapView?.mapView.annotations.annotations.forEach {
                         if var annotation = $0.value as? PointAnnotation {
                             annotation.image = UIImage(named: "marker")
                             do {
-                                try navigationViewController.navigationMapView?.mapView.annotationManager.updateAnnotation(annotation)
+                                try navigationViewController.navigationMapView?.mapView.annotations.updateAnnotation(annotation)
                             } catch {
                                 NSLog("Error occured: \(error.localizedDescription)")
                             }

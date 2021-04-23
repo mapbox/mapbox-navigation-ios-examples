@@ -84,7 +84,8 @@ class CustomWaypointsViewController: UIViewController {
         let secondWaypoint = CLLocationCoordinate2DMake(37.76259647118012, -122.42072747880516)
         let navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, firstWaypoint, secondWaypoint])
         
-        self.navigationMapView.mapView.cameraManager.setCamera(centerCoordinate: origin, zoom: 13.0)
+        let cameraOptions = CameraOptions(center: origin, zoom: 13.0)
+        self.navigationMapView.mapView.camera.setCamera(to: cameraOptions)
         
         Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
             switch result {

@@ -12,7 +12,7 @@ class LocationSnappingViewController: UIViewController {
         didSet {
             toggleButton.backgroundColor = isSnappingEnabled ? .blue : .darkGray
             let locationProvider: LocationProvider = isSnappingEnabled ? passiveLocationProvider : AppleLocationProvider()
-            navigationMapView.mapView.locationManager.overrideLocationProvider(with: locationProvider)
+            navigationMapView.mapView.location.overrideLocationProvider(with: locationProvider)
             passiveLocationProvider.startUpdatingLocation()
         }
     }
@@ -32,8 +32,9 @@ class LocationSnappingViewController: UIViewController {
         
         // TODO: Provide a reliable way of setting camera to current coordinate.
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            if let coordinate = self.navigationMapView.mapView.locationManager.latestLocation?.coordinate {
-                self.navigationMapView.mapView.cameraManager.setCamera(centerCoordinate: coordinate, zoom: 17.0)
+            if let coordinate = self.navigationMapView.mapView.location.latestLocation?.coordinate {
+                let cameraOptions = CameraOptions(center: coordinate, zoom: 17.0)
+                self.navigationMapView.mapView.camera.setCamera(to: cameraOptions)
             }
         }
         

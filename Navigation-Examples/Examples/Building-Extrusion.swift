@@ -58,10 +58,11 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         
         // TODO: Provide a reliable way of setting camera to current coordinate.
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            if let coordinate = self.navigationMapView.mapView.locationManager.latestLocation?.coordinate {
+            if let coordinate = self.navigationMapView.mapView.location.latestLocation?.coordinate {
                 // To make sure that buildings are rendered increase zoomLevel to value which is higher than 16.0.
                 // More details can be found here: https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v8/#building
-                self.navigationMapView.mapView.cameraManager.setCamera(centerCoordinate: coordinate, zoom: 17.0)
+                let cameraOptions = CameraOptions(center: coordinate, zoom: 17.0)
+                self.navigationMapView.mapView.camera.setCamera(to: cameraOptions)
             }
         }
         
@@ -134,7 +135,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         navigationViewController.routeLineTracksTraversal = true
         navigationViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen
-        navigationViewController.navigationMapView?.mapView.style.styleURL = navigationMapView.mapView.style.styleURL
+        navigationViewController.navigationMapView?.mapView.style.uri = navigationMapView.mapView.style.uri
         
         // Set `waypointStyle` to either `.building` or `.extrudedBuilding` to allow
         // building highighting in 2D or 3D respectively.
@@ -144,10 +145,10 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     }
     
     func toggleDayNightStyle() {
-        if navigationMapView.mapView?.style.styleURL.url == MapboxMaps.Style.navigationNightStyleURL {
-            navigationMapView.mapView?.style.styleURL = StyleURL.custom(url: MapboxMaps.Style.navigationDayStyleURL)
+        if navigationMapView.mapView?.style.uri.rawValue == MapboxMaps.Style.navigationNightStyleURL {
+            navigationMapView.mapView?.style.uri = StyleURI.custom(url: MapboxMaps.Style.navigationDayStyleURL)
         } else {
-            navigationMapView.mapView?.style.styleURL = StyleURL.custom(url: MapboxMaps.Style.navigationNightStyleURL)
+            navigationMapView.mapView?.style.uri = StyleURI.custom(url: MapboxMaps.Style.navigationNightStyleURL)
         }
     }
     
@@ -171,7 +172,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
 
     func createWaypoints(for destinationCoordinate: CLLocationCoordinate2D?) {
         guard let destinationCoordinate = destinationCoordinate else { return }
-        guard let userLocation = navigationMapView.mapView.locationManager.latestLocation?.internalLocation else {
+        guard let userLocation = navigationMapView.mapView.location.latestLocation?.internalLocation else {
             presentAlert(message: "User location is not valid. Make sure to enable Location Services.")
             return
         }
