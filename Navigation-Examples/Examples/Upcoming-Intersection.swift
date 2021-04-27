@@ -25,8 +25,8 @@ class ObservingElectronicHorizonEventsViewController: UIViewController {
         navigationMapView.mapView.update {
             $0.location.puckType = .puck2D()
         }
-        navigationMapView.mapView.on(.styleLoaded) { _ in
-            self.setupMostProbablePathStyle()
+        navigationMapView.mapView.on(.styleLoaded) { [weak self] _ in
+            self?.setupMostProbablePathStyle()
         }
         
         // TODO: Provide a reliable way of setting camera to current coordinate.
@@ -80,7 +80,7 @@ class ObservingElectronicHorizonEventsViewController: UIViewController {
 
     private func streetName(for edge: ElectronicHorizon.Edge) -> String? {
         let edgeMetadata = passiveLocationManager.dataSource.roadGraph.edgeMetadata(edgeIdentifier: edge.identifier)
-        return edgeMetadata?.names.first.flatMap { roadName in
+        return edgeMetadata?.names.first.map { roadName in
             switch roadName {
             case .name(let name):
                 return name
@@ -94,8 +94,7 @@ class ObservingElectronicHorizonEventsViewController: UIViewController {
         let initialStreetName = streetName(for: edge)
         var currentEdge: ElectronicHorizon.Edge? = edge
         while let nextEdge = currentEdge?.outletEdges.max(by: { $0.probability < $1.probability }) {
-            let nextStreetName = streetName(for: nextEdge)
-            if nextStreetName != nil && nextStreetName != initialStreetName {
+            if let nextStreetName = streetName(for: nextEdge), nextStreetName != initialStreetName {
                 return nextStreetName
             }
             currentEdge = nextEdge
@@ -137,13 +136,13 @@ class ObservingElectronicHorizonEventsViewController: UIViewController {
     }
 
     private func updateMostProbablePath(with mostProbablePath: [CLLocationCoordinate2D]) {
-        let feature = Feature(geometry: .multiLineString(MultiLineString([mostProbablePath])))
+        let feature = Feature(geometry: .lineString(LineString(mostProbablePath)))
         _ = navigationMapView.mapView.style.updateGeoJSON(for: sourceIdentifier, with: feature)
     }
 
     private func setupMostProbablePathStyle() {
         var source = GeoJSONSource()
-        source.data = .geometry(Geometry.multiLineString(MultiLineString([[]])))
+        source.data = .geometry(Geometry.lineString(LineString([])))
         _ = navigationMapView.mapView.style.addSource(source: source, identifier: sourceIdentifier)
 
         var layer = LineLayer(id: layerIdentifier)
