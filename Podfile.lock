@@ -30,8 +30,8 @@ PODS:
   - Turf (2.0.0-alpha.3)
 
 DEPENDENCIES:
-  - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `release-v2.0`)
-  - MapboxNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `release-v2.0`)
+  - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `maxim/966-add-final-destination-delegate`)
+  - MapboxNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `maxim/966-add-final-destination-delegate`)
 
 SPEC REPOS:
   trunk:
@@ -48,18 +48,18 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   MapboxCoreNavigation:
-    :branch: release-v2.0
+    :branch: maxim/966-add-final-destination-delegate
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
   MapboxNavigation:
-    :branch: release-v2.0
+    :branch: maxim/966-add-final-destination-delegate
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
 
 CHECKOUT OPTIONS:
   MapboxCoreNavigation:
-    :commit: 024102be0b189a2f21a4401e65dd44e224323bb0
+    :commit: e6993e67aa0d94e7749afc9122c371f41ebae969
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
   MapboxNavigation:
-    :commit: 024102be0b189a2f21a4401e65dd44e224323bb0
+    :commit: e6993e67aa0d94e7749afc9122c371f41ebae969
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
 
 SPEC CHECKSUMS:
@@ -76,6 +76,6 @@ SPEC CHECKSUMS:
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   Turf: ec9b01ef9386ab53545a1f763b7296c9ce3590d1
 
-PODFILE CHECKSUM: 08ee95eefa37720b886316a708310b6234d09e59
+PODFILE CHECKSUM: bec92ee865bdc9404c82c4c0b065e0aa42cb5c63
 
 COCOAPODS: 1.10.1

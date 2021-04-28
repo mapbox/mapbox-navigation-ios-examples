@@ -29,21 +29,30 @@ class CustomDestinationMarkerController: UIViewController {
                 let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
                 navigationViewController.modalPresentationStyle = .fullScreen
                 navigationViewController.routeLineTracksTraversal = true
+                navigationViewController.delegate = self
                 
-                strongSelf.present(navigationViewController, animated: true) {
-                    // upon completion, update each annotation image to the custom image
-                    navigationViewController.navigationMapView?.mapView.annotations.annotations.forEach {
-                        if var annotation = $0.value as? PointAnnotation {
-                            annotation.image = UIImage(named: "marker")
-                            do {
-                                try navigationViewController.navigationMapView?.mapView.annotations.updateAnnotation(annotation)
-                            } catch {
-                                NSLog("Error occured: \(error.localizedDescription)")
-                            }
-                        }
-                    }
-                }
+                strongSelf.present(navigationViewController, animated: true)
             }
         }
+    }
+}
+
+// MARK: - NavigationViewControllerDelegate methods
+
+extension CustomDestinationMarkerController: NavigationViewControllerDelegate {
+    
+    func navigationViewController(_ navigationViewController: NavigationViewController, didAdd finalDestinationAnnotation: PointAnnotation) {
+        var finalDestinationAnnotation = finalDestinationAnnotation
+        finalDestinationAnnotation.image = UIImage(named: "marker")
+        
+        do {
+            try navigationViewController.navigationMapView?.mapView.annotations.updateAnnotation(finalDestinationAnnotation)
+        } catch {
+            NSLog("Error occured: \(error.localizedDescription).")
+        }
+    }
+    
+    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
+        dismiss(animated: true)
     }
 }
