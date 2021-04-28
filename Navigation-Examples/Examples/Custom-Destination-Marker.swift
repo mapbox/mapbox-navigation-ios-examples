@@ -55,8 +55,8 @@ class CustomDestinationMarkerController: UIViewController {
         startNavigationButton.isHidden = true
         view.addSubview(startNavigationButton)
         
-        startNavigationButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
-        startNavigationButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        startNavigationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        startNavigationButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         view.setNeedsLayout()
     }
     
@@ -82,13 +82,12 @@ class CustomDestinationMarkerController: UIViewController {
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
         let navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        let cameraOptions = CameraOptions(center: destination, zoom: 13.0)
-        self.navigationMapView.mapView.camera.setCamera(to: cameraOptions)
+        navigationMapView.mapView.camera.setCamera(to: CameraOptions(center: destination, zoom: 13.0))
         
         Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
             switch result {
             case .failure(let error):
-                print(error.localizedDescription)
+                NSLog("Error occured: \(error.localizedDescription).")
             case .success(let response):
                 guard let routes = response.routes,
                       let currentRoute = routes.first,
