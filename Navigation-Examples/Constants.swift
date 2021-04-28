@@ -33,7 +33,7 @@ let listOfExamples: [NamedController] = [
         description: "Use a custom image for styling the destination marker.",
         controller: CustomDestinationMarkerController.self,
         storyboard: nil,
-        pushExampleToViewController: false
+        pushExampleToViewController: true
     ),
     (
         name: "Embedded View Controller",
