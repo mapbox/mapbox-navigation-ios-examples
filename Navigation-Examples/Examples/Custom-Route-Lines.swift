@@ -121,7 +121,7 @@ class CustomRouteLinesViewController: UIViewController {
                                                                 routeIndex: 0,
                                                                 routeOptions: navigationRouteOptions,
                                                                 navigationOptions: navigationOptions)
-        navigationViewController.navigationMapView?.delegate = self
+        navigationViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen
         
         navigationViewController.routeLineTracksTraversal = true
