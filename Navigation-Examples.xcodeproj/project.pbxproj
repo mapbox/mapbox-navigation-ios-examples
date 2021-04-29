@@ -13,6 +13,9 @@
 		2B521D4E24090A3A00984CF8 /* CustomBarsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B521D4D24090A3A00984CF8 /* CustomBarsViewController.swift */; };
 		2B521D502409240E00984CF8 /* CustomBottomBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B521D4F2409240E00984CF8 /* CustomBottomBannerView.swift */; };
 		2B521D522409242A00984CF8 /* CustomBottomBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */; };
+		8A2DFA57261650A60034A87E /* CustomCameraStateTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFA55261650A60034A87E /* CustomCameraStateTransition.swift */; };
+		8A2DFA58261650A60034A87E /* CustomViewportDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFA56261650A60034A87E /* CustomViewportDataSource.swift */; };
+		8A2DFA6C261651600034A87E /* Custom-Navigation-Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFA6B261651600034A87E /* Custom-Navigation-Camera.swift */; };
 		8A33629624E4844E0086C647 /* Building-Extrusion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A33629524E4844E0086C647 /* Building-Extrusion.swift */; };
 		8A96379C2492B366008DEF2A /* Route-Deserialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A96379A2492B366008DEF2A /* Route-Deserialization.swift */; };
 		8A96379D2492B366008DEF2A /* route.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A96379B2492B366008DEF2A /* route.json */; };
@@ -53,6 +56,9 @@
 		2B521D4D24090A3A00984CF8 /* CustomBarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarsViewController.swift; sourceTree = "<group>"; };
 		2B521D4F2409240E00984CF8 /* CustomBottomBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomBannerView.swift; sourceTree = "<group>"; };
 		2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomBottomBannerView.xib; sourceTree = "<group>"; };
+		8A2DFA55261650A60034A87E /* CustomCameraStateTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraStateTransition.swift; sourceTree = "<group>"; };
+		8A2DFA56261650A60034A87E /* CustomViewportDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewportDataSource.swift; sourceTree = "<group>"; };
+		8A2DFA6B261651600034A87E /* Custom-Navigation-Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Navigation-Camera.swift"; sourceTree = "<group>"; };
 		8A33629524E4844E0086C647 /* Building-Extrusion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Building-Extrusion.swift"; sourceTree = "<group>"; };
 		8A96379A2492B366008DEF2A /* Route-Deserialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Route-Deserialization.swift"; sourceTree = "<group>"; };
 		8A96379B2492B366008DEF2A /* route.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = route.json; sourceTree = "<group>"; };
@@ -137,6 +143,16 @@
 				2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */,
 			);
 			path = CustomBars;
+			sourceTree = "<group>";
+		};
+		8A2DFA52261650600034A87E /* NavigationCamera */ = {
+			isa = PBXGroup;
+			children = (
+				8A2DFA6B261651600034A87E /* Custom-Navigation-Camera.swift */,
+				8A2DFA55261650A60034A87E /* CustomCameraStateTransition.swift */,
+				8A2DFA56261650A60034A87E /* CustomViewportDataSource.swift */,
+			);
+			path = NavigationCamera;
 			sourceTree = "<group>";
 		};
 		8A5BBF6A2489B0A000FA4960 /* Scripts */ = {
@@ -230,6 +246,7 @@
 				8A96379A2492B366008DEF2A /* Route-Deserialization.swift */,
 				8AC9129C2494106100B6941E /* Route-Initialization.swift */,
 				8A33629524E4844E0086C647 /* Building-Extrusion.swift */,
+				8A2DFA52261650600034A87E /* NavigationCamera */,
 				B480E423261E4C3500C16FA0 /* Predictive-Caching.swift */,
 				B480E427261E4C4600C16FA0 /* Route-Alerts.swift */,
 				11DC36F126161DAF0042CD4A /* Location-Snapping.swift */,
@@ -531,6 +548,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5F130A01FE9B44600463E86 /* Constants.swift in Sources */,
+				8A2DFA6C261651600034A87E /* Custom-Navigation-Camera.swift in Sources */,
 				11DC36F226161DAF0042CD4A /* Location-Snapping.swift in Sources */,
 				C58FB86E1FE89D9500C4B491 /* ExampleTableViewController.swift in Sources */,
 				B480E424261E4C3500C16FA0 /* Predictive-Caching.swift in Sources */,
@@ -549,9 +567,11 @@
 				8DF510741FEB08F70049DB9C /* Embedded-Navigation.swift in Sources */,
 				11B6E81726176F3600872E4D /* Upcoming-Intersection.swift in Sources */,
 				C58FB8711FE8A43000C4B491 /* Basic.swift in Sources */,
+				8A2DFA57261650A60034A87E /* CustomCameraStateTransition.swift in Sources */,
 				C58FB8731FE98AEB00C4B491 /* Styled-UI-Elements.swift in Sources */,
 				C58FB85A1FE899B800C4B491 /* AppDelegate.swift in Sources */,
 				8A33629624E4844E0086C647 /* Building-Extrusion.swift in Sources */,
+				8A2DFA58261650A60034A87E /* CustomViewportDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
