@@ -5,7 +5,7 @@ typealias NamedController = (
     name: String,
     description: String,
     controller: UIViewController.Type,
-    storyboard: UIStoryboard?, //is the example containined in a storyboard? If so, we assume the Initial View Controller of the storyboard.
+    storyboard: UIStoryboard?, // Is the example containined in a storyboard? If so, we assume the Initial View Controller of the storyboard.
     pushExampleToViewController: Bool // If the example does not go directly into the example,(i.e. another map is shown) set this value to true
 )
 
