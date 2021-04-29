@@ -129,7 +129,7 @@ let listOfExamples: [NamedController] = [
     (
         name: "Observe electronic horizon events",
         description: "Demonstrates how to use electronic horizon to predict user's most probable path and show upcoming intersections. Simulate Navigation option isn't supported here, instead you can simulate location in Xcode.",
-        controller: ObservingElectronicHorizonEventsViewController.self,
+        controller: ElectronicHorizonEventsViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
     )
