@@ -378,7 +378,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint --strict\nfi  \n";
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint --strict\nfi\n";
 		};
 		1179FA72263B0735004965CE /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;

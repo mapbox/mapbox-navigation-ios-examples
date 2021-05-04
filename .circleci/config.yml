@@ -6,6 +6,7 @@ step-library:
          name: Install SwiftLint
          command: |
           curl -OL "https://github.com/realm/SwiftLint/releases/download/0.43.1/SwiftLint.pkg"
+          echo "e05a054ae15c968ab40bc8537a8afe598ab2d7af  SwiftLint.pkg" | shasum -c -
           sudo installer -pkg SwiftLint.pkg -target /
 
 jobs:
