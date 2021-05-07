@@ -165,7 +165,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
         // In case if route is already shown on map do not allow selection of buildings other than final destination.
-        if currentRoute != nil, navigationRouteOptions != nil { return }
+        guard currentRoute == nil || navigationRouteOptions == nil else { return }
         navigationMapView.highlightBuildings(at: [navigationMapView.mapView.coordinate(for: gesture.location(in: navigationMapView.mapView))], in3D: true)
     }
 
