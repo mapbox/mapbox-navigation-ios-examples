@@ -22,16 +22,13 @@ class ViewController: UIViewController {
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(navigationMapView)
-
-        // Allow the map to display the user's location
-        navigationMapView.showsUserLocation = true
         
         // Zoom and center user's location on the map
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            if let coordinate = self.navigationMapView.mapView.locationManager.latestLocation?.coordinate {
-                self.navigationMapView.mapView.cameraManager.setCamera(to: CameraOptions(center: coordinate, zoom: 13),
-                                                                  animated: true,
-                                                                  completion: nil)
+            if let coordinate = self.navigationMapView.mapView.location.latestLocation?.coordinate {
+                self.navigationMapView.mapView.camera.setCamera(to: CameraOptions(center: coordinate, zoom: 13),
+                                                                animated: true,
+                                                                completion: nil)
             }
         }
         
@@ -79,7 +76,7 @@ class ViewController: UIViewController {
         let point = sender.location(in: navigationMapView)
         let coordinate = navigationMapView.mapView.coordinate(for: point)
 
-        if let origin = navigationMapView.mapView.locationManager.latestLocation?.internalLocation.coordinate {
+        if let origin = navigationMapView.mapView.location.latestLocation?.internalLocation.coordinate {
             // Calculate the route from the user's location to the set destination
             calculateRoute(from: origin, to: coordinate)
         } else {
