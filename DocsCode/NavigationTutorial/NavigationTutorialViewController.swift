@@ -23,6 +23,11 @@ class ViewController: UIViewController {
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(navigationMapView)
         
+        // By default `NavigationViewportDataSource` tracks location changes from `PassiveLocationDataSource`, to consume
+        // raw locations `ViewportDataSourceType` should be set to `.raw`.
+        let navigationViewportDataSource = NavigationViewportDataSource(navigationMapView.mapView, viewportDataSourceType: .raw)
+        navigationMapView.navigationCamera.viewportDataSource = navigationViewportDataSource
+        
         // Add a gesture recognizer to the map view
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
         navigationMapView.addGestureRecognizer(longPress)
