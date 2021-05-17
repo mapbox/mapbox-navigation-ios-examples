@@ -28,6 +28,11 @@ class ViewController: UIViewController {
         let navigationViewportDataSource = NavigationViewportDataSource(navigationMapView.mapView, viewportDataSourceType: .raw)
         navigationMapView.navigationCamera.viewportDataSource = navigationViewportDataSource
         
+        // Allow the map to display the user's location
+        navigationMapView.mapView.update {
+            $0.location.puckType = .puck2D()
+        }
+        
         // Add a gesture recognizer to the map view
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
         navigationMapView.addGestureRecognizer(longPress)
