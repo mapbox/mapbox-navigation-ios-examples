@@ -22,11 +22,6 @@ class ViewController: UIViewController {
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(navigationMapView)
-
-        // Allow the map to display the user's location
-        navigationMapView.mapView.update {
-            $0.location.puckType = .puck2D()
-        }
         
         // By default `NavigationViewportDataSource` tracks location changes from `PassiveLocationDataSource`, to consume
         // raw locations `ViewportDataSourceType` should be set to `.raw`.
