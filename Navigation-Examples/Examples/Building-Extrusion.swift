@@ -160,14 +160,14 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .began else { return }
 
-        createWaypoints(for: navigationMapView.mapView.coordinate(for: gesture.location(in: navigationMapView.mapView)))
+        createWaypoints(for: navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView)))
         requestRoute()
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
         // In case if route is already shown on map do not allow selection of buildings other than final destination.
         if let _ = currentRoute, let _ = navigationRouteOptions { return }
-        navigationMapView.highlightBuildings(at: [navigationMapView.mapView.coordinate(for: gesture.location(in: navigationMapView.mapView))], in3D: true)
+        navigationMapView.highlightBuildings(at: [navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView))], in3D: true)
     }
 
     func createWaypoints(for destinationCoordinate: CLLocationCoordinate2D?) {

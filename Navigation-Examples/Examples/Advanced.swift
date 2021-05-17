@@ -99,7 +99,7 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
     
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .ended else { return }
-        let location = navigationMapView.mapView.coordinate(for: gesture.location(in: navigationMapView.mapView))
+        let location = navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView))
         
         requestRoute(destination: location)
     }
