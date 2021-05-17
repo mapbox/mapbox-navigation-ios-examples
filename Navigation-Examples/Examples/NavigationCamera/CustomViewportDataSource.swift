@@ -60,10 +60,11 @@ class CustomViewportDataSource: ViewportDataSource {
         followingMobileCamera.pitch = 45.0
         
         if let shape = routeProgress?.route.shape,
-           let camera = mapView?.mapboxMap.camera(for: .lineString(shape), padding: .zero, bearing: nil, pitch: nil) {
+           let camera = mapView?.mapboxMap.camera(for: .lineString(shape),
+                                                  padding: UIEdgeInsets(top: 150.0, left: 10.0, bottom: 150.0, right: 10.0),
+                                                  bearing: 0.0,
+                                                  pitch: 0.0) {
             overviewMobileCamera = camera
-            overviewMobileCamera.padding = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-            overviewMobileCamera.center = location?.coordinate
         }
         
         let cameraOptions = [
