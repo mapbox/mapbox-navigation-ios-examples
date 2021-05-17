@@ -10,35 +10,23 @@ class CustomCameraStateTransition: CameraStateTransition {
     }
     
     func transitionToFollowing(_ cameraOptions: CameraOptions, completion: @escaping (() -> Void)) {
-        mapView?.camera.setCamera(to: cameraOptions,
-                                  animated: true,
-                                  duration: 0.5,
-                                  completion: { _ in
-                                    completion()
-                                  })
+        mapView?.camera.ease(to: cameraOptions, duration: 0.5, curve: .linear, completion: { _ in
+            completion()
+        })
     }
     
     func transitionToOverview(_ cameraOptions: CameraOptions, completion: @escaping (() -> Void)) {
-        mapView?.camera.setCamera(to: cameraOptions,
-                                  animated: true,
-                                  duration: 0.5,
-                                  completion: { _ in
-                                    completion()
-                                  })
+        mapView?.camera.ease(to: cameraOptions, duration: 0.5, curve: .linear, completion: { _ in
+            completion()
+        })
     }
     
     func updateForFollowing(_ cameraOptions: CameraOptions) {
-        mapView?.camera.setCamera(to: cameraOptions,
-                                  animated: true,
-                                  duration: 0.5,
-                                  completion: nil)
+        mapView?.camera.ease(to: cameraOptions, duration: 0.5, curve: .linear, completion: nil)
     }
     
     func updateForOverview(_ cameraOptions: CameraOptions) {
-        mapView?.camera.setCamera(to: cameraOptions,
-                                  animated: true,
-                                  duration: 0.5,
-                                  completion: nil)
+        mapView?.camera.ease(to: cameraOptions, duration: 0.5, curve: .linear, completion: nil)
     }
     
     func cancelPendingTransition() {
