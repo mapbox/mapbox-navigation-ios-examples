@@ -169,7 +169,7 @@ class RouteLinesStylingViewController: UIViewController {
 extension RouteLinesStylingViewController: NavigationMapViewDelegate {
     
     func navigationMapView(_ mapView: NavigationMapView, didSelect route: Route) {
-        self.currentRoute = route
+        currentRoute = route
     }
     
     func navigationMapView(_ navigationMapView: NavigationMapView, shapeFor route: Route) -> LineString? {
