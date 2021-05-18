@@ -56,15 +56,12 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
             $0.location.puckType = .puck2D()
         }
         
-        // TODO: Provide a reliable way of setting camera to current coordinate.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            if let coordinate = self.navigationMapView.mapView.location.latestLocation?.coordinate {
-                // To make sure that buildings are rendered increase zoomLevel to value which is higher than 16.0.
-                // More details can be found here: https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v8/#building
-                let cameraOptions = CameraOptions(center: coordinate, zoom: 17.0)
-                self.navigationMapView.mapView.camera.setCamera(to: cameraOptions)
-            }
-        }
+        // To make sure that buildings are rendered increase zoomLevel to value which is higher than 16.0.
+        // More details can be found here: https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v8/#building
+        let navigationViewportDataSource = NavigationViewportDataSource(navigationMapView.mapView, viewportDataSourceType: .raw)
+        navigationViewportDataSource.options.followingCameraOptions.zoomUpdatesAllowed = false
+        navigationViewportDataSource.followingMobileCamera.zoom = 17.0
+        navigationMapView.navigationCamera.viewportDataSource = navigationViewportDataSource
         
         view.addSubview(navigationMapView)
     }
