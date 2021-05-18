@@ -2,6 +2,19 @@ import MapboxMaps
 import MapboxNavigation
 import MapboxCoreNavigation
 
+/**
+ Custom implementation of Navigation Camera data source, which is used to fill and store
+ `CameraOptions` which will be later used by `CustomCameraStateTransition` for execution of
+ transitions and continuous camera updates.
+ 
+ To be able to use custom camera data source user has to create instance of `CustomCameraStateTransition`
+ and then override with it default implementation, by modifying
+ `NavigationMapView.NavigationCamera.ViewportDataSource` or
+ `NavigationViewController.NavigationMapView.NavigationCamera.ViewportDataSource` properties.
+ 
+ By default Navigation SDK for iOS provides default implementation of `ViewportDataSource`
+ in `NavigationViewportDataSource`.
+ */
 class CustomViewportDataSource: ViewportDataSource {
     
     public var delegate: ViewportDataSourceDelegate?
@@ -32,6 +45,9 @@ class CustomViewportDataSource: ViewportDataSource {
     // MARK: - Notifications observer methods
     
     func subscribeForNotifications() {
+        // `CustomViewportDataSource` uses raw locations provided by `LocationConsumer` in
+        // free-drive mode and locations snapped to the road provided by
+        // `Notification.Name.routeControllerProgressDidChange` notification.
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(progressDidChange(_:)),
                                                name: .routeControllerProgressDidChange,
@@ -54,6 +70,7 @@ class CustomViewportDataSource: ViewportDataSource {
     
     func cameraOptions(_ location: CLLocation?, routeProgress: RouteProgress? = nil) -> [String: CameraOptions] {
         followingMobileCamera.center = location?.coordinate
+        // Set the bearing of the `MapView` (measured in degrees clockwise from true north).
         followingMobileCamera.bearing = location?.course
         followingMobileCamera.padding = .zero
         followingMobileCamera.zoom = 15.0
