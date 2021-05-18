@@ -5,7 +5,7 @@ import MapboxDirections
 import MapboxMaps
 import Turf
 
-class CustomRouteLinesViewController: UIViewController {
+class RouteLinesStylingViewController: UIViewController {
     
     var navigationMapView: NavigationMapView!
     
@@ -166,7 +166,7 @@ class CustomRouteLinesViewController: UIViewController {
 
 // MARK: - NavigationMapViewDelegate methods
 
-extension CustomRouteLinesViewController: NavigationMapViewDelegate {
+extension RouteLinesStylingViewController: NavigationMapViewDelegate {
     
     func navigationMapView(_ mapView: NavigationMapView, didSelect route: Route) {
         self.currentRoute = route
@@ -205,7 +205,7 @@ extension CustomRouteLinesViewController: NavigationMapViewDelegate {
 
 // MARK: - NavigationViewControllerDelegate methods
 
-extension CustomRouteLinesViewController: NavigationViewControllerDelegate {
+extension RouteLinesStylingViewController: NavigationViewControllerDelegate {
     
     func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
         dismiss(animated: true, completion: nil)

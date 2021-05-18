@@ -143,7 +143,7 @@ let listOfExamples: [NamedController] = [
     (
         name: "Route Lines Styling",
         description: "Demonstrates how to provide custom styling for the route lines.",
-        controller: CustomRouteLinesViewController.self,
+        controller: RouteLinesStylingViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
     )
