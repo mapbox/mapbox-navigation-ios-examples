@@ -100,7 +100,7 @@ class CustomNavigationCameraViewController: UIViewController {
         Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
             switch result {
             case .failure(let error):
-                print(error.localizedDescription)
+                NSLog("Error occured while requesting route: \(error.localizedDescription).")
             case .success(let response):
                 guard let route = response.routes?.first else { return }
                 
