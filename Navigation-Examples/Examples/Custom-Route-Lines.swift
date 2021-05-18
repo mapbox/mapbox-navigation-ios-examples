@@ -27,22 +27,19 @@ class CustomRouteLinesViewController: UIViewController {
             guard let routes = routes, let currentRoute = routes.first else {
                 navigationMapView.removeRoutes()
                 navigationMapView.removeWaypoints()
-                waypoints.removeAll()
                 return
             }
-
+            
             navigationMapView.show(routes)
             navigationMapView.showWaypoints(on: currentRoute)
         }
     }
-
-    var waypoints: [Waypoint] = []
     
     // MARK: - UIViewController lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupNavigationMapView()
         setupPerformActionBarButtonItem()
         setupGestureRecognizers()
@@ -60,7 +57,7 @@ class CustomRouteLinesViewController: UIViewController {
         
         let navigationViewportDataSource = NavigationViewportDataSource(navigationMapView.mapView, viewportDataSourceType: .raw)
         navigationMapView.navigationCamera.viewportDataSource = navigationViewportDataSource
-
+        
         view.addSubview(navigationMapView)
     }
     
@@ -99,7 +96,7 @@ class CustomRouteLinesViewController: UIViewController {
         
         present(alertController, animated: true, completion: nil)
     }
-
+    
     func setupGestureRecognizers() {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         navigationMapView.addGestureRecognizer(longPressGestureRecognizer)
@@ -125,42 +122,35 @@ class CustomRouteLinesViewController: UIViewController {
         navigationViewController.modalPresentationStyle = .fullScreen
         
         navigationViewController.routeLineTracksTraversal = true
-
+        
         present(navigationViewController, animated: true, completion: nil)
     }
     
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .began else { return }
-
-        createWaypoints(for: navigationMapView.mapView.coordinate(for: gesture.location(in: navigationMapView.mapView)))
-        requestRoute()
+        
+        let mapView = navigationMapView.mapView
+        let destinationCoordinate = mapView?.mapboxMap.coordinate(for: gesture.location(in: mapView))
+        requestRoute(destinationCoordinate)
     }
-
-    func createWaypoints(for destinationCoordinate: CLLocationCoordinate2D?) {
-        guard let destinationCoordinate = destinationCoordinate else { return }
-        guard let userLocation = navigationMapView.mapView.locationManager.latestLocation?.internalLocation else {
+    
+    func requestRoute(_ destinationCoordinate: CLLocationCoordinate2D?) {
+        guard let userLocation = navigationMapView.mapView.location.latestLocation?.internalLocation else {
             print("User location is not valid. Make sure to enable Location Services.")
             return
         }
+        guard let destinationCoordinate = destinationCoordinate else { return }
         
-        let cameraOptions = CameraOptions(center: origin, zoom: 13.0)
-        self.navigationMapView.mapView.camera.setCamera(to: cameraOptions)
+        let waypoints = [
+            Waypoint(coordinate: userLocation.coordinate),
+            Waypoint(coordinate: destinationCoordinate)
+        ]
         
-        // Add destination waypoint to list of waypoints.
-        let waypoint = Waypoint(coordinate: destinationCoordinate)
-        waypoint.targetCoordinate = destinationCoordinate
-        waypoints.append(waypoint)
-    }
-
-    func requestRoute() {
         let navigationRouteOptions = NavigationRouteOptions(waypoints: waypoints)
         Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
             switch result {
             case .failure(let error):
-                print("Error occured while requesting route: \(error.localizedDescription).")
-
-                // In case if direction calculation failed - remove last destination waypoint.
-                self?.waypoints.removeLast()
+                NSLog("Error occured while requesting route: \(error.localizedDescription).")
             case .success(let response):
                 guard let routes = response.routes else { return }
                 self?.navigationRouteOptions = navigationRouteOptions
@@ -168,10 +158,6 @@ class CustomRouteLinesViewController: UIViewController {
                 self?.navigationMapView.show(routes)
                 if let currentRoute = self?.currentRoute {
                     self?.navigationMapView.showWaypoints(on: currentRoute)
-                }
-
-                if let coordinates = self?.waypoints.compactMap({ $0.targetCoordinate }) {
-                    self?.navigationMapView.highlightBuildings(at: coordinates, in3D: true)
                 }
             }
         }
@@ -197,7 +183,7 @@ extension CustomRouteLinesViewController: NavigationMapViewDelegate {
     func navigationMapView(_ navigationMapView: NavigationMapView, routeLineLayerWithIdentifier identifier: String, sourceIdentifier: String) -> LineLayer? {
         var lineLayer = LineLayer(id: identifier)
         lineLayer.source = sourceIdentifier
-        lineLayer.paint?.lineColor = .constant(.init(color: .red))
+        lineLayer.paint?.lineColor = .constant(.init(color: identifier.contains("main") ? #colorLiteral(red: 0.337254902, green: 0.6588235294, blue: 0.9843137255, alpha: 1) : #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)))
         lineLayer.paint?.lineWidth = .constant(10.0)
         lineLayer.layout?.lineJoin = .constant(.round)
         lineLayer.layout?.lineCap = .constant(.round)
@@ -208,7 +194,7 @@ extension CustomRouteLinesViewController: NavigationMapViewDelegate {
     func navigationMapView(_ navigationMapView: NavigationMapView, routeCasingLineLayerWithIdentifier identifier: String, sourceIdentifier: String) -> LineLayer? {
         var lineLayer = LineLayer(id: identifier)
         lineLayer.source = sourceIdentifier
-        lineLayer.paint?.lineColor = .constant(.init(color: .green))
+        lineLayer.paint?.lineColor = .constant(.init(color: identifier.contains("main") ? #colorLiteral(red: 0.1843137255, green: 0.4784313725, blue: 0.7764705882, alpha: 1) : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)))
         lineLayer.paint?.lineWidth = .constant(14.0)
         lineLayer.layout?.lineJoin = .constant(.round)
         lineLayer.layout?.lineCap = .constant(.round)
@@ -228,7 +214,7 @@ extension CustomRouteLinesViewController: NavigationViewControllerDelegate {
     func navigationViewController(_ navigationViewController: NavigationViewController, routeLineLayerWithIdentifier identifier: String, sourceIdentifier: String) -> LineLayer? {
         var lineLayer = LineLayer(id: identifier)
         lineLayer.source = sourceIdentifier
-        lineLayer.paint?.lineColor = .constant(.init(color: .red))
+        lineLayer.paint?.lineColor = .constant(.init(color: identifier.contains("main") ? #colorLiteral(red: 0.337254902, green: 0.6588235294, blue: 0.9843137255, alpha: 1) : #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)))
         lineLayer.paint?.lineWidth = .constant(10.0)
         lineLayer.layout?.lineJoin = .constant(.round)
         lineLayer.layout?.lineCap = .constant(.round)
@@ -239,7 +225,7 @@ extension CustomRouteLinesViewController: NavigationViewControllerDelegate {
     func navigationViewController(_ navigationViewController: NavigationViewController, routeCasingLineLayerWithIdentifier identifier: String, sourceIdentifier: String) -> LineLayer? {
         var lineLayer = LineLayer(id: identifier)
         lineLayer.source = sourceIdentifier
-        lineLayer.paint?.lineColor = .constant(.init(color: .green))
+        lineLayer.paint?.lineColor = .constant(.init(color: identifier.contains("main") ? #colorLiteral(red: 0.1843137255, green: 0.4784313725, blue: 0.7764705882, alpha: 1) : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)))
         lineLayer.paint?.lineWidth = .constant(14.0)
         lineLayer.layout?.lineJoin = .constant(.round)
         lineLayer.layout?.lineCap = .constant(.round)
