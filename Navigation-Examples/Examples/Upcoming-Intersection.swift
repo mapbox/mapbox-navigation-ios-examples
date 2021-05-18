@@ -128,13 +128,13 @@ class ObservingElectronicHorizonEventsViewController: UIViewController {
 
     private func updateMostProbablePath(with mostProbablePath: [CLLocationCoordinate2D]) {
         let feature = Feature(geometry: .lineString(LineString(mostProbablePath)))
-        _ = navigationMapView.mapView.style.updateGeoJSON(for: sourceIdentifier, with: feature)
+        try? navigationMapView.mapView.style.updateGeoJSONSource(withId: sourceIdentifier, geoJSON: feature)
     }
 
     private func setupMostProbablePathStyle() {
         var source = GeoJSONSource()
         source.data = .geometry(Geometry.lineString(LineString([])))
-        _ = navigationMapView.mapView.style.addSource(source: source, identifier: sourceIdentifier)
+        try? navigationMapView.mapView.style.addSource(source, id: sourceIdentifier)
 
         var layer = LineLayer(id: layerIdentifier)
         layer.source = sourceIdentifier
@@ -149,6 +149,6 @@ class ObservingElectronicHorizonEventsViewController: UIViewController {
         layer.layout?.lineCap = .constant(.round)
         layer.layout?.lineJoin = .constant(.miter)
         layer.minZoom = 9
-        _ = navigationMapView.mapView.style.addLayer(layer: layer)
+        try? navigationMapView.mapView.style.addLayer(layer)
     }
 }
