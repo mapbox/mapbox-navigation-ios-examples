@@ -128,31 +128,30 @@ extension MapboxDirections.Incident: CustomStringConvertible {
 }
 
 extension MapboxCoreNavigation.RouteAlert: CustomStringConvertible {
-    
+
     public var description: String {
         let distance = Int64(self.distanceToStart)
         guard distance > 0 && distance < 500 else { return "" }
         
-        let alertInfo = self.alert
-        switch alertInfo {
-        case .incident(let incident):
+        switch roadObject.type {
+        case .incident(let incident?):
             return "\(incident.alertDescription) in \(distance)m."
-        case .tunnel(let alert):
+        case .tunnel(let alert?):
             if let alertName = alert.name {
                 return "Tunnel \(alertName) in \(distance)m."
             } else {
                 return "A tunnel in \(distance)m."
             }
-        case .borderCrossing(let alert):
+        case .borderCrossing(let alert?):
             return "Crossing border from \(alert.from) to \(alert.to) in \(distance)m."
-        case .serviceArea(let alert):
+        case .serviceArea(let alert?):
             switch alert.type {
             case .restArea:
                 return "Rest area in \(distance)m."
             case .serviceArea:
                 return "Service area in \(distance)m."
             }
-        case .tollCollection(let alert):
+        case .tollCollection(let alert?):
             switch alert.type {
             case .booth:
                 return "Toll booth in \(distance)m."
