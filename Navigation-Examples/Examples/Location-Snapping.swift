@@ -26,9 +26,7 @@ class LocationSnappingViewController: UIViewController {
     
     private func setupNavigationMapView() {
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        navigationMapView.mapView.update {
-            $0.location.puckType = .puck2D()
-        }
+        navigationMapView.mapView.location.options.puckType = .puck2D()
         
         let navigationViewportDataSource = NavigationViewportDataSource(navigationMapView.mapView)
         navigationViewportDataSource.options.followingCameraOptions.zoomUpdatesAllowed = false
