@@ -34,7 +34,7 @@
                                 </constraints>
                                 <state key="normal" title="Present NavigationViewController from UIStoryboardSegue"/>
                                 <connections>
-                                    <segue destination="h9f-3d-YgW" kind="show" identifier="NavigationSegue" id="jxw-eC-1BV"/>
+                                    <segue destination="h9f-3d-YgW" kind="showDetail" identifier="NavigationSegue" id="jxw-eC-1BV"/>
                                 </connections>
                             </button>
                         </subviews>

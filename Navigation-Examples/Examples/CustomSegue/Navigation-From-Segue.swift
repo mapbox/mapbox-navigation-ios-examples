@@ -58,9 +58,18 @@ class SegueViewController: UIViewController {
                 navigationViewController.routeOptions = navigationRouteOptions
                 // `navigationOptions` property is optional.
                 navigationViewController.navigationOptions = navigationOptions
+                navigationViewController.delegate = self
+                navigationViewController.modalPresentationStyle = .fullScreen
             }
         default:
             break
         }
+    }
+}
+
+extension SegueViewController: NavigationViewControllerDelegate {
+    
+    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
+        dismiss(animated: true)
     }
 }
