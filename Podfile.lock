@@ -1,37 +1,37 @@
 PODS:
-  - MapboxCommon (11.0.2)
-  - MapboxCoreMaps (10.0.0-beta.21):
-    - MapboxCommon (~> 11.0.2)
+  - MapboxCommon (12.0.0)
+  - MapboxCoreMaps (10.0.0-beta.22):
+    - MapboxCommon (~> 12.0.0)
   - MapboxCoreNavigation (2.0.0-beta.10):
     - MapboxDirections-pre (= 2.0.0-beta.3)
     - MapboxMobileEvents (~> 0.10.2)
-    - MapboxNavigationNative (~> 49.0)
+    - MapboxNavigationNative (~> 50.0)
     - Turf (= 2.0.0-alpha.3)
   - MapboxDirections-pre (2.0.0-beta.3):
     - Polyline (~> 5.0)
     - Turf (~> 2.0.0-alpha.3)
-  - MapboxMaps (10.0.0-beta.19.1):
-    - MapboxCommon (~> 11.0.2)
-    - MapboxCoreMaps (= 10.0.0-beta.21)
+  - MapboxMaps (10.0.0-beta.20):
+    - MapboxCommon (~> 12.0.0)
+    - MapboxCoreMaps (= 10.0.0-beta.22)
     - MapboxMobileEvents (= 0.10.8)
     - Turf (= 2.0.0-alpha.3)
   - MapboxMobileEvents (0.10.8)
   - MapboxNavigation (2.0.0-beta.10):
     - MapboxCoreNavigation (= 2.0.0-beta.10)
-    - MapboxMaps (= 10.0.0-beta.19.1)
+    - MapboxMaps (= 10.0.0-beta.20)
     - MapboxMobileEvents (~> 0.10.2)
     - MapboxSpeech-pre (= 2.0.0-alpha.1)
     - Solar (~> 2.1)
-  - MapboxNavigationNative (49.0.1):
-    - MapboxCommon (= 11.0.2)
+  - MapboxNavigationNative (50.0.0):
+    - MapboxCommon (~> 12.0)
   - MapboxSpeech-pre (2.0.0-alpha.1)
   - Polyline (5.0.2)
   - Solar (2.1.0)
   - Turf (2.0.0-alpha.3)
 
 DEPENDENCIES:
-  - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, tag `v2.0.0-beta.10`)
-  - MapboxNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, tag `v2.0.0-beta.10`)
+  - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `release-v2.0`)
+  - MapboxNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `release-v2.0`)
 
 SPEC REPOS:
   trunk:
@@ -48,34 +48,34 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   MapboxCoreNavigation:
+    :branch: release-v2.0
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
-    :tag: v2.0.0-beta.10
   MapboxNavigation:
+    :branch: release-v2.0
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
-    :tag: v2.0.0-beta.10
 
 CHECKOUT OPTIONS:
   MapboxCoreNavigation:
+    :commit: 2fc35deb98c9bf9e200dd829a7e66dd8ec4ae6f2
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
-    :tag: v2.0.0-beta.10
   MapboxNavigation:
+    :commit: 2fc35deb98c9bf9e200dd829a7e66dd8ec4ae6f2
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
-    :tag: v2.0.0-beta.10
 
 SPEC CHECKSUMS:
-  MapboxCommon: 721b98b188a4d540b930d6964a934586d7d9dc63
-  MapboxCoreMaps: bd921cb905dbf896e2f43bb89fafe29b459827f6
-  MapboxCoreNavigation: 88990b9378a4963a2b2fdc2b6d1a2fa9d530b13a
+  MapboxCommon: 5d38df5a519c1c5419dca4751c20516b99b5bb27
+  MapboxCoreMaps: 73965fb516164df3e66f5c2b98e6a2239c0db1ac
+  MapboxCoreNavigation: 2be7f963ea54993eac78ed600b864a023d93c185
   MapboxDirections-pre: 221ad1f4ee428346923654f55898c5a7c6e79ecb
-  MapboxMaps: 71981d8c0cb5240306ae5862b413e73998df4108
+  MapboxMaps: 3dd2f97f3e600bc6c599a29306fa5047200b9fa0
   MapboxMobileEvents: 36ff53b135aac486eed94b61f813c7967a0c2c6f
-  MapboxNavigation: cddf9a460d8d7e79b36aa6dbb4697724a0f5df7d
-  MapboxNavigationNative: fc5f23cf3a1874c70f6434e226de7b5ce55063d6
+  MapboxNavigation: 8c0b689be350b68fe39bd76930de5600cf3e5787
+  MapboxNavigationNative: 94ea4cb642461495178fa1794adcf6cbccdd5a4e
   MapboxSpeech-pre: aeb16de604d07ceb4195150c3359d5401bb298e6
   Polyline: fce41d72e1146c41c6d081f7656827226f643dff
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   Turf: ec9b01ef9386ab53545a1f763b7296c9ce3590d1
 
-PODFILE CHECKSUM: d4cb43728f84605e88f30d4ecbd751d3eaab2b47
+PODFILE CHECKSUM: 08ee95eefa37720b886316a708310b6234d09e59
 
 COCOAPODS: 1.10.1
