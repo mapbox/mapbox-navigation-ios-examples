@@ -1,7 +1,6 @@
 import UIKit
 import MapboxNavigation
 import MapboxCoreNavigation
-import CoreLocation
 import MapboxDirections
 
 class SegueViewController: UIViewController {
@@ -35,7 +34,7 @@ class SegueViewController: UIViewController {
                 let navigationService = MapboxNavigationService(route: route,
                                                                 routeIndex: 0,
                                                                 routeOptions: self.navigationRouteOptions,
-                                                                simulating: .always)
+                                                                simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 self.navigationOptions = NavigationOptions(navigationService: navigationService)
             }
         }
@@ -48,12 +47,16 @@ class SegueViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // To create an instance of `NavigationViewController`
+        // from `UIStoryboardSegue` `route`, `routeIndex` and `routeOptions`
+        // properties of `NavigationViewController` must be pre-defined.
         switch segue.identifier ?? "" {
         case "NavigationSegue":
             if let navigationViewController = segue.destination as? NavigationViewController {
                 navigationViewController.route = route
                 navigationViewController.routeIndex = 0
                 navigationViewController.routeOptions = navigationRouteOptions
+                // `navigationOptions` property is optional.
                 navigationViewController.navigationOptions = navigationOptions
             }
         default:
