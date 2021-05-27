@@ -30,8 +30,8 @@ PODS:
   - Turf (2.0.0-alpha.3)
 
 DEPENDENCIES:
-  - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `maxim/2973-fix-navigation-view-controller-crash-in-storyboard`)
-  - MapboxNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `maxim/2973-fix-navigation-view-controller-crash-in-storyboard`)
+  - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `release-v2.0`)
+  - MapboxNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `release-v2.0`)
 
 SPEC REPOS:
   trunk:
@@ -48,18 +48,18 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   MapboxCoreNavigation:
-    :branch: maxim/2973-fix-navigation-view-controller-crash-in-storyboard
+    :branch: release-v2.0
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
   MapboxNavigation:
-    :branch: maxim/2973-fix-navigation-view-controller-crash-in-storyboard
+    :branch: release-v2.0
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
 
 CHECKOUT OPTIONS:
   MapboxCoreNavigation:
-    :commit: 498c8a145ec82418350ecfe6269420b90d861cf2
+    :commit: aef35fc88c2bd972cef6365ac8fbd911fd28ba7e
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
   MapboxNavigation:
-    :commit: 498c8a145ec82418350ecfe6269420b90d861cf2
+    :commit: aef35fc88c2bd972cef6365ac8fbd911fd28ba7e
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
 
 SPEC CHECKSUMS:
@@ -76,6 +76,6 @@ SPEC CHECKSUMS:
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   Turf: ec9b01ef9386ab53545a1f763b7296c9ce3590d1
 
-PODFILE CHECKSUM: 011ce6bdcc4ad199f301b352f8926efe4de7df03
+PODFILE CHECKSUM: 08ee95eefa37720b886316a708310b6234d09e59
 
 COCOAPODS: 1.10.1
