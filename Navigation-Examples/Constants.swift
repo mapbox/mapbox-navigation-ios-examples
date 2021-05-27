@@ -146,5 +146,12 @@ let listOfExamples: [NamedController] = [
         controller: RouteLinesStylingViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
+    ),
+    (
+        name: "Custom Segue",
+        description: "Demonstrates how to create an instance of NavigationViewController from UIStoryboardSegue.",
+        controller: SegueViewController.self,
+        storyboard: UIStoryboard(name: "CustomSegue", bundle: nil),
+        pushExampleToViewController: true
     )
 ]

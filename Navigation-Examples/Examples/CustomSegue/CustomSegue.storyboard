@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Xg4-Po-kzu">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--NavigationViewController-->
+        <scene sceneID="cSe-rV-QHv">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Navigation" bundleIdentifier="org.cocoapods.MapboxNavigation" referencedIdentifier="NavigationViewController" id="h9f-3d-YgW" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="DSp-2V-mUu"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cKf-ee-17W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1083" y="617"/>
+        </scene>
+        <!--Segue View Controller-->
+        <scene sceneID="J6Q-nZ-713">
+            <objects>
+                <viewController id="Xg4-Po-kzu" customClass="SegueViewController" customModule="Navigation_Examples" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hqs-cF-bxk">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9mr-VU-0yI">
+                                <rect key="frame" x="35" y="423" width="344" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Bbb-51-yZA"/>
+                                </constraints>
+                                <state key="normal" title="Present NavigationViewController from UIStoryboardSegue"/>
+                                <connections>
+                                    <segue destination="h9f-3d-YgW" kind="showDetail" identifier="NavigationSegue" id="jxw-eC-1BV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Mqw-MG-33R"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="9mr-VU-0yI" firstAttribute="centerY" secondItem="hqs-cF-bxk" secondAttribute="centerY" id="7qt-CG-VZt"/>
+                            <constraint firstItem="9mr-VU-0yI" firstAttribute="centerX" secondItem="hqs-cF-bxk" secondAttribute="centerX" id="GNr-2i-Ygi"/>
+                            <constraint firstItem="Mqw-MG-33R" firstAttribute="trailing" secondItem="9mr-VU-0yI" secondAttribute="trailing" constant="35" id="IMp-oS-jGe"/>
+                            <constraint firstItem="9mr-VU-0yI" firstAttribute="leading" secondItem="Mqw-MG-33R" secondAttribute="leading" constant="35" id="Spg-xj-61z"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="presentNavigationButton" destination="9mr-VU-0yI" id="dDU-2u-5Za"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="51p-Wh-5bq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="397" y="617"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
