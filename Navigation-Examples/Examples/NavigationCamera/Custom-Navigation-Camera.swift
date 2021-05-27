@@ -33,9 +33,7 @@ class CustomNavigationCameraViewController: UIViewController {
     func setupNavigationMapView() {
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        navigationMapView.mapView.update {
-            $0.location.puckType = .puck2D()
-        }
+        navigationMapView.mapView.location.options.puckType = .puck2D()
         
         // Modify default `NavigationViewportDataSource` and `NavigationCameraStateTransition` to change
         // `NavigationCamera` behavior during free drive and when locations are provided by Maps SDK directly.

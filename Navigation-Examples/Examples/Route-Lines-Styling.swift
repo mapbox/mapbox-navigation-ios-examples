@@ -51,9 +51,7 @@ class RouteLinesStylingViewController: UIViewController {
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.delegate = self
-        navigationMapView.mapView.update {
-            $0.location.puckType = .puck2D()
-        }
+        navigationMapView.mapView.location.options.puckType = .puck2D()
         
         let navigationViewportDataSource = NavigationViewportDataSource(navigationMapView.mapView, viewportDataSourceType: .raw)
         navigationMapView.navigationCamera.viewportDataSource = navigationViewportDataSource
@@ -204,10 +202,10 @@ extension RouteLinesStylingViewController: NavigationMapViewDelegate {
         // main or alternative, and whether route is casing or not. For example: identifier for
         // main route line will look like this: `0x0000600001168000.main.route_line`, and for
         // alternative route line casing will look like this: `0x0000600001ddee80.alternative.route_line_casing`.
-        lineLayer.paint?.lineColor = .constant(.init(color: identifier.contains("main") ? #colorLiteral(red: 0.337254902, green: 0.6588235294, blue: 0.9843137255, alpha: 1) : #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)))
-        lineLayer.paint?.lineWidth = .expression(lineWidthExpression())
-        lineLayer.layout?.lineJoin = .constant(.round)
-        lineLayer.layout?.lineCap = .constant(.round)
+        lineLayer.lineColor = .constant(.init(color: identifier.contains("main") ? #colorLiteral(red: 0.337254902, green: 0.6588235294, blue: 0.9843137255, alpha: 1) : #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)))
+        lineLayer.lineWidth = .expression(lineWidthExpression())
+        lineLayer.lineJoin = .constant(.round)
+        lineLayer.lineCap = .constant(.round)
         
         return lineLayer
     }
@@ -218,10 +216,10 @@ extension RouteLinesStylingViewController: NavigationMapViewDelegate {
         
         // Based on information stored in `identifier` property (whether route line is main or not)
         // route line will be colored differently.
-        lineLayer.paint?.lineColor = .constant(.init(color: identifier.contains("main") ? #colorLiteral(red: 0.1843137255, green: 0.4784313725, blue: 0.7764705882, alpha: 1) : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)))
-        lineLayer.paint?.lineWidth = .expression(lineWidthExpression(1.2))
-        lineLayer.layout?.lineJoin = .constant(.round)
-        lineLayer.layout?.lineCap = .constant(.round)
+        lineLayer.lineColor = .constant(.init(color: identifier.contains("main") ? #colorLiteral(red: 0.1843137255, green: 0.4784313725, blue: 0.7764705882, alpha: 1) : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)))
+        lineLayer.lineWidth = .expression(lineWidthExpression(1.2))
+        lineLayer.lineJoin = .constant(.round)
+        lineLayer.lineCap = .constant(.round)
         
         return lineLayer
     }
@@ -240,10 +238,10 @@ extension RouteLinesStylingViewController: NavigationViewControllerDelegate {
     func navigationViewController(_ navigationViewController: NavigationViewController, routeLineLayerWithIdentifier identifier: String, sourceIdentifier: String) -> LineLayer? {
         var lineLayer = LineLayer(id: identifier)
         lineLayer.source = sourceIdentifier
-        lineLayer.paint?.lineColor = .constant(.init(color: identifier.contains("main") ? #colorLiteral(red: 0.337254902, green: 0.6588235294, blue: 0.9843137255, alpha: 1) : #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)))
-        lineLayer.paint?.lineWidth = .expression(lineWidthExpression())
-        lineLayer.layout?.lineJoin = .constant(.round)
-        lineLayer.layout?.lineCap = .constant(.round)
+        lineLayer.lineColor = .constant(.init(color: identifier.contains("main") ? #colorLiteral(red: 0.337254902, green: 0.6588235294, blue: 0.9843137255, alpha: 1) : #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)))
+        lineLayer.lineWidth = .expression(lineWidthExpression())
+        lineLayer.lineJoin = .constant(.round)
+        lineLayer.lineCap = .constant(.round)
         
         return lineLayer
     }
@@ -251,10 +249,10 @@ extension RouteLinesStylingViewController: NavigationViewControllerDelegate {
     func navigationViewController(_ navigationViewController: NavigationViewController, routeCasingLineLayerWithIdentifier identifier: String, sourceIdentifier: String) -> LineLayer? {
         var lineLayer = LineLayer(id: identifier)
         lineLayer.source = sourceIdentifier
-        lineLayer.paint?.lineColor = .constant(.init(color: identifier.contains("main") ? #colorLiteral(red: 0.1843137255, green: 0.4784313725, blue: 0.7764705882, alpha: 1) : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)))
-        lineLayer.paint?.lineWidth = .expression(lineWidthExpression(1.2))
-        lineLayer.layout?.lineJoin = .constant(.round)
-        lineLayer.layout?.lineCap = .constant(.round)
+        lineLayer.lineColor = .constant(.init(color: identifier.contains("main") ? #colorLiteral(red: 0.1843137255, green: 0.4784313725, blue: 0.7764705882, alpha: 1) : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)))
+        lineLayer.lineWidth = .expression(lineWidthExpression(1.2))
+        lineLayer.lineJoin = .constant(.round)
+        lineLayer.lineCap = .constant(.round)
         
         return lineLayer
     }

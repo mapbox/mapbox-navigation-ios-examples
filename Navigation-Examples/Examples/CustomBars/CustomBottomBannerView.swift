@@ -1,7 +1,7 @@
 import UIKit
 import MapboxNavigation
 
-protocol CustomBottomBannerViewDelegate: class {
+protocol CustomBottomBannerViewDelegate: AnyObject {
     func customBottomBannerDidCancel(_ banner: CustomBottomBannerView)
 }
 

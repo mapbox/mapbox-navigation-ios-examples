@@ -52,9 +52,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.delegate = self
-        navigationMapView.mapView.update {
-            $0.location.puckType = .puck2D()
-        }
+        navigationMapView.mapView.location.options.puckType = .puck2D()
         
         // To make sure that buildings are rendered increase zoomLevel to value which is higher than 16.0.
         // More details can be found here: https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v8/#building
@@ -132,7 +130,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         navigationViewController.routeLineTracksTraversal = true
         navigationViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen
-        navigationViewController.navigationMapView?.mapView.style.uri = navigationMapView.mapView.style.uri
+        navigationViewController.navigationMapView?.mapView.mapboxMap.style.uri = navigationMapView.mapView?.mapboxMap.style.uri
         
         // Set `waypointStyle` to either `.building` or `.extrudedBuilding` to allow
         // building highighting in 2D or 3D respectively.
@@ -142,10 +140,11 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     }
     
     func toggleDayNightStyle() {
-        if navigationMapView.mapView?.style.uri.rawValue == MapboxMaps.Style.navigationNightStyleURL {
-            navigationMapView.mapView?.style.uri = StyleURI.custom(url: MapboxMaps.Style.navigationDayStyleURL)
+        let style = navigationMapView.mapView?.mapboxMap.style
+        if style?.uri?.rawValue == MapboxMaps.Style.navigationNightStyleURL.absoluteString {
+            style?.uri = StyleURI(url: MapboxMaps.Style.navigationDayStyleURL)
         } else {
-            navigationMapView.mapView?.style.uri = StyleURI.custom(url: MapboxMaps.Style.navigationNightStyleURL)
+            style?.uri = StyleURI(url: MapboxMaps.Style.navigationNightStyleURL)
         }
     }
     
