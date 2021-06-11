@@ -31,7 +31,7 @@ class CustomWaypointsViewController: UIViewController {
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.delegate = self
-        navigationMapView.mapView.location.options.puckType = .puck2D()
+        navigationMapView.userLocationStyle = .puck2D()
         
         view.addSubview(navigationMapView)
         
@@ -83,7 +83,7 @@ class CustomWaypointsViewController: UIViewController {
         let navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, firstWaypoint, secondWaypoint])
         
         let cameraOptions = CameraOptions(center: origin, zoom: 13.0)
-        self.navigationMapView.mapView.camera.setCamera(to: cameraOptions)
+        self.navigationMapView.mapView.mapboxMap.setCamera(to: cameraOptions)
         
         Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
             switch result {
@@ -153,7 +153,7 @@ class CustomWaypointsViewController: UIViewController {
     }
 
     func customWaypointShape(shapeFor waypoints: [Waypoint], legIndex: Int) -> FeatureCollection {
-        var features = [Feature]()
+        var features = [Turf.Feature]()
         for (waypointIndex, waypoint) in waypoints.enumerated() {
             var feature = Feature(Point(waypoint.coordinate))
             feature.properties = [

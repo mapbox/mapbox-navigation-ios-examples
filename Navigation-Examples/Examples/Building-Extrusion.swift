@@ -52,7 +52,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.delegate = self
-        navigationMapView.mapView.location.options.puckType = .puck2D()
+        navigationMapView.userLocationStyle = .puck2D()
         
         // To make sure that buildings are rendered increase zoomLevel to value which is higher than 16.0.
         // More details can be found here: https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v8/#building

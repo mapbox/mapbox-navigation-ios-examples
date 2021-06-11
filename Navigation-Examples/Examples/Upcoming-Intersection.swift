@@ -22,7 +22,7 @@ class ObservingElectronicHorizonEventsViewController: UIViewController {
     func setupNavigationMapView() {
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.mapView.location.overrideLocationProvider(with: passiveLocationManager)
-        navigationMapView.mapView.location.options.puckType = .puck2D()
+        navigationMapView.userLocationStyle = .puck2D()
         navigationMapView.mapView.mapboxMap.onNext(.styleLoaded, handler: { [weak self] _ in
             self?.setupMostProbablePathStyle()
         })
