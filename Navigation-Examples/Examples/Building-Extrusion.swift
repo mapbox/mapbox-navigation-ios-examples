@@ -52,18 +52,14 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.delegate = self
-        navigationMapView.mapView.update {
-            $0.location.puckType = .puck2D()
-        }
+        navigationMapView.userLocationStyle = .puck2D()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            if let coordinate = self.navigationMapView.mapView.location.latestLocation?.coordinate {
-                // To make sure that buildings are rendered increase zoomLevel to value which is higher than 16.0.
-                // More details can be found here: https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v8/#building
-                let cameraOptions = CameraOptions(center: coordinate, zoom: 17.0)
-                self.navigationMapView.mapView.camera.setCamera(to: cameraOptions)
-            }
-        }
+        // To make sure that buildings are rendered increase zoomLevel to value which is higher than 16.0.
+        // More details can be found here: https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v8/#building
+        let navigationViewportDataSource = NavigationViewportDataSource(navigationMapView.mapView, viewportDataSourceType: .raw)
+        navigationViewportDataSource.options.followingCameraOptions.zoomUpdatesAllowed = false
+        navigationViewportDataSource.followingMobileCamera.zoom = 17.0
+        navigationMapView.navigationCamera.viewportDataSource = navigationViewportDataSource
         
         view.addSubview(navigationMapView)
     }
@@ -134,7 +130,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         navigationViewController.routeLineTracksTraversal = true
         navigationViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen
-        navigationViewController.navigationMapView?.mapView.style.uri = navigationMapView.mapView.style.uri
+        navigationViewController.navigationMapView?.mapView.mapboxMap.style.uri = navigationMapView.mapView?.mapboxMap.style.uri
         
         // Set `waypointStyle` to either `.building` or `.extrudedBuilding` to allow
         // building highighting in 2D or 3D respectively.
@@ -144,10 +140,11 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     }
     
     func toggleDayNightStyle() {
-        if navigationMapView.mapView?.style.uri.rawValue == MapboxMaps.Style.navigationNightStyleURL {
-            navigationMapView.mapView?.style.uri = StyleURI.custom(url: MapboxMaps.Style.navigationDayStyleURL)
+        let style = navigationMapView.mapView?.mapboxMap.style
+        if style?.uri?.rawValue == MapboxMaps.Style.navigationNightStyleURL.absoluteString {
+            style?.uri = StyleURI(url: MapboxMaps.Style.navigationDayStyleURL)
         } else {
-            navigationMapView.mapView?.style.uri = StyleURI.custom(url: MapboxMaps.Style.navigationNightStyleURL)
+            style?.uri = StyleURI(url: MapboxMaps.Style.navigationNightStyleURL)
         }
     }
     
@@ -159,14 +156,14 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .began else { return }
 
-        createWaypoints(for: navigationMapView.mapView.coordinate(for: gesture.location(in: navigationMapView.mapView)))
+        createWaypoints(for: navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView)))
         requestRoute()
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
         // In case if route is already shown on map do not allow selection of buildings other than final destination.
         guard currentRoute == nil || navigationRouteOptions == nil else { return }
-        navigationMapView.highlightBuildings(at: [navigationMapView.mapView.coordinate(for: gesture.location(in: navigationMapView.mapView))], in3D: true)
+        navigationMapView.highlightBuildings(at: [navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView))], in3D: true)
     }
 
     func createWaypoints(for destinationCoordinate: CLLocationCoordinate2D?) {

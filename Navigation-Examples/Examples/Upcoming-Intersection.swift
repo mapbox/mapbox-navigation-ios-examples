@@ -22,12 +22,10 @@ class ElectronicHorizonEventsViewController: UIViewController {
     func setupNavigationMapView() {
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.mapView.location.overrideLocationProvider(with: passiveLocationManager)
-        navigationMapView.mapView.update {
-            $0.location.puckType = .puck2D()
-        }
-        navigationMapView.mapView.on(.styleLoaded) { [weak self] _ in
+        navigationMapView.userLocationStyle = .puck2D()
+        navigationMapView.mapView.mapboxMap.onNext(.styleLoaded, handler: { [weak self] _ in
             self?.setupMostProbablePathStyle()
-        }
+        })
         
         view.addSubview(navigationMapView)
     }
@@ -128,27 +126,27 @@ class ElectronicHorizonEventsViewController: UIViewController {
 
     private func updateMostProbablePath(with mostProbablePath: [CLLocationCoordinate2D]) {
         let feature = Feature(geometry: .lineString(LineString(mostProbablePath)))
-        _ = navigationMapView.mapView.style.updateGeoJSON(for: sourceIdentifier, with: feature)
+        try? navigationMapView.mapView.mapboxMap.style.updateGeoJSONSource(withId: sourceIdentifier, geoJSON: feature)
     }
-
+    
     private func setupMostProbablePathStyle() {
         var source = GeoJSONSource()
         source.data = .geometry(Geometry.lineString(LineString([])))
-        _ = navigationMapView.mapView.style.addSource(source: source, identifier: sourceIdentifier)
-
+        try? navigationMapView.mapView.mapboxMap.style.addSource(source, id: sourceIdentifier)
+        
         var layer = LineLayer(id: layerIdentifier)
         layer.source = sourceIdentifier
-        layer.paint?.lineWidth = .expression(
+        layer.lineWidth = .expression(
             Exp(.interpolate) {
                 Exp(.linear)
                 Exp(.zoom)
                 RouteLineWidthByZoomLevel.mapValues { $0 * 0.5 }
             }
         )
-        layer.paint?.lineColor = .constant(.init(color: UIColor.green.withAlphaComponent(0.9)))
-        layer.layout?.lineCap = .constant(.round)
-        layer.layout?.lineJoin = .constant(.miter)
+        layer.lineColor = .constant(.init(color: UIColor.green.withAlphaComponent(0.9)))
+        layer.lineCap = .constant(.round)
+        layer.lineJoin = .constant(.miter)
         layer.minZoom = 9
-        _ = navigationMapView.mapView.style.addLayer(layer: layer)
+        try? navigationMapView.mapView.mapboxMap.style.addLayer(layer)
     }
 }

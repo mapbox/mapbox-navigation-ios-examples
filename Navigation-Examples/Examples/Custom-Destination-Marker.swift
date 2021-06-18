@@ -11,6 +11,7 @@ class CustomDestinationMarkerController: UIViewController {
     var navigationRouteOptions: NavigationRouteOptions!
     var startNavigationButton: UIButton!
     var routes: [Route] = []
+    var pointAnnotationManager: PointAnnotationManager?
     
     // MARK: - UIViewController lifecycle methods
     
@@ -36,8 +37,11 @@ class CustomDestinationMarkerController: UIViewController {
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.delegate = self
-        navigationMapView.mapView.update {
-            $0.location.puckType = .puck2D()
+        navigationMapView.userLocationStyle = .puck2D()
+        
+        navigationMapView.mapView.mapboxMap.onNext(.styleLoaded) { [weak self] _ in
+            guard let self = self else { return }
+            self.pointAnnotationManager = self.navigationMapView.mapView.annotations.makePointAnnotationManager()
         }
         
         view.addSubview(navigationMapView)
@@ -82,7 +86,7 @@ class CustomDestinationMarkerController: UIViewController {
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
         let navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        navigationMapView.mapView.camera.setCamera(to: CameraOptions(center: destination, zoom: 13.0))
+        navigationMapView.mapView.mapboxMap.setCamera(to: CameraOptions(center: destination, zoom: 13.0))
         
         Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
             switch result {
@@ -110,13 +114,13 @@ extension CustomDestinationMarkerController: NavigationMapViewDelegate {
     
     func navigationMapView(_ navigationMapView: NavigationMapView, didAdd finalDestinationAnnotation: PointAnnotation) {
         var finalDestinationAnnotation = finalDestinationAnnotation
-        finalDestinationAnnotation.image = UIImage(named: "marker")
-        
-        do {
-            try navigationMapView.mapView.annotations.updateAnnotation(finalDestinationAnnotation)
-        } catch {
-            NSLog("Error occured: \(error.localizedDescription).")
+        if let image = UIImage(named: "marker") {
+            finalDestinationAnnotation.image = PointAnnotation.Image.custom(image: image, name: "marker")
+        } else {
+            finalDestinationAnnotation.image = .default
         }
+        
+        pointAnnotationManager?.syncAnnotations([finalDestinationAnnotation])
     }
 }
 
@@ -126,13 +130,13 @@ extension CustomDestinationMarkerController: NavigationViewControllerDelegate {
     
     func navigationViewController(_ navigationViewController: NavigationViewController, didAdd finalDestinationAnnotation: PointAnnotation) {
         var finalDestinationAnnotation = finalDestinationAnnotation
-        finalDestinationAnnotation.image = UIImage(named: "marker")
-        
-        do {
-            try navigationViewController.navigationMapView?.mapView.annotations.updateAnnotation(finalDestinationAnnotation)
-        } catch {
-            NSLog("Error occured: \(error.localizedDescription).")
+        if let image = UIImage(named: "marker") {
+            finalDestinationAnnotation.image = PointAnnotation.Image.custom(image: image, name: "marker")
+        } else {
+            finalDestinationAnnotation.image = .default
         }
+        
+        pointAnnotationManager?.syncAnnotations([finalDestinationAnnotation])
     }
     
     func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {

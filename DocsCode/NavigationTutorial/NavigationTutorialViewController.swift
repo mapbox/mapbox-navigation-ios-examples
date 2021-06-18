@@ -22,16 +22,14 @@ class ViewController: UIViewController {
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(navigationMapView)
-
-        // Allow the map to display the user's location
-        navigationMapView.mapView.update {
-            $0.location.puckType = .puck2D()
-        }
         
         // By default `NavigationViewportDataSource` tracks location changes from `PassiveLocationDataSource`, to consume
         // raw locations `ViewportDataSourceType` should be set to `.raw`.
         let navigationViewportDataSource = NavigationViewportDataSource(navigationMapView.mapView, viewportDataSourceType: .raw)
         navigationMapView.navigationCamera.viewportDataSource = navigationViewportDataSource
+        
+        // Allow the map to display the user's location
+        navigationMapView.userLocationStyle = .puck2D()
         
         // Add a gesture recognizer to the map view
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
@@ -75,7 +73,7 @@ class ViewController: UIViewController {
 
         // Converts point where user did a long press to map coordinates
         let point = sender.location(in: navigationMapView)
-        let coordinate = navigationMapView.mapView.coordinate(for: point)
+        let coordinate = navigationMapView.mapView.mapboxMap.coordinate(for: point)
 
         if let origin = navigationMapView.mapView.location.latestLocation?.internalLocation.coordinate {
             // Calculate the route from the user's location to the set destination
@@ -145,22 +143,22 @@ class ViewController: UIViewController {
         let feature = Feature(LineString(routeShape.coordinates))
         
         // If there's already a route line on the map, update its shape to the new route
-        if let _ = try? mapView.style.getSource(identifier: sourceIdentifier, type: GeoJSONSource.self).get() {
-            let _ = mapView.style.updateGeoJSON(for: sourceIdentifier, with: feature)
+        if mapView.mapboxMap.style.sourceExists(withId: sourceIdentifier) {
+            try? mapView.mapboxMap.style.updateGeoJSONSource(withId: sourceIdentifier, geoJSON: feature)
         } else {
             // Convert the route’s coordinates into a lineString Feature and add the source of the route line to the map
             var geoJSONSource = GeoJSONSource()
             geoJSONSource.data = .feature(feature)
-            mapView.style.addSource(source: geoJSONSource, identifier: sourceIdentifier)
+            try? mapView.mapboxMap.style.addSource(geoJSONSource, id: sourceIdentifier)
             
             // Customize the route line color and width
             var lineLayer = LineLayer(id: "routeLayer")
             lineLayer.source = sourceIdentifier
-            lineLayer.paint?.lineColor = .constant(.init(color: UIColor(red: 0.1897518039, green: 0.3010634184, blue: 0.7994888425, alpha: 1.0)))
-            lineLayer.paint?.lineWidth = .constant(3)
+            lineLayer.lineColor = .constant(.init(color: UIColor(red: 0.1897518039, green: 0.3010634184, blue: 0.7994888425, alpha: 1.0)))
+            lineLayer.lineWidth = .constant(3)
             
             // Add the style layer of the route line to the map
-            mapView.style?.addLayer(layer: lineLayer)
+            try? mapView.mapboxMap.style.addLayer(lineLayer)
         }
     }
     // #-end-code-snippet: navigation draw-route-swift

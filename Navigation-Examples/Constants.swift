@@ -120,17 +120,38 @@ let listOfExamples: [NamedController] = [
         pushExampleToViewController: false
     ),
     (
-        name: "Snapping locations in standalone map view",
+        name: "Location Snapping",
         description: "Demonstrates how to snap user location to the road network in a map view outside of active turn-by-turn navigation. Simulate Navigation option isn't supported here, instead you can use location simulation inside of the Simulator (Features ‣ Location ‣ \"City Bicycle Ride\") to see the difference with and without snapping.",
         controller: LocationSnappingViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
     ),
     (
-        name: "Observe electronic horizon events",
+        name: "Electronic Horizon Events Observing",
         description: "Demonstrates how to use electronic horizon to predict user's most probable path and show upcoming intersections. Simulate Navigation option isn't supported here, instead you can simulate location in Xcode.",
         controller: ElectronicHorizonEventsViewController.self,
         storyboard: nil,
+        pushExampleToViewController: true
+    ),
+    (
+        name: "Custom Navigation Camera",
+        description: "Demonstrates how to add custom data source and transitions to navigation camera.",
+        controller: CustomNavigationCameraViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
+    ),
+    (
+        name: "Route Lines Styling",
+        description: "Demonstrates how to provide custom styling for the route lines.",
+        controller: RouteLinesStylingViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
+    ),
+    (
+        name: "Custom Segue",
+        description: "Demonstrates how to create an instance of NavigationViewController from UIStoryboardSegue.",
+        controller: SegueViewController.self,
+        storyboard: UIStoryboard(name: "CustomSegue", bundle: nil),
         pushExampleToViewController: true
     )
 ]

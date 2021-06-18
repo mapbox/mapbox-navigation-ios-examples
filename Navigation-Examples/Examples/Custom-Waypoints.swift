@@ -31,9 +31,7 @@ class CustomWaypointsViewController: UIViewController {
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.delegate = self
-        navigationMapView.mapView.update {
-            $0.location.puckType = .puck2D()
-        }
+        navigationMapView.userLocationStyle = .puck2D()
         
         view.addSubview(navigationMapView)
         
@@ -85,7 +83,7 @@ class CustomWaypointsViewController: UIViewController {
         let navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, firstWaypoint, secondWaypoint])
         
         let cameraOptions = CameraOptions(center: origin, zoom: 13.0)
-        self.navigationMapView.mapView.camera.setCamera(to: cameraOptions)
+        self.navigationMapView.mapView.mapboxMap.setCamera(to: cameraOptions)
         
         Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
             switch result {
@@ -122,25 +120,25 @@ class CustomWaypointsViewController: UIViewController {
             0.5
             1
         }
-        circleLayer.paint?.circleColor = .constant(.init(color: UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)))
-        circleLayer.paint?.circleOpacity = .expression(opacity)
-        circleLayer.paint?.circleRadius = .constant(.init(10))
-        circleLayer.paint?.circleStrokeColor = .constant(.init(color: UIColor.black))
-        circleLayer.paint?.circleStrokeWidth = .constant(.init(1))
-        circleLayer.paint?.circleStrokeOpacity = .expression(opacity)
+        circleLayer.circleColor = .constant(.init(color: UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)))
+        circleLayer.circleOpacity = .expression(opacity)
+        circleLayer.circleRadius = .constant(.init(10))
+        circleLayer.circleStrokeColor = .constant(.init(color: UIColor.black))
+        circleLayer.circleStrokeWidth = .constant(.init(1))
+        circleLayer.circleStrokeOpacity = .expression(opacity)
         return circleLayer
     }
 
     func customSymbolLayer(with identifier: String, sourceIdentifier: String) -> SymbolLayer {
         var symbolLayer = SymbolLayer(id: identifier)
         symbolLayer.source = sourceIdentifier
-        symbolLayer.layout?.textField = .expression(Exp(.toString) {
+        symbolLayer.textField = .expression(Exp(.toString) {
             Exp(.get) {
                 "name"
             }
         })
-        symbolLayer.layout?.textSize = .constant(.init(10))
-        symbolLayer.paint?.textOpacity = .expression(Exp(.switchCase) {
+        symbolLayer.textSize = .constant(.init(10))
+        symbolLayer.textOpacity = .expression(Exp(.switchCase) {
             Exp(.any) {
                 Exp(.get) {
                     "waypointCompleted"
@@ -149,13 +147,13 @@ class CustomWaypointsViewController: UIViewController {
             0.5
             1
         })
-        symbolLayer.paint?.textHaloWidth = .constant(.init(0.25))
-        symbolLayer.paint?.textHaloColor = .constant(.init(color: UIColor.black))
+        symbolLayer.textHaloWidth = .constant(.init(0.25))
+        symbolLayer.textHaloColor = .constant(.init(color: UIColor.black))
         return symbolLayer
     }
 
     func customWaypointShape(shapeFor waypoints: [Waypoint], legIndex: Int) -> FeatureCollection {
-        var features = [Feature]()
+        var features = [Turf.Feature]()
         for (waypointIndex, waypoint) in waypoints.enumerated() {
             var feature = Feature(Point(waypoint.coordinate))
             feature.properties = [

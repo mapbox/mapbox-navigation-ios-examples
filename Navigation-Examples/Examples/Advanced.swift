@@ -41,11 +41,12 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.delegate = self
-        navigationMapView.mapView.update {
-            $0.location.puckType = .puck2D()
-        }
-
-        navigationMapView.navigationCamera.viewportDataSource = NavigationViewportDataSource(navigationMapView.mapView, viewportDataSourceType: .raw)
+        navigationMapView.userLocationStyle = .puck2D()
+        
+        let navigationViewportDataSource = NavigationViewportDataSource(navigationMapView.mapView, viewportDataSourceType: .raw)
+        navigationViewportDataSource.options.followingCameraOptions.zoomUpdatesAllowed = false
+        navigationViewportDataSource.followingMobileCamera.zoom = 13.0
+        navigationMapView.navigationCamera.viewportDataSource = navigationViewportDataSource
         
         let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         navigationMapView.addGestureRecognizer(gesture)
@@ -93,7 +94,7 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
     
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .ended else { return }
-        let location = navigationMapView.mapView.coordinate(for: gesture.location(in: navigationMapView.mapView))
+        let location = navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView))
         
         requestRoute(destination: location)
     }
