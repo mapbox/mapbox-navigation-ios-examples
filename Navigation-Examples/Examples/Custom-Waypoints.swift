@@ -13,7 +13,7 @@ class CustomWaypointsViewController: UIViewController {
     var routes: [Route]? {
         didSet {
             guard let routes = routes, let current = routes.first else {
-                navigationMapView.removeRoutes();
+                navigationMapView.removeRoutes()
                 return
             }
             
@@ -85,7 +85,7 @@ class CustomWaypointsViewController: UIViewController {
         let cameraOptions = CameraOptions(center: origin, zoom: 13.0)
         self.navigationMapView.mapView.mapboxMap.setCamera(to: cameraOptions)
         
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
+        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
@@ -120,7 +120,7 @@ class CustomWaypointsViewController: UIViewController {
             0.5
             1
         }
-        circleLayer.circleColor = .constant(.init(color: UIColor(red:0.9, green:0.9, blue:0.9, alpha:1.0)))
+        circleLayer.circleColor = .constant(.init(color: UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)))
         circleLayer.circleOpacity = .expression(opacity)
         circleLayer.circleRadius = .constant(.init(10))
         circleLayer.circleStrokeColor = .constant(.init(color: UIColor.black))

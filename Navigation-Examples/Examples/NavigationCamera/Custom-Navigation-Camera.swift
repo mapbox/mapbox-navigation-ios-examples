@@ -95,7 +95,7 @@ class CustomNavigationCameraViewController: UIViewController {
         let destination = navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView))
         navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
+        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
             switch result {
             case .failure(let error):
                 NSLog("Error occured while requesting route: \(error.localizedDescription).")

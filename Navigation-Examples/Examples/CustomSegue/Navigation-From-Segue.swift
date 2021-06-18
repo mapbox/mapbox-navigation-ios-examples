@@ -22,7 +22,7 @@ class SegueViewController: UIViewController {
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
         navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
+        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
             switch result {
             case .failure(let error):
                 NSLog("Error occured: \(error.localizedDescription).")

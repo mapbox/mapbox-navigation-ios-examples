@@ -145,7 +145,7 @@ class RouteLinesStylingViewController: UIViewController {
         ]
         
         let navigationRouteOptions = NavigationRouteOptions(waypoints: waypoints)
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
+        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
             switch result {
             case .failure(let error):
                 NSLog("Error occured while requesting route: \(error.localizedDescription).")

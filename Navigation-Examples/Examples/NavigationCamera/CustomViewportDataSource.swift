@@ -17,7 +17,7 @@ import MapboxCoreNavigation
  */
 class CustomViewportDataSource: ViewportDataSource {
     
-    public var delegate: ViewportDataSourceDelegate?
+    public weak var delegate: ViewportDataSourceDelegate?
     
     public var followingMobileCamera: CameraOptions = CameraOptions()
     
@@ -98,12 +98,7 @@ class CustomViewportDataSource: ViewportDataSource {
 extension CustomViewportDataSource: LocationConsumer {
     
     var shouldTrackLocation: Bool {
-        get {
-            return true
-        }
-        set(newValue) {
-            // No-op
-        }
+        return true
     }
 
     func locationUpdate(newLocation: Location) {

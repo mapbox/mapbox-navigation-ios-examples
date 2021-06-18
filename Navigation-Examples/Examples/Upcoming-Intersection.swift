@@ -4,7 +4,7 @@ import MapboxCoreNavigation
 import MapboxMaps
 import Turf
 
-class ObservingElectronicHorizonEventsViewController: UIViewController {
+class ElectronicHorizonEventsViewController: UIViewController {
 
     private lazy var navigationMapView = NavigationMapView(frame: view.bounds)
 

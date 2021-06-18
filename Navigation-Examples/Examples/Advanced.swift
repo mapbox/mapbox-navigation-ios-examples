@@ -22,7 +22,7 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
     var routes: [Route]? {
         didSet {
             guard let routes = routes, let current = routes.first else {
-                navigationMapView.removeRoutes();
+                navigationMapView.removeRoutes()
                 return
             }
             
@@ -105,7 +105,7 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
         let destinationWaypoint = Waypoint(coordinate: destination)
         let navigationRouteOptions = NavigationRouteOptions(waypoints: [userWaypoint, destinationWaypoint])
         
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
+        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)

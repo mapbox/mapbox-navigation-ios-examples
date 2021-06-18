@@ -63,7 +63,7 @@ class CustomBottomBannerView: UIView {
         initFromNib()
     }
     
-    @IBAction @objc func onCancel(_ sender: Any) {
+    @IBAction func onCancel(_ sender: Any) {
         delegate?.customBottomBannerDidCancel(self)
     }
 }
