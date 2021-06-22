@@ -7,6 +7,8 @@ import Turf
 
 class RouteLinesStylingViewController: UIViewController {
     
+    typealias ActionHandler = (UIAlertAction) -> Void
+    
     var navigationMapView: NavigationMapView!
     
     var navigationRouteOptions: NavigationRouteOptions!
@@ -72,8 +74,6 @@ class RouteLinesStylingViewController: UIViewController {
     @objc func performAction(_ sender: Any) {
         let alertController = UIAlertController(title: "Perform action",
                                                 message: "Select specific action to perform it", preferredStyle: .actionSheet)
-        
-        typealias ActionHandler = (UIAlertAction) -> Void
         
         let startNavigation: ActionHandler = { _ in self.startNavigation() }
         let removeRoutes: ActionHandler = { _ in self.routes = nil }

@@ -5,6 +5,9 @@ import MapboxDirections
 import MapboxMaps
 
 class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate, UIGestureRecognizerDelegate {
+    
+    typealias ActionHandler = (UIAlertAction) -> Void
+    
     var navigationMapView: NavigationMapView!
     
     var navigationRouteOptions: NavigationRouteOptions!
@@ -85,8 +88,6 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     @objc func performAction(_ sender: Any) {
         let alertController = UIAlertController(title: "Perform action",
                                                 message: "Select specific action to perform it", preferredStyle: .actionSheet)
-        
-        typealias ActionHandler = (UIAlertAction) -> Void
         
         let startNavigation: ActionHandler = { _ in self.startNavigation() }
         let toggleDayNightStyle: ActionHandler = { _ in self.toggleDayNightStyle() }
