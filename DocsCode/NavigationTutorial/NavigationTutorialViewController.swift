@@ -75,7 +75,7 @@ class ViewController: UIViewController {
         let point = sender.location(in: navigationMapView)
         let coordinate = navigationMapView.mapView.mapboxMap.coordinate(for: point)
 
-        if let origin = navigationMapView.mapView.location.latestLocation?.internalLocation.coordinate {
+        if let origin = navigationMapView.mapView.location.latestLocation?.coordinate {
             // Calculate the route from the user's location to the set destination
             calculateRoute(from: origin, to: coordinate)
         } else {
@@ -140,7 +140,7 @@ class ViewController: UIViewController {
         let sourceIdentifier = "routeStyle"
         
         // Convert the route’s coordinates into a linestring feature
-        let feature = Feature(LineString(routeShape.coordinates))
+        let feature = Feature(geometry: .lineString(LineString(routeShape.coordinates)))
         
         // If there's already a route line on the map, update its shape to the new route
         if mapView.mapboxMap.style.sourceExists(withId: sourceIdentifier) {
