@@ -106,6 +106,8 @@ class CustomDestinationMarkerController: UIViewController {
 
 extension CustomDestinationMarkerController: NavigationMapViewDelegate {
     
+    // Delegate method, which is called whenever final destination `PointAnnotation` is added on
+    // `MapView`.
     func navigationMapView(_ navigationMapView: NavigationMapView,
                            didAdd finalDestinationAnnotation: PointAnnotation,
                            pointAnnotationManager: PointAnnotationManager) {
@@ -116,6 +118,11 @@ extension CustomDestinationMarkerController: NavigationMapViewDelegate {
             finalDestinationAnnotation.image = .default
         }
         
+        // `PointAnnotationManager` is used to manage `PointAnnotation`s and is also exposed as
+        // a property in `NavigationMapView.pointAnnotationManager`. After any modifications to the
+        // `PointAnnotation` changes must be synchronized with `PointAnnotationManager.syncAnnotations(_:)`
+        // method. To remove all annotations for specific `PointAnnotationManager`, call method below with
+        // an empty array.
         pointAnnotationManager.syncAnnotations([finalDestinationAnnotation])
     }
 }
