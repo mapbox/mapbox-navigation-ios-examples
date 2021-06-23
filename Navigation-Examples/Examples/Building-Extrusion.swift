@@ -169,8 +169,8 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
 
     func createWaypoints(for destinationCoordinate: CLLocationCoordinate2D?) {
         guard let destinationCoordinate = destinationCoordinate else { return }
-        guard let userLocation = navigationMapView.mapView.location.latestLocation?.internalLocation else {
-            presentAlert(message: "User location is not valid. Make sure to enable Location Services.")
+        guard let userCoordinate = navigationMapView.mapView.location.latestLocation?.coordinate else {
+            presentAlert(message: "User coordinate is not valid. Make sure to enable Location Services.")
             return
         }
         
@@ -181,7 +181,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         
         // In case if origin waypoint is not present in list of waypoints - add it.
         let userLocationName = "User location"
-        let userWaypoint = Waypoint(coordinate: userLocation.coordinate, name: userLocationName)
+        let userWaypoint = Waypoint(coordinate: userCoordinate, name: userLocationName)
         if waypoints.first?.name != userLocationName {
             waypoints.insert(userWaypoint, at: 0)
         }

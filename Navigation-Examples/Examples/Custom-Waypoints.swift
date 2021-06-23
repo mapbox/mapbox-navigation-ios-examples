@@ -155,7 +155,7 @@ class CustomWaypointsViewController: UIViewController {
     func customWaypointShape(shapeFor waypoints: [Waypoint], legIndex: Int) -> FeatureCollection {
         var features = [Turf.Feature]()
         for (waypointIndex, waypoint) in waypoints.enumerated() {
-            var feature = Feature(Point(waypoint.coordinate))
+            var feature = Feature(geometry: .point(Point(waypoint.coordinate)))
             feature.properties = [
                 "waypointCompleted": waypointIndex < legIndex,
                 "name": "#\(waypointIndex + 1)"

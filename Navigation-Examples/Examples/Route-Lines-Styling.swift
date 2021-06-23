@@ -133,14 +133,14 @@ class RouteLinesStylingViewController: UIViewController {
     }
     
     func requestRoute(_ destinationCoordinate: CLLocationCoordinate2D?) {
-        guard let userLocation = navigationMapView.mapView.location.latestLocation?.internalLocation else {
-            print("User location is not valid. Make sure to enable Location Services.")
+        guard let userCoordinate = navigationMapView.mapView.location.latestLocation?.coordinate else {
+            print("User coordinate is not valid. Make sure to enable Location Services.")
             return
         }
         guard let destinationCoordinate = destinationCoordinate else { return }
         
         let waypoints = [
-            Waypoint(coordinate: userLocation.coordinate),
+            Waypoint(coordinate: userCoordinate),
             Waypoint(coordinate: destinationCoordinate)
         ]
         

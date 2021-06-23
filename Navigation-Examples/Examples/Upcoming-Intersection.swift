@@ -9,7 +9,8 @@ class ElectronicHorizonEventsViewController: UIViewController {
     private lazy var navigationMapView = NavigationMapView(frame: view.bounds)
 
     private let upcomingIntersectionLabel = UILabel()
-    private let passiveLocationManager = PassiveLocationManager(dataSource: PassiveLocationDataSource())
+    private let passiveLocationManager = PassiveLocationManager()
+    private lazy var passiveLocationProvider = PassiveLocationProvider(locationManager: passiveLocationManager)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +22,7 @@ class ElectronicHorizonEventsViewController: UIViewController {
 
     func setupNavigationMapView() {
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        navigationMapView.mapView.location.overrideLocationProvider(with: passiveLocationManager)
+        navigationMapView.mapView.location.overrideLocationProvider(with: passiveLocationProvider)
         navigationMapView.userLocationStyle = .puck2D()
         navigationMapView.mapView.mapboxMap.onNext(.styleLoaded, handler: { [weak self] _ in
             self?.setupMostProbablePathStyle()
@@ -63,12 +64,12 @@ class ElectronicHorizonEventsViewController: UIViewController {
         updateLabel(currentStreetName: currentStreetName, predictedCrossStreet: upcomingCrossStreet)
 
         // Drawing the most probable path
-        let mostProbablePath = routeLine(from: horizonTree, roadGraph: passiveLocationManager.dataSource.roadGraph)
+        let mostProbablePath = routeLine(from: horizonTree, roadGraph: passiveLocationManager.roadGraph)
         updateMostProbablePath(with: mostProbablePath)
     }
 
     private func streetName(for edge: RoadGraph.Edge) -> String? {
-        let edgeMetadata = passiveLocationManager.dataSource.roadGraph.edgeMetadata(edgeIdentifier: edge.identifier)
+        let edgeMetadata = passiveLocationManager.roadGraph.edgeMetadata(edgeIdentifier: edge.identifier)
         return edgeMetadata?.names.first.map { roadName in
             switch roadName {
             case .name(let name):

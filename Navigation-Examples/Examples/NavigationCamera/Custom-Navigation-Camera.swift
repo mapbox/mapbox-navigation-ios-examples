@@ -90,7 +90,7 @@ class CustomNavigationCameraViewController: UIViewController {
     
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .ended,
-              let origin = navigationMapView.mapView.location.latestLocation?.internalLocation.coordinate else { return }
+              let origin = navigationMapView.mapView.location.latestLocation?.coordinate else { return }
 
         let destination = navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView))
         navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, destination])
