@@ -102,7 +102,15 @@ extension CustomViewportDataSource: LocationConsumer {
     }
 
     func locationUpdate(newLocation: Location) {
-        let cameraOptions = self.cameraOptions(newLocation.internalLocation)
+        let location = CLLocation(coordinate: newLocation.coordinate,
+                                  altitude: 0.0,
+                                  horizontalAccuracy: newLocation.horizontalAccuracy,
+                                  verticalAccuracy: 0.0,
+                                  course: newLocation.course,
+                                  speed: 0.0,
+                                  timestamp: Date())
+        
+        let cameraOptions = self.cameraOptions(location)
         delegate?.viewportDataSource(self, didUpdate: cameraOptions)
     }
 }

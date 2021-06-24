@@ -101,8 +101,16 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
 
     func requestRoute(destination: CLLocationCoordinate2D) {
         guard let userLocation = navigationMapView.mapView.location.latestLocation else { return }
-        let userWaypoint = Waypoint(location: userLocation.internalLocation, heading: userLocation.heading, name: "user")
+        
+        let location = CLLocation(latitude: userLocation.coordinate.latitude,
+                                  longitude: userLocation.coordinate.longitude)
+        
+        let userWaypoint = Waypoint(location: location,
+                                    heading: userLocation.heading,
+                                    name: "user")
+        
         let destinationWaypoint = Waypoint(coordinate: destination)
+        
         let navigationRouteOptions = NavigationRouteOptions(waypoints: [userWaypoint, destinationWaypoint])
         
         Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in

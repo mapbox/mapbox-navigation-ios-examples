@@ -4,9 +4,11 @@ import MapboxCoreNavigation
 import MapboxMaps
 
 class LocationSnappingViewController: UIViewController {
+    
     private lazy var navigationMapView = NavigationMapView(frame: view.bounds)
     private let toggleButton = UIButton()
-    private let passiveLocationProvider = PassiveLocationManager(dataSource: PassiveLocationDataSource())
+    private let passiveLocationManager = PassiveLocationManager()
+    private lazy var passiveLocationProvider = PassiveLocationProvider(locationManager: passiveLocationManager)
     
     private var isSnappingEnabled: Bool = false {
         didSet {
