@@ -11,7 +11,6 @@ class CustomDestinationMarkerController: UIViewController {
     var navigationRouteOptions: NavigationRouteOptions!
     var startNavigationButton: UIButton!
     var routes: [Route] = []
-    var pointAnnotationManager: PointAnnotationManager?
     
     // MARK: - UIViewController lifecycle methods
     
@@ -38,11 +37,6 @@ class CustomDestinationMarkerController: UIViewController {
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.delegate = self
         navigationMapView.userLocationStyle = .puck2D()
-        
-        navigationMapView.mapView.mapboxMap.onNext(.styleLoaded) { [weak self] _ in
-            guard let self = self else { return }
-            self.pointAnnotationManager = self.navigationMapView.mapView.annotations.makePointAnnotationManager()
-        }
         
         view.addSubview(navigationMapView)
     }
@@ -112,7 +106,11 @@ class CustomDestinationMarkerController: UIViewController {
 
 extension CustomDestinationMarkerController: NavigationMapViewDelegate {
     
-    func navigationMapView(_ navigationMapView: NavigationMapView, didAdd finalDestinationAnnotation: PointAnnotation) {
+    // Delegate method, which is called whenever final destination `PointAnnotation` is added on
+    // `MapView`.
+    func navigationMapView(_ navigationMapView: NavigationMapView,
+                           didAdd finalDestinationAnnotation: PointAnnotation,
+                           pointAnnotationManager: PointAnnotationManager) {
         var finalDestinationAnnotation = finalDestinationAnnotation
         if let image = UIImage(named: "marker") {
             finalDestinationAnnotation.image = PointAnnotation.Image.custom(image: image, name: "marker")
@@ -120,7 +118,12 @@ extension CustomDestinationMarkerController: NavigationMapViewDelegate {
             finalDestinationAnnotation.image = .default
         }
         
-        pointAnnotationManager?.syncAnnotations([finalDestinationAnnotation])
+        // `PointAnnotationManager` is used to manage `PointAnnotation`s and is also exposed as
+        // a property in `NavigationMapView.pointAnnotationManager`. After any modifications to the
+        // `PointAnnotation` changes must be synchronized with `PointAnnotationManager.syncAnnotations(_:)`
+        // method. To remove all annotations for specific `PointAnnotationManager`, call method below with
+        // an empty array.
+        pointAnnotationManager.syncAnnotations([finalDestinationAnnotation])
     }
 }
 
@@ -128,7 +131,9 @@ extension CustomDestinationMarkerController: NavigationMapViewDelegate {
 
 extension CustomDestinationMarkerController: NavigationViewControllerDelegate {
     
-    func navigationViewController(_ navigationViewController: NavigationViewController, didAdd finalDestinationAnnotation: PointAnnotation) {
+    func navigationViewController(_ navigationViewController: NavigationViewController,
+                                  didAdd finalDestinationAnnotation: PointAnnotation,
+                                  pointAnnotationManager: PointAnnotationManager) {
         var finalDestinationAnnotation = finalDestinationAnnotation
         if let image = UIImage(named: "marker") {
             finalDestinationAnnotation.image = PointAnnotation.Image.custom(image: image, name: "marker")
@@ -136,7 +141,7 @@ extension CustomDestinationMarkerController: NavigationViewControllerDelegate {
             finalDestinationAnnotation.image = .default
         }
         
-        pointAnnotationManager?.syncAnnotations([finalDestinationAnnotation])
+        pointAnnotationManager.syncAnnotations([finalDestinationAnnotation])
     }
     
     func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
