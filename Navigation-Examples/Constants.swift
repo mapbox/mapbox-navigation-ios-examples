@@ -153,5 +153,12 @@ let listOfExamples: [NamedController] = [
         controller: SegueViewController.self,
         storyboard: UIStoryboard(name: "CustomSegue", bundle: nil),
         pushExampleToViewController: true
+    ),
+    (
+        name: "Custom User Location",
+        description: "Demonstrates how to provide custom user location indicator layer during navigation.",
+        controller: CustomUserLocationViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
     )
 ]
