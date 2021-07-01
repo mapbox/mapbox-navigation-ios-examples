@@ -33,8 +33,10 @@
 		9639244A22E02A520010FE73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C58FB85D1FE899B800C4B491 /* Main.storyboard */; };
 		9639244B22E02A820010FE73 /* EmbeddedExamples.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D6D36A620001F0400C2B61B /* EmbeddedExamples.storyboard */; };
 		B40ADDC9ABB7E7F6703997CA /* Pods_DocsCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B796D93B6E7934BFD326FA8 /* Pods_DocsCode.framework */; };
+		B4747F58268CE9C800BE884B /* MSL_clean.gltf in Resources */ = {isa = PBXBuildFile; fileRef = B4747F57268CE9C800BE884B /* MSL_clean.gltf */; };
 		B480E424261E4C3500C16FA0 /* Predictive-Caching.swift in Sources */ = {isa = PBXBuildFile; fileRef = B480E423261E4C3500C16FA0 /* Predictive-Caching.swift */; };
 		B480E428261E4C4600C16FA0 /* Route-Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B480E427261E4C4600C16FA0 /* Route-Alerts.swift */; };
+		B4F805EE26791AD900D5F1C8 /* Custom-User-Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F805ED26791AD900D5F1C8 /* Custom-User-Location.swift */; };
 		C3893F1C25F96BDC0058A987 /* Custom-Waypoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3893F1B25F96BDC0058A987 /* Custom-Waypoints.swift */; };
 		C52BAA782040D5030086EC6B /* Custom-Destination-Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */; };
 		C58FB85A1FE899B800C4B491 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8591FE899B800C4B491 /* AppDelegate.swift */; };
@@ -84,8 +86,10 @@
 		9A4F31D3A4350E716451A486 /* Pods-DocsCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocsCode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DocsCode/Pods-DocsCode.debug.xcconfig"; sourceTree = "<group>"; };
 		9B796D93B6E7934BFD326FA8 /* Pods_DocsCode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DocsCode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33B5E4C0AD283368D51EEDA /* Pods-DocsCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocsCode.release.xcconfig"; path = "Pods/Target Support Files/Pods-DocsCode/Pods-DocsCode.release.xcconfig"; sourceTree = "<group>"; };
+		B4747F57268CE9C800BE884B /* MSL_clean.gltf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MSL_clean.gltf; sourceTree = "<group>"; };
 		B480E423261E4C3500C16FA0 /* Predictive-Caching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predictive-Caching.swift"; sourceTree = "<group>"; };
 		B480E427261E4C4600C16FA0 /* Route-Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Route-Alerts.swift"; sourceTree = "<group>"; };
+		B4F805ED26791AD900D5F1C8 /* Custom-User-Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-User-Location.swift"; sourceTree = "<group>"; };
 		BFEC70FB9C884A4DDD80E7D9 /* Pods-Navigation-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples.release.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples.release.xcconfig"; sourceTree = "<group>"; };
 		C3893F1B25F96BDC0058A987 /* Custom-Waypoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Waypoints.swift"; sourceTree = "<group>"; };
 		C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Destination-Marker.swift"; sourceTree = "<group>"; };
@@ -172,6 +176,7 @@
 		8AC9129E2494118400B6941E /* TestData */ = {
 			isa = PBXGroup;
 			children = (
+				B4747F57268CE9C800BE884B /* MSL_clean.gltf */,
 				8A96379B2492B366008DEF2A /* route.json */,
 			);
 			path = TestData;
@@ -266,6 +271,7 @@
 				B480E427261E4C4600C16FA0 /* Route-Alerts.swift */,
 				11DC36F126161DAF0042CD4A /* Location-Snapping.swift */,
 				11B6E81626176F3600872E4D /* Upcoming-Intersection.swift */,
+				B4F805ED26791AD900D5F1C8 /* Custom-User-Location.swift */,
 				8AFBF217265E851700468551 /* CustomSegue */,
 				8A2DFA52261650600034A87E /* NavigationCamera */,
 				8AC9129E2494118400B6941E /* TestData */,
@@ -390,6 +396,7 @@
 				C58FB8611FE899B800C4B491 /* Assets.xcassets in Resources */,
 				8A0B182326553482005107DE /* CustomSegue.storyboard in Resources */,
 				9639244A22E02A520010FE73 /* Main.storyboard in Resources */,
+				B4747F58268CE9C800BE884B /* MSL_clean.gltf in Resources */,
 				9639244B22E02A820010FE73 /* EmbeddedExamples.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -611,6 +618,7 @@
 				C5C0D63820589422003A3B1D /* Custom-Server.swift in Sources */,
 				C3893F1C25F96BDC0058A987 /* Custom-Waypoints.swift in Sources */,
 				8A31388726402DF400763714 /* Navigation-From-Segue.swift in Sources */,
+				B4F805EE26791AD900D5F1C8 /* Custom-User-Location.swift in Sources */,
 				2B521D4E24090A3A00984CF8 /* CustomBarsViewController.swift in Sources */,
 				8A96379C2492B366008DEF2A /* Route-Deserialization.swift in Sources */,
 				2B521D502409240E00984CF8 /* CustomBottomBannerView.swift in Sources */,
