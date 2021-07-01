@@ -226,7 +226,8 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
     
     func setupPuck3D() {
         // It's required to provide a `Puck3DConfiguration` to the `UserLocationStyle.puck3D`, a `gltf` 3D asset will be used as the `Model` source.
-        // The model source is from NASA's curiosity(clean) in https://github.com/nasa/NASA-3D-Resources/blob/master/3D%20Models/Curiosity%20(Clean)/MSL_clean.blend
+        // NASA's Curiosity rover from https://github.com/nasa/NASA-3D-Resources/blob/463f2b2941e3e95acfcbb12f783070e9d92ee267/3D%20Models/Curiosity%20(Clean)/MSL_clean.blend
+
         let uri = Bundle.main.url(forResource: "MSL_clean",
                                   withExtension: "gltf")
         // Instantiating the model. The position is the coordinates of the model in `[longitude, latitude]` format.
