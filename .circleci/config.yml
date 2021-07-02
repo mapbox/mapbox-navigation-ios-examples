@@ -14,13 +14,13 @@ jobs:
     parameters:
       xcode:
         type: string
-        default: "12.2"
+        default: "12.4"
       device:
         type: string
         default: "iPhone 8 Plus"
       ios:
         type: string
-        default: "14.1"
+        default: "14.4"
     macos:
       xcode: << parameters.xcode >>
     steps:
