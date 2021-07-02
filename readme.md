@@ -21,7 +21,7 @@ _Installation with CocoaPods_
    where _PRIVATE_MAPBOX_API_TOKEN_ is your Mapbox API token with the `DOWNLOADS:READ` scope. 
 1. Run `pod repo update && pod install` and open the resulting Navigation-Examples.xcworkspace.
 1. Sign up or log in to your Mapbox account and grab a [Mapbox access token](https://www.mapbox.com/help/define-access-token/).
-1. Enter your Mapbox access token into the value of the `MGLMapboxAccessToken` key within the Info.plist file. Alternatively, if you plan to use this project as the basis for any open source application, [read this guide](https://docs.mapbox.com/help/troubleshooting/private-access-token-android-and-ios/#ios) to learn how to best protect your access tokens.
+1. Enter your Mapbox access token into the value of the `MBXAccessToken` key within the Info.plist file. Alternatively, if you plan to use this project as the basis for any open source application, [read this guide](https://docs.mapbox.com/help/troubleshooting/private-access-token-android-and-ios/#ios) to learn how to best protect your access tokens.
 1. Building and run the Navigation-Examples scheme.
 
 ## Add an example:

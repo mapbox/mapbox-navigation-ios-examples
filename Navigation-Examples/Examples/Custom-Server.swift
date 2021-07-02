@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import MapboxMaps
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
@@ -17,7 +18,7 @@ class CustomServerViewController: UIViewController {
         super.viewDidLoad()
         
         let routeOptions = self.routeOptions
-        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+        Directions.shared.calculate(routeOptions) { [weak self] (_, result) in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
@@ -48,7 +49,7 @@ extension CustomServerViewController: NavigationViewControllerDelegate {
         
         // Here, we are simulating a custom server.
         let routeOptions = NavigationRouteOptions(waypoints: [Waypoint(location: location), self.routeOptions.waypoints.last!])
-        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+        Directions.shared.calculate(routeOptions) { [weak self] (_, result) in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
@@ -70,7 +71,7 @@ extension CustomServerViewController: NavigationViewControllerDelegate {
                     waypoint.separatesLegs = false
                 }
                 
-                Directions.shared.calculateRoutes(matching: matchOptions) { [weak self] (session, result) in
+                Directions.shared.calculateRoutes(matching: matchOptions) { [weak self] (_, result) in
                     switch result {
                     case .failure(let error):
                         print(error.localizedDescription)

@@ -2,13 +2,12 @@ import UIKit
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
-import Mapbox
+import MapboxMaps
 
-
-class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDelegate, NavigationMapViewDelegate, NavigationViewControllerDelegate {
+class AdvancedViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate {
     
-    var mapView: NavigationMapView?
-    var routeOptions: NavigationRouteOptions?
+    var navigationMapView: NavigationMapView!
+    var navigationRouteOptions: NavigationRouteOptions!
     var currentRoute: Route? {
         get {
             return routes?.first
@@ -19,99 +18,115 @@ class AdvancedViewController: UIViewController, MGLMapViewDelegate, CLLocationMa
             self.routes = [selected] + routes.filter { $0 != selected }
         }
     }
+    
     var routes: [Route]? {
         didSet {
-            guard let routes = routes, let current = routes.first else { mapView?.removeRoutes(); return }
-            mapView?.show(routes)
-            mapView?.showWaypoints(on: current)
+            guard let routes = routes, let current = routes.first else {
+                navigationMapView.removeRoutes()
+                return
+            }
+            
+            navigationMapView.show(routes)
+            navigationMapView.showWaypoints(on: current)
         }
     }
-    var startButton: UIButton?
-    var locationManager = CLLocationManager()
     
-    private typealias RouteRequestSuccess = (([Route]) -> Void)
-    private typealias RouteRequestFailure = ((NSError) -> Void)
+    var startButton: UIButton!
     
-    //MARK: - Lifecycle Methods
+    // MARK: - UIViewController lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
+        navigationMapView = NavigationMapView(frame: view.bounds)
+        navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        navigationMapView.delegate = self
+        navigationMapView.userLocationStyle = .puck2D()
         
-        mapView = NavigationMapView(frame: view.bounds)
-        mapView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mapView?.userTrackingMode = .follow
-        mapView?.delegate = self
-        mapView?.navigationMapViewDelegate = self
+        let navigationViewportDataSource = NavigationViewportDataSource(navigationMapView.mapView, viewportDataSourceType: .raw)
+        navigationViewportDataSource.options.followingCameraOptions.zoomUpdatesAllowed = false
+        navigationViewportDataSource.followingMobileCamera.zoom = 13.0
+        navigationMapView.navigationCamera.viewportDataSource = navigationViewportDataSource
         
         let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        mapView?.addGestureRecognizer(gesture)
+        navigationMapView.addGestureRecognizer(gesture)
         
-        view.addSubview(mapView!)
+        view.addSubview(navigationMapView)
         
         startButton = UIButton()
-        startButton?.setTitle("Start Navigation", for: .normal)
-        startButton?.translatesAutoresizingMaskIntoConstraints = false
-        startButton?.backgroundColor = .blue
-        startButton?.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
-        startButton?.addTarget(self, action: #selector(tappedButton(sender:)), for: .touchUpInside)
-        startButton?.isHidden = true
-        view.addSubview(startButton!)
-        startButton?.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
-        startButton?.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        startButton.setTitle("Start Navigation", for: .normal)
+        startButton.translatesAutoresizingMaskIntoConstraints = false
+        startButton.backgroundColor = .blue
+        startButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        startButton.addTarget(self, action: #selector(tappedButton(sender:)), for: .touchUpInside)
+        startButton.isHidden = true
+        view.addSubview(startButton)
+        
+        startButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        startButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         view.setNeedsLayout()
     }
     
-    //overriding layout lifecycle callback so we can style the start button
+    // Override layout lifecycle callback to be able to style the start button.
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        startButton?.layer.cornerRadius = startButton!.bounds.midY
-        startButton?.clipsToBounds = true
-        startButton?.setNeedsDisplay()
         
+        startButton.layer.cornerRadius = startButton.bounds.midY
+        startButton.clipsToBounds = true
+        startButton.setNeedsDisplay()
     }
 
     @objc func tappedButton(sender: UIButton) {
-        guard let route = currentRoute, let routeOptions = routeOptions else { return }
+        guard let route = currentRoute, let navigationRouteOptions = navigationRouteOptions else { return }
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+        let navigationService = MapboxNavigationService(route: route,
+                                                        routeIndex: 0,
+                                                        routeOptions: navigationRouteOptions,
+                                                        simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
+        let navigationViewController = NavigationViewController(for: route, routeIndex: 0,
+                                                                routeOptions: navigationRouteOptions,
+                                                                navigationOptions: navigationOptions)
         navigationViewController.delegate = self
         
         present(navigationViewController, animated: true, completion: nil)
     }
     
-     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+    @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .ended else { return }
-        
-        let spot = gesture.location(in: mapView)
-        guard let location = mapView?.convert(spot, toCoordinateFrom: mapView) else { return }
+        let location = navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView))
         
         requestRoute(destination: location)
     }
 
     func requestRoute(destination: CLLocationCoordinate2D) {
-        guard let userLocation = mapView?.userLocation!.location else { return }
-        let userWaypoint = Waypoint(location: userLocation, heading: mapView?.userLocation?.heading, name: "user")
+        guard let userLocation = navigationMapView.mapView.location.latestLocation else { return }
+        
+        let location = CLLocation(latitude: userLocation.coordinate.latitude,
+                                  longitude: userLocation.coordinate.longitude)
+        
+        let userWaypoint = Waypoint(location: location,
+                                    heading: userLocation.heading,
+                                    name: "user")
+        
         let destinationWaypoint = Waypoint(coordinate: destination)
         
-        let routeOptions = NavigationRouteOptions(waypoints: [userWaypoint, destinationWaypoint])
+        let navigationRouteOptions = NavigationRouteOptions(waypoints: [userWaypoint, destinationWaypoint])
         
-        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let response):
-                guard let routes = response.routes, let strongSelf = self else {
-                    return
-                }
-                strongSelf.routeOptions = routeOptions
-                strongSelf.routes = routes
-                strongSelf.startButton?.isHidden = false
-                strongSelf.mapView?.show(routes)
-                strongSelf.mapView?.showWaypoints(on: strongSelf.currentRoute!)
+                guard let routes = response.routes,
+                      let currentRoute = routes.first,
+                      let self = self else { return }
+                
+                self.navigationRouteOptions = navigationRouteOptions
+                self.routes = routes
+                self.startButton?.isHidden = false
+                self.navigationMapView.show(routes)
+                self.navigationMapView.showWaypoints(on: currentRoute)
             }
         }
     }

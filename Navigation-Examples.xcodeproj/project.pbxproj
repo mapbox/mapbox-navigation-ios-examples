@@ -8,13 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		0E4DB43E555307E85D094271 /* Pods_Navigation_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */; };
+		11B6E81726176F3600872E4D /* Upcoming-Intersection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B6E81626176F3600872E4D /* Upcoming-Intersection.swift */; };
+		11DC36F226161DAF0042CD4A /* Location-Snapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DC36F126161DAF0042CD4A /* Location-Snapping.swift */; };
 		2B521D4E24090A3A00984CF8 /* CustomBarsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B521D4D24090A3A00984CF8 /* CustomBarsViewController.swift */; };
 		2B521D502409240E00984CF8 /* CustomBottomBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B521D4F2409240E00984CF8 /* CustomBottomBannerView.swift */; };
 		2B521D522409242A00984CF8 /* CustomBottomBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */; };
+		8A0B182326553482005107DE /* CustomSegue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A0B182226553482005107DE /* CustomSegue.storyboard */; };
+		8A2DFA57261650A60034A87E /* CustomCameraStateTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFA55261650A60034A87E /* CustomCameraStateTransition.swift */; };
+		8A2DFA58261650A60034A87E /* CustomViewportDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFA56261650A60034A87E /* CustomViewportDataSource.swift */; };
+		8A2DFA6C261651600034A87E /* Custom-Navigation-Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFA6B261651600034A87E /* Custom-Navigation-Camera.swift */; };
+		8A31388726402DF400763714 /* Navigation-From-Segue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A31388626402DF400763714 /* Navigation-From-Segue.swift */; };
 		8A33629624E4844E0086C647 /* Building-Extrusion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A33629524E4844E0086C647 /* Building-Extrusion.swift */; };
 		8A96379C2492B366008DEF2A /* Route-Deserialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A96379A2492B366008DEF2A /* Route-Deserialization.swift */; };
 		8A96379D2492B366008DEF2A /* route.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A96379B2492B366008DEF2A /* route.json */; };
 		8AC9129D2494106100B6941E /* Route-Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC9129C2494106100B6941E /* Route-Initialization.swift */; };
+		8AE033222628EDFF000E7145 /* Route-Lines-Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE033212628EDFF000E7145 /* Route-Lines-Styling.swift */; };
 		8DF510741FEB08F70049DB9C /* Embedded-Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF510731FEB08F70049DB9C /* Embedded-Navigation.swift */; };
 		8DF510751FEB0CA00049DB9C /* MapboxNavigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DF510761FEB0CA00049DB9C /* MapboxNavigation.framework */; };
 		9613F58522E0306500D34E24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961FC4E822E0260A00C72877 /* Assets.xcassets */; };
@@ -25,6 +33,11 @@
 		9639244A22E02A520010FE73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C58FB85D1FE899B800C4B491 /* Main.storyboard */; };
 		9639244B22E02A820010FE73 /* EmbeddedExamples.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D6D36A620001F0400C2B61B /* EmbeddedExamples.storyboard */; };
 		B40ADDC9ABB7E7F6703997CA /* Pods_DocsCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B796D93B6E7934BFD326FA8 /* Pods_DocsCode.framework */; };
+		B4747F58268CE9C800BE884B /* MSL_clean.gltf in Resources */ = {isa = PBXBuildFile; fileRef = B4747F57268CE9C800BE884B /* MSL_clean.gltf */; };
+		B480E424261E4C3500C16FA0 /* Predictive-Caching.swift in Sources */ = {isa = PBXBuildFile; fileRef = B480E423261E4C3500C16FA0 /* Predictive-Caching.swift */; };
+		B480E428261E4C4600C16FA0 /* Route-Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B480E427261E4C4600C16FA0 /* Route-Alerts.swift */; };
+		B4F805EE26791AD900D5F1C8 /* Custom-User-Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F805ED26791AD900D5F1C8 /* Custom-User-Location.swift */; };
+		C3893F1C25F96BDC0058A987 /* Custom-Waypoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3893F1B25F96BDC0058A987 /* Custom-Waypoints.swift */; };
 		C52BAA782040D5030086EC6B /* Custom-Destination-Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */; };
 		C58FB85A1FE899B800C4B491 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8591FE899B800C4B491 /* AppDelegate.swift */; };
 		C58FB8611FE899B800C4B491 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C58FB8601FE899B800C4B491 /* Assets.xcassets */; };
@@ -42,15 +55,23 @@
 /* Begin PBXFileReference section */
 		01D167067A6027DCA4D44BF3 /* Pods-Navigation-Examples-DocsCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples-DocsCode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples-DocsCode/Pods-Navigation-Examples-DocsCode.debug.xcconfig"; sourceTree = "<group>"; };
 		020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		11B6E81626176F3600872E4D /* Upcoming-Intersection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Upcoming-Intersection.swift"; sourceTree = "<group>"; };
+		11DC36F126161DAF0042CD4A /* Location-Snapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location-Snapping.swift"; sourceTree = "<group>"; };
 		1E6EDEBB177F0E6643EC4DB9 /* Pods-Navigation-Examples-DocsCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples-DocsCode.release.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples-DocsCode/Pods-Navigation-Examples-DocsCode.release.xcconfig"; sourceTree = "<group>"; };
 		2B521D4D24090A3A00984CF8 /* CustomBarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarsViewController.swift; sourceTree = "<group>"; };
 		2B521D4F2409240E00984CF8 /* CustomBottomBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomBannerView.swift; sourceTree = "<group>"; };
 		2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomBottomBannerView.xib; sourceTree = "<group>"; };
+		8A0B182226553482005107DE /* CustomSegue.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomSegue.storyboard; sourceTree = "<group>"; };
+		8A2DFA55261650A60034A87E /* CustomCameraStateTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraStateTransition.swift; sourceTree = "<group>"; };
+		8A2DFA56261650A60034A87E /* CustomViewportDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewportDataSource.swift; sourceTree = "<group>"; };
+		8A2DFA6B261651600034A87E /* Custom-Navigation-Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Navigation-Camera.swift"; sourceTree = "<group>"; };
+		8A31388626402DF400763714 /* Navigation-From-Segue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Navigation-From-Segue.swift"; sourceTree = "<group>"; };
 		8A33629524E4844E0086C647 /* Building-Extrusion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Building-Extrusion.swift"; sourceTree = "<group>"; };
 		8A96379A2492B366008DEF2A /* Route-Deserialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Route-Deserialization.swift"; sourceTree = "<group>"; };
 		8A96379B2492B366008DEF2A /* route.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = route.json; sourceTree = "<group>"; };
 		8AC9129C2494106100B6941E /* Route-Initialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Route-Initialization.swift"; sourceTree = "<group>"; };
 		8AD2F2132489B5C800F81353 /* apply-mapbox-access-token.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "apply-mapbox-access-token.sh"; sourceTree = "<group>"; };
+		8AE033212628EDFF000E7145 /* Route-Lines-Styling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Route-Lines-Styling.swift"; sourceTree = "<group>"; };
 		8D6D36A620001F0400C2B61B /* EmbeddedExamples.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EmbeddedExamples.storyboard; sourceTree = "<group>"; };
 		8DF510731FEB08F70049DB9C /* Embedded-Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Embedded-Navigation.swift"; sourceTree = "<group>"; };
 		8DF510761FEB0CA00049DB9C /* MapboxNavigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxNavigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,7 +86,12 @@
 		9A4F31D3A4350E716451A486 /* Pods-DocsCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocsCode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DocsCode/Pods-DocsCode.debug.xcconfig"; sourceTree = "<group>"; };
 		9B796D93B6E7934BFD326FA8 /* Pods_DocsCode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DocsCode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33B5E4C0AD283368D51EEDA /* Pods-DocsCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocsCode.release.xcconfig"; path = "Pods/Target Support Files/Pods-DocsCode/Pods-DocsCode.release.xcconfig"; sourceTree = "<group>"; };
+		B4747F57268CE9C800BE884B /* MSL_clean.gltf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MSL_clean.gltf; sourceTree = "<group>"; };
+		B480E423261E4C3500C16FA0 /* Predictive-Caching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predictive-Caching.swift"; sourceTree = "<group>"; };
+		B480E427261E4C4600C16FA0 /* Route-Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Route-Alerts.swift"; sourceTree = "<group>"; };
+		B4F805ED26791AD900D5F1C8 /* Custom-User-Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-User-Location.swift"; sourceTree = "<group>"; };
 		BFEC70FB9C884A4DDD80E7D9 /* Pods-Navigation-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples.release.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples.release.xcconfig"; sourceTree = "<group>"; };
+		C3893F1B25F96BDC0058A987 /* Custom-Waypoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Waypoints.swift"; sourceTree = "<group>"; };
 		C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Destination-Marker.swift"; sourceTree = "<group>"; };
 		C58FB8561FE899B800C4B491 /* Navigation-Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Navigation-Examples.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C58FB8591FE899B800C4B491 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +155,16 @@
 			path = CustomBars;
 			sourceTree = "<group>";
 		};
+		8A2DFA52261650600034A87E /* NavigationCamera */ = {
+			isa = PBXGroup;
+			children = (
+				8A2DFA6B261651600034A87E /* Custom-Navigation-Camera.swift */,
+				8A2DFA55261650A60034A87E /* CustomCameraStateTransition.swift */,
+				8A2DFA56261650A60034A87E /* CustomViewportDataSource.swift */,
+			);
+			path = NavigationCamera;
+			sourceTree = "<group>";
+		};
 		8A5BBF6A2489B0A000FA4960 /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,9 +176,19 @@
 		8AC9129E2494118400B6941E /* TestData */ = {
 			isa = PBXGroup;
 			children = (
+				B4747F57268CE9C800BE884B /* MSL_clean.gltf */,
 				8A96379B2492B366008DEF2A /* route.json */,
 			);
 			path = TestData;
+			sourceTree = "<group>";
+		};
+		8AFBF217265E851700468551 /* CustomSegue */ = {
+			isa = PBXGroup;
+			children = (
+				8A31388626402DF400763714 /* Navigation-From-Segue.swift */,
+				8A0B182226553482005107DE /* CustomSegue.storyboard */,
+			);
+			path = CustomSegue;
 			sourceTree = "<group>";
 		};
 		961FC4E622E0260A00C72877 /* DocsCode */ = {
@@ -216,9 +262,18 @@
 				C59094C2203E3B9100EB2417 /* Custom-Voice-Controller.swift */,
 				C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */,
 				C5C0D63720589422003A3B1D /* Custom-Server.swift */,
+				C3893F1B25F96BDC0058A987 /* Custom-Waypoints.swift */,
+				8AE033212628EDFF000E7145 /* Route-Lines-Styling.swift */,
 				8A96379A2492B366008DEF2A /* Route-Deserialization.swift */,
 				8AC9129C2494106100B6941E /* Route-Initialization.swift */,
 				8A33629524E4844E0086C647 /* Building-Extrusion.swift */,
+				B480E423261E4C3500C16FA0 /* Predictive-Caching.swift */,
+				B480E427261E4C4600C16FA0 /* Route-Alerts.swift */,
+				11DC36F126161DAF0042CD4A /* Location-Snapping.swift */,
+				11B6E81626176F3600872E4D /* Upcoming-Intersection.swift */,
+				B4F805ED26791AD900D5F1C8 /* Custom-User-Location.swift */,
+				8AFBF217265E851700468551 /* CustomSegue */,
+				8A2DFA52261650600034A87E /* NavigationCamera */,
 				8AC9129E2494118400B6941E /* TestData */,
 				2B521D5324094F2500984CF8 /* CustomBars */,
 			);
@@ -243,6 +298,7 @@
 			buildConfigurationList = 961FC51122E0265400C72877 /* Build configuration list for PBXNativeTarget "DocsCode" */;
 			buildPhases = (
 				42E7FBF777C5D4065585B7CA /* [CP] Check Pods Manifest.lock */,
+				1179FA72263B0735004965CE /* Run SwiftLint */,
 				961FC4FA22E0265300C72877 /* Sources */,
 				961FC4FB22E0265300C72877 /* Frameworks */,
 				961FC4FC22E0265300C72877 /* Resources */,
@@ -263,6 +319,7 @@
 			buildConfigurationList = C58FB8681FE899B800C4B491 /* Build configuration list for PBXNativeTarget "Navigation-Examples" */;
 			buildPhases = (
 				AE8741EB2B6B63DBE64F3268 /* [CP] Check Pods Manifest.lock */,
+				1179FA71263ACDD3004965CE /* Run SwiftLint */,
 				C58FB8521FE899B800C4B491 /* Sources */,
 				C58FB8531FE899B800C4B491 /* Frameworks */,
 				C58FB8541FE899B800C4B491 /* Resources */,
@@ -285,7 +342,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = Mapbox;
 				TargetAttributes = {
 					961FC4FD22E0265300C72877 = {
@@ -337,7 +394,9 @@
 				8A96379D2492B366008DEF2A /* route.json in Resources */,
 				2B521D522409242A00984CF8 /* CustomBottomBannerView.xib in Resources */,
 				C58FB8611FE899B800C4B491 /* Assets.xcassets in Resources */,
+				8A0B182326553482005107DE /* CustomSegue.storyboard in Resources */,
 				9639244A22E02A520010FE73 /* Main.storyboard in Resources */,
+				B4747F58268CE9C800BE884B /* MSL_clean.gltf in Resources */,
 				9639244B22E02A820010FE73 /* EmbeddedExamples.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,6 +404,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1179FA71263ACDD3004965CE /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint --strict\nfi\n";
+		};
+		1179FA72263B0735004965CE /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint --strict \nfi  \n";
+		};
 		2417DF2EA3911D0DF486D567 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -352,32 +447,34 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples-frameworks.sh",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxCoreNavigation/MapboxCoreNavigation.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxDirections/MapboxDirections.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxDirections-pre/MapboxDirections.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxGeocoder.swift/MapboxGeocoder.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxMaps/MapboxMaps.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxNavigation/MapboxNavigation.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxSpeech/MapboxSpeech.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxSpeech-pre/MapboxSpeech.framework",
 				"${BUILT_PRODUCTS_DIR}/Polyline/Polyline.framework",
 				"${BUILT_PRODUCTS_DIR}/Solar/Solar.framework",
 				"${BUILT_PRODUCTS_DIR}/Turf/Turf.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxAccounts/MapboxAccounts.framework/MapboxAccounts",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxCommon/MapboxCommon.framework/MapboxCommon",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxCoreMaps/MapboxCoreMaps.framework/MapboxCoreMaps",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework/MapboxMobileEvents",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxNavigationNative/MapboxNavigationNative.framework/MapboxNavigationNative",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreNavigation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxDirections.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxGeocoder.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMaps.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxSpeech.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Polyline.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Solar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Turf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxAccounts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreMaps.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigationNative.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -466,32 +563,34 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-DocsCode/Pods-DocsCode-frameworks.sh",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxCoreNavigation/MapboxCoreNavigation.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxDirections/MapboxDirections.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxDirections-pre/MapboxDirections.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxGeocoder.swift/MapboxGeocoder.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxMaps/MapboxMaps.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxNavigation/MapboxNavigation.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxSpeech/MapboxSpeech.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxSpeech-pre/MapboxSpeech.framework",
 				"${BUILT_PRODUCTS_DIR}/Polyline/Polyline.framework",
 				"${BUILT_PRODUCTS_DIR}/Solar/Solar.framework",
 				"${BUILT_PRODUCTS_DIR}/Turf/Turf.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxAccounts/MapboxAccounts.framework/MapboxAccounts",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxCommon/MapboxCommon.framework/MapboxCommon",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxCoreMaps/MapboxCoreMaps.framework/MapboxCoreMaps",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework/MapboxMobileEvents",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxNavigationNative/MapboxNavigationNative.framework/MapboxNavigationNative",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreNavigation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxDirections.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxGeocoder.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMaps.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxSpeech.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Polyline.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Solar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Turf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxAccounts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreMaps.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigationNative.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -516,11 +615,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5F130A01FE9B44600463E86 /* Constants.swift in Sources */,
+				8A2DFA6C261651600034A87E /* Custom-Navigation-Camera.swift in Sources */,
+				11DC36F226161DAF0042CD4A /* Location-Snapping.swift in Sources */,
 				C58FB86E1FE89D9500C4B491 /* ExampleTableViewController.swift in Sources */,
+				B480E424261E4C3500C16FA0 /* Predictive-Caching.swift in Sources */,
 				C5C0D63820589422003A3B1D /* Custom-Server.swift in Sources */,
+				C3893F1C25F96BDC0058A987 /* Custom-Waypoints.swift in Sources */,
+				8A31388726402DF400763714 /* Navigation-From-Segue.swift in Sources */,
+				B4F805EE26791AD900D5F1C8 /* Custom-User-Location.swift in Sources */,
 				2B521D4E24090A3A00984CF8 /* CustomBarsViewController.swift in Sources */,
 				8A96379C2492B366008DEF2A /* Route-Deserialization.swift in Sources */,
 				2B521D502409240E00984CF8 /* CustomBottomBannerView.swift in Sources */,
+				B480E428261E4C4600C16FA0 /* Route-Alerts.swift in Sources */,
 				C58FB8771FE98B0E00C4B491 /* Waypoint-Arrival-Screen.swift in Sources */,
 				C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */,
 				C58FB86C1FE89CEC00C4B491 /* ExampleContainerViewController.swift in Sources */,
@@ -528,10 +634,14 @@
 				C59094C3203E3B9100EB2417 /* Custom-Voice-Controller.swift in Sources */,
 				C52BAA782040D5030086EC6B /* Custom-Destination-Marker.swift in Sources */,
 				8DF510741FEB08F70049DB9C /* Embedded-Navigation.swift in Sources */,
+				11B6E81726176F3600872E4D /* Upcoming-Intersection.swift in Sources */,
 				C58FB8711FE8A43000C4B491 /* Basic.swift in Sources */,
+				8A2DFA57261650A60034A87E /* CustomCameraStateTransition.swift in Sources */,
 				C58FB8731FE98AEB00C4B491 /* Styled-UI-Elements.swift in Sources */,
 				C58FB85A1FE899B800C4B491 /* AppDelegate.swift in Sources */,
+				8AE033222628EDFF000E7145 /* Route-Lines-Styling.swift in Sources */,
 				8A33629624E4844E0086C647 /* Building-Extrusion.swift in Sources */,
+				8A2DFA58261650A60034A87E /* CustomViewportDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,6 +729,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -644,7 +755,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -678,6 +789,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -697,7 +809,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
