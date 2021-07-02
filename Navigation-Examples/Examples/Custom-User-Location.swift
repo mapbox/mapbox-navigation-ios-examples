@@ -6,6 +6,8 @@ import MapboxMaps
 
 class CustomUserLocationViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate, UIGestureRecognizerDelegate {
     
+    typealias ActionHandler = (UIAlertAction) -> Void
+    
     var navigationMapView: NavigationMapView! {
         didSet {
             // After the start of active turn-by-turn navigation, the previous `navigationMapView` should be `nil` and removed from super view. It could avoid the location update in the background to disturb the turn-by-turn navigation guidance.
@@ -179,8 +181,6 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
         let alertController = UIAlertController(title: "Choose UserLocationStyle",
                                                 message: "Select the user location style",
                                                 preferredStyle: .actionSheet)
-        
-        typealias ActionHandler = (UIAlertAction) -> Void
         
         let courseView: ActionHandler = { _ in self.setupCourseView() }
         let puck2D: ActionHandler = { _ in self.setupPuck2D() }
