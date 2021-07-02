@@ -5,7 +5,7 @@ typealias NamedController = (
     name: String,
     description: String,
     controller: UIViewController.Type,
-    storyboard: UIStoryboard?, //is the example containined in a storyboard? If so, we assume the Initial View Controller of the storyboard.
+    storyboard: UIStoryboard?, // Is the example containined in a storyboard? If so, we assume the Initial View Controller of the storyboard.
     pushExampleToViewController: Bool // If the example does not go directly into the example,(i.e. another map is shown) set this value to true
 )
 
@@ -33,7 +33,7 @@ let listOfExamples: [NamedController] = [
         description: "Use a custom image for styling the destination marker.",
         controller: CustomDestinationMarkerController.self,
         storyboard: nil,
-        pushExampleToViewController: false
+        pushExampleToViewController: true
     ),
     (
         name: "Embedded View Controller",
@@ -55,6 +55,13 @@ let listOfExamples: [NamedController] = [
         controller: WaypointArrivalScreenViewController.self,
         storyboard: nil,
         pushExampleToViewController: false
+    ),
+    (
+        name: "Custom Waypoint Styling",
+        description: "Demonstrates how to customize waypoint styling.",
+        controller: CustomWaypointsViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
     ),
     (
         name: "Custom Voice Controller",
@@ -95,6 +102,62 @@ let listOfExamples: [NamedController] = [
         name: "Building Extrusion",
         description: "Demonstrates how to highlight building extrusion.",
         controller: BuildingExtrusionViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
+    ),
+    (
+        name: "Predictive Caching",
+        description: "Demonstrates how to use predictive caching for navigation.",
+        controller: PredictiveCachingViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: false
+    ),
+    (
+        name: "Route Alerts",
+        description: "Demonstrates how to display route alerts.",
+        controller: RouteAlertsViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: false
+    ),
+    (
+        name: "Location Snapping",
+        description: "Demonstrates how to snap user location to the road network in a map view outside of active turn-by-turn navigation. Simulate Navigation option isn't supported here, instead you can use location simulation inside of the Simulator (Features ‣ Location ‣ \"City Bicycle Ride\") to see the difference with and without snapping.",
+        controller: LocationSnappingViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
+    ),
+    (
+        name: "Electronic Horizon Events Observing",
+        description: "Demonstrates how to use electronic horizon to predict user's most probable path and show upcoming intersections. Simulate Navigation option isn't supported here, instead you can simulate location in Xcode.",
+        controller: ElectronicHorizonEventsViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
+    ),
+    (
+        name: "Custom Navigation Camera",
+        description: "Demonstrates how to add custom data source and transitions to navigation camera.",
+        controller: CustomNavigationCameraViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
+    ),
+    (
+        name: "Route Lines Styling",
+        description: "Demonstrates how to provide custom styling for the route lines.",
+        controller: RouteLinesStylingViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
+    ),
+    (
+        name: "Custom Segue",
+        description: "Demonstrates how to create an instance of NavigationViewController from UIStoryboardSegue.",
+        controller: SegueViewController.self,
+        storyboard: UIStoryboard(name: "CustomSegue", bundle: nil),
+        pushExampleToViewController: true
+    ),
+    (
+        name: "Custom User Location",
+        description: "Demonstrates how to provide custom user location indicator layer during navigation.",
+        controller: CustomUserLocationViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
     )

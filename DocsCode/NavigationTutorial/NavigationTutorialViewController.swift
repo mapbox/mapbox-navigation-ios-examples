@@ -1,47 +1,81 @@
 // #-code-snippet: navigation dependencies-swift
-import Mapbox
+import MapboxMaps
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
+import Turf
 // #-end-code-snippet: navigation dependencies-swift
 
-class ViewController: UIViewController, MGLMapViewDelegate {
+class ViewController: UIViewController {
     // #-code-snippet: navigation vc-variables-swift
-    var mapView: NavigationMapView!
+    var navigationMapView: NavigationMapView!
+    var navigationViewController: NavigationViewController!
     var routeOptions: NavigationRouteOptions?
     var route: Route?
+    var startButton: UIButton!
     // #-end-code-snippet: navigation vc-variables-swift
 
     // #-code-snippet: navigation view-did-load-swift
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        mapView = NavigationMapView(frame: view.bounds)
-
-        view.addSubview(mapView)
-
-        // Set the map view's delegate
-        mapView.delegate = self
-
+        navigationMapView = NavigationMapView(frame: view.bounds)
+        navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(navigationMapView)
+        
+        // By default `NavigationViewportDataSource` tracks location changes from `PassiveLocationDataSource`, to consume
+        // raw locations `ViewportDataSourceType` should be set to `.raw`.
+        let navigationViewportDataSource = NavigationViewportDataSource(navigationMapView.mapView, viewportDataSourceType: .raw)
+        navigationMapView.navigationCamera.viewportDataSource = navigationViewportDataSource
+        
         // Allow the map to display the user's location
-        mapView.showsUserLocation = true
-        mapView.setUserTrackingMode(.follow, animated: true, completionHandler: nil)
-
+        navigationMapView.userLocationStyle = .puck2D()
+        
         // Add a gesture recognizer to the map view
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
-        mapView.addGestureRecognizer(longPress)
+        navigationMapView.addGestureRecognizer(longPress)
+        
+        // Add a button to start navigation
+        displayStartButton()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        startButton.layer.cornerRadius = startButton.bounds.midY
+        startButton.clipsToBounds = true
+        startButton.setNeedsDisplay()
     }
     // #-end-code-snippet: navigation view-did-load-swift
-
+    
+    // #-code-snippet: navigation display-start-button-swift
+    func displayStartButton() {
+        startButton = UIButton()
+        
+        // Add a title and set the button's constraints
+        startButton.setTitle("Start Navigation", for: .normal)
+        startButton.translatesAutoresizingMaskIntoConstraints = false
+        startButton.backgroundColor = .blue
+        startButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        startButton.addTarget(self, action: #selector(tappedButton(sender:)), for: .touchUpInside)
+        startButton.isHidden = true
+        view.addSubview(startButton)
+        
+        startButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        startButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        view.setNeedsLayout()
+    }
+    // #-end-code-snippet: navigation display-start-button-swift
+    
     // #-code-snippet: navigation long-press-swift
     @objc func didLongPress(_ sender: UILongPressGestureRecognizer) {
         guard sender.state == .began else { return }
 
         // Converts point where user did a long press to map coordinates
-        let point = sender.location(in: mapView)
-        let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
+        let point = sender.location(in: navigationMapView)
+        let coordinate = navigationMapView.mapView.mapboxMap.coordinate(for: point)
 
-        if let origin = mapView.userLocation?.coordinate {
+        if let origin = navigationMapView.mapView.location.latestLocation?.coordinate {
             // Calculate the route from the user's location to the set destination
             calculateRoute(from: origin, to: coordinate)
         } else {
@@ -49,6 +83,19 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         }
     }
     // #-end-code-snippet: navigation long-press-swift
+    
+    // #-code-snippet: navigation tapped-button-swift
+    // Present the navigation view controller when the start button is tapped
+    @objc func tappedButton(sender: UIButton) {
+        guard let route = route, let navigationRouteOptions = routeOptions else { return }
+        
+        navigationViewController = NavigationViewController(for: route, routeIndex: 0,
+                                                                routeOptions: navigationRouteOptions)
+        navigationViewController.modalPresentationStyle = .fullScreen
+        
+        present(navigationViewController, animated: true, completion: nil)
+    }
+    // #-end-code-snippet: navigation tapped-button-swift
 
     // #-code-snippet: navigation calculate-route-swift
     // Calculate route to be used for navigation
@@ -73,17 +120,14 @@ class ViewController: UIViewController, MGLMapViewDelegate {
                 strongSelf.route = route
                 strongSelf.routeOptions = routeOptions
                 
+                // Show the start button
+                strongSelf.startButton?.isHidden = false
+                
                 // Draw the route on the map after creating it
                 strongSelf.drawRoute(route: route)
                 
                 // Show destination waypoint on the map
-                strongSelf.mapView.showWaypoints(on: route)
-                
-                // Display callout view on destination annotation
-                if let annotation = strongSelf.mapView.annotations?.first as? MGLPointAnnotation {
-                    annotation.title = "Start navigation"
-                    strongSelf.mapView.selectAnnotation(annotation, animated: true, completionHandler: nil)
-                }
+                strongSelf.navigationMapView.showWaypoints(on: route)
             }
         }
     }
@@ -92,42 +136,30 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     // #-code-snippet: navigation draw-route-swift
     func drawRoute(route: Route) {
         guard let routeShape = route.shape, routeShape.coordinates.count > 0 else { return }
-        // Convert the route’s coordinates into a polyline
-        var routeCoordinates = routeShape.coordinates
-        let polyline = MGLPolylineFeature(coordinates: &routeCoordinates, count: UInt(routeCoordinates.count))
-
-        // If there's already a route line on the map, reset its shape to the new route
-        if let source = mapView.style?.source(withIdentifier: "route-source") as? MGLShapeSource {
-            source.shape = polyline
+        guard let mapView = navigationMapView.mapView else { return }
+        let sourceIdentifier = "routeStyle"
+        
+        // Convert the route’s coordinates into a linestring feature
+        let feature = Feature(geometry: .lineString(LineString(routeShape.coordinates)))
+        
+        // If there's already a route line on the map, update its shape to the new route
+        if mapView.mapboxMap.style.sourceExists(withId: sourceIdentifier) {
+            try? mapView.mapboxMap.style.updateGeoJSONSource(withId: sourceIdentifier, geoJSON: feature)
         } else {
-            let source = MGLShapeSource(identifier: "route-source", features: [polyline], options: nil)
-
+            // Convert the route’s coordinates into a lineString Feature and add the source of the route line to the map
+            var geoJSONSource = GeoJSONSource()
+            geoJSONSource.data = .feature(feature)
+            try? mapView.mapboxMap.style.addSource(geoJSONSource, id: sourceIdentifier)
+            
             // Customize the route line color and width
-            let lineStyle = MGLLineStyleLayer(identifier: "route-style", source: source)
-            lineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 0.1897518039, green: 0.3010634184, blue: 0.7994888425, alpha: 1))
-            lineStyle.lineWidth = NSExpression(forConstantValue: 3)
-
-            // Add the source and style layer of the route line to the map
-            mapView.style?.addSource(source)
-            mapView.style?.addLayer(lineStyle)
+            var lineLayer = LineLayer(id: "routeLayer")
+            lineLayer.source = sourceIdentifier
+            lineLayer.lineColor = .constant(.init(color: UIColor(red: 0.1897518039, green: 0.3010634184, blue: 0.7994888425, alpha: 1.0)))
+            lineLayer.lineWidth = .constant(3)
+            
+            // Add the style layer of the route line to the map
+            try? mapView.mapboxMap.style.addLayer(lineLayer)
         }
     }
     // #-end-code-snippet: navigation draw-route-swift
-
-    // #-code-snippet: navigation callout-functions-swift
-    // Implement the delegate method that allows annotations to show callouts when tapped
-    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-        return true
-    }
-
-    // Present the navigation view controller when the callout is selected
-    func mapView(_ mapView: MGLMapView, tapOnCalloutFor annotation: MGLAnnotation) {
-        guard let route = route, let routeOptions = routeOptions else {
-            return
-        }
-        let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions)
-        navigationViewController.modalPresentationStyle = .fullScreen
-        self.present(navigationViewController, animated: true, completion: nil)
-    }
-    // #-end-code-snippet: navigation callout-functions-swift
 }

@@ -3,60 +3,148 @@ import UIKit
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
+import MapboxMaps
 
 class CustomDestinationMarkerController: UIViewController {
+    
+    var navigationMapView: NavigationMapView!
+    var navigationRouteOptions: NavigationRouteOptions!
+    var startNavigationButton: UIButton!
+    var routes: [Route] = []
+    
+    // MARK: - UIViewController lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupNavigationMapView()
+        setupStartNavigationButton()
+        requestRoute()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        startNavigationButton.layer.cornerRadius = startNavigationButton.bounds.midY
+        startNavigationButton.clipsToBounds = true
+        startNavigationButton.setNeedsDisplay()
+    }
+    
+    // MARK: - Setting-up methods
+    
+    func setupNavigationMapView() {
+        navigationMapView = NavigationMapView(frame: view.bounds)
+        navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        navigationMapView.delegate = self
+        navigationMapView.userLocationStyle = .puck2D()
+        
+        view.addSubview(navigationMapView)
+    }
+    
+    func setupStartNavigationButton() {
+        startNavigationButton = UIButton()
+        startNavigationButton.setTitle("Start Navigation", for: .normal)
+        startNavigationButton.translatesAutoresizingMaskIntoConstraints = false
+        startNavigationButton.backgroundColor = .white
+        startNavigationButton.setTitleColor(.black, for: .highlighted)
+        startNavigationButton.setTitleColor(.darkGray, for: .normal)
+        startNavigationButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        startNavigationButton.addTarget(self, action: #selector(tappedButton(_:)), for: .touchUpInside)
+        startNavigationButton.isHidden = true
+        view.addSubview(startNavigationButton)
+        
+        startNavigationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        startNavigationButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        view.setNeedsLayout()
+    }
+    
+    @objc func tappedButton(_ sender: UIButton) {
+        guard let route = routes.first, let routeOptions = navigationRouteOptions else { return }
+        let navigationService = MapboxNavigationService(route: route,
+                                                        routeIndex: 0,
+                                                        routeOptions: routeOptions,
+                                                        simulating: simulationIsEnabled ? .always : .onPoorGPS)
+        let navigationOptions = NavigationOptions(navigationService: navigationService)
+        let navigationViewController = NavigationViewController(for: route,
+                                                                routeIndex: 0,
+                                                                routeOptions: routeOptions,
+                                                                navigationOptions: navigationOptions)
+        navigationViewController.modalPresentationStyle = .fullScreen
+        navigationViewController.delegate = self
+        
+        present(navigationViewController, animated: true)
+    }
+    
+    func requestRoute() {
         let origin = CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648)
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
-        let routeOptions = NavigationRouteOptions(coordinates: [origin, destination])
+        let navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+        navigationMapView.mapView.mapboxMap.setCamera(to: CameraOptions(center: destination, zoom: 13.0))
+        
+        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
             switch result {
             case .failure(let error):
-                print(error.localizedDescription)
+                NSLog("Error occured: \(error.localizedDescription).")
             case .success(let response):
-                guard let route = response.routes?.first, let strongSelf = self else {
-                    return
-                }
+                guard let routes = response.routes,
+                      let currentRoute = routes.first,
+                      let self = self else { return }
                 
-                // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-                let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
-                let navigationOptions = NavigationOptions(navigationService: navigationService)
-                let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
-                navigationViewController.modalPresentationStyle = .fullScreen
-                navigationViewController.mapView?.delegate = strongSelf
-                navigationViewController.routeLineTracksTraversal = true
+                self.navigationRouteOptions = navigationRouteOptions
+                self.routes = routes
+                self.startNavigationButton?.isHidden = false
                 
-                strongSelf.present(navigationViewController, animated: true, completion: nil)
+                self.navigationMapView.show(routes)
+                self.navigationMapView.showWaypoints(on: currentRoute)
             }
         }
     }
 }
 
-extension CustomDestinationMarkerController: MGLMapViewDelegate {
+// MARK: - NavigationMapViewDelegate methods
 
-    func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
-        var annotationImage = mapView.dequeueReusableAnnotationImage(withIdentifier: "marker")
-        
-        if annotationImage == nil {
-            // Leaning Tower of Pisa by Stefan Spieler from the Noun Project.
-            var image = UIImage(named: "marker")!
-            
-            // The anchor point of an annotation is currently always the center. To
-            // shift the anchor point to the bottom of the annotation, the image
-            // asset includes transparent bottom padding equal to the original image
-            // height.
-            //
-            // To make this padding non-interactive, we create another image object
-            // with a custom alignment rect that excludes the padding.
-            image = image.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: image.size.height / 2, right: 0))
-            
-            // Initialize the ‘pisa’ annotation image with the UIImage we just loaded.
-            annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: "marker")
+extension CustomDestinationMarkerController: NavigationMapViewDelegate {
+    
+    // Delegate method, which is called whenever final destination `PointAnnotation` is added on
+    // `MapView`.
+    func navigationMapView(_ navigationMapView: NavigationMapView,
+                           didAdd finalDestinationAnnotation: PointAnnotation,
+                           pointAnnotationManager: PointAnnotationManager) {
+        var finalDestinationAnnotation = finalDestinationAnnotation
+        if let image = UIImage(named: "marker") {
+            finalDestinationAnnotation.image = PointAnnotation.Image.custom(image: image, name: "marker")
+        } else {
+            finalDestinationAnnotation.image = .default
         }
         
-        return annotationImage
+        // `PointAnnotationManager` is used to manage `PointAnnotation`s and is also exposed as
+        // a property in `NavigationMapView.pointAnnotationManager`. After any modifications to the
+        // `PointAnnotation` changes must be synchronized with `PointAnnotationManager.syncAnnotations(_:)`
+        // method. To remove all annotations for specific `PointAnnotationManager`, call method below with
+        // an empty array.
+        pointAnnotationManager.syncAnnotations([finalDestinationAnnotation])
+    }
+}
+
+// MARK: - NavigationViewControllerDelegate methods
+
+extension CustomDestinationMarkerController: NavigationViewControllerDelegate {
+    
+    func navigationViewController(_ navigationViewController: NavigationViewController,
+                                  didAdd finalDestinationAnnotation: PointAnnotation,
+                                  pointAnnotationManager: PointAnnotationManager) {
+        var finalDestinationAnnotation = finalDestinationAnnotation
+        if let image = UIImage(named: "marker") {
+            finalDestinationAnnotation.image = PointAnnotation.Image.custom(image: image, name: "marker")
+        } else {
+            finalDestinationAnnotation.image = .default
+        }
+        
+        pointAnnotationManager.syncAnnotations([finalDestinationAnnotation])
+    }
+    
+    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
+        dismiss(animated: true)
     }
 }
