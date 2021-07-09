@@ -234,7 +234,8 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         let delay = 5.0
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
             guard let navigationService = (self.presentedViewController as? NavigationViewController)?.navigationService else { return }
-            guard let router = navigationService.router, router.route.legs.count > router.routeProgress.legIndex + 1 else { return }
+            let router = navigationService.router
+            guard router.route.legs.count > router.routeProgress.legIndex + 1 else { return }
             router.routeProgress.legIndex += 1
             
             navigationService.start()
