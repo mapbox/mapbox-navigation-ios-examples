@@ -33,11 +33,7 @@ class CustomCameraStateTransition: CameraStateTransition {
         })
     }
     
-    func updateForFollowing(_ cameraOptions: CameraOptions) {
-        mapView?.camera.ease(to: cameraOptions, duration: 0.5, curve: .linear, completion: nil)
-    }
-    
-    func updateForOverview(_ cameraOptions: CameraOptions) {
+    func update(to cameraOptions: CameraOptions, state: NavigationCameraState) {
         mapView?.camera.ease(to: cameraOptions, duration: 0.5, curve: .linear, completion: nil)
     }
     
