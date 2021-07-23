@@ -17,10 +17,6 @@ class EmbeddedExampleViewController: UIViewController {
         return NavigationRouteOptions(coordinates: [origin, destination])
     }()
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
