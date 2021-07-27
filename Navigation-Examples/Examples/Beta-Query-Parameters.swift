@@ -12,7 +12,7 @@ class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, Navi
     var routes: [Route]? {
         didSet {
             guard let routes = routes, let current = routes.first else {
-                navigationMapView.removeRoutes();
+                navigationMapView.removeRoutes()
                 return
             }
             
@@ -34,7 +34,7 @@ class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, Navi
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.delegate = self
-        navigationMapView.mapView.location.options.puckType = .puck2D()
+        navigationMapView.userLocationStyle = .puck2D()
         
         let navigationViewportDataSource = NavigationViewportDataSource(navigationMapView.mapView, viewportDataSourceType: .raw)
         navigationViewportDataSource.options.followingCameraOptions.zoomUpdatesAllowed = false
@@ -134,11 +134,18 @@ class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, Navi
 
     func requestRoute(destination: CLLocationCoordinate2D) {
         guard let userLocation = navigationMapView.mapView.location.latestLocation else { return }
-        let userWaypoint = Waypoint(location: userLocation.internalLocation, heading: userLocation.heading, name: "user")
+        
+        let location = CLLocation(latitude: userLocation.coordinate.latitude,
+                                  longitude: userLocation.coordinate.longitude)
+        
+        let userWaypoint = Waypoint(location: location,
+                                    heading: userLocation.heading,
+                                    name: "user")
+        
         let destinationWaypoint = Waypoint(coordinate: destination)
         let navigationRouteOptions = MopedRouteOptions(waypoints: [userWaypoint, destinationWaypoint], departTime: dateTextField.text!)
                 
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
+        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
@@ -167,14 +174,13 @@ class MopedRouteOptions: NavigationRouteOptions {
     
     // add departureTime to URLQueryItems
     override var urlQueryItems: [URLQueryItem] {
-        let item = [URLQueryItem(name: "depart_at", value: departureTime)]
-        if let queryItems = super.urlQueryItems as [URLQueryItem]? {
-            return queryItems + item
-        }
+        var items = super.urlQueryItems
+        items.append(URLQueryItem(name: "depart_at", value: departureTime))
+        return items
     }
     
     // create initializer to take in the departure time
-    public init(waypoints: [Waypoint], departTime: String){
+    public init(waypoints: [Waypoint], departTime: String) {
         departureTime = departTime
         super.init(waypoints: waypoints)
     }
@@ -187,4 +193,3 @@ class MopedRouteOptions: NavigationRouteOptions {
         fatalError("init(waypoints:profileIdentifier:) has not been implemented")
     }
 }
-
