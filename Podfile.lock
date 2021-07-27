@@ -1,36 +1,37 @@
 PODS:
-  - MapboxCommon (20.1.0)
-  - MapboxCoreMaps (10.1.0):
-    - MapboxCommon (~> 20.1)
-  - MapboxCoreNavigation (2.0.1):
-    - MapboxDirections (~> 2.0)
-    - MapboxMobileEvents (~> 1.0)
-    - MapboxNavigationNative (~> 69.0)
-  - MapboxDirections (2.0.0):
+  - MapboxCommon (16.0.0)
+  - MapboxCoreMaps (10.0.0-rc.5):
+    - MapboxCommon (~> 16.0.0)
+  - MapboxCoreNavigation (2.0.0-beta.21):
+    - MapboxDirections-pre (= 2.0.0-beta.7)
+    - MapboxMobileEvents (~> 1.0.0)
+    - MapboxNavigationNative (~> 60.0)
+    - Turf (= 2.0.0-beta.1)
+  - MapboxDirections-pre (2.0.0-beta.7):
     - Polyline (~> 5.0)
-    - Turf (~> 2.0)
-  - MapboxMaps (10.1.0):
-    - MapboxCommon (= 20.1.0)
-    - MapboxCoreMaps (= 10.1.0)
-    - MapboxMobileEvents (= 1.0.6)
-    - Turf (~> 2.0)
-  - MapboxMobileEvents (1.0.6)
-  - MapboxNavigation (2.0.1):
-    - MapboxCoreNavigation (= 2.0.1)
-    - MapboxMaps (~> 10.0)
-    - MapboxMobileEvents (~> 1.0)
-    - MapboxSpeech (~> 2.0)
+    - Turf (~> 2.0.0-beta.1)
+  - MapboxMaps (10.0.0-rc.5):
+    - MapboxCommon (= 16.0.0)
+    - MapboxCoreMaps (= 10.0.0-rc.5)
+    - MapboxMobileEvents (= 1.0.2)
+    - Turf (= 2.0.0-beta.1)
+  - MapboxMobileEvents (1.0.2)
+  - MapboxNavigation (2.0.0-beta.21):
+    - MapboxCoreNavigation (= 2.0.0-beta.21)
+    - MapboxMaps (= 10.0.0-rc.5)
+    - MapboxMobileEvents (~> 1.0.0)
+    - MapboxSpeech-pre (= 2.0.0-alpha.1)
     - Solar-dev (~> 3.0)
-  - MapboxNavigationNative (69.0.3):
-    - MapboxCommon (~> 20.0)
-  - MapboxSpeech (2.0.0)
+  - MapboxNavigationNative (60.0.0):
+    - MapboxCommon (~> 16.0)
+  - MapboxSpeech-pre (2.0.0-alpha.1)
   - Polyline (5.0.2)
   - Solar-dev (3.0.1)
-  - Turf (2.1.0)
+  - Turf (2.0.0-beta.1)
 
 DEPENDENCIES:
-  - MapboxCoreNavigation (~> 2.0)
-  - MapboxNavigation (~> 2.0)
+  - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `main`)
+  - MapboxNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `main`)
 
 SPEC REPOS:
   trunk:
@@ -47,20 +48,36 @@ SPEC REPOS:
     - Solar-dev
     - Turf
 
+EXTERNAL SOURCES:
+  MapboxCoreNavigation:
+    :branch: main
+    :git: https://github.com/mapbox/mapbox-navigation-ios.git
+  MapboxNavigation:
+    :branch: main
+    :git: https://github.com/mapbox/mapbox-navigation-ios.git
+
+CHECKOUT OPTIONS:
+  MapboxCoreNavigation:
+    :commit: 3ae3cf3960703dd34a59d0b5d6adef6830f7e373
+    :git: https://github.com/mapbox/mapbox-navigation-ios.git
+  MapboxNavigation:
+    :commit: 3ae3cf3960703dd34a59d0b5d6adef6830f7e373
+    :git: https://github.com/mapbox/mapbox-navigation-ios.git
+
 SPEC CHECKSUMS:
-  MapboxCommon: 8dd878a6c444b78bc1a819af1920dd1a0bb9f732
-  MapboxCoreMaps: 6ecb358c04600f6a947e52d41b78ac0c2570f930
-  MapboxCoreNavigation: 6b523a368630727659422744167fd88a7b158e01
-  MapboxDirections: bbb1b63cf5250a337abb1d120d9706280deb6747
-  MapboxMaps: c19e24617b7135f87fac7dbad3a4baef657555ae
-  MapboxMobileEvents: 14d7ac3ee95b4142c4fec2205dfd48ff453e8871
-  MapboxNavigation: 64530555dea0a6db0064eb4f33f9e89d3315bb07
-  MapboxNavigationNative: a997b061e4eb93c1fb881992e5061e3a290f04f6
-  MapboxSpeech: e4ed02984444b6373374c72c369edaf045cc490c
+  MapboxCommon: 44430838b703d0b1b5032f3c8501c60c7c70d3cc
+  MapboxCoreMaps: 0aa69120a787fce64eb66ea1068a707fbc0a3c8b
+  MapboxCoreNavigation: d79eb0b5d0d35c9ebaadbc7ed9bc07faff58c0e4
+  MapboxDirections-pre: 929a1a63063c9c97f88b793e70143d547eaed293
+  MapboxMaps: b966939712943f6af126aadf73b82b43c0535020
+  MapboxMobileEvents: 9775eb995e06cc3ea10894bf6ab111683c8e73e7
+  MapboxNavigation: 4cd5a5c46c9ec186f46b9509f85e5fe0c8782221
+  MapboxNavigationNative: 9f49640451eca820667c657475d412e1c990d41b
+  MapboxSpeech-pre: aeb16de604d07ceb4195150c3359d5401bb298e6
   Polyline: fce41d72e1146c41c6d081f7656827226f643dff
   Solar-dev: 4612dc9878b9fed2667d23b327f1d4e54e16e8d0
-  Turf: d1220730a00b50a9fb5862c1fb6a5dd698c9e367
+  Turf: 8851f941a6e6476ea200bf057d31cf21b2418467
 
-PODFILE CHECKSUM: ade747cd70b06f12dd4076e55177eb029b4813b0
+PODFILE CHECKSUM: 9f3bdf8f2b78c4d17175133554bc4b33a9ac4613
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.10.1

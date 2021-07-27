@@ -19,6 +19,12 @@
 		8A2DFA6C261651600034A87E /* Custom-Navigation-Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFA6B261651600034A87E /* Custom-Navigation-Camera.swift */; };
 		8A31388726402DF400763714 /* Navigation-From-Segue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A31388626402DF400763714 /* Navigation-From-Segue.swift */; };
 		8A33629624E4844E0086C647 /* Building-Extrusion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A33629524E4844E0086C647 /* Building-Extrusion.swift */; };
+		8A3F6B1E26B09C48009EE612 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F6B1D26B09C48009EE612 /* AppDelegate.swift */; };
+		8A3F6B2026B09C48009EE612 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F6B1F26B09C48009EE612 /* SceneDelegate.swift */; };
+		8A3F6B2226B09C48009EE612 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F6B2126B09C48009EE612 /* ViewController.swift */; };
+		8A3F6B2526B09C48009EE612 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A3F6B2326B09C48009EE612 /* Main.storyboard */; };
+		8A3F6B2726B09C4A009EE612 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A3F6B2626B09C4A009EE612 /* Assets.xcassets */; };
+		8A3F6B2A26B09C4A009EE612 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A3F6B2826B09C4A009EE612 /* LaunchScreen.storyboard */; };
 		8A96379C2492B366008DEF2A /* Route-Deserialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A96379A2492B366008DEF2A /* Route-Deserialization.swift */; };
 		8A96379D2492B366008DEF2A /* route.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A96379B2492B366008DEF2A /* route.json */; };
 		8AC9129D2494106100B6941E /* Route-Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC9129C2494106100B6941E /* Route-Initialization.swift */; };
@@ -52,22 +58,34 @@
 		C5C0D63820589422003A3B1D /* Custom-Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C0D63720589422003A3B1D /* Custom-Server.swift */; };
 		C5F130A01FE9B44600463E86 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1309F1FE9B44600463E86 /* Constants.swift */; };
 		C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F130A51FEB2D7800463E86 /* Advanced.swift */; };
+		D1B95EB8E655F6466A9518CC /* Pods_CarPlayExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CFC17203A5AA0333106A668 /* Pods_CarPlayExample.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		11B6E81626176F3600872E4D /* Upcoming-Intersection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Upcoming-Intersection.swift"; sourceTree = "<group>"; };
 		11DC36F126161DAF0042CD4A /* Location-Snapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location-Snapping.swift"; sourceTree = "<group>"; };
+		1CFC17203A5AA0333106A668 /* Pods_CarPlayExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CarPlayExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B521D4D24090A3A00984CF8 /* CustomBarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarsViewController.swift; sourceTree = "<group>"; };
 		2B521D4F2409240E00984CF8 /* CustomBottomBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomBannerView.swift; sourceTree = "<group>"; };
 		2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomBottomBannerView.xib; sourceTree = "<group>"; };
 		4EF74F60792B221A1A61A3CE /* Pods-Navigation-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples.debug.xcconfig"; sourceTree = "<group>"; };
+		5F805B58F5491201CD2D2D5F /* Pods-CarPlayExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarPlayExample.debug.xcconfig"; path = "Target Support Files/Pods-CarPlayExample/Pods-CarPlayExample.debug.xcconfig"; sourceTree = "<group>"; };
 		8A0B182226553482005107DE /* CustomSegue.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomSegue.storyboard; sourceTree = "<group>"; };
 		8A2DFA55261650A60034A87E /* CustomCameraStateTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraStateTransition.swift; sourceTree = "<group>"; };
 		8A2DFA56261650A60034A87E /* CustomViewportDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewportDataSource.swift; sourceTree = "<group>"; };
 		8A2DFA6B261651600034A87E /* Custom-Navigation-Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Navigation-Camera.swift"; sourceTree = "<group>"; };
 		8A31388626402DF400763714 /* Navigation-From-Segue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Navigation-From-Segue.swift"; sourceTree = "<group>"; };
 		8A33629524E4844E0086C647 /* Building-Extrusion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Building-Extrusion.swift"; sourceTree = "<group>"; };
+		8A3F6B1B26B09C48009EE612 /* CarPlayExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarPlayExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A3F6B1D26B09C48009EE612 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8A3F6B1F26B09C48009EE612 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		8A3F6B2126B09C48009EE612 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8A3F6B2426B09C48009EE612 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8A3F6B2626B09C4A009EE612 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8A3F6B2926B09C4A009EE612 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8A3F6B2B26B09C4A009EE612 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8A3F6B3326B0B253009EE612 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		8A96379A2492B366008DEF2A /* Route-Deserialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Route-Deserialization.swift"; sourceTree = "<group>"; };
 		8A96379B2492B366008DEF2A /* route.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = route.json; sourceTree = "<group>"; };
 		8AC9129C2494106100B6941E /* Route-Initialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Route-Initialization.swift"; sourceTree = "<group>"; };
@@ -110,10 +128,19 @@
 		C5C0D63720589422003A3B1D /* Custom-Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Server.swift"; sourceTree = "<group>"; };
 		C5F1309F1FE9B44600463E86 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C5F130A51FEB2D7800463E86 /* Advanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advanced.swift; sourceTree = "<group>"; };
+		EBDF518BF4786E6F4DB25952 /* Pods-CarPlayExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarPlayExample.release.xcconfig"; path = "Target Support Files/Pods-CarPlayExample/Pods-CarPlayExample.release.xcconfig"; sourceTree = "<group>"; };
 		FAC970C66A93305A51421FFF /* Pods-DocsCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocsCode.release.xcconfig"; path = "Target Support Files/Pods-DocsCode/Pods-DocsCode.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8A3F6B1826B09C48009EE612 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1B95EB8E655F6466A9518CC /* Pods_CarPlayExample.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		961FC4FB22E0265300C72877 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -152,6 +179,21 @@
 				8A2DFA56261650A60034A87E /* CustomViewportDataSource.swift */,
 			);
 			path = NavigationCamera;
+			sourceTree = "<group>";
+		};
+		8A3F6B1C26B09C48009EE612 /* CarPlayExample */ = {
+			isa = PBXGroup;
+			children = (
+				8A3F6B1D26B09C48009EE612 /* AppDelegate.swift */,
+				8A3F6B1F26B09C48009EE612 /* SceneDelegate.swift */,
+				8A3F6B2126B09C48009EE612 /* ViewController.swift */,
+				8A3F6B2326B09C48009EE612 /* Main.storyboard */,
+				8A3F6B2626B09C4A009EE612 /* Assets.xcassets */,
+				8A3F6B2826B09C4A009EE612 /* LaunchScreen.storyboard */,
+				8A3F6B2B26B09C4A009EE612 /* Info.plist */,
+				8A3F6B3326B0B253009EE612 /* Entitlements.plist */,
+			);
+			path = CarPlayExample;
 			sourceTree = "<group>";
 		};
 		8A5BBF6A2489B0A000FA4960 /* Scripts */ = {
@@ -205,6 +247,7 @@
 		C58FB84D1FE899B800C4B491 = {
 			isa = PBXGroup;
 			children = (
+				8A3F6B1C26B09C48009EE612 /* CarPlayExample */,
 				C58FB8581FE899B800C4B491 /* Navigation-Examples */,
 				961FC4E622E0260A00C72877 /* DocsCode */,
 				8A5BBF6A2489B0A000FA4960 /* Scripts */,
@@ -219,6 +262,7 @@
 			children = (
 				C58FB8561FE899B800C4B491 /* Navigation-Examples.app */,
 				961FC4FE22E0265300C72877 /* DocsCode.app */,
+				8A3F6B1B26B09C48009EE612 /* CarPlayExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -278,8 +322,9 @@
 				FAC970C66A93305A51421FFF /* Pods-DocsCode.release.xcconfig */,
 				4EF74F60792B221A1A61A3CE /* Pods-Navigation-Examples.debug.xcconfig */,
 				A8BC0BE26AF9683D3B034741 /* Pods-Navigation-Examples.release.xcconfig */,
+				5F805B58F5491201CD2D2D5F /* Pods-CarPlayExample.debug.xcconfig */,
+				EBDF518BF4786E6F4DB25952 /* Pods-CarPlayExample.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -289,6 +334,7 @@
 				8DF510761FEB0CA00049DB9C /* MapboxNavigation.framework */,
 				020D595E7751FB434720AACD /* Pods_Navigation_Examples.framework */,
 				9B796D93B6E7934BFD326FA8 /* Pods_DocsCode.framework */,
+				1CFC17203A5AA0333106A668 /* Pods_CarPlayExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -296,6 +342,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8A3F6B1A26B09C48009EE612 /* CarPlayExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A3F6B2E26B09C4A009EE612 /* Build configuration list for PBXNativeTarget "CarPlayExample" */;
+			buildPhases = (
+				5159D55EA629EFFB8E5F1015 /* [CP] Check Pods Manifest.lock */,
+				8A3F6B1726B09C48009EE612 /* Sources */,
+				8A3F6B1826B09C48009EE612 /* Frameworks */,
+				8A3F6B1926B09C48009EE612 /* Resources */,
+				89DFE9A4155B596CE41A9EA3 /* [CP] Embed Pods Frameworks */,
+				8A3F6B2F26B09D8F009EE612 /* Apply Mapbox Access Token */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CarPlayExample;
+			productName = CarPlayExample;
+			productReference = 8A3F6B1B26B09C48009EE612 /* CarPlayExample.app */;
+			productType = "com.apple.product-type.application";
+		};
 		961FC4FD22E0265300C72877 /* DocsCode */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 961FC51122E0265400C72877 /* Build configuration list for PBXNativeTarget "DocsCode" */;
@@ -344,10 +410,14 @@
 		C58FB84E1FE899B800C4B491 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = Mapbox;
 				TargetAttributes = {
+					8A3F6B1A26B09C48009EE612 = {
+						CreatedOnToolsVersion = 12.5.1;
+						ProvisioningStyle = Manual;
+					};
 					961FC4FD22E0265300C72877 = {
 						CreatedOnToolsVersion = 10.2.1;
 						LastSwiftMigration = 1110;
@@ -375,11 +445,22 @@
 			targets = (
 				C58FB8551FE899B800C4B491 /* Navigation-Examples */,
 				961FC4FD22E0265300C72877 /* DocsCode */,
+				8A3F6B1A26B09C48009EE612 /* CarPlayExample */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8A3F6B1926B09C48009EE612 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A3F6B2A26B09C4A009EE612 /* LaunchScreen.storyboard in Resources */,
+				8A3F6B2726B09C4A009EE612 /* Assets.xcassets in Resources */,
+				8A3F6B2526B09C48009EE612 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		961FC4FC22E0265300C72877 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -505,6 +586,86 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		5159D55EA629EFFB8E5F1015 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CarPlayExample-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		89DFE9A4155B596CE41A9EA3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CarPlayExample/Pods-CarPlayExample-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/MapboxCoreNavigation/MapboxCoreNavigation.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxDirections-pre/MapboxDirections.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxMaps/MapboxMaps.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxNavigation/MapboxNavigation.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxSpeech-pre/MapboxSpeech.framework",
+				"${BUILT_PRODUCTS_DIR}/Polyline/Polyline.framework",
+				"${BUILT_PRODUCTS_DIR}/Solar-dev/Solar.framework",
+				"${BUILT_PRODUCTS_DIR}/Turf/Turf.framework",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxCommon/MapboxCommon.framework/MapboxCommon",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxCoreMaps/MapboxCoreMaps.framework/MapboxCoreMaps",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework/MapboxMobileEvents",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxNavigationNative/MapboxNavigationNative.framework/MapboxNavigationNative",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreNavigation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxDirections.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMaps.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxSpeech.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Polyline.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Solar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Turf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreMaps.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigationNative.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CarPlayExample/Pods-CarPlayExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8A3F6B2F26B09D8F009EE612 /* Apply Mapbox Access Token */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Apply Mapbox Access Token";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$SRCROOT/Scripts/apply-mapbox-access-token.sh\n";
+		};
 		8AAD08F22486DA4700664446 /* Apply Mapbox Access Token */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -600,6 +761,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8A3F6B1726B09C48009EE612 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A3F6B2226B09C48009EE612 /* ViewController.swift in Sources */,
+				8A3F6B1E26B09C48009EE612 /* AppDelegate.swift in Sources */,
+				8A3F6B2026B09C48009EE612 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		961FC4FA22E0265300C72877 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -649,6 +820,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		8A3F6B2326B09C48009EE612 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8A3F6B2426B09C48009EE612 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		8A3F6B2826B09C4A009EE612 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8A3F6B2926B09C4A009EE612 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		C58FB85D1FE899B800C4B491 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -668,6 +855,51 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		8A3F6B2C26B09C4A009EE612 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F805B58F5491201CD2D2D5F /* Pods-CarPlayExample.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/CarPlayExample/Entitlements.plist";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = GJZR2MEM28;
+				INFOPLIST_FILE = CarPlayExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Mapbox.CarPlay-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "CarPlay Provisioning Profile";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8A3F6B2D26B09C4A009EE612 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EBDF518BF4786E6F4DB25952 /* Pods-CarPlayExample.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/CarPlayExample/Entitlements.plist";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = GJZR2MEM28;
+				INFOPLIST_FILE = CarPlayExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Mapbox.CarPlay-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "CarPlay Provisioning Profile";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		961FC51222E0265400C72877 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9223D8DB7C82389A1E85E3E5 /* Pods-DocsCode.debug.xcconfig */;
@@ -853,6 +1085,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8A3F6B2E26B09C4A009EE612 /* Build configuration list for PBXNativeTarget "CarPlayExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A3F6B2C26B09C4A009EE612 /* Debug */,
+				8A3F6B2D26B09C4A009EE612 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		961FC51122E0265400C72877 /* Build configuration list for PBXNativeTarget "DocsCode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
