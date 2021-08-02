@@ -4,6 +4,7 @@ import CarPlay
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
+import MapboxMaps
 
 @main
 class AppDelegate: UIResponder, UIWindowSceneDelegate {
@@ -73,13 +74,123 @@ extension AppDelegate: CPTemplateApplicationSceneDelegate {
 extension AppDelegate: CarPlayManagerDelegate {
     
     func carPlayManager(_ carPlayManager: CarPlayManager,
-                        navigationServiceAlong route: Route,
-                        routeIndex: Int,
-                        routeOptions: RouteOptions,
-                        desiredSimulationMode: SimulationMode) -> NavigationService {
-        return MapboxNavigationService(route: route,
-                                       routeIndex: routeIndex,
-                                       routeOptions: routeOptions,
-                                       simulating: desiredSimulationMode)
+                        leadingNavigationBarButtonsCompatibleWith traitCollection: UITraitCollection,
+                        in carPlayTemplate: CPTemplate, for activity: CarPlayActivity) -> [CPBarButton]? {
+        let barButton = CPBarButton(type: .text) { _ in
+            
+        }
+        barButton.title = "Test"
+        
+        return [barButton]
+    }
+    
+    func carPlayManager(_ carPlayManager: CarPlayManager,
+                        trailingNavigationBarButtonsCompatibleWith traitCollection: UITraitCollection,
+                        in carPlayTemplate: CPTemplate,
+                        for activity: CarPlayActivity) -> [CPBarButton]? {
+        switch activity {
+        
+        case .browsing:
+            break
+            
+        case .panningInBrowsingMode:
+            break
+            
+        case .previewing:
+            break
+            
+        case .navigating:
+            break
+            
+        }
+        
+        let barButton = CPBarButton(type: .text) { _ in
+            
+        }
+        barButton.title = "Test"
+        
+        return [barButton]
+    }
+    
+    func carPlayManager(_ carPlayManager: CarPlayManager,
+                        mapButtonsCompatibleWith traitCollection: UITraitCollection,
+                        in carPlayTemplate: CPTemplate,
+                        for activity: CarPlayActivity) -> [CPMapButton] {
+        switch activity {
+        
+        case .browsing:
+            break
+            
+        case .panningInBrowsingMode:
+            break
+            
+        case .previewing:
+            break
+            
+        case .navigating:
+            break
+            
+        }
+        
+        let mapButton = CPMapButton { _ in
+            
+        }
+        mapButton.image = UIImage.checkmark
+        
+        return [mapButton]
+    }
+    
+    func carPlayManager(_ carPlayManager: CarPlayManager,
+                        didFailToFetchRouteBetween waypoints: [Waypoint]?,
+                        options: RouteOptions,
+                        error: DirectionsError) -> CPNavigationAlert? {
+        return nil
+    }
+    
+    func carPlayManager(_ carPlayManager: CarPlayManager,
+                        willPreview trip: CPTrip) -> CPTrip {
+        return trip
+    }
+    
+    func carPlayManager(_ carPlayManager: CarPlayManager,
+                        willPreview trip: CPTrip,
+                        with previewTextConfiguration: CPTripPreviewTextConfiguration) -> CPTripPreviewTextConfiguration {
+        return previewTextConfiguration
+    }
+    
+    func carPlayManager(_ carPlayManager: CarPlayManager,
+                        selectedPreviewFor trip: CPTrip,
+                        using routeChoice: CPRouteChoice) {
+        
+    }
+    
+    func carPlayManager(_ carPlayManager: CarPlayManager,
+                        didBeginNavigationWith service: NavigationService) {
+
+    }
+    
+    func carPlayManagerDidEndNavigation(_ carPlayManager: CarPlayManager) {
+        
+    }
+    
+    func carPlayManager(_ carPlayManager: CarPlayManager,
+                        shouldPresentArrivalUIFor waypoint: Waypoint) -> Bool {
+        return false
+    }
+    
+    func carPlayManagerShouldDisableIdleTimer(_ carPlayManager: CarPlayManager) -> Bool {
+        return false
+    }
+    
+    func carPlayManager(_ carPlayManager: CarPlayManager,
+                        didPresent navigationViewController: CarPlayNavigationViewController) {
+
+    }
+    
+    func carPlayManager(_ carPlayManager: CarPlayManager,
+                        didAdd finalDestinationAnnotation: PointAnnotation,
+                        to parentViewController: UIViewController,
+                        pointAnnotationManager: PointAnnotationManager) {
+        
     }
 }
