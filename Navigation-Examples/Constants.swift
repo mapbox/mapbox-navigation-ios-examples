@@ -167,5 +167,12 @@ let listOfExamples: [NamedController] = [
         controller: CustomUserLocationViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
+    ),
+    (
+        name: "Flags",
+        description: "Flags are on the map!",
+        controller: FlagsViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: false
     )
 ]

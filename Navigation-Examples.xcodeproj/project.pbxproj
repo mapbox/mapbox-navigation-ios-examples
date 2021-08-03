@@ -51,6 +51,8 @@
 		C5C0D63820589422003A3B1D /* Custom-Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C0D63720589422003A3B1D /* Custom-Server.swift */; };
 		C5F130A01FE9B44600463E86 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1309F1FE9B44600463E86 /* Constants.swift */; };
 		C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F130A51FEB2D7800463E86 /* Advanced.swift */; };
+		DAD86C3E26B8D8C700DC3C62 /* Flags.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD86C3D26B8D8C700DC3C62 /* Flags.swift */; };
+		DAD86C4626B8DA8C00DC3C62 /* flagpoles.geojson in Resources */ = {isa = PBXBuildFile; fileRef = DAD86C4526B8DA8C00DC3C62 /* flagpoles.geojson */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,7 +92,6 @@
 		B480E423261E4C3500C16FA0 /* Predictive-Caching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predictive-Caching.swift"; sourceTree = "<group>"; };
 		B480E427261E4C4600C16FA0 /* Route-Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Route-Alerts.swift"; sourceTree = "<group>"; };
 		B4F805ED26791AD900D5F1C8 /* Custom-User-Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-User-Location.swift"; sourceTree = "<group>"; };
-		BFEC70FB9C884A4DDD80E7D9 /* Pods-Navigation-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples.release.xcconfig"; path = "Pods/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples.release.xcconfig"; sourceTree = "<group>"; };
 		C346744D263C57610068A65E /* Beta-Query-Parameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Beta-Query-Parameters.swift"; sourceTree = "<group>"; };
 		C3893F1B25F96BDC0058A987 /* Custom-Waypoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Waypoints.swift"; sourceTree = "<group>"; };
 		C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Destination-Marker.swift"; sourceTree = "<group>"; };
@@ -109,6 +110,9 @@
 		C5C0D63720589422003A3B1D /* Custom-Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Server.swift"; sourceTree = "<group>"; };
 		C5F1309F1FE9B44600463E86 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C5F130A51FEB2D7800463E86 /* Advanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advanced.swift; sourceTree = "<group>"; };
+		DAD86C3D26B8D8C700DC3C62 /* Flags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flags.swift; sourceTree = "<group>"; };
+		DAD86C4526B8DA8C00DC3C62 /* flagpoles.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = flagpoles.geojson; sourceTree = "<group>"; };
+		DAD86C4926B8DCFD00DC3C62 /* flags.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = flags.sh; sourceTree = "<group>"; };
 		FAC970C66A93305A51421FFF /* Pods-DocsCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocsCode.release.xcconfig"; path = "Target Support Files/Pods-DocsCode/Pods-DocsCode.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -157,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				8AD2F2132489B5C800F81353 /* apply-mapbox-access-token.sh */,
+				DAD86C4926B8DCFD00DC3C62 /* flags.sh */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
@@ -233,6 +238,7 @@
 				C58FB85D1FE899B800C4B491 /* Main.storyboard */,
 				C58FB8621FE899B800C4B491 /* LaunchScreen.storyboard */,
 				C58FB8601FE899B800C4B491 /* Assets.xcassets */,
+				DAD86C4526B8DA8C00DC3C62 /* flagpoles.geojson */,
 				C58FB8651FE899B800C4B491 /* Info.plist */,
 			);
 			path = "Navigation-Examples";
@@ -261,6 +267,7 @@
 				11DC36F126161DAF0042CD4A /* Location-Snapping.swift */,
 				11B6E81626176F3600872E4D /* Upcoming-Intersection.swift */,
 				B4F805ED26791AD900D5F1C8 /* Custom-User-Location.swift */,
+				DAD86C3D26B8D8C700DC3C62 /* Flags.swift */,
 				8AFBF217265E851700468551 /* CustomSegue */,
 				8A2DFA52261650600034A87E /* NavigationCamera */,
 				8AC9129E2494118400B6941E /* TestData */,
@@ -277,7 +284,6 @@
 				4EF74F60792B221A1A61A3CE /* Pods-Navigation-Examples.debug.xcconfig */,
 				A8BC0BE26AF9683D3B034741 /* Pods-Navigation-Examples.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -393,6 +399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A96379D2492B366008DEF2A /* route.json in Resources */,
+				DAD86C4626B8DA8C00DC3C62 /* flagpoles.geojson in Resources */,
 				2B521D522409242A00984CF8 /* CustomBottomBannerView.xib in Resources */,
 				C58FB8611FE899B800C4B491 /* Assets.xcassets in Resources */,
 				8A0B182326553482005107DE /* CustomSegue.storyboard in Resources */,
@@ -421,7 +428,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint --strict\nfi\n";
+			shellScript = "# if which swiftlint >/dev/null; then\n#   swiftlint --strict\n# fi\n";
 		};
 		1179FA72263B0735004965CE /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -637,6 +644,7 @@
 				8A2DFA57261650A60034A87E /* CustomCameraStateTransition.swift in Sources */,
 				C58FB8731FE98AEB00C4B491 /* Styled-UI-Elements.swift in Sources */,
 				C58FB85A1FE899B800C4B491 /* AppDelegate.swift in Sources */,
+				DAD86C3E26B8D8C700DC3C62 /* Flags.swift in Sources */,
 				8AE033222628EDFF000E7145 /* Route-Lines-Styling.swift in Sources */,
 				8A33629624E4844E0086C647 /* Building-Extrusion.swift in Sources */,
 				8A2DFA58261650A60034A87E /* CustomViewportDataSource.swift in Sources */,
