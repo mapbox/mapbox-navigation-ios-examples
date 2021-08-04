@@ -223,14 +223,3 @@ extension ViewController: NavigationViewControllerDelegate {
         dismiss(animated: true, completion: nil)
     }
 }
-
-// MARK: - UIGestureRecognizerDelegate methods
-
-extension ViewController: UIGestureRecognizerDelegate {
-
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        // Allow both route selection and building extrusion when tapping on screen.
-        return true
-    }
-}
