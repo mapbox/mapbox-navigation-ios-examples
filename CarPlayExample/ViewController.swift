@@ -11,26 +11,15 @@ class ViewController: UIViewController {
     
     var navigationRouteOptions: NavigationRouteOptions!
     
-    var currentRoute: Route? {
-        get {
-            return routes?.first
-        }
-        set {
-            guard let selected = newValue else { routes = nil; return }
-            guard let routes = routes else { self.routes = [selected]; return }
-            self.routes = [selected] + routes.filter { $0 != selected }
-        }
-    }
-    
-    var routes: [Route]? {
+    var routeResponse: RouteResponse? {
         didSet {
-            guard let routes = routes, let currentRoute = routes.first else {
+            guard let routes = routeResponse?.routes, let currentRoute = routes.first else {
                 navigationMapView.removeRoutes()
                 navigationMapView.removeWaypoints()
                 waypoints.removeAll()
                 return
             }
-
+            
             navigationMapView.show(routes)
             navigationMapView.showWaypoints(on: currentRoute)
         }
@@ -90,7 +79,7 @@ class ViewController: UIViewController {
                                                 preferredStyle: .actionSheet)
         
         let startNavigation: ActionHandler = { _ in self.startNavigation() }
-        let removeRoutes: ActionHandler = { _ in self.routes = nil }
+        let removeRoutes: ActionHandler = { _ in self.routeResponse = nil }
         
         let actions: [(String, UIAlertAction.Style, ActionHandler?)] = [
             ("Start Navigation", .default, startNavigation),
@@ -110,20 +99,17 @@ class ViewController: UIViewController {
     }
     
     func startNavigation() {
-        guard let route = currentRoute, let navigationRouteOptions = navigationRouteOptions else {
+        guard let routeResponse = routeResponse,
+              let navigationRouteOptions = navigationRouteOptions else {
             presentAlert(message: "Please select at least one destination coordinate to start navigation.")
             return
         }
-
-        let navigationService = MapboxNavigationService(route: route,
+        
+        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
                                                         routeIndex: 0,
                                                         routeOptions: navigationRouteOptions,
                                                         simulating: .always)
-        let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route,
-                                                                routeIndex: 0,
-                                                                routeOptions: navigationRouteOptions,
-                                                                navigationOptions: navigationOptions)
+        let navigationViewController = NavigationViewController(navigationService: navigationService)
         navigationViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen
         
@@ -169,24 +155,17 @@ class ViewController: UIViewController {
     func requestRoute() {
         let navigationRouteOptions = NavigationRouteOptions(waypoints: waypoints)
         Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
+            guard let self = self else { return }
+            
             switch result {
             case .failure(let error):
-                self?.presentAlert(message: error.localizedDescription)
-
+                self.presentAlert(message: error.localizedDescription)
+                
                 // In case if direction calculation failed - remove last destination waypoint.
-                self?.waypoints.removeLast()
+                self.waypoints.removeLast()
             case .success(let response):
-                guard let routes = response.routes else { return }
-                self?.navigationRouteOptions = navigationRouteOptions
-                self?.routes = routes
-                self?.navigationMapView.show(routes)
-                if let currentRoute = self?.currentRoute {
-                    self?.navigationMapView.showWaypoints(on: currentRoute)
-                }
-
-                if let coordinates = self?.waypoints.compactMap({ $0.targetCoordinate }) {
-                    self?.navigationMapView.highlightBuildings(at: coordinates, in3D: true)
-                }
+                self.routeResponse = response
+                self.navigationRouteOptions = navigationRouteOptions
             }
         }
     }
@@ -208,7 +187,10 @@ class ViewController: UIViewController {
 extension ViewController: NavigationMapViewDelegate {
     
     func navigationMapView(_ mapView: NavigationMapView, didSelect route: Route) {
-        self.currentRoute = route
+        guard let routes = routeResponse?.routes,
+              let routeIndex = routes.firstIndex(where: { $0 === route }) else { return }
+        
+        routeResponse?.routes?.swapAt(routeIndex, 0)
     }
 }
 
