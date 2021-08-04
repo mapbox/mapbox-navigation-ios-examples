@@ -1,10 +1,9 @@
 import UIKit
-
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
 
-class ViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate, UIGestureRecognizerDelegate {
+class ViewController: UIViewController {
     
     typealias ActionHandler = (UIAlertAction) -> Void
     
@@ -65,22 +64,30 @@ class ViewController: UIViewController, NavigationMapViewDelegate, NavigationVie
     }
     
     func setupPerformActionBarButtonItem() {
-        let settingsBarButtonItem = UIBarButtonItem(title: NSString(string: "\u{2699}\u{0000FE0E}") as String, style: .plain, target: self, action: #selector(performAction))
-        settingsBarButtonItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 30)], for: .normal)
-        settingsBarButtonItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 30)], for: .highlighted)
+        let settingsBarButtonItem = UIBarButtonItem(title: NSString(string: "\u{2699}\u{0000FE0E}") as String,
+                                                    style: .plain,
+                                                    target: self,
+                                                    action: #selector(performAction))
+        let attributes = [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30)
+        ]
+        settingsBarButtonItem.setTitleTextAttributes(attributes, for: .normal)
+        settingsBarButtonItem.setTitleTextAttributes(attributes, for: .highlighted)
         navigationItem.rightBarButtonItem = settingsBarButtonItem
     }
     
     // MARK: - UIGestureRecognizer related methods
     
     func setupGestureRecognizers() {
-        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self,
+                                                                      action: #selector(handleLongPress(_:)))
         navigationMapView.addGestureRecognizer(longPressGestureRecognizer)
     }
 
     @objc func performAction(_ sender: Any) {
         let alertController = UIAlertController(title: "Perform action",
-                                                message: "Select specific action to perform it", preferredStyle: .actionSheet)
+                                                message: "Select specific action to perform it",
+                                                preferredStyle: .actionSheet)
         
         let startNavigation: ActionHandler = { _ in self.startNavigation() }
         let removeRoutes: ActionHandler = { _ in self.routes = nil }
@@ -134,7 +141,8 @@ class ViewController: UIViewController, NavigationMapViewDelegate, NavigationVie
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .began else { return }
 
-        createWaypoints(for: navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView)))
+        let mapView = navigationMapView.mapView
+        createWaypoints(for: mapView?.mapboxMap.coordinate(for: gesture.location(in: mapView)))
         requestRoute()
     }
 
@@ -182,16 +190,34 @@ class ViewController: UIViewController, NavigationMapViewDelegate, NavigationVie
             }
         }
     }
-    
-    // MARK: - NavigationMapViewDelegate methods
+
+    // MARK: - Utility methods
+
+    func presentAlert(_ title: String? = nil, message: String? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+            alertController.dismiss(animated: true, completion: nil)
+        }))
+
+        present(alertController, animated: true, completion: nil)
+    }
+}
+
+// MARK: - NavigationMapViewDelegate methods
+
+extension ViewController: NavigationMapViewDelegate {
     
     func navigationMapView(_ mapView: NavigationMapView, didSelect route: Route) {
         self.currentRoute = route
     }
+}
+
+// MARK: - NavigationViewControllerDelegate methods
+
+extension ViewController: NavigationViewControllerDelegate {
     
-    // MARK: - NavigationViewControllerDelegate methods
-    
-    func navigationViewController(_ navigationViewController: NavigationViewController, didArriveAt waypoint: Waypoint) -> Bool {
+    func navigationViewController(_ navigationViewController: NavigationViewController,
+                                  didArriveAt waypoint: Waypoint) -> Bool {
         if navigationViewController.navigationService.router.routeProgress.isFinalLeg {
             return true
         }
@@ -210,25 +236,19 @@ class ViewController: UIViewController, NavigationMapViewDelegate, NavigationVie
         return false
     }
     
-    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
+    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController,
+                                            byCanceling canceled: Bool) {
         dismiss(animated: true, completion: nil)
     }
+}
 
-    // MARK: - UIGestureRecognizerDelegate methods
+// MARK: - UIGestureRecognizerDelegate methods
 
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+extension ViewController: UIGestureRecognizerDelegate {
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         // Allow both route selection and building extrusion when tapping on screen.
         return true
-    }
-
-    // MARK: - Utility methods
-
-    func presentAlert(_ title: String? = nil, message: String? = nil) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
-            alertController.dismiss(animated: true, completion: nil)
-        }))
-
-        present(alertController, animated: true, completion: nil)
     }
 }

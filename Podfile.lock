@@ -30,8 +30,8 @@ PODS:
   - Turf (2.0.0-beta.1)
 
 DEPENDENCIES:
-  - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `main`)
-  - MapboxNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `main`)
+  - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `maxim/car-play-refactoring`)
+  - MapboxNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `maxim/car-play-refactoring`)
 
 SPEC REPOS:
   trunk:
@@ -50,18 +50,18 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   MapboxCoreNavigation:
-    :branch: main
+    :branch: maxim/car-play-refactoring
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
   MapboxNavigation:
-    :branch: main
+    :branch: maxim/car-play-refactoring
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
 
 CHECKOUT OPTIONS:
   MapboxCoreNavigation:
-    :commit: 5c9fc1df2cd4bdc8efee539ff854ee6d150ccabc
+    :commit: 3d471096f6ecc68376169a82a36a4af0eb0218f8
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
   MapboxNavigation:
-    :commit: 5c9fc1df2cd4bdc8efee539ff854ee6d150ccabc
+    :commit: 3d471096f6ecc68376169a82a36a4af0eb0218f8
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
 
 SPEC CHECKSUMS:
@@ -78,6 +78,6 @@ SPEC CHECKSUMS:
   Solar-dev: 4612dc9878b9fed2667d23b327f1d4e54e16e8d0
   Turf: 8851f941a6e6476ea200bf057d31cf21b2418467
 
-PODFILE CHECKSUM: 9f3bdf8f2b78c4d17175133554bc4b33a9ac4613
+PODFILE CHECKSUM: cdba1559ae133c7fa27daf8adf70e8089ac9c090
 
 COCOAPODS: 1.10.1
