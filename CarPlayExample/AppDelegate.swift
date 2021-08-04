@@ -11,7 +11,7 @@ class AppDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     @available(iOS 12.0, *)
-    lazy var carPlayManager: CarPlayManager = CarPlayManager()
+    lazy var carPlayManager: CarPlayManager = CarPlayManager(styles: [CustomStyle()])
 }
 
 // MARK: - UIApplicationDelegate methods
@@ -55,8 +55,6 @@ extension AppDelegate: CPTemplateApplicationSceneDelegate {
         appDelegate.carPlayManager.templateApplicationScene(templateApplicationScene,
                                                             didConnectCarInterfaceController: interfaceController,
                                                             to: window)
-        
-        appDelegate.carPlayManager.interfaceController?.delegate = self
     }
     
     func templateApplicationScene(_ templateApplicationScene: CPTemplateApplicationScene,
@@ -82,13 +80,24 @@ extension AppDelegate: CarPlayManagerDelegate {
     
     func carPlayManager(_ carPlayManager: CarPlayManager,
                         leadingNavigationBarButtonsCompatibleWith traitCollection: UITraitCollection,
-                        in carPlayTemplate: CPTemplate, for activity: CarPlayActivity) -> [CPBarButton]? {
-        let barButton = CPBarButton(type: .text) { _ in
-            
-        }
-        barButton.title = "Test"
+                        in carPlayTemplate: CPTemplate,
+                        for activity: CarPlayActivity) -> [CPBarButton]? {
+        switch activity {
         
-        return [barButton]
+        case .browsing:
+            break
+            
+        case .panningInBrowsingMode:
+            break
+            
+        case .previewing:
+            break
+            
+        case .navigating:
+            break
+        }
+        
+        return []
     }
     
     func carPlayManager(_ carPlayManager: CarPlayManager,
@@ -107,22 +116,16 @@ extension AppDelegate: CarPlayManagerDelegate {
             break
             
         case .navigating:
-            break
-            
+            return [carPlayManager.exitButton]
         }
         
-        let barButton = CPBarButton(type: .text) { _ in
-            
-        }
-        barButton.title = "Test"
-        
-        return [barButton]
+        return []
     }
     
     func carPlayManager(_ carPlayManager: CarPlayManager,
                         mapButtonsCompatibleWith traitCollection: UITraitCollection,
                         in carPlayTemplate: CPTemplate,
-                        for activity: CarPlayActivity) -> [CPMapButton] {
+                        for activity: CarPlayActivity) -> [CPMapButton]? {
         switch activity {
         
         case .browsing:
@@ -136,15 +139,9 @@ extension AppDelegate: CarPlayManagerDelegate {
             
         case .navigating:
             break
-            
         }
         
-        let mapButton = CPMapButton { _ in
-            
-        }
-        mapButton.image = UIImage.checkmark
-        
-        return [mapButton]
+        return []
     }
     
     func carPlayManager(_ carPlayManager: CarPlayManager,
@@ -185,24 +182,51 @@ extension AppDelegate: CarPlayManagerDelegate {
         
     }
     
+    // Delegate method, which is called after ending active-guidance navigation session and dismissing
+    // `CarPlayNavigationViewController`.
     func carPlayManagerDidEndNavigation(_ carPlayManager: CarPlayManager) {
+        let alertAction = CPAlertAction(title: "OK",
+                                        style: .default,
+                                        handler: { [weak self] _ in
+                                            self?.carPlayManager.interfaceController?.dismissTemplate(animated: true)
+                                        })
         
+        let alertTemplate = CPAlertTemplate(titleVariants: ["Did end active-guidance navigation."],
+                                            actions: [alertAction])
+        
+        carPlayManager.interfaceController?.presentTemplate(alertTemplate, animated: true)
     }
     
+    // Delegate method, which allows to show `CPActionSheetTemplate` or `CPAlertTemplate`
+    // after arriving to the specific `Waypoint`.
     func carPlayManager(_ carPlayManager: CarPlayManager,
                         shouldPresentArrivalUIFor waypoint: Waypoint) -> Bool {
-        return false
+        return true
     }
     
+    // Delegate method, which provides the ability to disable the idle timer to avert system sleep.
     func carPlayManagerShouldDisableIdleTimer(_ carPlayManager: CarPlayManager) -> Bool {
-        return false
+        return true
     }
     
+    // Delegate method, which is called right after starting active-guidance navigation and presenting
+    // `CarPlayNavigationViewController`.
     func carPlayManager(_ carPlayManager: CarPlayManager,
                         didPresent navigationViewController: CarPlayNavigationViewController) {
+        let alertAction = CPAlertAction(title: "OK",
+                                        style: .default,
+                                        handler: { [weak self] _ in
+                                            self?.carPlayManager.interfaceController?.dismissTemplate(animated: true)
+                                        })
         
+        let alertTemplate = CPAlertTemplate(titleVariants: ["Did present CarPlayNavigationViewController."],
+                                            actions: [alertAction])
+        
+        carPlayManager.interfaceController?.presentTemplate(alertTemplate, animated: true)
     }
     
+    // Delegate method, which allows to modify final destination annotation whenever its added to
+    // `CarPlayMapViewController` or `CarPlayNavigationViewController`.
     func carPlayManager(_ carPlayManager: CarPlayManager,
                         didAdd finalDestinationAnnotation: PointAnnotation,
                         to parentViewController: UIViewController,
