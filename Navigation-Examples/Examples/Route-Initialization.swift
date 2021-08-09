@@ -82,11 +82,20 @@ class RouteInitializationViewController: UIViewController {
         
         // Here `Route` object is created manually without calling Directions API directly.
         let route = Route(legs: [routeLeg], shape: LineString(routeCoordinates), distance: distance, expectedTravelTime: expectedTravelTime)
-        
+        // Route response encapsulates more data about the route. Since this example doesn't call Directions API, we should add it manually.
+        let routeResponse = RouteResponse(httpResponse: nil,
+                                          identifier: "your-custom-id-here",
+                                          routes: [route],
+                                          waypoints: routeCoordinates.map {
+                                            Waypoint(coordinate: $0,
+                                                     coordinateAccuracy: nil,
+                                                     name: nil)
+                                          }, options: .route(routeOptions),
+                                          credentials: Directions.shared.credentials)
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+        let navigationService = MapboxNavigationService(routeResponse: routeResponse, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
+        let navigationViewController = NavigationViewController(for: routeResponse, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
         navigationViewController.modalPresentationStyle = .fullScreen
         self.present(navigationViewController, animated: true, completion: nil)
     }

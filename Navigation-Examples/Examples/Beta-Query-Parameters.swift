@@ -9,15 +9,14 @@ class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, Navi
     var navigationMapView: NavigationMapView!
     var navigationRouteOptions: MopedRouteOptions!
     
-    var routes: [Route]? {
+    var routeResponse: RouteResponse? {
         didSet {
-            guard let routes = routes, let current = routes.first else {
+            guard let routes = routeResponse?.routes, let currentRoute = routes.first else {
                 navigationMapView.removeRoutes()
                 return
             }
-            
             navigationMapView.show(routes)
-            navigationMapView.showWaypoints(on: current)
+            navigationMapView.showWaypoints(on: currentRoute)
         }
     }
     
@@ -109,15 +108,15 @@ class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, Navi
     }
     
     @objc func tappedStartButton(sender: UIButton) {
-        guard let route = routes?.first, let navigationRouteOptions = navigationRouteOptions else { return }
+        guard let routeResponse = routeResponse, let navigationRouteOptions = navigationRouteOptions else { return }
 
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let navigationService = MapboxNavigationService(route: route,
+        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
                                                         routeIndex: 0,
                                                         routeOptions: navigationRouteOptions,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route, routeIndex: 0,
+        let navigationViewController = NavigationViewController(for: routeResponse, routeIndex: 0,
                                                                 routeOptions: navigationRouteOptions,
                                                                 navigationOptions: navigationOptions)
         navigationViewController.delegate = self
@@ -155,7 +154,7 @@ class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, Navi
                       let self = self else { return }
                 
                 self.navigationRouteOptions = navigationRouteOptions
-                self.routes = routes
+                self.routeResponse = response
                 self.startButton?.isHidden = false
                 self.dateTextField?.isHidden = true
                 self.navigationMapView.show(routes)

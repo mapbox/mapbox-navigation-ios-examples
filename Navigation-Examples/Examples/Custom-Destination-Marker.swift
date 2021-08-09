@@ -10,7 +10,7 @@ class CustomDestinationMarkerController: UIViewController {
     var navigationMapView: NavigationMapView!
     var navigationRouteOptions: NavigationRouteOptions!
     var startNavigationButton: UIButton!
-    var routes: [Route] = []
+    var routeResponse: RouteResponse!
     
     // MARK: - UIViewController lifecycle methods
     
@@ -59,13 +59,13 @@ class CustomDestinationMarkerController: UIViewController {
     }
     
     @objc func tappedButton(_ sender: UIButton) {
-        guard let route = routes.first, let routeOptions = navigationRouteOptions else { return }
-        let navigationService = MapboxNavigationService(route: route,
+        guard let routeOptions = navigationRouteOptions else { return }
+        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
                                                         routeIndex: 0,
                                                         routeOptions: routeOptions,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route,
+        let navigationViewController = NavigationViewController(for: routeResponse,
                                                                 routeIndex: 0,
                                                                 routeOptions: routeOptions,
                                                                 navigationOptions: navigationOptions)
@@ -92,7 +92,7 @@ class CustomDestinationMarkerController: UIViewController {
                       let self = self else { return }
                 
                 self.navigationRouteOptions = navigationRouteOptions
-                self.routes = routes
+                self.routeResponse = response
                 self.startNavigationButton?.isHidden = false
                 
                 self.navigationMapView.show(routes)

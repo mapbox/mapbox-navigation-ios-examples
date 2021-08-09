@@ -10,17 +10,37 @@ class CustomWaypointsViewController: UIViewController {
     var navigationMapView: NavigationMapView!
     var navigationRouteOptions: NavigationRouteOptions!
     
-    var routes: [Route]? {
+    var currentRouteIndex = 0 {
         didSet {
-            guard let routes = routes, let current = routes.first else {
+            showCurrentRoute()
+        }
+    }
+
+    var routes: [Route]? {
+        return routeResponse?.routes
+    }
+    
+    var routeResponse: RouteResponse? {
+        didSet {
+            guard routes != nil else {
                 navigationMapView.removeRoutes()
                 return
             }
-            
-            navigationMapView.show(routes)
-            navigationMapView.showWaypoints(on: current)
+            currentRouteIndex = 0
         }
     }
+    
+    func showCurrentRoute() {
+        guard let currentRoute = routes?[currentRouteIndex] else { return }
+        
+        var routes = [currentRoute]
+        routes.append(contentsOf: self.routes!.filter {
+            $0 != currentRoute
+        })
+        navigationMapView.show(routes)
+        navigationMapView.showWaypoints(on: currentRoute)
+    }
+    
     var startButton: UIButton!
     
     // MARK: - UIViewController lifecycle methods
@@ -61,14 +81,14 @@ class CustomWaypointsViewController: UIViewController {
     }
 
     @objc func tappedButton(sender: UIButton) {
-        guard let route = routes?.first, let navigationRouteOptions = navigationRouteOptions else { return }
+        guard let routeResponse = routeResponse, let navigationRouteOptions = navigationRouteOptions else { return }
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let navigationService = MapboxNavigationService(route: route,
-                                                        routeIndex: 0,
+        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
+                                                        routeIndex: currentRouteIndex,
                                                         routeOptions: navigationRouteOptions,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route, routeIndex: 0,
+        let navigationViewController = NavigationViewController(for: routeResponse, routeIndex: currentRouteIndex,
                                                                 routeOptions: navigationRouteOptions,
                                                                 navigationOptions: navigationOptions)
         navigationViewController.delegate = self
@@ -95,7 +115,7 @@ class CustomWaypointsViewController: UIViewController {
                       let self = self else { return }
                 
                 self.navigationRouteOptions = navigationRouteOptions
-                self.routes = routes
+                self.routeResponse = response
                 self.startButton?.isHidden = false
                 self.navigationMapView.show(routes)
                 self.navigationMapView.showWaypoints(on: currentRoute)

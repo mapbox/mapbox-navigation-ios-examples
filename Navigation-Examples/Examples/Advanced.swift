@@ -8,27 +8,38 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
     
     var navigationMapView: NavigationMapView!
     var navigationRouteOptions: NavigationRouteOptions!
+    var currentRouteIndex = 0 {
+        didSet {
+            showCurrentRoute()
+        }
+    }
     var currentRoute: Route? {
-        get {
-            return routes?.first
-        }
-        set {
-            guard let selected = newValue else { routes?.remove(at: 0); return }
-            guard let routes = routes else { self.routes = [selected]; return }
-            self.routes = [selected] + routes.filter { $0 != selected }
-        }
+        return routes?[currentRouteIndex]
     }
     
     var routes: [Route]? {
+        return routeResponse?.routes
+    }
+    
+    var routeResponse: RouteResponse? {
         didSet {
-            guard let routes = routes, let current = routes.first else {
+            guard currentRoute != nil else {
                 navigationMapView.removeRoutes()
                 return
             }
-            
-            navigationMapView.show(routes)
-            navigationMapView.showWaypoints(on: current)
+            currentRouteIndex = 0
         }
+    }
+    
+    func showCurrentRoute() {
+        guard let currentRoute = currentRoute else { return }
+        
+        var routes = [currentRoute]
+        routes.append(contentsOf: self.routes!.filter {
+            $0 != currentRoute
+        })
+        navigationMapView.show(routes)
+        navigationMapView.showWaypoints(on: currentRoute)
     }
     
     var startButton: UIButton!
@@ -77,14 +88,14 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
     }
 
     @objc func tappedButton(sender: UIButton) {
-        guard let route = currentRoute, let navigationRouteOptions = navigationRouteOptions else { return }
+        guard let routeResponse = routeResponse, let navigationRouteOptions = navigationRouteOptions else { return }
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let navigationService = MapboxNavigationService(route: route,
-                                                        routeIndex: 0,
+        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
+                                                        routeIndex: currentRouteIndex,
                                                         routeOptions: navigationRouteOptions,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route, routeIndex: 0,
+        let navigationViewController = NavigationViewController(for: routeResponse, routeIndex: currentRouteIndex,
                                                                 routeOptions: navigationRouteOptions,
                                                                 navigationOptions: navigationOptions)
         navigationViewController.delegate = self
@@ -118,22 +129,23 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let response):
-                guard let routes = response.routes,
-                      let currentRoute = routes.first,
-                      let self = self else { return }
+                guard let self = self else { return }
                 
                 self.navigationRouteOptions = navigationRouteOptions
-                self.routes = routes
+                self.routeResponse = response
                 self.startButton?.isHidden = false
-                self.navigationMapView.show(routes)
-                self.navigationMapView.showWaypoints(on: currentRoute)
+                if let routes = self.routes,
+                   let currentRoute = self.currentRoute {
+                    self.navigationMapView.show(routes)
+                    self.navigationMapView.showWaypoints(on: currentRoute)
+                }
             }
         }
     }
     
     // Delegate method called when the user selects a route
     func navigationMapView(_ mapView: NavigationMapView, didSelect route: Route) {
-        self.currentRoute = route
+        self.currentRouteIndex = self.routes?.firstIndex(of: route) ?? 0
     }
     
     func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {

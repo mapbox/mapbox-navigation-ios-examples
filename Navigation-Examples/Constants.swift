@@ -100,7 +100,7 @@ let listOfExamples: [NamedController] = [
     ),
     (
         name: "Route Initialization",
-        description: "Demonstrates how to initialize a Route using initializers in code.",
+        description: "Demonstrates how to initialize a Route and RouteResponse using initializers in code.",
         controller: RouteInitializationViewController.self,
         storyboard: nil,
         pushExampleToViewController: false

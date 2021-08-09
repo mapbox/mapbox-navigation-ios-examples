@@ -21,9 +21,18 @@ class RouteDeserializationViewController: UIViewController {
         let route: Route? = try? decoder.decode(Route.self, from: routeData)
         
         if let route = route {
-            let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+            let routeResponse = RouteResponse(httpResponse: nil,
+                                              identifier: "deserialized-route",
+                                              routes: [route],
+                                              waypoints: [origin, destination].map {
+                                                Waypoint(coordinate: $0)
+                                              },
+                                              options: .route(routeOptions),
+                                              credentials: Directions.shared.credentials)
+            
+            let navigationService = MapboxNavigationService(routeResponse: routeResponse, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
             let navigationOptions = NavigationOptions(navigationService: navigationService)
-            let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
+            let navigationViewController = NavigationViewController(for: routeResponse, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
             navigationViewController.modalPresentationStyle = .fullScreen
             self.present(navigationViewController, animated: true, completion: nil)
         } else {

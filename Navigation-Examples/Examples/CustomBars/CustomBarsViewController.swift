@@ -17,12 +17,12 @@ class CustomBarsViewController: UIViewController {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let response):
-                guard let route = response.routes?.first, let strongSelf = self else {
+                guard let strongSelf = self else {
                     return
                 }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-                let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+                let navigationService = MapboxNavigationService(routeResponse: response, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 
                 // Pass your custom implementations of `topBanner` and/or `bottomBanner` to `NavigationOptions`
                 // If you do not specify them explicitly, `TopBannerViewController` and `BottomBannerViewController` will be used by default.
@@ -30,7 +30,7 @@ class CustomBarsViewController: UIViewController {
                 let topBanner = CustomTopBarViewController()
                 let bottomBanner = CustomBottomBarViewController()
                 let navigationOptions = NavigationOptions(navigationService: navigationService, topBanner: topBanner, bottomBanner: bottomBanner)
-                let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
+                let navigationViewController = NavigationViewController(for: response, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
                 bottomBanner.navigationViewController = navigationViewController
                 
                 let parentSafeArea = navigationViewController.view.safeAreaLayoutGuide
