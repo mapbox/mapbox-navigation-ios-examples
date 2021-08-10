@@ -10,6 +10,7 @@ PODS:
   - MapboxDirections-pre (2.0.0-beta.7):
     - Polyline (~> 5.0)
     - Turf (~> 2.0.0-beta.1)
+  - MapboxGeocoder.swift (0.14.0)
   - MapboxMaps (10.0.0-rc.5):
     - MapboxCommon (= 16.0.0)
     - MapboxCoreMaps (= 10.0.0-rc.5)
@@ -31,6 +32,7 @@ PODS:
 
 DEPENDENCIES:
   - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `maxim/car-play-refactoring`)
+  - MapboxGeocoder.swift (~> 0.14)
   - MapboxNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `maxim/car-play-refactoring`)
 
 SPEC REPOS:
@@ -58,10 +60,10 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   MapboxCoreNavigation:
-    :commit: 884f7282b64a655f8fba2e2abec339d795024b19
+    :commit: c49aea5f827f2c989d1dde59df0b2b4f0ea80a69
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
   MapboxNavigation:
-    :commit: 884f7282b64a655f8fba2e2abec339d795024b19
+    :commit: c49aea5f827f2c989d1dde59df0b2b4f0ea80a69
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
 
 SPEC CHECKSUMS:
@@ -69,6 +71,7 @@ SPEC CHECKSUMS:
   MapboxCoreMaps: 0aa69120a787fce64eb66ea1068a707fbc0a3c8b
   MapboxCoreNavigation: d79eb0b5d0d35c9ebaadbc7ed9bc07faff58c0e4
   MapboxDirections-pre: 929a1a63063c9c97f88b793e70143d547eaed293
+  MapboxGeocoder.swift: a288e92ec13fbd65bbdfd7c54c61b0e80d19e734
   MapboxMaps: b966939712943f6af126aadf73b82b43c0535020
   MapboxMobileEvents: 9775eb995e06cc3ea10894bf6ab111683c8e73e7
   MapboxNavigation: 4cd5a5c46c9ec186f46b9509f85e5fe0c8782221
@@ -78,6 +81,6 @@ SPEC CHECKSUMS:
   Solar-dev: 4612dc9878b9fed2667d23b327f1d4e54e16e8d0
   Turf: 8851f941a6e6476ea200bf057d31cf21b2418467
 
-PODFILE CHECKSUM: cdba1559ae133c7fa27daf8adf70e8089ac9c090
+PODFILE CHECKSUM: a247a3ff0698b3c2e1e7ba58d8d6744eed13967c
 
 COCOAPODS: 1.10.1

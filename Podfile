@@ -5,6 +5,7 @@ use_frameworks!
 
 pod 'MapboxCoreNavigation', :git => 'https://github.com/mapbox/mapbox-navigation-ios.git', :branch => 'maxim/car-play-refactoring'
 pod 'MapboxNavigation', :git => 'https://github.com/mapbox/mapbox-navigation-ios.git', :branch => 'maxim/car-play-refactoring'
+pod 'MapboxGeocoder.swift', '~> 0.14'
 
 target 'Navigation-Examples' do
 end

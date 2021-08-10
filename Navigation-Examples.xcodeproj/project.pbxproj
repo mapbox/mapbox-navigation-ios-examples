@@ -28,6 +28,9 @@
 		8A96379C2492B366008DEF2A /* Route-Deserialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A96379A2492B366008DEF2A /* Route-Deserialization.swift */; };
 		8A96379D2492B366008DEF2A /* route.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A96379B2492B366008DEF2A /* route.json */; };
 		8AB316AD26BB0BAF00C3AC76 /* CustomStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB316AC26BB0BAE00C3AC76 /* CustomStyle.swift */; };
+		8AB316B226BC870B00C3AC76 /* AppDelegate+CarPlayManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB316B126BC870B00C3AC76 /* AppDelegate+CarPlayManagerDelegate.swift */; };
+		8AB316B426BC876700C3AC76 /* AppDelegate+CarPlaySearchControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB316B326BC876700C3AC76 /* AppDelegate+CarPlaySearchControllerDelegate.swift */; };
+		8AB316B626BC87D000C3AC76 /* AppDelegate+CPTemplateApplicationSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB316B526BC87D000C3AC76 /* AppDelegate+CPTemplateApplicationSceneDelegate.swift */; };
 		8AC9129D2494106100B6941E /* Route-Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC9129C2494106100B6941E /* Route-Initialization.swift */; };
 		8AE033222628EDFF000E7145 /* Route-Lines-Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE033212628EDFF000E7145 /* Route-Lines-Styling.swift */; };
 		8DF510741FEB08F70049DB9C /* Embedded-Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF510731FEB08F70049DB9C /* Embedded-Navigation.swift */; };
@@ -90,6 +93,9 @@
 		8A96379A2492B366008DEF2A /* Route-Deserialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Route-Deserialization.swift"; sourceTree = "<group>"; };
 		8A96379B2492B366008DEF2A /* route.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = route.json; sourceTree = "<group>"; };
 		8AB316AC26BB0BAE00C3AC76 /* CustomStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStyle.swift; sourceTree = "<group>"; };
+		8AB316B126BC870B00C3AC76 /* AppDelegate+CarPlayManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+CarPlayManagerDelegate.swift"; sourceTree = "<group>"; };
+		8AB316B326BC876700C3AC76 /* AppDelegate+CarPlaySearchControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+CarPlaySearchControllerDelegate.swift"; sourceTree = "<group>"; };
+		8AB316B526BC87D000C3AC76 /* AppDelegate+CPTemplateApplicationSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+CPTemplateApplicationSceneDelegate.swift"; sourceTree = "<group>"; };
 		8AC9129C2494106100B6941E /* Route-Initialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Route-Initialization.swift"; sourceTree = "<group>"; };
 		8AD2F2132489B5C800F81353 /* apply-mapbox-access-token.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "apply-mapbox-access-token.sh"; sourceTree = "<group>"; };
 		8AE033212628EDFF000E7145 /* Route-Lines-Styling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Route-Lines-Styling.swift"; sourceTree = "<group>"; };
@@ -188,6 +194,9 @@
 			children = (
 				8AB316AC26BB0BAE00C3AC76 /* CustomStyle.swift */,
 				8A3F6B1D26B09C48009EE612 /* AppDelegate.swift */,
+				8AB316B126BC870B00C3AC76 /* AppDelegate+CarPlayManagerDelegate.swift */,
+				8AB316B526BC87D000C3AC76 /* AppDelegate+CPTemplateApplicationSceneDelegate.swift */,
+				8AB316B326BC876700C3AC76 /* AppDelegate+CarPlaySearchControllerDelegate.swift */,
 				8A3F6B1F26B09C48009EE612 /* SceneDelegate.swift */,
 				8A3F6B2126B09C48009EE612 /* ViewController.swift */,
 				8A3F6B2326B09C48009EE612 /* Main.storyboard */,
@@ -535,7 +544,8 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MapboxCoreNavigation/MapboxCoreNavigation.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxDirections/MapboxDirections.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxDirections-pre/MapboxDirections.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxGeocoder.swift/MapboxGeocoder.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxMaps/MapboxMaps.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxNavigation/MapboxNavigation.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxSpeech/MapboxSpeech.framework",
@@ -551,6 +561,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreNavigation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxDirections.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxGeocoder.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMaps.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxSpeech.framework",
@@ -620,6 +631,7 @@
 				"${PODS_ROOT}/Target Support Files/Pods-CarPlayExample/Pods-CarPlayExample-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MapboxCoreNavigation/MapboxCoreNavigation.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxDirections-pre/MapboxDirections.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxGeocoder.swift/MapboxGeocoder.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxMaps/MapboxMaps.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxNavigation/MapboxNavigation.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxSpeech-pre/MapboxSpeech.framework",
@@ -635,6 +647,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreNavigation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxDirections.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxGeocoder.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMaps.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxSpeech.framework",
@@ -730,7 +743,8 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-DocsCode/Pods-DocsCode-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MapboxCoreNavigation/MapboxCoreNavigation.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxDirections/MapboxDirections.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxDirections-pre/MapboxDirections.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxGeocoder.swift/MapboxGeocoder.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxMaps/MapboxMaps.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxNavigation/MapboxNavigation.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxSpeech/MapboxSpeech.framework",
@@ -746,6 +760,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreNavigation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxDirections.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxGeocoder.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMaps.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxSpeech.framework",
@@ -769,9 +784,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AB316B426BC876700C3AC76 /* AppDelegate+CarPlaySearchControllerDelegate.swift in Sources */,
 				8AB316AD26BB0BAF00C3AC76 /* CustomStyle.swift in Sources */,
 				8A3F6B2226B09C48009EE612 /* ViewController.swift in Sources */,
+				8AB316B226BC870B00C3AC76 /* AppDelegate+CarPlayManagerDelegate.swift in Sources */,
 				8A3F6B1E26B09C48009EE612 /* AppDelegate.swift in Sources */,
+				8AB316B626BC87D000C3AC76 /* AppDelegate+CPTemplateApplicationSceneDelegate.swift in Sources */,
 				8A3F6B2026B09C48009EE612 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
