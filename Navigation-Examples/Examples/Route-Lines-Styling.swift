@@ -13,28 +13,39 @@ class RouteLinesStylingViewController: UIViewController {
     
     var navigationRouteOptions: NavigationRouteOptions!
     
+    var currentRouteIndex = 0 {
+        didSet {
+            showCurrentRoute()
+        }
+    }
+
     var currentRoute: Route? {
-        get {
-            return routes?.first
-        }
-        set {
-            guard let selected = newValue else { routes = nil; return }
-            guard let routes = routes else { self.routes = [selected]; return }
-            self.routes = [selected] + routes.filter { $0 != selected }
-        }
+        return routes?[currentRouteIndex]
     }
     
     var routes: [Route]? {
+        return routeResponse?.routes
+    }
+    
+    var routeResponse: RouteResponse? {
         didSet {
-            guard let routes = routes, let currentRoute = routes.first else {
+            guard currentRoute != nil else {
                 navigationMapView.removeRoutes()
-                navigationMapView.removeWaypoints()
                 return
             }
-            
-            navigationMapView.show(routes)
-            navigationMapView.showWaypoints(on: currentRoute)
+            currentRouteIndex = 0
         }
+    }
+    
+    func showCurrentRoute() {
+        guard let currentRoute = currentRoute else { return }
+        
+        var routes = [currentRoute]
+        routes.append(contentsOf: self.routes!.filter {
+            $0 != currentRoute
+        })
+        navigationMapView.show(routes)
+        navigationMapView.showWaypoints(on: currentRoute)
     }
     
     // MARK: - UIViewController lifecycle methods
@@ -76,7 +87,7 @@ class RouteLinesStylingViewController: UIViewController {
                                                 message: "Select specific action to perform it", preferredStyle: .actionSheet)
         
         let startNavigation: ActionHandler = { _ in self.startNavigation() }
-        let removeRoutes: ActionHandler = { _ in self.routes = nil }
+        let removeRoutes: ActionHandler = { _ in self.routeResponse = nil }
         
         let actions: [(String, UIAlertAction.Style, ActionHandler?)] = [
             ("Start Navigation", .default, startNavigation),
@@ -101,19 +112,19 @@ class RouteLinesStylingViewController: UIViewController {
     }
     
     @objc func startNavigation() {
-        guard let route = currentRoute else {
+        guard let routeResponse = routeResponse else {
             print("Please select at least one destination coordinate to start navigation.")
             return
         }
         
-        let navigationService = MapboxNavigationService(route: route,
-                                                        routeIndex: 0,
+        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
+                                                        routeIndex: currentRouteIndex,
                                                         routeOptions: navigationRouteOptions,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route,
-                                                                routeIndex: 0,
+        let navigationViewController = NavigationViewController(for: routeResponse,
+                                                                routeIndex: currentRouteIndex,
                                                                 routeOptions: navigationRouteOptions,
                                                                 navigationOptions: navigationOptions)
         navigationViewController.delegate = self
@@ -152,7 +163,7 @@ class RouteLinesStylingViewController: UIViewController {
             case .success(let response):
                 guard let routes = response.routes else { return }
                 self?.navigationRouteOptions = navigationRouteOptions
-                self?.routes = routes
+                self?.routeResponse = response
                 self?.navigationMapView.show(routes)
                 if let currentRoute = self?.currentRoute {
                     self?.navigationMapView.showWaypoints(on: currentRoute)
@@ -180,7 +191,7 @@ extension RouteLinesStylingViewController: NavigationMapViewDelegate {
     }
     
     func navigationMapView(_ mapView: NavigationMapView, didSelect route: Route) {
-        currentRoute = route
+        currentRouteIndex = routes?.firstIndex(of: route) ?? 0
     }
     
     // It's possible to change route line shape in preview mode by adding own implementation to either

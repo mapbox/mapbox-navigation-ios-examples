@@ -7,7 +7,7 @@ import MapboxCoreNavigation
 class CustomNavigationCameraViewController: UIViewController {
     
     var navigationMapView: NavigationMapView!
-    var route: Route!
+    var routeResponse: RouteResponse!
     var navigationRouteOptions: NavigationRouteOptions!
     var startNavigationButton: UIButton!
 
@@ -63,13 +63,13 @@ class CustomNavigationCameraViewController: UIViewController {
     }
     
     @objc func startNavigationButtonPressed(_ sender: UIButton) {
-        let navigationService = MapboxNavigationService(route: route,
+        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
                                                         routeIndex: 0,
                                                         routeOptions: navigationRouteOptions,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route,
+        let navigationViewController = NavigationViewController(for: routeResponse,
                                                                 routeIndex: 0,
                                                                 routeOptions: navigationRouteOptions,
                                                                 navigationOptions: navigationOptions)
@@ -103,7 +103,7 @@ class CustomNavigationCameraViewController: UIViewController {
                 guard let route = response.routes?.first else { return }
                 
                 self?.startNavigationButton.isHidden = false
-                self?.route = route
+                self?.routeResponse = response
                 self?.navigationMapView.show([route])
                 self?.navigationMapView.showWaypoints(on: route)
             }

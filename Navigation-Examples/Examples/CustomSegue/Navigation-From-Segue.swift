@@ -5,7 +5,7 @@ import MapboxDirections
 
 class SegueViewController: UIViewController {
     
-    var route: Route!
+    var routeResponse: RouteResponse!
     
     var navigationRouteOptions: NavigationRouteOptions!
     
@@ -27,11 +27,11 @@ class SegueViewController: UIViewController {
             case .failure(let error):
                 NSLog("Error occured: \(error.localizedDescription).")
             case .success(let response):
-                guard let route = response.routes?.first, let self = self else { return }
+                guard let self = self else { return }
                 
-                self.route = route
+                self.routeResponse = response
                 
-                let navigationService = MapboxNavigationService(route: route,
+                let navigationService = MapboxNavigationService(routeResponse: response,
                                                                 routeIndex: 0,
                                                                 routeOptions: self.navigationRouteOptions,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
@@ -53,9 +53,9 @@ class SegueViewController: UIViewController {
         switch segue.identifier ?? "" {
         case "NavigationSegue":
             if let navigationViewController = segue.destination as? NavigationViewController {
-                navigationViewController.route = route
-                navigationViewController.routeIndex = 0
-                navigationViewController.routeOptions = navigationRouteOptions
+                _ = navigationViewController.prepareViewLoading(routeResponse: routeResponse,
+                                                                routeIndex: 0,
+                                                                routeOptions: navigationRouteOptions)
                 // `navigationOptions` property is optional.
                 navigationViewController.navigationOptions = navigationOptions
                 navigationViewController.delegate = self
