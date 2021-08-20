@@ -7,6 +7,7 @@ class CustomStyle: NightStyle {
         super.init()
         
         mapStyleURL = URL(string: StyleURI.dark.rawValue)!
+        previewMapStyleURL = URL(string: StyleURI.dark.rawValue)!
     }
     
     override func apply() {
