@@ -4,7 +4,7 @@ import MapboxNavigation
 import MapboxDirections
 import MapboxMaps
 
-class OfflineRegionsViewController: UIViewController, NavigationViewControllerDelegate {
+class OfflineRegionsViewController: UITableViewController {
 
     var tileStore: TileStore!
     var resourceOptions: ResourceOptions!
@@ -15,37 +15,6 @@ class OfflineRegionsViewController: UIViewController, NavigationViewControllerDe
     var stylePackProgressView: UIProgressView!
     var tileRegionProgressView: UIProgressView!
     var downloadRegionsView: UIView!
-    
-    var startButton: UIButton!
-    var navigationMapView: NavigationMapView!
-    var navigationRouteOptions: NavigationRouteOptions!
-    
-    var currentRoute: Route? {
-        get {
-            return routes?.first
-        }
-        set {
-            guard let selected = newValue else { routes = nil; return }
-            guard let routes = routes else { self.routes = [selected]; return }
-            self.routes = [selected] + routes.filter { $0 != selected }
-        }
-    }
-    
-    var routes: [Route]? {
-        didSet {
-            guard let routes = routes, let currentRoute = routes.first else {
-                navigationMapView.removeRoutes()
-                navigationMapView.removeWaypoints()
-                waypoints.removeAll()
-                return
-            }
-
-            navigationMapView.show(routes)
-            navigationMapView.showWaypoints(on: currentRoute)
-        }
-    }
-    
-    var waypoints: [Waypoint] = []
     
     // Tile region and style pack
     var downloads: [Cancelable] = []
@@ -109,21 +78,6 @@ class OfflineRegionsViewController: UIViewController, NavigationViewControllerDe
         
         stateButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
         stateButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        view.setNeedsLayout()
-    }
-    
-    func setupStartButton() {
-        startButton = UIButton()
-        startButton.setTitle("Start Navigation", for: .normal)
-        startButton.translatesAutoresizingMaskIntoConstraints = false
-        startButton.backgroundColor = .blue
-        startButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
-        startButton.addTarget(self, action: #selector(tappedStartButton(_:)), for: .touchUpInside)
-        startButton.isHidden = true
-        view.addSubview(startButton)
-        
-        startButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
-        startButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         view.setNeedsLayout()
     }
     
@@ -302,80 +256,6 @@ class OfflineRegionsViewController: UIViewController, NavigationViewControllerDe
                 print("Error listing offline regions: \(error).")
             }
         })
-    }
-    
-// MARK: NavigationMapView Methods
-    func enableShowNavigationMapView(){
-        stateButton.setTitle("Show NavigationMapView", for: .normal)
-        return
-    }
-        
-    func showNavigationMapView() {
-        downloadRegionsView.isHidden = true
-        stylePackProgressView.isHidden = true
-        tileRegionProgressView.isHidden = true
-            
-        navigationMapView = NavigationMapView(frame: view.bounds)
-        navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        navigationMapView.mapView.location.options.puckType = .puck2D()
-
-        let navigationViewportDataSource = NavigationViewportDataSource(navigationMapView.mapView, viewportDataSourceType: .raw)
-        navigationViewportDataSource.options.followingCameraOptions.zoomUpdatesAllowed = false
-        navigationViewportDataSource.followingMobileCamera.zoom = 12.0
-        navigationMapView.navigationCamera.viewportDataSource = navigationViewportDataSource
-        
-        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        navigationMapView.addGestureRecognizer(gesture)
-        
-        view.addSubview(navigationMapView)
-        setupRefreshRegionsBarButtonItem()
-        setupStartButton()
-    }
-    @objc func tappedStartButton(_ button: UIButton) {
-        guard let route = currentRoute, let navigationRouteOptions = navigationRouteOptions else { return }
-        // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let navigationService = MapboxNavigationService(route: route,
-                                                        routeIndex: 0,
-                                                        routeOptions: navigationRouteOptions,
-                                                        simulating: simulationIsEnabled ? .always : .onPoorGPS)
-        let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route, routeIndex: 0,
-                                                                routeOptions: navigationRouteOptions,
-                                                                navigationOptions: navigationOptions)
-        navigationViewController.delegate = self
-        
-        present(navigationViewController, animated: true, completion: nil)
-    }
-    
-    @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
-        guard gesture.state == .ended else { return }
-        let location = navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView))
-        
-        requestRoute(destination: location)
-    }
-    
-    func requestRoute(destination: CLLocationCoordinate2D) {
-        guard let userLocation = navigationMapView.mapView.location.latestLocation else { return }
-        let userWaypoint = Waypoint(location: userLocation.internalLocation, heading: userLocation.heading, name: "user")
-        let destinationWaypoint = Waypoint(coordinate: destination)
-        let navigationRouteOptions = NavigationRouteOptions(waypoints: [userWaypoint, destinationWaypoint])
-        
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (session, result) in
-            switch result {
-            case .failure(let error):
-                print(error.localizedDescription)
-            case .success(let response):
-                guard let routes = response.routes,
-                      let currentRoute = routes.first,
-                      let self = self else { return }
-                
-                self.navigationRouteOptions = navigationRouteOptions
-                self.routes = routes
-                self.startButton?.isHidden = false
-                self.navigationMapView.show(routes)
-                self.navigationMapView.showWaypoints(on: currentRoute)
-            }
-        }
     }
     
     
