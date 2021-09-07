@@ -11,7 +11,7 @@ class ViewController: UIViewController {
     var navigationMapView: NavigationMapView!
     var navigationViewController: NavigationViewController!
     var routeOptions: NavigationRouteOptions?
-    var route: Route?
+    var routeResponse: RouteResponse?
     var startButton: UIButton!
     // #-end-code-snippet: navigation vc-variables-swift
 
@@ -87,9 +87,9 @@ class ViewController: UIViewController {
     // #-code-snippet: navigation tapped-button-swift
     // Present the navigation view controller when the start button is tapped
     @objc func tappedButton(sender: UIButton) {
-        guard let route = route, let navigationRouteOptions = routeOptions else { return }
+        guard let response = routeResponse, let navigationRouteOptions = routeOptions else { return }
         
-        navigationViewController = NavigationViewController(for: route, routeIndex: 0,
+        navigationViewController = NavigationViewController(for: response, routeIndex: 0,
                                                                 routeOptions: navigationRouteOptions)
         navigationViewController.modalPresentationStyle = .fullScreen
         
@@ -117,7 +117,7 @@ class ViewController: UIViewController {
                     return
                 }
                 
-                strongSelf.route = route
+                strongSelf.routeResponse = response
                 strongSelf.routeOptions = routeOptions
                 
                 // Show the start button
