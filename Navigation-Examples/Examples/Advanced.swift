@@ -10,18 +10,18 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
     var navigationRouteOptions: NavigationRouteOptions!
     var currentRoute: Route? {
         get {
-            return routes?.first
+            return response?.routes?.first
         }
         set {
-            guard let selected = newValue else { routes?.remove(at: 0); return }
-            guard let routes = routes else { self.routes = [selected]; return }
-            self.routes = [selected] + routes.filter { $0 != selected }
+            guard let selected = newValue else { response?.routes?.remove(at: 0); return }
+            guard let routes = response?.routes else { self.response?.routes = [selected]; return }
+            self.response?.routes = [selected] + routes.filter { $0 != selected }
         }
     }
     
-    var routes: [Route]? {
+    var response: RouteResponse? {
         didSet {
-            guard let routes = routes, let current = routes.first else {
+            guard let routes = response?.routes, let current = routes.first else {
                 navigationMapView.removeRoutes()
                 return
             }
@@ -77,14 +77,15 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
     }
 
     @objc func tappedButton(sender: UIButton) {
-        guard let route = currentRoute, let navigationRouteOptions = navigationRouteOptions else { return }
+        guard let response = response, let navigationRouteOptions = navigationRouteOptions else { return }
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let navigationService = MapboxNavigationService(route: route,
+        let navigationService = MapboxNavigationService(routeResponse: response,
                                                         routeIndex: 0,
                                                         routeOptions: navigationRouteOptions,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route, routeIndex: 0,
+        let navigationViewController = NavigationViewController(for: response,
+                                                                routeIndex: 0,
                                                                 routeOptions: navigationRouteOptions,
                                                                 navigationOptions: navigationOptions)
         navigationViewController.delegate = self
@@ -118,15 +119,11 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let response):
-                guard let routes = response.routes,
-                      let currentRoute = routes.first,
-                      let self = self else { return }
+                guard let self = self else { return }
                 
                 self.navigationRouteOptions = navigationRouteOptions
-                self.routes = routes
+                self.response = response
                 self.startButton?.isHidden = false
-                self.navigationMapView.show(routes)
-                self.navigationMapView.showWaypoints(on: currentRoute)
             }
         }
     }

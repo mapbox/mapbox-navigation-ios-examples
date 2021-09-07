@@ -14,6 +14,9 @@ import MapboxNavigation
  in `NavigationCameraStateTransition`.
  */
 class CustomCameraStateTransition: CameraStateTransition {
+    func update(to cameraOptions: CameraOptions, state: NavigationCameraState) {
+        //
+    }
     
     weak var mapView: MapView?
     

@@ -10,9 +10,9 @@ class CustomWaypointsViewController: UIViewController {
     var navigationMapView: NavigationMapView!
     var navigationRouteOptions: NavigationRouteOptions!
     
-    var routes: [Route]? {
+    var routeResponse: RouteResponse? {
         didSet {
-            guard let routes = routes, let current = routes.first else {
+            guard let routes = routeResponse?.routes, let current = routes.first else {
                 navigationMapView.removeRoutes()
                 return
             }
@@ -61,14 +61,15 @@ class CustomWaypointsViewController: UIViewController {
     }
 
     @objc func tappedButton(sender: UIButton) {
-        guard let route = routes?.first, let navigationRouteOptions = navigationRouteOptions else { return }
+        guard let response = routeResponse, let navigationRouteOptions = navigationRouteOptions else { return }
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let navigationService = MapboxNavigationService(route: route,
+        let navigationService = MapboxNavigationService(routeResponse: response,
                                                         routeIndex: 0,
                                                         routeOptions: navigationRouteOptions,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route, routeIndex: 0,
+        let navigationViewController = NavigationViewController(for: response,
+                                                                routeIndex: 0,
                                                                 routeOptions: navigationRouteOptions,
                                                                 navigationOptions: navigationOptions)
         navigationViewController.delegate = self
@@ -90,15 +91,11 @@ class CustomWaypointsViewController: UIViewController {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let response):
-                guard let routes = response.routes,
-                      let currentRoute = routes.first,
-                      let self = self else { return }
+                guard let self = self else { return }
                 
                 self.navigationRouteOptions = navigationRouteOptions
-                self.routes = routes
+                self.routeResponse = response
                 self.startButton?.isHidden = false
-                self.navigationMapView.show(routes)
-                self.navigationMapView.showWaypoints(on: currentRoute)
             }
         }
     }

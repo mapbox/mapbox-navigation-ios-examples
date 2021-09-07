@@ -20,12 +20,10 @@ class CustomVoiceControllerUI: UIViewController {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let response):
-                guard let route = response.routes?.first, let strongSelf = self else {
-                    return
-                }
+                guard let strongSelf = self else { return }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-                let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+                let navigationService = MapboxNavigationService(routeResponse: response, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 
                 // `MultiplexedSpeechSynthesizer` will provide "a backup" functionality to cover cases, which
                 // our custom implementation cannot handle.
@@ -34,7 +32,7 @@ class CustomVoiceControllerUI: UIViewController {
                 // Remember to pass our `Voice Controller` to `Navigation Options`!
                 let navigationOptions = NavigationOptions(navigationService: navigationService, voiceController: routeVoiceController)
                 
-                let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
+                let navigationViewController = NavigationViewController(for: response, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
                 navigationViewController.modalPresentationStyle = .fullScreen
                 
                 strongSelf.present(navigationViewController, animated: true, completion: nil)

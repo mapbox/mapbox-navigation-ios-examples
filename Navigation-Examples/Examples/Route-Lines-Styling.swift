@@ -15,18 +15,18 @@ class RouteLinesStylingViewController: UIViewController {
     
     var currentRoute: Route? {
         get {
-            return routes?.first
+            return routeResponse?.routes?.first
         }
         set {
-            guard let selected = newValue else { routes = nil; return }
-            guard let routes = routes else { self.routes = [selected]; return }
-            self.routes = [selected] + routes.filter { $0 != selected }
+            guard let selected = newValue else { routeResponse?.routes = nil; return }
+            guard let routes = routeResponse?.routes else { self.routeResponse?.routes = [selected]; return }
+            self.routeResponse?.routes = [selected] + routes.filter { $0 != selected }
         }
     }
     
-    var routes: [Route]? {
+    var routeResponse: RouteResponse? {
         didSet {
-            guard let routes = routes, let currentRoute = routes.first else {
+            guard let routes = routeResponse?.routes, let currentRoute = routes.first else {
                 navigationMapView.removeRoutes()
                 navigationMapView.removeWaypoints()
                 return
@@ -76,7 +76,7 @@ class RouteLinesStylingViewController: UIViewController {
                                                 message: "Select specific action to perform it", preferredStyle: .actionSheet)
         
         let startNavigation: ActionHandler = { _ in self.startNavigation() }
-        let removeRoutes: ActionHandler = { _ in self.routes = nil }
+        let removeRoutes: ActionHandler = { _ in self.routeResponse?.routes = nil }
         
         let actions: [(String, UIAlertAction.Style, ActionHandler?)] = [
             ("Start Navigation", .default, startNavigation),
@@ -101,18 +101,18 @@ class RouteLinesStylingViewController: UIViewController {
     }
     
     @objc func startNavigation() {
-        guard let route = currentRoute else {
+        guard let response = routeResponse else {
             print("Please select at least one destination coordinate to start navigation.")
             return
         }
         
-        let navigationService = MapboxNavigationService(route: route,
+        let navigationService = MapboxNavigationService(routeResponse: response,
                                                         routeIndex: 0,
                                                         routeOptions: navigationRouteOptions,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route,
+        let navigationViewController = NavigationViewController(for: response,
                                                                 routeIndex: 0,
                                                                 routeOptions: navigationRouteOptions,
                                                                 navigationOptions: navigationOptions)
@@ -150,13 +150,9 @@ class RouteLinesStylingViewController: UIViewController {
             case .failure(let error):
                 NSLog("Error occured while requesting route: \(error.localizedDescription).")
             case .success(let response):
-                guard let routes = response.routes else { return }
-                self?.navigationRouteOptions = navigationRouteOptions
-                self?.routes = routes
-                self?.navigationMapView.show(routes)
-                if let currentRoute = self?.currentRoute {
-                    self?.navigationMapView.showWaypoints(on: currentRoute)
-                }
+                guard let self = self else { return }
+                self.navigationRouteOptions = navigationRouteOptions
+                self.routeResponse = response
             }
         }
     }

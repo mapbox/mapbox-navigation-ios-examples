@@ -17,17 +17,15 @@ class RouteAlertsViewController: UIViewController {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let response):
-                guard let route = response.routes?.first, let strongSelf = self else {
-                    return
-                }
+                guard let strongSelf = self else { return }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-                let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: options, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+                let navigationService = MapboxNavigationService(routeResponse: response, routeIndex: 0, routeOptions: options, simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 
                 // Define a customized `topBanner` to display route alerts during turn-by-turn navigation, and pass it to `NavigationOptions`.
                 let topAlertsBannerViewController = TopAlertsBarViewController()
                 let navigationOptions = NavigationOptions(navigationService: navigationService, topBanner: topAlertsBannerViewController)
-                let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: options, navigationOptions: navigationOptions)
+                let navigationViewController = NavigationViewController(for: response, routeIndex: 0, routeOptions: options, navigationOptions: navigationOptions)
 
                 let parentSafeArea = navigationViewController.view.safeAreaLayoutGuide
                 topAlertsBannerViewController.view.topAnchor.constraint(equalTo: parentSafeArea.topAnchor).isActive = true

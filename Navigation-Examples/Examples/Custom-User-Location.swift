@@ -25,18 +25,18 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
     
     var currentRoute: Route? {
         get {
-            return routes?.first
+            return routeResponse?.routes?.first
         }
         set {
-            guard let selected = newValue else { routes = nil; return }
-            guard let routes = routes else { self.routes = [selected]; return }
-            self.routes = [selected] + routes.filter { $0 != selected }
+            guard let selected = newValue else { routeResponse?.routes = nil; return }
+            guard let routes = routeResponse?.routes else { self.routeResponse?.routes = [selected]; return }
+            self.routeResponse?.routes = [selected] + routes.filter { $0 != selected }
         }
     }
     
-    var routes: [Route]? {
+    var routeResponse: RouteResponse? {
         didSet {
-            guard let routes = routes, let currentRoute = routes.first else {
+            guard let routes = routeResponse?.routes, let currentRoute = routes.first else {
                 navigationMapView?.removeRoutes()
                 navigationMapView?.removeRouteDurations()
                 navigationMapView?.removeWaypoints()
@@ -161,19 +161,15 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
                 print(error.localizedDescription)
                 self?.waypoints.removeLast()
             case .success(let response):
-                guard let routes = response.routes else { return }
-                self?.navigationRouteOptions = navigationRouteOptions
-                self?.routes = routes
-                self?.navigationMapView.show(routes)
-                if let currentRoute = self?.currentRoute {
-                    self?.navigationMapView.showWaypoints(on: currentRoute)
-                }
+                guard let self = self else { return }
+                self.navigationRouteOptions = navigationRouteOptions
+                self.routeResponse = response
             }
         }
     }
     
     @objc func clearMap(_ sender: Any) {
-        routes = nil
+        routeResponse = nil
     }
     
     @objc func performAction(_ sender: Any) {
@@ -270,14 +266,14 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
     }
     
     func presentNavigationViewController(_ userLocationStyle: UserLocationStyle? = nil) {
-        guard let route = currentRoute, let navigationRouteOptions = navigationRouteOptions else { return }
+        guard let response = routeResponse, let navigationRouteOptions = navigationRouteOptions else { return }
 
-        let navigationService = MapboxNavigationService(route: route,
+        let navigationService = MapboxNavigationService(routeResponse: response,
                                                         routeIndex: 0,
                                                         routeOptions: navigationRouteOptions,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route,
+        let navigationViewController = NavigationViewController(for: response,
                                                                 routeIndex: 0,
                                                                 routeOptions: navigationRouteOptions,
                                                                 navigationOptions: navigationOptions)
@@ -299,7 +295,7 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
     }
     
     func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
-        routes = nil
+        routeResponse = nil
         dismiss(animated: true, completion: nil)
         if navigationMapView == nil {
             navigationMapView = NavigationMapView(frame: view.bounds)

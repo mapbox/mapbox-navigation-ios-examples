@@ -14,18 +14,18 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     
     var currentRoute: Route? {
         get {
-            return routes?.first
+            return routeResponse?.routes?.first
         }
         set {
-            guard let selected = newValue else { routes = nil; return }
-            guard let routes = routes else { self.routes = [selected]; return }
-            self.routes = [selected] + routes.filter { $0 != selected }
+            guard let selected = newValue else { routeResponse?.routes = nil; return }
+            guard let routes = routeResponse?.routes else { self.routeResponse?.routes = [selected]; return }
+            self.routeResponse?.routes = [selected] + routes.filter { $0 != selected }
         }
     }
     
-    var routes: [Route]? {
+    var routeResponse: RouteResponse? {
         didSet {
-            guard let routes = routes, let currentRoute = routes.first else {
+            guard let routes = routeResponse?.routes, let currentRoute = routes.first else {
                 navigationMapView.removeRoutes()
                 navigationMapView.removeWaypoints()
                 waypoints.removeAll()
@@ -92,7 +92,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         let startNavigation: ActionHandler = { _ in self.startNavigation() }
         let toggleDayNightStyle: ActionHandler = { _ in self.toggleDayNightStyle() }
         let unhighlightBuildings: ActionHandler = { _ in self.unhighlightBuildings() }
-        let removeRoutes: ActionHandler = { _ in self.routes = nil }
+        let removeRoutes: ActionHandler = { _ in self.routeResponse?.routes = nil }
         
         let actions: [(String, UIAlertAction.Style, ActionHandler?)] = [
             ("Start Navigation", .default, startNavigation),
@@ -114,17 +114,17 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     }
     
     func startNavigation() {
-        guard let route = currentRoute, let navigationRouteOptions = navigationRouteOptions else {
+        guard let response = routeResponse, let navigationRouteOptions = navigationRouteOptions else {
             presentAlert(message: "Please select at least one destination coordinate to start navigation.")
             return
         }
 
-        let navigationService = MapboxNavigationService(route: route,
+        let navigationService = MapboxNavigationService(routeResponse: response,
                                                         routeIndex: 0,
                                                         routeOptions: navigationRouteOptions,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route,
+        let navigationViewController = NavigationViewController(for: response,
                                                                 routeIndex: 0,
                                                                 routeOptions: navigationRouteOptions,
                                                                 navigationOptions: navigationOptions)
@@ -202,17 +202,12 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
                 // In case if direction calculation failed - remove last destination waypoint.
                 self?.waypoints.removeLast()
             case .success(let response):
-                guard let routes = response.routes else { return }
-                self?.navigationRouteOptions = navigationRouteOptions
-                self?.routes = routes
-                self?.navigationMapView.show(routes)
-                if let currentRoute = self?.currentRoute {
-                    self?.navigationMapView.showWaypoints(on: currentRoute)
-                }
+                guard let self = self else { return }
+                self.navigationRouteOptions = navigationRouteOptions
+                self.routeResponse = response
 
-                if let coordinates = self?.waypoints.compactMap({ $0.targetCoordinate }) {
-                    self?.navigationMapView.highlightBuildings(at: coordinates, in3D: true)
-                }
+                let coordinates = self.waypoints.compactMap({ $0.targetCoordinate })
+                self.navigationMapView.highlightBuildings(at: coordinates, in3D: true)
             }
         }
     }
@@ -234,7 +229,8 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         let delay = 5.0
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
             guard let navigationService = (self.presentedViewController as? NavigationViewController)?.navigationService else { return }
-            guard let router = navigationService.router, router.route.legs.count > router.routeProgress.legIndex + 1 else { return }
+            let router = navigationService.router
+            guard router.route.legs.count > router.routeProgress.legIndex + 1 else { return }
             router.routeProgress.legIndex += 1
             
             navigationService.start()

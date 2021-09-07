@@ -83,10 +83,16 @@ class RouteInitializationViewController: UIViewController {
         // Here `Route` object is created manually without calling Directions API directly.
         let route = Route(legs: [routeLeg], shape: LineString(routeCoordinates), distance: distance, expectedTravelTime: expectedTravelTime)
         
+        let wayPoints: [Waypoint] = [Waypoint(coordinate: origin), Waypoint(coordinate: destination)]
+        
+        let credentials: DirectionsCredentials = .init()
+        
+        let routeResponse = RouteResponse(httpResponse: nil, routes: [route], waypoints: wayPoints, options: .route(routeOptions), credentials: credentials)
+        
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let navigationService = MapboxNavigationService(route: route, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+        let navigationService = MapboxNavigationService(routeResponse: routeResponse, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
+        let navigationViewController = NavigationViewController(for: routeResponse, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
         navigationViewController.modalPresentationStyle = .fullScreen
         self.present(navigationViewController, animated: true, completion: nil)
     }
