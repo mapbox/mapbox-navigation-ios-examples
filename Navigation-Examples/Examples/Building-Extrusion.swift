@@ -152,10 +152,10 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     
     func toggleDayNightStyle() {
         let style = navigationMapView.mapView?.mapboxMap.style
-        if style?.uri?.rawValue == MapboxMaps.Style.navigationNightStyleURL.absoluteString {
-            style?.uri = StyleURI(url: MapboxMaps.Style.navigationDayStyleURL)
+        if style?.uri == StyleURI.navigationNight {
+            style?.uri = StyleURI.navigationDay
         } else {
-            style?.uri = StyleURI(url: MapboxMaps.Style.navigationNightStyleURL)
+            style?.uri = StyleURI.navigationNight
         }
     }
     
