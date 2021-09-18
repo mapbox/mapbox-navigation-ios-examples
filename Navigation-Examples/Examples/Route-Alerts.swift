@@ -133,7 +133,7 @@ extension MapboxCoreNavigation.RouteAlert: CustomStringConvertible {
         let distance = Int64(self.distanceToStart)
         guard distance > 0 && distance < 500 else { return "" }
         
-        switch roadObject.type {
+        switch roadObject.kind {
         case .incident(let incident?):
             return "\(incident.alertDescription) in \(distance)m."
         case .tunnel(let alert?):

@@ -140,10 +140,10 @@ class CustomWaypointsViewController: UIViewController {
             0.5
             1
         }
-        circleLayer.circleColor = .constant(.init(color: UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)))
+        circleLayer.circleColor = .constant(.init(UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)))
         circleLayer.circleOpacity = .expression(opacity)
         circleLayer.circleRadius = .constant(.init(10))
-        circleLayer.circleStrokeColor = .constant(.init(color: UIColor.black))
+        circleLayer.circleStrokeColor = .constant(.init(UIColor.black))
         circleLayer.circleStrokeWidth = .constant(.init(1))
         circleLayer.circleStrokeOpacity = .expression(opacity)
         return circleLayer
@@ -168,7 +168,7 @@ class CustomWaypointsViewController: UIViewController {
             1
         })
         symbolLayer.textHaloWidth = .constant(.init(0.25))
-        symbolLayer.textHaloColor = .constant(.init(color: UIColor.black))
+        symbolLayer.textHaloColor = .constant(.init(UIColor.black))
         return symbolLayer
     }
 

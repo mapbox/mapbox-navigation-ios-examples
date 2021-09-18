@@ -144,7 +144,7 @@ class ElectronicHorizonEventsViewController: UIViewController {
                 RouteLineWidthByZoomLevel.mapValues { $0 * 0.5 }
             }
         )
-        layer.lineColor = .constant(.init(color: UIColor.green.withAlphaComponent(0.9)))
+        layer.lineColor = .constant(.init(UIColor.green.withAlphaComponent(0.9)))
         layer.lineCap = .constant(.round)
         layer.lineJoin = .constant(.miter)
         layer.minZoom = 9

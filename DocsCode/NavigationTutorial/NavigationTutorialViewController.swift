@@ -154,7 +154,7 @@ class ViewController: UIViewController {
             // Customize the route line color and width
             var lineLayer = LineLayer(id: "routeLayer")
             lineLayer.source = sourceIdentifier
-            lineLayer.lineColor = .constant(.init(color: UIColor(red: 0.1897518039, green: 0.3010634184, blue: 0.7994888425, alpha: 1.0)))
+            lineLayer.lineColor = .constant(.init(UIColor(red: 0.1897518039, green: 0.3010634184, blue: 0.7994888425, alpha: 1.0)))
             lineLayer.lineWidth = .constant(3)
             
             // Add the style layer of the route line to the map
