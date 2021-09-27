@@ -123,11 +123,8 @@ class ViewController: UIViewController {
                 // Show the start button
                 strongSelf.startButton?.isHidden = false
                 
-                // Draw the route on the map after creating it
-                strongSelf.drawRoute(route: route)
-                
-                // Show destination waypoint on the map
-                strongSelf.navigationMapView.showWaypoints(on: route)
+                // Showcase the route and destination waypoint, and set camera
+                strongSelf.navigationMapView.showcase([route], animated: true)
             }
         }
     }
