@@ -31,6 +31,7 @@ jobs:
             echo "machine api.mapbox.com" >> ~/.netrc
             echo "login mapbox" >> ~/.netrc
             echo "password $SDK_REGISTRY_TOKEN" >> ~/.netrc
+            chmod 600 ~/.netrc
       - run:
           name: Install Dependencies
           command: pod install
