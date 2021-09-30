@@ -49,6 +49,8 @@ class CustomBarsViewController: UIViewController {
                 navigationViewController.modalPresentationStyle = .fullScreen
                 
                 strongSelf.present(navigationViewController, animated: true, completion: nil)
+                navigationViewController.floatingButtons = []
+                navigationViewController.showsSpeedLimits = false
             }
         }
     }
@@ -58,11 +60,14 @@ class CustomBarsViewController: UIViewController {
 
 class CustomTopBarViewController: ContainerViewController {
     private lazy var instructionsBannerTopOffsetConstraint = {
-        return instructionsBannerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10)
+        return instructionsBannerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10)
     }()
     private lazy var centerOffset: CGFloat = calculateCenterOffset(with: view.bounds.size)
     private lazy var instructionsBannerCenterOffsetConstraint = {
         return instructionsBannerView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0)
+    }()
+    private lazy var instructionsBannerWidthConstraint = {
+        return instructionsBannerView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9)
     }()
     
     // You can Include one of the existing Views to display route-specific info
@@ -91,6 +96,7 @@ class CustomTopBarViewController: ContainerViewController {
     private func setupConstraints() {
         instructionsBannerCenterOffsetConstraint.isActive = true
         instructionsBannerTopOffsetConstraint.isActive = true
+        instructionsBannerWidthConstraint.isActive = true
     }
     
     private func updateConstraints() {
