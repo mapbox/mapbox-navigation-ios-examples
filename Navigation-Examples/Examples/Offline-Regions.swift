@@ -6,7 +6,7 @@ import MapboxMaps
 class OfflineRegionsViewController: UITableViewController {
     // MARK: Setup variables for Tile Management
     let styleURI: StyleURI = .streets
-    var offlineManager: OfflineManager!
+    let offlineManager = OfflineManager(resourceOptions: .init(accessToken: ""))
     var tileStoreConfiguration: TileStoreConfiguration {
         .default
     }
@@ -33,7 +33,6 @@ class OfflineRegionsViewController: UITableViewController {
     // MARK: Setup TableView
     override func viewDidLoad() {
         super.viewDidLoad()
-        offlineManager = OfflineManager(resourceOptions: .init(accessToken: ""))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -107,7 +106,7 @@ class OfflineRegionsViewController: UITableViewController {
     // MARK: Offline Regions
     func downloadTileRegions() {
         // Create style package
-        let stylePackLoadOptions = StylePackLoadOptions(glyphsRasterizationMode: .ideographsRasterizedLocally, metadata: nil)!
+        guard let stylePackLoadOptions = StylePackLoadOptions(glyphsRasterizationMode: .ideographsRasterizedLocally, metadata: nil) else { return }
         _ = offlineManager.loadStylePack(for: .streets, loadOptions: stylePackLoadOptions, completion: { result in
             // Confirm successful download
             switch result {
@@ -120,7 +119,7 @@ class OfflineRegionsViewController: UITableViewController {
 
         // Load tile region
         regions.forEach { region in
-                download(region: region)
+            download(region: region)
         }
     }
     
