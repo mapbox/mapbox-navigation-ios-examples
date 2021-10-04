@@ -64,7 +64,6 @@ class OfflineRegionsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = self.regions[indexPath.row].identifier
-        print("RELOADED!")
         return cell
     }
 
