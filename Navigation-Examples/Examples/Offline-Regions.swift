@@ -1,184 +1,114 @@
 import UIKit
 import MapboxCoreNavigation
-import MapboxNavigation
-import MapboxDirections
+import MapboxNavigationNative
 import MapboxMaps
 
 class OfflineRegionsViewController: UITableViewController {
-
-    var tileStore: TileStore!
-    var resourceOptions: ResourceOptions!
-    var tilesetDescriptor: TilesetDescriptor!
-    
-    // Transition button, progress view
-    var stateButton: UIButton!
-    var stylePackProgressView: UIProgressView!
-    var tileRegionProgressView: UIProgressView!
-    var downloadRegionsView: UIView!
-    
-    // Tile region and style pack
-    var downloads: [Cancelable] = []
-    
-    // Create some hard-coded regions
-    let tileZoom: CGFloat = 12
-    let tileAreas: [ToBeTileRegion] = [
-        ToBeTileRegion(coordinates: CLLocationCoordinate2D(latitude: 38.907, longitude: -77.036), identifier: "Washington DC Tile Region"),
-        ToBeTileRegion(coordinates: CLLocationCoordinate2D(latitude: 38.997, longitude: -77.027), identifier: "Silver Spring Tile Region"),
-        ToBeTileRegion(coordinates: CLLocationCoordinate2D(latitude: 38.805, longitude: -77.046), identifier: "Alexandria Tile Region")
-    ]
-    let washingtonDCCoord = CLLocationCoordinate2D(latitude: 38.907, longitude: -77.036)
-    let dcRegionIdentifier = "Washington DC Tile Region"
-    
+    // MARK: Setup variables for Tile Management
+    let styleURI: StyleURI = .streets
     var offlineManager: OfflineManager!
-    var mapInitOptions: MapInitOptions!
+    var tileStoreConfiguration: TileStoreConfiguration {
+        .default
+    }
+    var tileStoreLocation: TileStoreConfiguration.Location {
+        .default
+    }
+    var tileStore: TileStore {
+        tileStoreLocation.tileStore
+    }
     
-    struct ToBeTileRegion {
-        var coordinates: CLLocationCoordinate2D
+    struct Region {
+        var coordinate: CLLocationCoordinate2D
         var identifier: String
     }
     
-    enum State {
-        case beforeExampleSelected
-        case initial
-        case downloaded
-        case finished
-        case showingNavigationMapView
-    }
+    // Create some hard-coded regions
+    let regions: [Region] = [
+        Region(coordinate: CLLocationCoordinate2D(latitude: 38.907, longitude: -77.036), identifier: "Washington DC"),
+        Region(coordinate: CLLocationCoordinate2D(latitude: 40.697, longitude: -74.259), identifier: "New York"),
+        Region(coordinate: CLLocationCoordinate2D(latitude: 37.757, longitude: -122.507), identifier: "San Francisco"),
+        Region(coordinate: CLLocationCoordinate2D(latitude: 47.612, longitude: -122.482), identifier: "Seattle")
+    ]
 
+    // MARK: Setup TableView
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        initialSetup()
-        state = .initial
+        offlineManager = OfflineManager(resourceOptions: .init(accessToken: ""))
     }
     
-    func initialSetup() {
-        resourceOptions = createCustomTileStore()
-        offlineManager = OfflineManager(resourceOptions: resourceOptions)
-        mapInitOptions = MapInitOptions(resourceOptions: resourceOptions, cameraOptions: CameraOptions(center: washingtonDCCoord, zoom: tileZoom), styleURI: .streets)
-        
-        downloadRegionsView = UIView(frame: self.view.bounds)
-        downloadRegionsView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(downloadRegionsView)
-        downloadRegionsView.backgroundColor = UIColor.white
-        
-        setupStateButton()
-        setupProgressViews()
+    override func viewDidAppear(_ animated: Bool) {
+        displayDownloadPopup()
     }
     
-    func setupStateButton() {
-        stateButton = UIButton()
-        stateButton.setTitle("Start Downloads", for: .normal)
-        stateButton.translatesAutoresizingMaskIntoConstraints = false
-        stateButton.backgroundColor = .blue
-        stateButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
-        stateButton.isHidden = false
-        stateButton.addTarget(self, action: #selector(didTapStateButton(_:)), for: .touchUpInside)
-        view.addSubview(stateButton)
-        
-        stateButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
-        stateButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        view.setNeedsLayout()
+    func displayDownloadPopup() {
+        let alert = UIAlertController(title: "Download Regions?", message: "To proceed, you must download tile regions.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in self.downloadTileRegions() }))
+        self.present(alert, animated: true, completion: nil)
     }
     
-    func setupProgressViews() {
-        stylePackProgressView = UIProgressView(frame: CGRect(x: 10, y: 200, width: view.frame.size.width-20, height: 20))
-        let stylePackProgressLabel = UILabel(frame: CGRect(x: 10, y: 150, width: view.frame.size.width-20, height: 20))
-        stylePackProgressLabel.text = "Style Pack"
-        view.addSubview(stylePackProgressView)
-        view.addSubview(stylePackProgressLabel)
-        stylePackProgressView.progress = 0.0
-        
-        tileRegionProgressView = UIProgressView(frame: CGRect(x: 10, y: 300, width: view.frame.size.width-20, height: 20))
-        let tileRegionProgressLabel = UILabel(frame: CGRect(x: 10, y: 250, width: view.frame.size.width-20, height: 20))
-        tileRegionProgressLabel.text = "Tile Region"
-        view.addSubview(tileRegionProgressView)
-        view.addSubview(tileRegionProgressLabel)
-        tileRegionProgressView.progress = 0.0
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
-    func setupRefreshRegionsBarButtonItem() {
-        let refreshRegionsBarButtonItem = UIBarButtonItem(title: NSString(string: "\u{1F5FA}") as String,
-                                                    style: .plain,
-                                                    target: self,
-                                                    action: #selector(performAction(_:)))
-        refreshRegionsBarButtonItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 30)], for: .normal)
-        refreshRegionsBarButtonItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 30)], for: .highlighted)
-        navigationItem.rightBarButtonItem = refreshRegionsBarButtonItem
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Regions"
     }
     
-    @objc func performAction(_ sender: Any) {
-        let alertController = UIAlertController(title: "Perform action",
-                                                message: "Select specific action to perform it. \n Note: You cannot refresh DC Region after removing it.", preferredStyle: .actionSheet)
-        
-        typealias ActionHandler = (UIAlertAction) -> Void
-        
-        let listRegions: ActionHandler = { _ in self.listDownloadedRegions() }
-        let refreshDCRegion: ActionHandler = { _ in self.updateRegions() }
-        let removeDCRegion: ActionHandler = { _ in self.removeOfflineRegion()}
-        
-        let actions: [(String, UIAlertAction.Style, ActionHandler?)] = [
-            ("List Regions", .default, listRegions),
-            ("Refresh DC Region", .default, refreshDCRegion),
-            ("Remove DC Region", .default, removeDCRegion),
-            ("Cancel", .cancel, nil)
-        ]
-        
-        actions
-            .map({ payload in UIAlertAction(title: payload.0, style: payload.1, handler: payload.2) })
-            .forEach(alertController.addAction(_:))
-        
-        if let popoverController = alertController.popoverPresentationController {
-            popoverController.barButtonItem = navigationItem.rightBarButtonItem
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 75
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.regions.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = self.regions[indexPath.row].identifier
+        print("RELOADED!")
+        return cell
+    }
+
+    override func tableView(_ tableView: UITableView,
+                            leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // Refresh action
+        let action = UIContextualAction(style: .normal,
+                                        title: "Refresh") { [weak self] (_, _, completionHandler) in
+                                            self?.handleRefresh(for: indexPath.row)
+                                            completionHandler(true)
         }
-        
-        present(alertController, animated: true, completion: nil)
+        action.backgroundColor = .systemGreen
+        return UISwipeActionsConfiguration(actions: [action])
     }
     
-// MARK: Offline Regions
-    func updateRegions() {
-        // Updating a region is done by the same scenario as downloading a new one
-        let tileRegionLoadOptions = TileRegionLoadOptions(
-            geometry: MBXGeometry(coordinate: washingtonDCCoord), descriptors: [tilesetDescriptor])!
-
-            tileStore.loadTileRegion(forId: dcRegionIdentifier, loadOptions: tileRegionLoadOptions, completion: { result in
-                switch result {
-                case .success(let region):
-                    print("\(region.id) updated!")
-                case .failure(let error):
-                    print("Error while updating outdated regions: \(error).")
-                }
-            })
-    }
-
-    func createCustomTileStore() -> ResourceOptions {
-        // get access token
-        guard let accessToken = CredentialsManager.default.accessToken else {
-            fatalError("Access token was not set.")
+    override func tableView(_ tableView: UITableView,
+                            trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // Delete action
+        let action = UIContextualAction(style: .normal,
+                                        title: "Delete") { [weak self] (_, _, completionHandler) in
+                                            self?.handleDelete(for: indexPath.row)
+                                            completionHandler(true)
         }
-
-        // Create a TileStore instance at the default location
-        tileStore = TileStore.__getInstance()
-        return ResourceOptions(accessToken: accessToken,
-                                              tileStore: tileStore)
+        action.backgroundColor = .systemRed
+        return UISwipeActionsConfiguration(actions: [action])
     }
-
-    func downloadOfflineRegions() {
+    
+    // Swipe actions for refreshing and deleting regions
+    func handleRefresh(for index: Int) {
+        update(region: regions[index])
+        print("Refreshed region.")
+    }
+    
+    func handleDelete(for index: Int) {
+        remove(region: regions[index])
+        print("Deleted region.")
+    }
+    
+    // MARK: Offline Regions
+    func downloadTileRegions() {
         // Create style package
         let stylePackLoadOptions = StylePackLoadOptions(glyphsRasterizationMode: .ideographsRasterizedLocally, metadata: nil)!
-        
-        let stylePackDownload = offlineManager.loadStylePack(for: .streets, loadOptions: stylePackLoadOptions) { [weak self] progress in
-            // update UI
-            DispatchQueue.main.async {
-                guard let progress = progress,
-                      let stylePackProgressView = self?.stylePackProgressView
-                else {
-                    return
-                }
-                // Update style pack progress bar
-                stylePackProgressView.progress = Float(progress.completedResourceCount)/Float(progress.requiredResourceCount)
-            }
-        } completion: { result in
+        _ = offlineManager.loadStylePack(for: .streets, loadOptions: stylePackLoadOptions, completion: { result in
             // Confirm successful download
             switch result {
             case .success(let stylePack):
@@ -186,109 +116,52 @@ class OfflineRegionsViewController: UITableViewController {
             case .failure(let error):
                 print("Error while downloading style pack: \(error).")
             }
-        }
-        downloads = [stylePackDownload]
-        
-        // Create offline regions with tiles
-        let navigationOptions = TilesetDescriptorOptions(styleURI: .streets, zoomRange: 0...10)
-        tilesetDescriptor = offlineManager.createTilesetDescriptor(for: navigationOptions)
-        
+        })
+
         // Load tile region
-        tileAreas.forEach { region in
-            let tileRegionLoadOptions = TileRegionLoadOptions(
-                geometry: MBXGeometry(coordinate: region.coordinates),
-                descriptors: [tilesetDescriptor],
-                metadata: nil,
-                averageBytesPerSecond: nil)!
-                    
-            let tileRegionDownload = tileStore.loadTileRegion(forId: region.identifier, loadOptions: tileRegionLoadOptions) { [weak self] progress in
-                // Closure gets called from the TileStore thread, so we need to dispatch to the main queue to update the UI.
-                DispatchQueue.main.async {
-                    guard let progress = progress,
-                          let tileRegionProgressView = self?.tileRegionProgressView
-                    else {
-                        return
-                    }
-                    // Update tile region progress bar
-                    tileRegionProgressView.progress = Float(progress.completedResourceCount)/Float(progress.requiredResourceCount)
-                }
-            } completion: { result in
-                // Confirm successful download.
+        regions.forEach { region in
+                download(region: region)
+        }
+    }
+    
+    func download(region: Region) {
+        tileRegionLoadOptions(for: region) { [weak self] loadOptions in
+            guard let self = self, let loadOptions = loadOptions else { return }
+            _ = self.tileStore.loadTileRegion(forId: region.identifier, loadOptions: loadOptions, completion: { result in
                 switch result {
                 case .success(let region):
                     print("\(region.id) downloaded!")
                 case .failure(let error):
-                    print("Error while updating outdated regions: \(error).")
+                    print("Error while downloading region: \(error).")
                 }
-            }
-            downloads.append(tileRegionDownload)
-        }
-        self.state = .downloaded
-    }
-    
-    func listOfflineRegions() -> [TileRegion] {
-        var tiles: [TileRegion] = []
-        
-        tileStore.allTileRegions(completion: { result in
-            do {
-                tiles = try result.get()
-            } catch {
-                print("Error listing offline regions: \(error).")
-            }
-        })
-        
-        return tiles
-    }
-
-    func removeOfflineRegion() {
-        tileStore.removeTileRegion(forId: dcRegionIdentifier)
-        print("DC Region removed!")
-    }
-    
-    func listDownloadedRegions() {
-        tileStore.allTileRegions(completion: { result in
-            do {
-                let tiles = try result.get()
-                tiles.forEach { tile in
-                    print("Region: \(tile.id)")
-                }
-            } catch {
-                print("Error listing offline regions: \(error).")
-            }
-        })
-    }
-    
-    
-// MARK: Handle State Changes
-    var state: State = .beforeExampleSelected {
-        didSet {
-            switch(oldValue, state) {
-            case(_, .initial):
-             print("Example started!")
-            case (.initial, .downloaded):
-                enableShowNavigationMapView()
-            case (.downloaded, .showingNavigationMapView):
-                showNavigationMapView()
-            case (.showingNavigationMapView, .finished):
-                print("Example finished!")
-            default:
-                fatalError("Invalid transition from \(oldValue) to \(state).")
-            }
+            })
         }
     }
     
-    @objc func didTapStateButton(_ button: UIButton) {
-        switch state {
-        case .beforeExampleSelected:
-            state = .initial
-        case .initial:
-            downloadOfflineRegions()
-        case .downloaded:
-            state = .showingNavigationMapView
-        case .showingNavigationMapView:
-            print("Select action")
-        case .finished:
-            state = .initial
+    func update(region: Region) {
+        // Updating a region is done by the same scenario as downloading a new one
+        download(region: region)
+    }
+    
+    func remove(region: Region) {
+        tileStore.removeTileRegion(forId: region.identifier)
+    }
+    
+    func tileRegionLoadOptions(for region: Region, completion: @escaping (TileRegionLoadOptions?) -> Void) {
+        let mapsDescriptor = offlineManager.createTilesetDescriptor(for: .init(
+            styleURI: styleURI,
+            zoomRange: UInt8(0)...UInt8(16)
+        ))
+        TilesetDescriptorFactory.getLatest { navigationDescriptor in
+            completion(
+                TileRegionLoadOptions(
+                    geometry: .init(coordinate: region.coordinate),
+                    descriptors: [ mapsDescriptor, navigationDescriptor ],
+                    metadata: nil,
+                    acceptExpired: true,
+                    networkRestriction: .none
+                )
+            )
         }
     }
 }
