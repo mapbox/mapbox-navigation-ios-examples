@@ -84,7 +84,11 @@ extension CustomServerViewController: NavigationViewControllerDelegate {
                         let routeOptions = RouteOptions(matchOptions: matchOptions)
                         
                         // Set the route
-                        self?.navigationViewController?.navigationService.router.updateRoute(with: .init(routeResponse: response, routeIndex: 0), routeOptions: routeOptions)
+                        let router = self?.navigationViewController?.navigationService.router
+                        router?.updateRoute(with: .init(routeResponse: response, routeIndex: 0),
+                                            routeOptions: routeOptions) { success in
+                            
+                        }
                     }
                 }
             }
