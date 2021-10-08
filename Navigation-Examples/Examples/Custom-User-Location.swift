@@ -39,12 +39,6 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
     
     var waypoints: [Waypoint] = []
     
-    var startButtonHighlighted: Bool = false {
-        didSet {
-            startButton.backgroundColor = startButtonHighlighted ? .clear : .blue
-        }
-    }
-    
     private let startButton = UIButton()
     private let clearButton = UIButton()
     
@@ -89,10 +83,9 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
     
     func setupStartButton() {
         startButton.setTitle("Start", for: .normal)
-        startButton.addTarget(self, action: #selector(startButtonChangeColor), for: .touchUpInside)
-        startButtonHighlighted = false
         startButton.layer.cornerRadius = 5
         startButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        startButton.backgroundColor = .blue
         
         startButton.addTarget(self, action: #selector(performAction), for: .touchUpInside)
         view.addSubview(startButton)
@@ -106,10 +99,6 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         navigationMapView.gestureRecognizers?.filter({ $0 is UILongPressGestureRecognizer }).forEach(longPressGestureRecognizer.require(toFail:))
         navigationMapView.addGestureRecognizer(longPressGestureRecognizer)
-    }
-    
-    @objc private func startButtonChangeColor() {
-        startButtonHighlighted = !startButtonHighlighted
     }
     
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
@@ -165,6 +154,13 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
     }
     
     @objc func performAction(_ sender: Any) {
+        guard routeResponse != nil, navigationRouteOptions != nil else {
+            let alertController = UIAlertController(title: "Create route",
+                                                    message: "Long tap on the map to create a route first.",
+                                                    preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default))
+            return present(alertController, animated: true)
+        }
         // Set Up the alert controller to switch between different userLocationStyle.
         let alertController = UIAlertController(title: "Choose UserLocationStyle",
                                                 message: "Select the user location style",
@@ -173,7 +169,7 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
         let courseView: ActionHandler = { _ in self.setupCourseView() }
         let puck2D: ActionHandler = { _ in self.setupPuck2D() }
         let puck3D: ActionHandler = { _ in self.setupPuck3D() }
-        let cancel: ActionHandler = { _ in self.startButtonHighlighted = false }
+        let cancel: ActionHandler = { _ in }
         
         let actionPayloads: [(String, UIAlertAction.Style, ActionHandler?)] = [
             ("Default Course View", .default, courseView),
