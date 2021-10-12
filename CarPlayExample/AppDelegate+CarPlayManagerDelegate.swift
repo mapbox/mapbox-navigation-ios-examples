@@ -180,7 +180,7 @@ extension AppDelegate: CarPlayManagerDelegate {
             finalDestinationAnnotation.image = .default
         }
         
-        pointAnnotationManager.syncAnnotations([finalDestinationAnnotation])
+        pointAnnotationManager.annotations = [finalDestinationAnnotation]
     }
     
     func carPlayManager(_ carPlayManager: CarPlayManager,
