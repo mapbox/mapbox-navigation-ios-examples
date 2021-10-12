@@ -1,39 +1,39 @@
 PODS:
-  - MapboxCommon (16.2.0)
-  - MapboxCoreMaps (10.0.0-rc.6):
-    - MapboxCommon (~> 16.2)
-  - MapboxCoreNavigation (2.0.0-beta.23):
-    - MapboxDirections-pre (= 2.0.0-beta.8)
+  - MapboxCommon (19.0.0)
+  - MapboxCoreMaps (10.0.0-rc.9.1):
+    - MapboxCommon (~> 19.0)
+  - MapboxCoreNavigation (2.0.0-rc.5):
+    - MapboxDirections-pre (= 2.0.0-rc.3)
     - MapboxMobileEvents (~> 1.0.0)
-    - MapboxNavigationNative (~> 63.0)
+    - MapboxNavigationNative (~> 68.0)
     - Turf (= 2.0.0-rc.1)
-  - MapboxDirections-pre (2.0.0-beta.8):
+  - MapboxDirections-pre (2.0.0-rc.3):
     - Polyline (~> 5.0)
     - Turf (~> 2.0.0-rc.1)
   - MapboxGeocoder.swift (0.14.0)
-  - MapboxMaps (10.0.0-rc.6):
-    - MapboxCommon (= 16.2.0)
-    - MapboxCoreMaps (= 10.0.0-rc.6)
-    - MapboxMobileEvents (= 1.0.2)
+  - MapboxMaps (10.0.0-rc.9):
+    - MapboxCommon (= 19.0.0)
+    - MapboxCoreMaps (= 10.0.0-rc.9.1)
+    - MapboxMobileEvents (= 1.0.4)
     - Turf (= 2.0.0-rc.1)
-  - MapboxMobileEvents (1.0.2)
-  - MapboxNavigation (2.0.0-beta.23):
-    - MapboxCoreNavigation (= 2.0.0-beta.23)
-    - MapboxMaps (= 10.0.0-rc.6)
+  - MapboxMobileEvents (1.0.4)
+  - MapboxNavigation (2.0.0-rc.5):
+    - MapboxCoreNavigation (= 2.0.0-rc.5)
+    - MapboxMaps (= 10.0.0-rc.9)
     - MapboxMobileEvents (~> 1.0.0)
-    - MapboxSpeech-pre (= 2.0.0-alpha.1)
+    - MapboxSpeech-pre (= 2.0.0-rc.1)
     - Solar-dev (~> 3.0)
-  - MapboxNavigationNative (63.1.0):
-    - MapboxCommon (~> 16.2)
-  - MapboxSpeech-pre (2.0.0-alpha.1)
+  - MapboxNavigationNative (68.0.0):
+    - MapboxCommon (~> 19.0)
+  - MapboxSpeech-pre (2.0.0-rc.1)
   - Polyline (5.0.2)
   - Solar-dev (3.0.1)
   - Turf (2.0.0-rc.1)
 
 DEPENDENCIES:
-  - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `maxim/car-play-refactoring`)
+  - MapboxCoreNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `main`)
   - MapboxGeocoder.swift (~> 0.14)
-  - MapboxNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `maxim/car-play-refactoring`)
+  - MapboxNavigation (from `https://github.com/mapbox/mapbox-navigation-ios.git`, branch `main`)
 
 SPEC REPOS:
   trunk:
@@ -52,35 +52,35 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   MapboxCoreNavigation:
-    :branch: maxim/car-play-refactoring
+    :branch: main
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
   MapboxNavigation:
-    :branch: maxim/car-play-refactoring
+    :branch: main
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
 
 CHECKOUT OPTIONS:
   MapboxCoreNavigation:
-    :commit: 5c35d7000cd39ce116da627341732a5b1df6b74c
+    :commit: 19b97cec6f618f78fad39a14150a03f429e7f287
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
   MapboxNavigation:
-    :commit: 5c35d7000cd39ce116da627341732a5b1df6b74c
+    :commit: 19b97cec6f618f78fad39a14150a03f429e7f287
     :git: https://github.com/mapbox/mapbox-navigation-ios.git
 
 SPEC CHECKSUMS:
-  MapboxCommon: 4fd3d1f439655efbe0108ecd45406924054071aa
-  MapboxCoreMaps: 045ecad9bb77931e221edc122a66848d778ea87c
-  MapboxCoreNavigation: 4184e9283aa8654d03d900dbf1813af6c1697b6e
-  MapboxDirections-pre: ac837a27e6f023ea9abcc00dff53d17b080023d2
+  MapboxCommon: c87a136d3d58ed9430adae9d8eab7c00705f8dc5
+  MapboxCoreMaps: 5e184ca5480b03bbd42789d1c65042af44c2bb32
+  MapboxCoreNavigation: 93288356921eb3bb07c8524016d7e436c274d362
+  MapboxDirections-pre: b4b3f2921a9c255088bd595d610ab3e997660eab
   MapboxGeocoder.swift: a288e92ec13fbd65bbdfd7c54c61b0e80d19e734
-  MapboxMaps: de9ac5e180c0a5957619a8642b96767108d2f9b4
-  MapboxMobileEvents: 9775eb995e06cc3ea10894bf6ab111683c8e73e7
-  MapboxNavigation: cd28ef804d6025d23ad9d3a935ab0273f7163dec
-  MapboxNavigationNative: 8d81ec51c9e76da2a9b7a0106eb8b526042d7c81
-  MapboxSpeech-pre: aeb16de604d07ceb4195150c3359d5401bb298e6
+  MapboxMaps: 49dfea96f19cc40be82ce299de9883f50a624091
+  MapboxMobileEvents: 23e673d72ba9a7b4bd20dd20853f323d70efcb22
+  MapboxNavigation: 6b9e531fa0f8e64b03197eb62c70588979755796
+  MapboxNavigationNative: 0bc4f99903a513cd1450336a8d34d5e006528869
+  MapboxSpeech-pre: c2739e843762ac6b222fb7132ac71903aa750af3
   Polyline: fce41d72e1146c41c6d081f7656827226f643dff
   Solar-dev: 4612dc9878b9fed2667d23b327f1d4e54e16e8d0
   Turf: 4efd14674a1a2f9527b7c0aadde8003a7b73b1be
 
-PODFILE CHECKSUM: a247a3ff0698b3c2e1e7ba58d8d6744eed13967c
+PODFILE CHECKSUM: 7935612098dd9561da75555944a41c57f5e5f67c
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
