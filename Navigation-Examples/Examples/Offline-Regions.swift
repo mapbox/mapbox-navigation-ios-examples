@@ -153,7 +153,7 @@ class OfflineRegionsViewController: UITableViewController {
     func downloadTileRegions() {
         // Create style package
         guard let stylePackLoadOptions = StylePackLoadOptions(glyphsRasterizationMode: .ideographsRasterizedLocally, metadata: nil) else { return }
-        _ = offlineManager.loadStylePack(for: .streets, loadOptions: stylePackLoadOptions, completion: { result in
+        _ = offlineManager.loadStylePack(for: styleURI, loadOptions: stylePackLoadOptions, completion: { result in
             // Confirm successful download
             switch result {
             case .success(let stylePack):
