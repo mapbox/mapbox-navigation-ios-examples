@@ -6,31 +6,54 @@ import MapboxMaps
 class OfflineRegionsViewController: UITableViewController {
     // MARK: Setup variables for Tile Management
     let styleURI: StyleURI = .streets
+    let zoomMin: UInt8 = 0
+    let zoomMax: UInt8 = 16
     let offlineManager = OfflineManager(resourceOptions: .init(accessToken: ""))
-    var tileStoreConfiguration: TileStoreConfiguration {
-        .default
-    }
-    var tileStoreLocation: TileStoreConfiguration.Location {
-        .default
-    }
+    let tileStoreConfiguration: TileStoreConfiguration = .default
+    let tileStoreLocation: TileStoreConfiguration.Location = .default
+    var log: String = ""
     var tileStore: TileStore {
         tileStoreLocation.tileStore
     }
     
     struct Region {
-        var coordinate: CLLocationCoordinate2D
+        var bbox: [CLLocationCoordinate2D]
         var identifier: String
     }
     
     // Create some hard-coded regions
     let regions: [Region] = [
-        Region(coordinate: CLLocationCoordinate2D(latitude: 38.907, longitude: -77.036), identifier: "Washington DC"),
-        Region(coordinate: CLLocationCoordinate2D(latitude: 40.697, longitude: -74.259), identifier: "New York"),
-        Region(coordinate: CLLocationCoordinate2D(latitude: 37.757, longitude: -122.507), identifier: "San Francisco"),
-        Region(coordinate: CLLocationCoordinate2D(latitude: 47.612, longitude: -122.482), identifier: "Seattle")
+        Region(bbox: [CLLocationCoordinate2DMake(38.7727560655, -77.0424720699),
+                      CLLocationCoordinate2DMake(38.8899646447, -77.1908975165),
+                      CLLocationCoordinate2DMake(39.0083989651, -77.0365213968),
+                      CLLocationCoordinate2DMake(38.8913858126, -76.8880959502),
+                      CLLocationCoordinate2DMake(38.7727560655, -77.0424720699)], identifier: "Washington DC"),
+        
+        Region(bbox: [CLLocationCoordinate2DMake(40.6815166955, -73.9802146272),
+                      CLLocationCoordinate2DMake(40.7032444267, -74.0405682483),
+                      CLLocationCoordinate2DMake(40.8496846662, -73.9487500055),
+                      CLLocationCoordinate2DMake(40.8280047669, -73.8883963845),
+                      CLLocationCoordinate2DMake(40.6815166955, -73.9802146272)], identifier: "New York"),
+        
+        Region(bbox: [CLLocationCoordinate2DMake(37.7055506911, -122.5211407756),
+                      CLLocationCoordinate2DMake(37.7055506911, -122.3500083596),
+                      CLLocationCoordinate2DMake(37.8141659838, -122.3500083596),
+                      CLLocationCoordinate2DMake(37.8141659838, -122.5211407756),
+                      CLLocationCoordinate2DMake(37.7055506911, -122.5211407756)], identifier: "San Francisco"),
+        
+        Region(bbox: [CLLocationCoordinate2DMake(47.5097685046, -122.4384838738),
+                      CLLocationCoordinate2DMake(47.5097685046, -122.2394838301),
+                      CLLocationCoordinate2DMake(47.7405633331, -122.2394838301),
+                      CLLocationCoordinate2DMake(47.7405633331, -122.4384838738),
+                      CLLocationCoordinate2DMake(47.5097685046, -122.4384838738)], identifier: "Seattle")
     ]
 
     // MARK: Setup TableView
+    enum Section: Int, CaseIterable {
+        case regions
+        case log
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -42,11 +65,12 @@ class OfflineRegionsViewController: UITableViewController {
     func displayDownloadPopup() {
         let alert = UIAlertController(title: "Download Regions?", message: "To proceed, you must download tile regions.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in self.downloadTileRegions() }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return Section.allCases.count
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -54,16 +78,39 @@ class OfflineRegionsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 75
+        guard let section = Section(rawValue: indexPath.section) else { return 0 }
+        
+        switch section {
+        case .regions:
+            return 75
+        case .log:
+            return 500
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.regions.count
+        guard let section = Section(rawValue: section) else { return 0 }
+        
+        switch section {
+        case .regions:
+            return regions.count
+        case .log:
+            return 1
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = Section(rawValue: indexPath.section)
+        
         let cell = UITableViewCell()
-        cell.textLabel?.text = self.regions[indexPath.row].identifier
+        switch section {
+        case .regions, .none:
+            cell.textLabel?.text = regions[indexPath.row].identifier
+        case .log:
+            cell.textLabel?.font = .systemFont(ofSize: 12.0)
+            cell.textLabel?.numberOfLines = 0
+            cell.textLabel?.text = log
+        }
         return cell
     }
 
@@ -123,17 +170,30 @@ class OfflineRegionsViewController: UITableViewController {
     }
     
     func download(region: Region) {
+        let indexPath = IndexPath(row: 0, section: 1)
+        
+        // swiftlint:disable multiple_closures_with_trailing_closure
         tileRegionLoadOptions(for: region) { [weak self] loadOptions in
             guard let self = self, let loadOptions = loadOptions else { return }
-            _ = self.tileStore.loadTileRegion(forId: region.identifier, loadOptions: loadOptions, completion: { result in
-                switch result {
-                case .success(let region):
-                    print("\(region.id) downloaded!")
-                case .failure(let error):
-                    print("Error while downloading region: \(error).")
+            // loadTileRegions returns a Cancelable that allows developers to cancel downloading a region
+            _ = self.tileStore.loadTileRegion(forId: region.identifier, loadOptions: loadOptions) { [weak self] progress in
+                // Closure gets called from TileStore thread, so we need to dispatch to the main queue to update the UI
+                DispatchQueue.main.async {
+                    self?.log += "\(progress) \n"
+                    self?.tableView.reloadRows(at: [indexPath], with: .none)
                 }
-            })
+            } completion: { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let region):
+                        self.log += "\(region.id) downloaded! \n"
+                    case .failure(let error):
+                        self.log += "Error while downloading region: \(error). \n"
+                    }
+                }
+            }
         }
+        // swiftlint:enable multiple_closures_with_trailing_closure
     }
     
     func update(region: Region) {
@@ -145,15 +205,16 @@ class OfflineRegionsViewController: UITableViewController {
         tileStore.removeTileRegion(forId: region.identifier)
     }
     
+    // Helper method for creating TileRegionLoadOptions that are needed to download regions
     func tileRegionLoadOptions(for region: Region, completion: @escaping (TileRegionLoadOptions?) -> Void) {
         let mapsDescriptor = offlineManager.createTilesetDescriptor(for: .init(
             styleURI: styleURI,
-            zoomRange: UInt8(0)...UInt8(16)
+            zoomRange: zoomMin...zoomMax
         ))
         TilesetDescriptorFactory.getLatest { navigationDescriptor in
             completion(
                 TileRegionLoadOptions(
-                    geometry: .init(coordinate: region.coordinate),
+                    geometry: .init(polygon: [region.bbox]),
                     descriptors: [ mapsDescriptor, navigationDescriptor ],
                     metadata: nil,
                     acceptExpired: true,
