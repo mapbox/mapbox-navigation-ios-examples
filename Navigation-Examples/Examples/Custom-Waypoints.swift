@@ -177,8 +177,8 @@ class CustomWaypointsViewController: UIViewController {
         for (waypointIndex, waypoint) in waypoints.enumerated() {
             var feature = Feature(geometry: .point(Point(waypoint.coordinate)))
             feature.properties = [
-                "waypointCompleted": waypointIndex < legIndex,
-                "name": "#\(waypointIndex + 1)"
+                "waypointCompleted": .boolean(waypointIndex < legIndex),
+                "name": .number(Double(waypointIndex + 1))
             ]
             features.append(feature)
         }

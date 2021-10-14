@@ -127,7 +127,8 @@ class ElectronicHorizonEventsViewController: UIViewController {
 
     private func updateMostProbablePath(with mostProbablePath: [CLLocationCoordinate2D]) {
         let feature = Feature(geometry: .lineString(LineString(mostProbablePath)))
-        try? navigationMapView.mapView.mapboxMap.style.updateGeoJSONSource(withId: sourceIdentifier, geoJSON: feature)
+        try? navigationMapView.mapView.mapboxMap.style.updateGeoJSONSource(withId: sourceIdentifier,
+                                                                           geoJSON: .feature(feature))
     }
     
     private func setupMostProbablePathStyle() {
