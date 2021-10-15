@@ -144,7 +144,7 @@ class ViewController: UIViewController {
         
         // If there's already a route line on the map, update its shape to the new route
         if mapView.mapboxMap.style.sourceExists(withId: sourceIdentifier) {
-            try? mapView.mapboxMap.style.updateGeoJSONSource(withId: sourceIdentifier, geoJSON: feature)
+            try? mapView.mapboxMap.style.updateGeoJSONSource(withId: sourceIdentifier, geoJSON: .feature(feature))
         } else {
             // Convert the route’s coordinates into a lineString Feature and add the source of the route line to the map
             var geoJSONSource = GeoJSONSource()
