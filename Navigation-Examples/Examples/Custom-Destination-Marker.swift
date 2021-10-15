@@ -113,9 +113,10 @@ extension CustomDestinationMarkerController: NavigationMapViewDelegate {
                            pointAnnotationManager: PointAnnotationManager) {
         var finalDestinationAnnotation = finalDestinationAnnotation
         if let image = UIImage(named: "marker") {
-            finalDestinationAnnotation.image = PointAnnotation.Image.custom(image: image, name: "marker")
+            finalDestinationAnnotation.image = .init(image: image, name: "marker")
         } else {
-            finalDestinationAnnotation.image = .default
+            let image = UIImage(named: "default_marker", in: .mapboxNavigation, compatibleWith: nil)!
+            finalDestinationAnnotation.image = .init(image: image, name: "marker")
         }
         
         // `PointAnnotationManager` is used to manage `PointAnnotation`s and is also exposed as
@@ -135,9 +136,10 @@ extension CustomDestinationMarkerController: NavigationViewControllerDelegate {
                                   pointAnnotationManager: PointAnnotationManager) {
         var finalDestinationAnnotation = finalDestinationAnnotation
         if let image = UIImage(named: "marker") {
-            finalDestinationAnnotation.image = PointAnnotation.Image.custom(image: image, name: "marker")
+            finalDestinationAnnotation.image = .init(image: image, name: "marker")
         } else {
-            finalDestinationAnnotation.image = .default
+            let image = UIImage(named: "default_marker", in: .mapboxNavigation, compatibleWith: nil)!
+            finalDestinationAnnotation.image = .init(image: image, name: "marker")
         }
         
         pointAnnotationManager.annotations = [finalDestinationAnnotation]

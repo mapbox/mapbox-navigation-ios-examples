@@ -167,12 +167,16 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
                                                 preferredStyle: .actionSheet)
         
         let courseView: ActionHandler = { _ in self.setupCourseView() }
-        let puck2D: ActionHandler = { _ in self.setupPuck2D() }
+        let defaultPuck2D: ActionHandler = { _ in self.setupDefaultPuck2D() }
+        let invisiblePuck: ActionHandler = { _ in self.setupInvisiblePuck() }
+        let puck2D: ActionHandler = { _ in self.setupCustomPuck2D() }
         let puck3D: ActionHandler = { _ in self.setupPuck3D() }
         let cancel: ActionHandler = { _ in }
         
         let actionPayloads: [(String, UIAlertAction.Style, ActionHandler?)] = [
+            ("Invisible Puck", .default, invisiblePuck),
             ("Default Course View", .default, courseView),
+            ("2D Default Puck", .default, defaultPuck2D),
             ("2D Arrow Puck", .default, puck2D),
             ("3D Car Puck", .default, puck3D),
             ("Cancel", .cancel, cancel)
@@ -193,10 +197,18 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
     func setupCourseView() {
         // Given configuration to the `UserLocationStyle.courseView` through the customizing of `UserPuckCourseView`. Both `UserPuckCourseView` and `UserHaloView` are subclassable.
         // By default `NavigationMapView.userLocationStyle` property is set to `UserLocationStyle.courseView(_:)`.
-        presentNavigationViewController()
+        presentNavigationViewController(.courseView())
     }
     
-    func setupPuck2D() {
+    func setupDefaultPuck2D() {
+        presentNavigationViewController(.puck2D())
+    }
+    
+    func setupInvisiblePuck() {
+        presentNavigationViewController(.none)
+    }
+    
+    func setupCustomPuck2D() {
         // It's optional to set up `Puck2DConfiguration` to the `UserLocationStyle.puck2D`. Otherwise the defualt configutaion for the `UserLocationStyle.puck2D` is `Puck2DConfiguration()`.
         var puck2DConfiguration = Puck2DConfiguration()
         if #available(iOS 13.0, *) {
@@ -270,9 +282,7 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
         navigationViewController.modalPresentationStyle = .fullScreen
         
         // If not customizing the `NavigationMapView.userLocationStyle`, it defaults as the `UserLocationStyle.courseView(_:)`.
-        if let userLocationStyle = userLocationStyle {
-            navigationViewController.navigationMapView?.userLocationStyle = userLocationStyle
-        }
+        navigationViewController.navigationMapView?.userLocationStyle = userLocationStyle
 
         navigationViewController.navigationMapView?.mapView.mapboxMap.style.uri = navigationMapView.mapView?.mapboxMap.style.uri
         
