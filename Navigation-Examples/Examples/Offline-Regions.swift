@@ -180,7 +180,7 @@ class OfflineRegionsViewController: UITableViewController {
         TilesetDescriptorFactory.getLatest { navigationDescriptor in
             completion(
                 TileRegionLoadOptions(
-                    geometry: .init(polygon: [region.bbox]),
+                    geometry: Polygon([region.bbox]).geometry,
                     descriptors: [ mapsDescriptor, navigationDescriptor ],
                     metadata: nil,
                     acceptExpired: true,
