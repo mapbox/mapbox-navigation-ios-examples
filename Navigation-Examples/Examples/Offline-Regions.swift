@@ -112,12 +112,12 @@ class OfflineRegionsViewController: UITableViewController {
     // Swipe actions for refreshing and deleting regions
     func handleRefresh(for index: Int) {
         update(region: regions[index])
-        print("Refreshed region.")
+        print("Refreshed \(regions[index].identifier) region.")
     }
     
     func handleDelete(for index: Int) {
         remove(region: regions[index])
-        print("Deleted region.")
+        print("Deleted \(regions[index].identifier) region.")
     }
     
     // MARK: Offline Regions
@@ -141,17 +141,12 @@ class OfflineRegionsViewController: UITableViewController {
     }
     
     func download(region: Region) {
-        let indexPath = IndexPath(row: 0, section: 1)
-        
         // swiftlint:disable multiple_closures_with_trailing_closure
         tileRegionLoadOptions(for: region) { [weak self] loadOptions in
             guard let self = self, let loadOptions = loadOptions else { return }
             // loadTileRegions returns a Cancelable that allows developers to cancel downloading a region
-            _ = self.tileStore.loadTileRegion(forId: region.identifier, loadOptions: loadOptions) { [weak self] progress in
-                // Closure gets called from TileStore thread, so we need to dispatch to the main queue to update the UI
-                DispatchQueue.main.async {
+            _ = self.tileStore.loadTileRegion(forId: region.identifier, loadOptions: loadOptions) { progress in
                     print(progress)
-                }
             } completion: { result in
                 DispatchQueue.main.async {
                     switch result {
@@ -185,7 +180,7 @@ class OfflineRegionsViewController: UITableViewController {
         TilesetDescriptorFactory.getLatest { navigationDescriptor in
             completion(
                 TileRegionLoadOptions(
-                    geometry: Polygon([region.bbox]).geometry,
+                    geometry: .init(polygon: [region.bbox]),
                     descriptors: [ mapsDescriptor, navigationDescriptor ],
                     metadata: nil,
                     acceptExpired: true,
