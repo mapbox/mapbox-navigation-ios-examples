@@ -11,7 +11,6 @@ class OfflineRegionsViewController: UITableViewController {
     let offlineManager = OfflineManager(resourceOptions: .init(accessToken: ""))
     let tileStoreConfiguration: TileStoreConfiguration = .default
     let tileStoreLocation: TileStoreConfiguration.Location = .default
-    var log: String = ""
     var tileStore: TileStore {
         tileStoreLocation.tileStore
     }
@@ -49,11 +48,6 @@ class OfflineRegionsViewController: UITableViewController {
     ]
 
     // MARK: Setup TableView
-    enum Section: Int, CaseIterable {
-        case regions
-        case log
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -70,7 +64,7 @@ class OfflineRegionsViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return Section.allCases.count
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -78,39 +72,16 @@ class OfflineRegionsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let section = Section(rawValue: indexPath.section) else { return 0 }
-        
-        switch section {
-        case .regions:
-            return 75
-        case .log:
-            return 500
-        }
+        return 75
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let section = Section(rawValue: section) else { return 0 }
-        
-        switch section {
-        case .regions:
-            return regions.count
-        case .log:
-            return 1
-        }
+        return regions.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = Section(rawValue: indexPath.section)
-        
         let cell = UITableViewCell()
-        switch section {
-        case .regions, .none:
-            cell.textLabel?.text = regions[indexPath.row].identifier
-        case .log:
-            cell.textLabel?.font = .systemFont(ofSize: 12.0)
-            cell.textLabel?.numberOfLines = 0
-            cell.textLabel?.text = log
-        }
+        cell.textLabel?.text = regions[indexPath.row].identifier
         return cell
     }
 
@@ -179,16 +150,15 @@ class OfflineRegionsViewController: UITableViewController {
             _ = self.tileStore.loadTileRegion(forId: region.identifier, loadOptions: loadOptions) { [weak self] progress in
                 // Closure gets called from TileStore thread, so we need to dispatch to the main queue to update the UI
                 DispatchQueue.main.async {
-                    self?.log += "\(progress) \n"
-                    self?.tableView.reloadRows(at: [indexPath], with: .none)
+                    print(progress)
                 }
             } completion: { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let region):
-                        self.log += "\(region.id) downloaded! \n"
+                        print("\(region.id) downloaded!")
                     case .failure(let error):
-                        self.log += "Error while downloading region: \(error). \n"
+                        print("Error while downloading region: \(error).")
                     }
                 }
             }
@@ -211,10 +181,11 @@ class OfflineRegionsViewController: UITableViewController {
             styleURI: styleURI,
             zoomRange: zoomMin...zoomMax
         ))
+        
         TilesetDescriptorFactory.getLatest { navigationDescriptor in
             completion(
                 TileRegionLoadOptions(
-                    geometry: .init(polygon: [region.bbox]),
+                    geometry: Polygon([region.bbox]).geometry,
                     descriptors: [ mapsDescriptor, navigationDescriptor ],
                     metadata: nil,
                     acceptExpired: true,
