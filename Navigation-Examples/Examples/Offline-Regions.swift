@@ -146,15 +146,13 @@ class OfflineRegionsViewController: UITableViewController {
             guard let self = self, let loadOptions = loadOptions else { return }
             // loadTileRegions returns a Cancelable that allows developers to cancel downloading a region
             _ = self.tileStore.loadTileRegion(forId: region.identifier, loadOptions: loadOptions) { progress in
-                    print(progress)
+                print(progress)
             } completion: { result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let region):
-                        print("\(region.id) downloaded!")
-                    case .failure(let error):
-                        print("Error while downloading region: \(error).")
-                    }
+                switch result {
+                case .success(let region):
+                    print("\(region.id) downloaded!")
+                case .failure(let error):
+                    print("Error while downloading region: \(error).")
                 }
             }
         }
