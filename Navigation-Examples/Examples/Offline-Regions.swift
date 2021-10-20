@@ -141,22 +141,20 @@ class OfflineRegionsViewController: UITableViewController {
     }
     
     func download(region: Region) {
-        // swiftlint:disable multiple_closures_with_trailing_closure
         tileRegionLoadOptions(for: region) { [weak self] loadOptions in
             guard let self = self, let loadOptions = loadOptions else { return }
             // loadTileRegions returns a Cancelable that allows developers to cancel downloading a region
-            _ = self.tileStore.loadTileRegion(forId: region.identifier, loadOptions: loadOptions) { progress in
+            _ = self.tileStore.loadTileRegion(forId: region.identifier, loadOptions: loadOptions, progress: { progress in
                 print(progress)
-            } completion: { result in
+            }, completion: { result in
                 switch result {
                 case .success(let region):
                     print("\(region.id) downloaded!")
                 case .failure(let error):
-                    print("Error while downloading region: \(error).")
+                    print("Error while downloading region: \(error)")
                 }
-            }
+            })
         }
-        // swiftlint:enable multiple_closures_with_trailing_closure
     }
     
     func update(region: Region) {
