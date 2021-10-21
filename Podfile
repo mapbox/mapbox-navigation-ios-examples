@@ -1,8 +1,8 @@
 platform :ios, '11.0'
 use_frameworks!
 
-pod 'MapboxCoreNavigation', :git => 'https://github.com/mapbox/mapbox-navigation-ios.git', :tag => 'v2.0.0-rc.6'
-pod 'MapboxNavigation', :git => 'https://github.com/mapbox/mapbox-navigation-ios.git', :tag => 'v2.0.0-rc.6'
+pod 'MapboxCoreNavigation', '~> 2.0'
+pod 'MapboxNavigation', '~> 2.0'
 
 target 'Navigation-Examples' do
 end
