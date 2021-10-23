@@ -39,7 +39,8 @@ class CustomBottomBannerView: UIView {
         addSubview(contentView)
         contentView.frame = bounds
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
+
+        progressBar.clipsToBounds = true
         progressBar.progressTintColor = .systemGreen
         progressBar.layer.borderColor = UIColor.black.cgColor
         progressBar.layer.borderWidth = 2
