@@ -28,11 +28,14 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     
     var routeResponse: RouteResponse? {
         didSet {
+            currentRouteIndex = 0
+            
             guard currentRoute != nil else {
                 navigationMapView.removeRoutes()
+                navigationMapView.removeWaypoints()
+                waypoints = []
                 return
             }
-            currentRouteIndex = 0
         }
     }
     
