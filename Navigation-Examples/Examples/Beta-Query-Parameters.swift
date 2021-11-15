@@ -188,7 +188,7 @@ class MopedRouteOptions: NavigationRouteOptions {
         fatalError("init(from:) has not been implemented")
     }
     
-    required init(waypoints: [Waypoint], profileIdentifier: DirectionsProfileIdentifier? = .automobileAvoidingTraffic) {
+    required init(waypoints: [Waypoint], profileIdentifier: ProfileIdentifier? = .automobileAvoidingTraffic) {
         fatalError("init(waypoints:profileIdentifier:) has not been implemented")
     }
 }
