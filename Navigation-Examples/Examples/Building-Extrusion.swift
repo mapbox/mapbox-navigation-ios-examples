@@ -250,7 +250,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
             guard let navigationService = (self.presentedViewController as? NavigationViewController)?.navigationService else { return }
             let router = navigationService.router
             guard router.route.legs.count > router.routeProgress.legIndex + 1 else { return }
-            router.routeProgress.legIndex += 1
+            router.advanceLegIndex(completionHandler: nil)
             
             navigationService.start()
         })

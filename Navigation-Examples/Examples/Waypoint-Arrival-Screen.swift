@@ -50,7 +50,7 @@ extension WaypointArrivalScreenViewController: NavigationViewControllerDelegate 
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
             // Begin the next leg once the driver confirms
             if !isFinalLeg {
-                navigationViewController.navigationService.routeProgress.legIndex += 1
+                navigationViewController.navigationService.router.advanceLegIndex(completionHandler: nil)
                 navigationViewController.navigationService.start()
             }
         }))
