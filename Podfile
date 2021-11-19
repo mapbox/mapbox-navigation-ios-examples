@@ -1,3 +1,5 @@
+install! 'cocoapods', :warn_for_unused_master_specs_repo => false
+
 platform :ios, '11.0'
 use_frameworks!
 
