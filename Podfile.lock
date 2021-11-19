@@ -1,7 +1,7 @@
 PODS:
-  - MapboxCommon (20.0.0)
-  - MapboxCoreMaps (10.0.0):
-    - MapboxCommon (~> 20.0)
+  - MapboxCommon (20.1.0)
+  - MapboxCoreMaps (10.1.0):
+    - MapboxCommon (~> 20.1)
   - MapboxCoreNavigation (2.0.1):
     - MapboxDirections (~> 2.0)
     - MapboxMobileEvents (~> 1.0)
@@ -9,9 +9,9 @@ PODS:
   - MapboxDirections (2.0.0):
     - Polyline (~> 5.0)
     - Turf (~> 2.0)
-  - MapboxMaps (10.0.1):
-    - MapboxCommon (= 20.0.0)
-    - MapboxCoreMaps (= 10.0.0)
+  - MapboxMaps (10.1.0):
+    - MapboxCommon (= 20.1.0)
+    - MapboxCoreMaps (= 10.1.0)
     - MapboxMobileEvents (= 1.0.6)
     - Turf (~> 2.0)
   - MapboxMobileEvents (1.0.6)
@@ -21,12 +21,12 @@ PODS:
     - MapboxMobileEvents (~> 1.0)
     - MapboxSpeech (~> 2.0)
     - Solar-dev (~> 3.0)
-  - MapboxNavigationNative (69.0.2):
+  - MapboxNavigationNative (69.0.3):
     - MapboxCommon (~> 20.0)
   - MapboxSpeech (2.0.0)
   - Polyline (5.0.2)
   - Solar-dev (3.0.1)
-  - Turf (2.0.0)
+  - Turf (2.1.0)
 
 DEPENDENCIES:
   - MapboxCoreNavigation (~> 2.0)
@@ -48,19 +48,19 @@ SPEC REPOS:
     - Turf
 
 SPEC CHECKSUMS:
-  MapboxCommon: 18ae12e6b4286f59f685862aaa5766fd95828ce2
-  MapboxCoreMaps: c2847aa114c71873def0d9662b0b7aba9e75d3af
+  MapboxCommon: 8dd878a6c444b78bc1a819af1920dd1a0bb9f732
+  MapboxCoreMaps: 6ecb358c04600f6a947e52d41b78ac0c2570f930
   MapboxCoreNavigation: 6b523a368630727659422744167fd88a7b158e01
   MapboxDirections: bbb1b63cf5250a337abb1d120d9706280deb6747
-  MapboxMaps: a74f59bcb19690ecdc345488c06f5548981b9089
+  MapboxMaps: c19e24617b7135f87fac7dbad3a4baef657555ae
   MapboxMobileEvents: 14d7ac3ee95b4142c4fec2205dfd48ff453e8871
   MapboxNavigation: 64530555dea0a6db0064eb4f33f9e89d3315bb07
-  MapboxNavigationNative: 24091273fefeeb8352df39070886ebe5f207ccb0
+  MapboxNavigationNative: a997b061e4eb93c1fb881992e5061e3a290f04f6
   MapboxSpeech: e4ed02984444b6373374c72c369edaf045cc490c
   Polyline: fce41d72e1146c41c6d081f7656827226f643dff
   Solar-dev: 4612dc9878b9fed2667d23b327f1d4e54e16e8d0
-  Turf: 79ad33d164291444775d83e5db4be199dd1f606f
+  Turf: d1220730a00b50a9fb5862c1fb6a5dd698c9e367
 
-PODFILE CHECKSUM: 37285338168a449d6a6fd652c885ae7455fb290a
+PODFILE CHECKSUM: ade747cd70b06f12dd4076e55177eb029b4813b0
 
 COCOAPODS: 1.11.2

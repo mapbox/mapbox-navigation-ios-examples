@@ -2,3 +2,4 @@
 /Navigation-Examples.xcworkspace
 xcuserdata/
 *.xcuserstate
+.DS_Store
