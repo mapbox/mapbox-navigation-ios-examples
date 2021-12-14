@@ -28,6 +28,9 @@ extension AppDelegate: CarPlayManagerDelegate {
         case .panningInBrowsingMode:
             break
             
+        case .panningInNavigationMode:
+            break
+            
         case .previewing:
             break
             
@@ -52,6 +55,9 @@ extension AppDelegate: CarPlayManagerDelegate {
         case .panningInBrowsingMode:
             break
             
+        case .panningInNavigationMode:
+            break
+            
         case .previewing:
             break
             
@@ -74,6 +80,9 @@ extension AppDelegate: CarPlayManagerDelegate {
             break
             
         case .panningInBrowsingMode:
+            break
+            
+        case .panningInNavigationMode:
             break
             
         case .previewing:
@@ -175,9 +184,10 @@ extension AppDelegate: CarPlayManagerDelegate {
                         pointAnnotationManager: PointAnnotationManager) {
         var finalDestinationAnnotation = finalDestinationAnnotation
         if let image = UIImage(named: "marker") {
-            finalDestinationAnnotation.image = PointAnnotation.Image.custom(image: image, name: "marker")
+            finalDestinationAnnotation.image = .init(image: image, name: "marker")
         } else {
-            finalDestinationAnnotation.image = .default
+            let image = UIImage(named: "default_marker", in: .mapboxNavigation, compatibleWith: nil)!
+            finalDestinationAnnotation.image = .init(image: image, name: "marker")
         }
         
         pointAnnotationManager.annotations = [finalDestinationAnnotation]
