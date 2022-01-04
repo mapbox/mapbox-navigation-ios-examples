@@ -119,7 +119,7 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
         
         let waypoint = Waypoint(coordinate: destinationCoordinate, name: "Dropped Pin #\(waypoints.endIndex + 1)")
         waypoint.targetCoordinate = destinationCoordinate
-        // Change the coordinate accuracy of `Waypoint` to negative beofre add it to the `waypoints`. Thus the route requested on the `waypoints` is considered viable.
+        // Change the coordinate accuracy of `Waypoint` to negative before adding it to the `waypoints`. Thus the route requested on the `waypoints` is considered viable.
         waypoint.coordinateAccuracy = -1
         waypoints.append(waypoint)
 
@@ -134,7 +134,7 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
         }
 
         let userWaypoint = Waypoint(coordinate: currentCoordinate)
-        // Change the coordinate accuracy of `Waypoint` to negative beofre add it to the `waypoints`. Thus the route requested on the `waypoints` is considered viable.
+        // Change the coordinate accuracy of `Waypoint` to negative before adding it to the `waypoints`. Thus the route requested on the `waypoints` is considered viable.
         userWaypoint.coordinateAccuracy = -1
         waypoints.insert(userWaypoint, at: 0)
         let navigationRouteOptions = NavigationRouteOptions(waypoints: waypoints)
@@ -216,7 +216,7 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
     }
     
     func setupCustomPuck2D() {
-        // It's optional to set up `Puck2DConfiguration` to the `UserLocationStyle.puck2D`. Otherwise the defualt configutaion for the `UserLocationStyle.puck2D` is `Puck2DConfiguration()`.
+        // It's optional to set up `Puck2DConfiguration` to the `UserLocationStyle.puck2D`. Otherwise the default configuration for the `UserLocationStyle.puck2D` is `Puck2DConfiguration()`.
         var puck2DConfiguration = Puck2DConfiguration()
         if #available(iOS 13.0, *) {
             puck2DConfiguration.topImage = UIImage(systemName: "arrow.up")
