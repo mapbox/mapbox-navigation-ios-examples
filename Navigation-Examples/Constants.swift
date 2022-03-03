@@ -22,6 +22,15 @@ let listOfExamples: [NamedController] = [
         pushExampleToViewController: true
     ),
     (
+        name: "Search Integration",
+        description:"""
+        Demonstrates how to integrate the Mapbox Search SDK with Mapbox Navigation
+        """,
+        controller: SearchViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
+    ),
+    (
         name: "Basic",
         description: "A basic hello world example showing how to create a navigation experience using the fewest lines of code possible.",
         controller: BasicViewController.self,
