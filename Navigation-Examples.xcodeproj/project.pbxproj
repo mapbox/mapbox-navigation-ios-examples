@@ -40,6 +40,7 @@
 		C346744E263C57610068A65E /* Beta-Query-Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = C346744D263C57610068A65E /* Beta-Query-Parameters.swift */; };
 		C35F1E4D2656967E00EC54CD /* Offline-Regions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35F1E4C2656967E00EC54CD /* Offline-Regions.swift */; };
 		C3893F1C25F96BDC0058A987 /* Custom-Waypoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3893F1B25F96BDC0058A987 /* Custom-Waypoints.swift */; };
+		C3D9C06D27B59E7000F6C0B3 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D9C06C27B59E7000F6C0B3 /* Search.swift */; };
 		C52BAA782040D5030086EC6B /* Custom-Destination-Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */; };
 		C58FB85A1FE899B800C4B491 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FB8591FE899B800C4B491 /* AppDelegate.swift */; };
 		C58FB8611FE899B800C4B491 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C58FB8601FE899B800C4B491 /* Assets.xcassets */; };
@@ -94,6 +95,7 @@
 		C346744D263C57610068A65E /* Beta-Query-Parameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Beta-Query-Parameters.swift"; sourceTree = "<group>"; };
 		C35F1E4C2656967E00EC54CD /* Offline-Regions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Offline-Regions.swift"; sourceTree = "<group>"; };
 		C3893F1B25F96BDC0058A987 /* Custom-Waypoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Waypoints.swift"; sourceTree = "<group>"; };
+		C3D9C06C27B59E7000F6C0B3 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Destination-Marker.swift"; sourceTree = "<group>"; };
 		C58FB8561FE899B800C4B491 /* Navigation-Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Navigation-Examples.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C58FB8591FE899B800C4B491 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				C58FB8721FE98AEB00C4B491 /* Styled-UI-Elements.swift */,
 				C58FB8761FE98B0E00C4B491 /* Waypoint-Arrival-Screen.swift */,
 				8DF510731FEB08F70049DB9C /* Embedded-Navigation.swift */,
+				C3D9C06C27B59E7000F6C0B3 /* Search.swift */,
 				8D6D36A620001F0400C2B61B /* EmbeddedExamples.storyboard */,
 				C5F130A51FEB2D7800463E86 /* Advanced.swift */,
 				C346744D263C57610068A65E /* Beta-Query-Parameters.swift */,
@@ -279,7 +282,6 @@
 				4EF74F60792B221A1A61A3CE /* Pods-Navigation-Examples.debug.xcconfig */,
 				A8BC0BE26AF9683D3B034741 /* Pods-Navigation-Examples.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -334,6 +336,8 @@
 			dependencies = (
 			);
 			name = "Navigation-Examples";
+			packageProductDependencies = (
+			);
 			productName = "Navigation Examples";
 			productReference = C58FB8561FE899B800C4B491 /* Navigation-Examples.app */;
 			productType = "com.apple.product-type.application";
@@ -369,6 +373,8 @@
 				Base,
 			);
 			mainGroup = C58FB84D1FE899B800C4B491;
+			packageReferences = (
+			);
 			productRefGroup = C58FB8571FE899B800C4B491 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -462,6 +468,7 @@
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxCoreMaps/MapboxCoreMaps.framework/MapboxCoreMaps",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework/MapboxMobileEvents",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxNavigationNative/MapboxNavigationNative.framework/MapboxNavigationNative",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxSearch/MapboxSearch.framework/MapboxSearch",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -477,6 +484,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreMaps.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigationNative.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxSearch.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -576,6 +584,7 @@
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxCoreMaps/MapboxCoreMaps.framework/MapboxCoreMaps",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework/MapboxMobileEvents",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxNavigationNative/MapboxNavigationNative.framework/MapboxNavigationNative",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxSearch/MapboxSearch.framework/MapboxSearch",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -591,6 +600,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreMaps.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigationNative.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxSearch.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -628,6 +638,7 @@
 				2B521D502409240E00984CF8 /* CustomBottomBannerView.swift in Sources */,
 				B480E428261E4C4600C16FA0 /* Route-Alerts.swift in Sources */,
 				C58FB8771FE98B0E00C4B491 /* Waypoint-Arrival-Screen.swift in Sources */,
+				C3D9C06D27B59E7000F6C0B3 /* Search.swift in Sources */,
 				C35F1E4D2656967E00EC54CD /* Offline-Regions.swift in Sources */,
 				C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */,
 				C58FB86C1FE89CEC00C4B491 /* ExampleContainerViewController.swift in Sources */,
