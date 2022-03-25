@@ -121,11 +121,14 @@ class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, Navi
         let navigationService = MapboxNavigationService(routeResponse: routeResponse,
                                                         routeIndex: 0,
                                                         routeOptions: navigationRouteOptions,
+                                                        routingProvider: NavigationSettings.shared.directions,
+                                                        credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: routeResponse, routeIndex: 0,
-                                                                routeOptions: navigationRouteOptions,
-                                                                navigationOptions: navigationOptions)
+        let navigationViewController = NavigationViewController(for: routeResponse,
+                                                                   routeIndex: 0,
+                                                                   routeOptions: navigationRouteOptions,
+                                                                   navigationOptions: navigationOptions)
         navigationViewController.delegate = self
 
         present(navigationViewController, animated: true, completion: nil)
@@ -195,7 +198,7 @@ class MopedRouteOptions: NavigationRouteOptions {
         fatalError("init(from:) has not been implemented")
     }
     
-    required init(waypoints: [Waypoint], profileIdentifier: DirectionsProfileIdentifier? = .automobileAvoidingTraffic) {
+    required init(waypoints: [Waypoint], profileIdentifier: ProfileIdentifier? = .automobileAvoidingTraffic) {
         fatalError("init(waypoints:profileIdentifier:) has not been implemented")
     }
 }

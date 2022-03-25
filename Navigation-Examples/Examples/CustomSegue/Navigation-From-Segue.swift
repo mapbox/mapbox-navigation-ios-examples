@@ -41,6 +41,8 @@ class SegueViewController: UIViewController {
                 let navigationService = MapboxNavigationService(routeResponse: response,
                                                                 routeIndex: 0,
                                                                 routeOptions: self.navigationRouteOptions,
+                                                                routingProvider: NavigationSettings.shared.directions,
+                                                                credentials: NavigationSettings.shared.directions.credentials,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 self.navigationOptions = NavigationOptions(navigationService: navigationService)
             }

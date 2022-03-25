@@ -29,15 +29,25 @@ class CustomBarsViewController: UIViewController {
                 }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-                let navigationService = MapboxNavigationService(routeResponse: response, routeIndex: 0, routeOptions: routeOptions, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+                let navigationService = MapboxNavigationService(routeResponse: response,
+                                                                routeIndex: 0,
+                                                                routeOptions: routeOptions,
+                                                                routingProvider: NavigationSettings.shared.directions,
+                                                                credentials: NavigationSettings.shared.directions.credentials,
+                                                                simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 
                 // Pass your custom implementations of `topBanner` and/or `bottomBanner` to `NavigationOptions`
                 // If you do not specify them explicitly, `TopBannerViewController` and `BottomBannerViewController` will be used by default.
                 // Those are `Open`, so you can also check thier source for more examples of using standard UI controls!
                 let topBanner = CustomTopBarViewController()
                 let bottomBanner = CustomBottomBarViewController()
-                let navigationOptions = NavigationOptions(navigationService: navigationService, topBanner: topBanner, bottomBanner: bottomBanner)
-                let navigationViewController = NavigationViewController(for: response, routeIndex: 0, routeOptions: routeOptions, navigationOptions: navigationOptions)
+                let navigationOptions = NavigationOptions(navigationService: navigationService,
+                                                          topBanner: topBanner,
+                                                          bottomBanner: bottomBanner)
+                let navigationViewController = NavigationViewController(for: response,
+                                                                           routeIndex: 0,
+                                                                           routeOptions: routeOptions,
+                                                                           navigationOptions: navigationOptions)
                 bottomBanner.navigationViewController = navigationViewController
                 
                 let parentSafeArea = navigationViewController.view.safeAreaLayoutGuide

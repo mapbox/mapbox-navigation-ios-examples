@@ -30,9 +30,18 @@ class BasicViewController: UIViewController {
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
                 // Since first route is retrieved from response `routeIndex` is set to 0.
-                let navigationService = MapboxNavigationService(routeResponse: response, routeIndex: 0, routeOptions: options, simulating: simulationIsEnabled ? .always : .onPoorGPS)
+                let navigationService = MapboxNavigationService(routeResponse: response,
+                                                                routeIndex: 0,
+                                                                routeOptions: options,
+                                                                routingProvider: NavigationSettings.shared.directions,
+                                                                credentials: NavigationSettings.shared.directions.credentials,
+                                                                simulating: simulationIsEnabled ? .always : .onPoorGPS)
+                
                 let navigationOptions = NavigationOptions(navigationService: navigationService)
-                let navigationViewController = NavigationViewController(for: response, routeIndex: 0, routeOptions: options, navigationOptions: navigationOptions)
+                let navigationViewController = NavigationViewController(for: response,
+                                                                           routeIndex: 0,
+                                                                           routeOptions: options,
+                                                                           navigationOptions: navigationOptions)
                 navigationViewController.modalPresentationStyle = .fullScreen
                 // Render part of the route that has been traversed with full transparency, to give the illusion of a disappearing route.
                 navigationViewController.routeLineTracksTraversal = true
