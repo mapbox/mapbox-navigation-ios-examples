@@ -37,6 +37,8 @@ class CustomVoiceControllerUI: UIViewController {
         let navigationService = MapboxNavigationService(routeResponse: response,
                                                         routeIndex: 0,
                                                         routeOptions: routeOptions,
+                                                        routingProvider: NavigationSettings.shared.directions,
+                                                        credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
 
         // `MultiplexedSpeechSynthesizer` will provide "a backup" functionality to cover cases, which
