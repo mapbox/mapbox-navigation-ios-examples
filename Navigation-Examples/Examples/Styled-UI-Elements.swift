@@ -92,7 +92,6 @@ class CustomDayStyle: DayStyle {
         ManeuverView.appearance(whenContainedInInstancesOf: [NextBannerView.self]).secondaryColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
         ManeuverView.appearance(whenContainedInInstancesOf: [StepInstructionsView.self]).primaryColor = darkGrayColor
         ManeuverView.appearance(whenContainedInInstancesOf: [StepInstructionsView.self]).secondaryColor = lightGrayColor
-        MarkerView.appearance().pinColor = blueColor
         NextBannerView.appearance().backgroundColor = backgroundColor
         NextInstructionLabel.appearance().textColor = #colorLiteral(red: 0.9842069745, green: 0.9843751788, blue: 0.9841964841, alpha: 1)
         NavigationMapView.appearance().tintColor = blueColor

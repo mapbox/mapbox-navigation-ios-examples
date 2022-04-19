@@ -201,4 +201,8 @@ class MopedRouteOptions: NavigationRouteOptions {
     required init(waypoints: [Waypoint], profileIdentifier: ProfileIdentifier? = .automobileAvoidingTraffic) {
         fatalError("init(waypoints:profileIdentifier:) has not been implemented")
     }
+    
+    required init(waypoints: [Waypoint], profileIdentifier: ProfileIdentifier? = .automobileAvoidingTraffic, queryItems: [URLQueryItem]? = nil) {
+        fatalError("init(waypoints:profileIdentifier:queryItems:) has not been implemented")
+    }
 }
