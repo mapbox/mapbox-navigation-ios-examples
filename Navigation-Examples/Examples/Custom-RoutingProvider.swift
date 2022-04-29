@@ -11,6 +11,9 @@ import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
 
+/*
+ This example demonstrates how users can control and customize the rerouting process. Unlike `Custom-Server` example, this one does not completely cancel SDK mechanism to do it separately, but instead controls just the part of new route calculation, preserving original workflow and events. In result, any related components will not know that rerouting was altered and will react as on usual reroute event.
+ */
 class CustomRoutingProviderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +54,6 @@ class CustomRoutingProviderViewController: UIViewController {
         })
     }
 }
-
 
 class CustomProvider: RoutingProvider {
     // This can encapsulate any route building engine we need. For simplicity let's use `MapboxRoutingProvider`.
@@ -133,6 +135,4 @@ class CustomProvider: RoutingProvider {
                             .failure(.unableToRoute))
         return nil
     }
-    
-    
 }
