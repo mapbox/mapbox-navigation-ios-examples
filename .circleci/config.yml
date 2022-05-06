@@ -14,7 +14,7 @@ jobs:
     parameters:
       xcode:
         type: string
-        default: "12.4"
+        default: "13.0"
       device:
         type: string
         default: "iPhone 8 Plus"
@@ -47,8 +47,8 @@ workflows:
   workflow:
     jobs:
       - build-job:
-          name: "Xcode_12.4_iOS_14.4"
-          xcode: "12.4.0"
+          name: "Xcode_13.0_iOS_14.4"
+          xcode: "13.0.0"
           ios: "14.4"
           device: "iPhone 11 Pro"
       - build-job:
