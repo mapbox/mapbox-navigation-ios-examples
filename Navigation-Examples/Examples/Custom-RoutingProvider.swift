@@ -12,7 +12,11 @@ import MapboxNavigation
 import MapboxDirections
 
 /*
- This example demonstrates how users can control and customize the rerouting process. Unlike `Custom-Server` example, this one does not completely cancel SDK mechanism to do it separately, but instead controls just the part of new route calculation, preserving original workflow and events. In result, any related components will not know that rerouting was altered and will react as on usual reroute event.
+ This example demonstrates how users can control and customize the rerouting process.
+ Unlike `Custom-Server` example, this one does not completely cancel SDK mechanism to do it
+ separately, but instead controls just the part of new route calculation, preserving original
+ workflow and events. In result, any related components will not know that rerouting was altered
+ and will react as on usual reroute event.
  */
 class CustomRoutingProviderViewController: UIViewController {
     override func viewDidLoad() {
@@ -92,7 +96,6 @@ class CustomProvider: RoutingProvider {
     // MARK: RoutingProvider implementation
     
     func calculateRoutes(options: RouteOptions, completionHandler: @escaping Directions.RouteCompletionHandler) -> NavigationProviderRequest? {
-        
         applyOptionsModification(options)
         
         // Using `MapboxRoutingProvider` also illustrates cases when we need to modify just a part of the route, or dynamically edit `RouteOptions` for each reroute.
@@ -101,7 +104,6 @@ class CustomProvider: RoutingProvider {
     }
     
     func calculateRoutes(options: MatchOptions, completionHandler: @escaping Directions.MatchCompletionHandler) -> NavigationProviderRequest? {
-        
         applyOptionsModification(options)
         
         return routeCalculator.calculateRoutes(options: options,
