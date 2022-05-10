@@ -174,5 +174,12 @@ let listOfExamples: [NamedController] = [
         controller: OfflineRegionsViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
+    ),
+    (
+        name: "Custom RoutingProvider",
+        description: "Demonstrates how to implement and utilize custom `RoutingProvider`.",
+        controller: CustomRoutingProviderViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
     )
 ]
