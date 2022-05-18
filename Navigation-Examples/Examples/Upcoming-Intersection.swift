@@ -18,13 +18,16 @@ class ElectronicHorizonEventsViewController: UIViewController {
     private let upcomingIntersectionLabel = UILabel()
     private let passiveLocationManager = PassiveLocationManager()
     private lazy var passiveLocationProvider = PassiveLocationProvider(locationManager: passiveLocationManager)
+    private let routeLineColor: UIColor = .green.withAlphaComponent(0.9)
+    private let traversedRouteColor: UIColor = .clear
+    private var totalDistance: CLLocationDistance = 0.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavigationMapView()
         setupUpcomingIntersectionLabel()
-        subscribeToElectronicHorizonUpdates()
+        setupElectronicHorizonUpdates()
     }
 
     func setupNavigationMapView() {
@@ -36,6 +39,12 @@ class ElectronicHorizonEventsViewController: UIViewController {
         })
         
         view.addSubview(navigationMapView)
+    }
+    
+    func setupElectronicHorizonUpdates() {
+        let options = ElectronicHorizonOptions(length: 500, expansionLevel: 0, branchLength: 0, minTimeDeltaBetweenUpdates: nil)
+        passiveLocationManager.startUpdatingElectronicHorizon(with: options)
+        subscribeToElectronicHorizonUpdates()
     }
 
     private func setupUpcomingIntersectionLabel() {
@@ -62,7 +71,9 @@ class ElectronicHorizonEventsViewController: UIViewController {
 
     @objc private func didUpdateElectronicHorizonPosition(_ notification: Notification) {
         let horizonTreeKey = RoadGraph.NotificationUserInfoKey.treeKey
-        guard let horizonTree = notification.userInfo?[horizonTreeKey] as? RoadGraph.Edge else {
+        guard let horizonTree = notification.userInfo?[horizonTreeKey] as? RoadGraph.Edge,
+              let position = notification.userInfo?[RoadGraph.NotificationUserInfoKey.positionKey] as? RoadGraph.Position,
+              let updatesMostProbablePath = notification.userInfo?[RoadGraph.NotificationUserInfoKey.updatesMostProbablePathKey] as? Bool else {
             return
         }
 
@@ -71,8 +82,14 @@ class ElectronicHorizonEventsViewController: UIViewController {
         updateLabel(currentStreetName: currentStreetName, predictedCrossStreet: upcomingCrossStreet)
 
         // Drawing the most probable path
-        let mostProbablePath = routeLine(from: horizonTree, roadGraph: passiveLocationManager.roadGraph)
-        updateMostProbablePath(with: mostProbablePath)
+        if updatesMostProbablePath {
+            let mostProbablePath = routeLine(from: horizonTree, roadGraph: passiveLocationManager.roadGraph)
+            updateMostProbablePath(with: mostProbablePath)
+        }
+        
+        updateMostProbablePathLayer(fractionFromStart: position.fractionFromStart,
+                                    roadGraph: passiveLocationManager.roadGraph,
+                                    currentEdge: horizonTree.identifier)
     }
 
     private func streetName(for edge: RoadGraph.Edge) -> String? {
@@ -123,9 +140,13 @@ class ElectronicHorizonEventsViewController: UIViewController {
     private func routeLine(from edge: RoadGraph.Edge, roadGraph: RoadGraph) -> [LocationCoordinate2D] {
         var coordinates = [LocationCoordinate2D]()
         var edge: RoadGraph.Edge? = edge
+        totalDistance = 0.0
         while let currentEdge = edge {
             if let shape = roadGraph.edgeShape(edgeIdentifier: currentEdge.identifier) {
                 coordinates.append(contentsOf: shape.coordinates.dropFirst(coordinates.isEmpty ? 0 : 1))
+            }
+            if let distance = roadGraph.edgeMetadata(edgeIdentifier: currentEdge.identifier)?.length {
+                totalDistance += distance
             }
             edge = currentEdge.outletEdges.max(by: { $0.probability < $1.probability })
         }
@@ -138,9 +159,20 @@ class ElectronicHorizonEventsViewController: UIViewController {
                                                                            geoJSON: .feature(feature))
     }
     
+    private func updateMostProbablePathLayer(fractionFromStart: Double,
+                                             roadGraph: RoadGraph,
+                                             currentEdge: RoadGraph.Edge.Identifier) {
+        if totalDistance > 0.0,
+           let currentLength = roadGraph.edgeMetadata(edgeIdentifier: currentEdge)?.length {
+            let fraction = fractionFromStart * currentLength / totalDistance
+            updateMostProbablePathLayerFraction(fraction)
+        }
+    }
+    
     private func setupMostProbablePathStyle() {
         var source = GeoJSONSource()
         source.data = .geometry(Geometry.lineString(LineString([])))
+        source.lineMetrics = true
         try? navigationMapView.mapView.mapboxMap.style.addSource(source, id: sourceIdentifier)
         
         var layer = LineLayer(id: layerIdentifier)
@@ -152,10 +184,29 @@ class ElectronicHorizonEventsViewController: UIViewController {
                 RouteLineWidthByZoomLevel.mapValues { $0 * 0.5 }
             }
         )
-        layer.lineColor = .constant(.init(UIColor.green.withAlphaComponent(0.9)))
+        layer.lineColor = .constant(.init(routeLineColor))
         layer.lineCap = .constant(.round)
         layer.lineJoin = .constant(.miter)
         layer.minZoom = 9
         try? navigationMapView.mapView.mapboxMap.style.addLayer(layer)
+    }
+    
+    private func updateMostProbablePathLayerFraction(_ fraction: Double) {
+        let nextDown = max(fraction.nextDown, 0.0)
+        let exp = Exp(.step) {
+            Exp(.lineProgress)
+            traversedRouteColor
+            nextDown
+            traversedRouteColor
+            fraction
+            routeLineColor
+        }
+        
+        if let data = try? JSONEncoder().encode(exp.self),
+           let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) {
+            try? navigationMapView.mapView.mapboxMap.style.setLayerProperty(for: layerIdentifier,
+                                                                            property: "line-gradient",
+                                                                            value: jsonObject)
+        }
     }
 }
