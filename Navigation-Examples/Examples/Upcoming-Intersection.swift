@@ -42,7 +42,8 @@ class ElectronicHorizonEventsViewController: UIViewController {
     }
     
     func setupElectronicHorizonUpdates() {
-        let options = ElectronicHorizonOptions(length: 500, expansionLevel: 0, branchLength: 0, minTimeDeltaBetweenUpdates: nil)
+        // Customize the `ElectronicHorizonOptions` for `PassiveLocationManager` to start Electronic Horizon updates.
+        let options = ElectronicHorizonOptions(length: 500, expansionLevel: 1, branchLength: 50, minTimeDeltaBetweenUpdates: nil)
         passiveLocationManager.startUpdatingElectronicHorizon(with: options)
         subscribeToElectronicHorizonUpdates()
     }
@@ -81,12 +82,14 @@ class ElectronicHorizonEventsViewController: UIViewController {
         let upcomingCrossStreet = nearestCrossStreetName(from: horizonTree)
         updateLabel(currentStreetName: currentStreetName, predictedCrossStreet: upcomingCrossStreet)
 
-        // Drawing the most probable path
+        // Update the most probable path when the position update indicates a new most probable path (MPP).
         if updatesMostProbablePath {
             let mostProbablePath = routeLine(from: horizonTree, roadGraph: passiveLocationManager.roadGraph)
             updateMostProbablePath(with: mostProbablePath)
         }
         
+        // Update the most probable path layer when the position update indicates
+        // a change of the fraction of the point traveled distance to the current edge’s length.
         updateMostProbablePathLayer(fractionFromStart: position.fractionFromStart,
                                     roadGraph: passiveLocationManager.roadGraph,
                                     currentEdge: horizonTree.identifier)
@@ -141,6 +144,8 @@ class ElectronicHorizonEventsViewController: UIViewController {
         var coordinates = [LocationCoordinate2D]()
         var edge: RoadGraph.Edge? = edge
         totalDistance = 0.0
+        
+        // Update the route line shape and total distance of the most propable path.
         while let currentEdge = edge {
             if let shape = roadGraph.edgeShape(edgeIdentifier: currentEdge.identifier) {
                 coordinates.append(contentsOf: shape.coordinates.dropFirst(coordinates.isEmpty ? 0 : 1))
@@ -162,6 +167,8 @@ class ElectronicHorizonEventsViewController: UIViewController {
     private func updateMostProbablePathLayer(fractionFromStart: Double,
                                              roadGraph: RoadGraph,
                                              currentEdge: RoadGraph.Edge.Identifier) {
+        // Based on the length of current edge and the total distance of the most propable path (MPP),
+        // calculate the fraction of the point traveled distance to the whole most propable path (MPP).
         if totalDistance > 0.0,
            let currentLength = roadGraph.edgeMetadata(edgeIdentifier: currentEdge)?.length {
             let fraction = fractionFromStart * currentLength / totalDistance
@@ -191,6 +198,8 @@ class ElectronicHorizonEventsViewController: UIViewController {
         try? navigationMapView.mapView.mapboxMap.style.addLayer(layer)
     }
     
+    // Update the line gradient property of the most probable path line layer,
+    // so the part of the most probable path that has been traversed will be rendered with full transparency.
     private func updateMostProbablePathLayerFraction(_ fraction: Double) {
         let nextDown = max(fraction.nextDown, 0.0)
         let exp = Exp(.step) {
