@@ -145,7 +145,7 @@ class ElectronicHorizonEventsViewController: UIViewController {
         var edge: RoadGraph.Edge? = edge
         totalDistance = 0.0
         
-        // Update the route line shape and total distance of the most propable path.
+        // Update the route line shape and total distance of the most probable path.
         while let currentEdge = edge {
             if let shape = roadGraph.edgeShape(edgeIdentifier: currentEdge.identifier) {
                 coordinates.append(contentsOf: shape.coordinates.dropFirst(coordinates.isEmpty ? 0 : 1))
@@ -167,8 +167,8 @@ class ElectronicHorizonEventsViewController: UIViewController {
     private func updateMostProbablePathLayer(fractionFromStart: Double,
                                              roadGraph: RoadGraph,
                                              currentEdge: RoadGraph.Edge.Identifier) {
-        // Based on the length of current edge and the total distance of the most propable path (MPP),
-        // calculate the fraction of the point traveled distance to the whole most propable path (MPP).
+        // Based on the length of current edge and the total distance of the most probable path (MPP),
+        // calculate the fraction of the point traveled distance to the whole most probable path (MPP).
         if totalDistance > 0.0,
            let currentLength = roadGraph.edgeMetadata(edgeIdentifier: currentEdge)?.length {
             let fraction = fractionFromStart * currentLength / totalDistance
