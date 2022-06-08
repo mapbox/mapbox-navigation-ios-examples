@@ -142,7 +142,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         let navigationService = MapboxNavigationService(routeResponse: routeResponse,
                                                         routeIndex: currentRouteIndex,
                                                         routeOptions: navigationRouteOptions,
-                                                        routingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)

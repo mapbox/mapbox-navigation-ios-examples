@@ -41,7 +41,7 @@ class CustomRoutingProviderViewController: UIViewController {
                 let navigationService = MapboxNavigationService(routeResponse: response,
                                                                 routeIndex: 0,
                                                                 routeOptions: options,
-                                                                routingProvider: customRoutingProvider, // passing `customRoutingProvider` to ensure it is used for re-routing and refreshing
+                                                                customRoutingProvider: customRoutingProvider, // passing `customRoutingProvider` to ensure it is used for re-routing and refreshing
                                                                 credentials: NavigationSettings.shared.directions.credentials,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 

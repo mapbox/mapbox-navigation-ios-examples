@@ -278,7 +278,7 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
         let navigationService = MapboxNavigationService(routeResponse: routeResponse,
                                                         routeIndex: 0,
                                                         routeOptions: navigationRouteOptions,
-                                                        routingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
