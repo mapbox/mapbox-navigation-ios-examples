@@ -109,7 +109,8 @@ class CustomProvider: RoutingProvider {
         return routeCalculator.calculateRoutes(options: options,
                                                completionHandler: { [weak self] (session, result) in
             switch result {
-            case .failure(_):
+            case .failure(let error):
+                print(error.localizedDescription)
                 completionHandler(session, result)
             case .success(let response):
                 guard let strongSelf = self else {
