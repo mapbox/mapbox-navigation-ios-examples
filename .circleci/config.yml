@@ -14,13 +14,13 @@ jobs:
     parameters:
       xcode:
         type: string
-        default: "13.0"
+        default: "13.4.1"
       device:
         type: string
-        default: "iPhone 8 Plus"
+        default: "iPhone 13 Pro"
       ios:
         type: string
-        default: "14.5"
+        default: "15.5"
     macos:
       xcode: << parameters.xcode >>
     steps:
@@ -47,10 +47,10 @@ workflows:
   workflow:
     jobs:
       - build-job:
-          name: "Xcode_13.0_iOS_14.5"
-          xcode: "13.0.0"
-          ios: "14.5"
-          device: "iPhone 11 Pro"
+          name: "Xcode_13.4.1_iOS_15.5"
+          xcode: "13.4.1"
+          ios: "15.5"
+          device: "iPhone 13 Pro"
       - build-job:
           name: "Xcode_13.0_iOS_15.0"
           xcode: "13.0.0"
