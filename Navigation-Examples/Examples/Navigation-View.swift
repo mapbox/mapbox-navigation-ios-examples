@@ -9,7 +9,7 @@ class NavigationViewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         navigationView = NavigationView(frame: view.bounds)
         navigationView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
@@ -23,8 +23,9 @@ class NavigationViewViewController: UIViewController {
         navigationView.bottomBannerContainerView.isHidden = false
         navigationView.bottomBannerContainerView.heightAnchor.constraint(equalToConstant: 150.0).isActive = true
         navigationView.bottomBannerContainerView.backgroundColor = .white
-        navigationView.isBottomBannerContainerViewExpandable = true
-        navigationView.bottomBannerContainerViewOffset = 50.0
+        // TODO: Make public.
+//        navigationView.bottomBannerContainerView.isExpandable = true
+//        navigationView.bottomBannerContainerView.expansionOffset = 50.0
         
         navigationView.topBannerContainerView.isHidden = false
         navigationView.topBannerContainerView.heightAnchor.constraint(equalToConstant: 50.0).isActive = true

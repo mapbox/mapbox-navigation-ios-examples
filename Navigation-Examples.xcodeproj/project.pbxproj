@@ -14,6 +14,7 @@
 		2B521D522409242A00984CF8 /* CustomBottomBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */; };
 		2B5470632816C74A0068DA3F /* Custom-RoutingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5470622816C74A0068DA3F /* Custom-RoutingProvider.swift */; };
 		6CD94175657B369FB9C6B8B5 /* Pods_DocsCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9107365E41DB56AF5F37BEE2 /* Pods_DocsCode.framework */; };
+		8A0A0171289882D800E4D8CA /* Navigation-View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0A0170289882D800E4D8CA /* Navigation-View.swift */; };
 		8A0B182326553482005107DE /* CustomSegue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A0B182226553482005107DE /* CustomSegue.storyboard */; };
 		8A2DFA57261650A60034A87E /* CustomCameraStateTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFA55261650A60034A87E /* CustomCameraStateTransition.swift */; };
 		8A2DFA58261650A60034A87E /* CustomViewportDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFA56261650A60034A87E /* CustomViewportDataSource.swift */; };
@@ -64,6 +65,7 @@
 		2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomBottomBannerView.xib; sourceTree = "<group>"; };
 		2B5470622816C74A0068DA3F /* Custom-RoutingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-RoutingProvider.swift"; sourceTree = "<group>"; };
 		751C9DE4E717073D370EB4EF /* Pods-DocsCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocsCode.release.xcconfig"; path = "Target Support Files/Pods-DocsCode/Pods-DocsCode.release.xcconfig"; sourceTree = "<group>"; };
+		8A0A0170289882D800E4D8CA /* Navigation-View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Navigation-View.swift"; sourceTree = "<group>"; };
 		8A0B182226553482005107DE /* CustomSegue.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomSegue.storyboard; sourceTree = "<group>"; };
 		8A2DFA55261650A60034A87E /* CustomCameraStateTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraStateTransition.swift; sourceTree = "<group>"; };
 		8A2DFA56261650A60034A87E /* CustomViewportDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewportDataSource.swift; sourceTree = "<group>"; };
@@ -212,7 +214,6 @@
 				E4F99A65CCB2B9CB623270EE /* Pods-Navigation-Examples.debug.xcconfig */,
 				0544DEF056F7B94F491CBD53 /* Pods-Navigation-Examples.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -278,6 +279,7 @@
 				11DC36F126161DAF0042CD4A /* Location-Snapping.swift */,
 				11B6E81626176F3600872E4D /* Upcoming-Intersection.swift */,
 				B4F805ED26791AD900D5F1C8 /* Custom-User-Location.swift */,
+				8A0A0170289882D800E4D8CA /* Navigation-View.swift */,
 				8AFBF217265E851700468551 /* CustomSegue */,
 				8A2DFA52261650600034A87E /* NavigationCamera */,
 				8AC9129E2494118400B6941E /* TestData */,
@@ -628,6 +630,7 @@
 				C5C0D63820589422003A3B1D /* Custom-Server.swift in Sources */,
 				C3893F1C25F96BDC0058A987 /* Custom-Waypoints.swift in Sources */,
 				8A31388726402DF400763714 /* Navigation-From-Segue.swift in Sources */,
+				8A0A0171289882D800E4D8CA /* Navigation-View.swift in Sources */,
 				B4F805EE26791AD900D5F1C8 /* Custom-User-Location.swift in Sources */,
 				C346744E263C57610068A65E /* Beta-Query-Parameters.swift in Sources */,
 				2B521D4E24090A3A00984CF8 /* CustomBarsViewController.swift in Sources */,
