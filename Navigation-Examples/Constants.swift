@@ -181,5 +181,12 @@ let listOfExamples: [NamedController] = [
         controller: CustomRoutingProviderViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
+    ),
+    (
+        name: "Navigation View",
+        description: "Demonstrates how to use NavigationView.",
+        controller: NavigationViewViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
     )
 ]
