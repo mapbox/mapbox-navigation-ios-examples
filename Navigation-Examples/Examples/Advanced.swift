@@ -138,16 +138,16 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
         
         startButton.isHidden = true
         
+        // Hide top and bottom container views before animating their presentation.
+        navigationViewController.navigationView.bottomBannerContainerView.hide(animated: false)
+        navigationViewController.navigationView.topBannerContainerView.hide(animated: false)
+        
+        // Hide `WayNameView`, `FloatingStackView` and `SpeedLimitView` to smoothly present them.
+        navigationViewController.navigationView.wayNameView.alpha = 0.0
+        navigationViewController.navigationView.floatingStackView.alpha = 0.0
+        navigationViewController.navigationView.speedLimitView.alpha = 0.0
+        
         present(navigationViewController, animated: false) {
-            // Hide top and bottom container views before animating their presentation.
-            navigationViewController.navigationView.bottomBannerContainerView.hide(animated: false)
-            navigationViewController.navigationView.topBannerContainerView.hide(animated: false)
-            
-            // Hide `WayNameView`, `FloatingStackView` and `SpeedLimitView` to smoothly present them.
-            navigationViewController.navigationView.wayNameView.alpha = 0.0
-            navigationViewController.navigationView.floatingStackView.alpha = 0.0
-            navigationViewController.navigationView.speedLimitView.alpha = 0.0
-            
             // Animate top and bottom banner views presentation.
             let duration = 1.0
             navigationViewController.navigationView.bottomBannerContainerView.show(duration: duration,
@@ -156,7 +156,7 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
                 navigationViewController.navigationView.floatingStackView.alpha = 1.0
                 navigationViewController.navigationView.speedLimitView.alpha = 1.0
             })
-            navigationViewController.navigationView.topBannerContainerView.show(duration: 1.0)
+            navigationViewController.navigationView.topBannerContainerView.show(duration: duration)
         }
     }
     

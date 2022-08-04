@@ -15,10 +15,9 @@ let listOfExamples: [NamedController] = [
         description:"""
         Demonstrates how to display a custom map style and how to apply stylized components in the UI.
         This example also allows the user to select an alternate route. Long press on the map to begin.
-        Transition between preview and active navigation states is done using `NavigationMapView`
-        instance re-usage. See `NavigationOptions.navigationMapView` property documentation for more
-        information.
-        Note: The Directions API will not always return alternate routes.
+        NavigationViewController reuses a NavigationMapView instance, allowing for a seamless transition
+        between between a route preview and active turn-by-turn navigation.
+        Note: The Directions API will not always return alternative routes.
         """,
         controller: AdvancedViewController.self,
         storyboard: nil,
