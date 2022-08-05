@@ -34,7 +34,7 @@ class ElectronicHorizonEventsViewController: UIViewController {
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.mapView.location.overrideLocationProvider(with: passiveLocationProvider)
         navigationMapView.userLocationStyle = .puck2D()
-        navigationMapView.mapView.mapboxMap.onNext(.styleLoaded, handler: { [weak self] _ in
+        navigationMapView.mapView.mapboxMap.onNext(event: .styleLoaded, handler: { [weak self] _ in
             self?.setupMostProbablePathStyle()
         })
         
