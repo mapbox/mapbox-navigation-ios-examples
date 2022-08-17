@@ -43,7 +43,41 @@ jobs:
           name: DocsCode
           command: xcodebuild -workspace Navigation-Examples.xcworkspace -scheme DocsCode -sdk iphonesimulator -configuration Release -destination "platform=iOS Simulator,name=<< parameters.device >>,OS=<< parameters.ios >>" clean build
 
+  update-version-job:
+    parameters:
+      xcode:
+        type: string
+        default: "13.4.1"
+    macos:
+      xcode: << parameters.xcode >>
+    steps:
+      - checkout
+      - run:
+          name: Prepare .netrc file
+          command: |
+            echo "machine api.mapbox.com" >> ~/.netrc
+            echo "login mapbox" >> ~/.netrc
+            echo "password $SDK_REGISTRY_TOKEN" >> ~/.netrc
+            chmod 600 ~/.netrc
+      - run:
+          name: Update Dependencies
+          command: pod update
+      - run:
+          name: Publish update
+          command: |
+            export GITHUB_WRITER_TOKEN=$(mbx-ci github writer private token)
+            git remote set-url origin "https://x-access-token:$GITHUB_WRITER_TOKEN@github.com/mapbox/mapbox-navigation-ios-examples"
+            git config --global user.email no-reply@mapbox.com && git config --global user.name mapbox-ci
+            VERSION=$( echo << pipeline.git.branch >> | sed 's/^trigger-update-version-//' )
+            ./Scripts/update-version.sh $VERSION
+
 workflows:
+  update-version-workflow:
+    jobs:
+      - update-version-job:
+          filters:
+            branches:
+              only: /^trigger-update-version-.*/
   workflow:
     jobs:
       - build-job:
