@@ -65,7 +65,7 @@ jobs:
       - run:
           name: Publish update
           command: |
-            export GITHUB_WRITER_TOKEN=$(mbx-ci github writer private token)
+            export GITHUB_WRITER_TOKEN=$(mbx-ci github writer public token)
             git remote set-url origin "https://x-access-token:$GITHUB_WRITER_TOKEN@github.com/mapbox/mapbox-navigation-ios-examples"
             git config --global user.email no-reply@mapbox.com && git config --global user.name mapbox-ci
             VERSION=$( echo << pipeline.git.branch >> | sed 's/^trigger-update-version-//' )
