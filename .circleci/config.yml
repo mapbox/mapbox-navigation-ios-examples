@@ -1,5 +1,14 @@
 version: 2.1
 
+commands:
+  install-mbx-ci:
+    steps:
+      - run:
+          name: "Install MBX CI"
+          command: |
+            curl -Ls https://mapbox-release-engineering.s3.amazonaws.com/mbx-ci/latest/mbx-ci-darwin-amd64 > /usr/local/bin/mbx-ci
+            chmod 755 /usr/local/bin/mbx-ci
+
 step-library:
   - &install-swiftlint
        run:
