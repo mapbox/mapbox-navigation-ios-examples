@@ -61,6 +61,13 @@ jobs:
       xcode: << parameters.xcode >>
     steps:
       - checkout
+      - run:
+          name: Prepare .netrc file
+          command: |
+            echo "machine api.mapbox.com" >> ~/.netrc
+            echo "login mapbox" >> ~/.netrc
+            echo "password $SDK_REGISTRY_TOKEN" >> ~/.netrc
+            chmod 600 ~/.netrc
       - install-mbx-ci
       - run:
           name: Prepare .netrc file
