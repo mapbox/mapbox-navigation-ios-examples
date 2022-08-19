@@ -13,7 +13,25 @@ import MapboxMaps
 
 class AdvancedViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate {
     
-    var navigationMapView: NavigationMapView!
+    var navigationMapView: NavigationMapView! {
+        didSet {
+            if oldValue != nil {
+                oldValue.removeFromSuperview()
+            }
+            
+            navigationMapView.translatesAutoresizingMaskIntoConstraints = false
+            
+            view.insertSubview(navigationMapView, at: 0)
+            
+            NSLayoutConstraint.activate([
+                navigationMapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                navigationMapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                navigationMapView.topAnchor.constraint(equalTo: view.topAnchor),
+                navigationMapView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+        }
+    }
+    
     var navigationRouteOptions: NavigationRouteOptions!
     var currentRouteIndex = 0 {
         didSet {
@@ -45,8 +63,7 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
         routes.append(contentsOf: self.routes!.filter {
             $0 != currentRoute
         })
-        navigationMapView.show(routes)
-        navigationMapView.showWaypoints(on: currentRoute)
+        navigationMapView.showcase(routes)
     }
     
     var startButton: UIButton!
@@ -104,14 +121,43 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         
-        let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: routeResponse,
-                                                                   routeIndex: currentRouteIndex,
-                                                                   routeOptions: navigationRouteOptions,
-                                                                   navigationOptions: navigationOptions)
-        navigationViewController.delegate = self
+        let navigationOptions = NavigationOptions(navigationService: navigationService,
+                                                  // Replace default `NavigationMapView` instance with instance that is used in preview mode.
+                                                  navigationMapView: navigationMapView)
         
-        present(navigationViewController, animated: true, completion: nil)
+        let navigationViewController = NavigationViewController(for: routeResponse,
+                                                                routeIndex: currentRouteIndex,
+                                                                routeOptions: navigationRouteOptions,
+                                                                navigationOptions: navigationOptions)
+        navigationViewController.delegate = self
+        navigationViewController.modalPresentationStyle = .fullScreen
+        
+        if let latestValidLocation = navigationMapView.mapView.location.latestLocation?.location {
+            navigationViewController.navigationMapView?.moveUserLocation(to: latestValidLocation)
+        }
+        
+        startButton.isHidden = true
+        
+        // Hide top and bottom container views before animating their presentation.
+        navigationViewController.navigationView.bottomBannerContainerView.hide(animated: false)
+        navigationViewController.navigationView.topBannerContainerView.hide(animated: false)
+        
+        // Hide `WayNameView`, `FloatingStackView` and `SpeedLimitView` to smoothly present them.
+        navigationViewController.navigationView.wayNameView.alpha = 0.0
+        navigationViewController.navigationView.floatingStackView.alpha = 0.0
+        navigationViewController.navigationView.speedLimitView.alpha = 0.0
+        
+        present(navigationViewController, animated: false) {
+            // Animate top and bottom banner views presentation.
+            let duration = 1.0
+            navigationViewController.navigationView.bottomBannerContainerView.show(duration: duration,
+                                                                                   animations: {
+                navigationViewController.navigationView.wayNameView.alpha = 1.0
+                navigationViewController.navigationView.floatingStackView.alpha = 1.0
+                navigationViewController.navigationView.speedLimitView.alpha = 1.0
+            })
+            navigationViewController.navigationView.topBannerContainerView.show(duration: duration)
+        }
     }
     
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
@@ -160,6 +206,41 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
     }
     
     func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
-        dismiss(animated: true, completion: nil)
+        let duration = 1.0
+        navigationViewController.navigationView.topBannerContainerView.hide(duration: duration)
+        navigationViewController.navigationView.bottomBannerContainerView.hide(duration: duration,
+                                                                               animations: {
+            navigationViewController.navigationView.wayNameView.alpha = 0.0
+            navigationViewController.navigationView.floatingStackView.alpha = 0.0
+            navigationViewController.navigationView.speedLimitView.alpha = 0.0
+        },
+                                                                               completion: { [weak self] _ in
+            navigationViewController.dismiss(animated: false) {
+                guard let self = self else { return }
+                
+                // Show previously hidden button that allows to start active navigation.
+                self.startButton.isHidden = false
+                
+                // Since `NavigationViewController` assigns `NavigationMapView`'s delegate to itself,
+                // delegate should be re-assigned back to `NavigationMapView` that is used in preview mode.
+                self.navigationMapView.delegate = self
+                
+                // Replace `NavigationMapView` instance with instance that was used in active navigation.
+                self.navigationMapView = navigationViewController.navigationMapView
+                
+                // Since `NavigationViewController` uses `UserPuckCourseView` as a default style
+                // of the user location indicator - revert to back to default look in preview mode.
+                self.navigationMapView.userLocationStyle = .puck2D()
+                
+                // Showcase originally requested routes.
+                if let routes = self.routes {
+                    let cameraOptions = CameraOptions(bearing: 0.0, pitch: 0.0)
+                    self.navigationMapView.showcase(routes,
+                                                    routesPresentationStyle: .all(shouldFit: true, cameraOptions: cameraOptions),
+                                                    animated: true,
+                                                    duration: duration)
+                }
+            }
+        })
     }
 }
