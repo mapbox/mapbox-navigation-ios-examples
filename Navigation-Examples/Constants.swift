@@ -183,5 +183,12 @@ let listOfExamples: [NamedController] = [
         controller: CustomRoutingProviderViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
+    ),
+    (
+        name: "History Recording",
+        description: "Demonstrates how to create history files in Free drive and Active turn-by-turn navigation.",
+        controller: HistoryRecordingViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
     )
 ]
