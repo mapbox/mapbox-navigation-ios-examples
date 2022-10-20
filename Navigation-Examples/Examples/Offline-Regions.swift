@@ -12,7 +12,7 @@ import MapboxMaps
 import MapboxNavigation
 import MapboxDirections
 
-class OfflineRegionsViewController: UIViewController, NavigationMapViewDelegate {
+class OfflineRegionsViewController: UIViewController {
     // MARK: Setup variables for Tile Management
     let styleURI: StyleURI = .streets
     var region: Region?
@@ -33,7 +33,14 @@ class OfflineRegionsViewController: UIViewController, NavigationMapViewDelegate 
     
     var routeResponse: RouteResponse? {
         didSet {
-            showRouetAndStartButton()
+            showRoutes()
+            showStartButton()
+        }
+    }
+    
+    var routeIndex: Int = 0 {
+        didSet {
+            showRoutes()
         }
     }
     
@@ -90,8 +97,7 @@ class OfflineRegionsViewController: UIViewController, NavigationMapViewDelegate 
         startButton.layer.cornerRadius = 5
         startButton.translatesAutoresizingMaskIntoConstraints = false
         startButton.addTarget(self, action: #selector(tappedStartButton(sender:)), for: .touchUpInside)
-        startButton.isHidden = true
-        startButton.isEnabled = false
+        showStartButton(false)
         view.addSubview(startButton)
         
         startButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true
@@ -99,6 +105,11 @@ class OfflineRegionsViewController: UIViewController, NavigationMapViewDelegate 
         startButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         startButton.sizeToFit()
         startButton.titleLabel?.font = UIFont.systemFont(ofSize: 25)
+    }
+    
+    func showStartButton(_ show: Bool = true) {
+        startButton.isHidden = !show
+        startButton.isEnabled = show
     }
     
     func setupGestureRecognizers() {
@@ -110,6 +121,7 @@ class OfflineRegionsViewController: UIViewController, NavigationMapViewDelegate 
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         let gestureLocation = gesture.location(in: navigationMapView)
         guard gesture.state == .began,
+              downloadButton.isHidden == true,
               let currentCoordinate = passiveLocationManager?.location?.coordinate,
               let destinationCoordinate = navigationMapView?.mapView.mapboxMap.coordinate(for: gestureLocation) else { return }
     
@@ -123,28 +135,26 @@ class OfflineRegionsViewController: UIViewController, NavigationMapViewDelegate 
     }
 
     @objc func tappedStartButton(sender: UIButton) {
-        startButton.isHidden = true
+        showStartButton(false)
         startNavigation()
     }
     
     // MARK: Offline navigation
     
-    func showRouetAndStartButton() {
-        guard let routes = routeResponse?.routes, !routes.isEmpty else { return }
+    func showRoutes() {
+        guard var routes = routeResponse?.routes, !routes.isEmpty else { return }
+        routes.insert(routes.remove(at: routeIndex), at: 0)
         navigationMapView?.showsCongestionForAlternativeRoutes = true
         navigationMapView?.showsRestrictedAreasOnRoute = true
-        navigationMapView?.show(routes)
-        navigationMapView?.showWaypoints(on: routes.first!)
+        navigationMapView?.showcase(routes)
         navigationMapView?.showRouteDurations(along: routes)
-        
-        let action: (UIAlertAction) -> Void = { _ in
-            self.startButton.isHidden = false
-            self.startButton.isEnabled = true
-        }
+    }
+    
+    func showStartButton() {
         let alertController = UIAlertController(title: "Start navigation",
                                                 message: "Turn off network access to start active navigation",
                                                 preferredStyle: .alert)
-        let approveAction = UIAlertAction(title: "OK", style: .default, handler: action)
+        let approveAction = UIAlertAction(title: "OK", style: .default, handler: {_ in self.showStartButton()})
         alertController.addAction(approveAction)
         self.present(alertController, animated: true, completion: nil)
     }
@@ -165,14 +175,14 @@ class OfflineRegionsViewController: UIViewController, NavigationMapViewDelegate 
     func startNavigation() {
         guard let response = routeResponse, let options = options else { return }
         let navigationService = MapboxNavigationService(routeResponse: response,
-                                                        routeIndex: 0,
+                                                        routeIndex: routeIndex,
                                                         routeOptions: options,
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: .always)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
         let navigationViewController = NavigationViewController(for: response,
-                                                                   routeIndex: 0,
+                                                                   routeIndex: routeIndex,
                                                                    routeOptions: options,
                                                                    navigationOptions: navigationOptions)
         navigationViewController.delegate = self
@@ -187,15 +197,12 @@ class OfflineRegionsViewController: UIViewController, NavigationMapViewDelegate 
     // MARK: Create regions
     
     func createRegion() {
-        guard let mapView = navigationMapView?.mapView else { return }
+        guard let location = passiveLocationManager?.location?.coordinate else { return }
         if region == nil {
-            let coordinateBounds = mapView.mapboxMap.coordinateBounds(for: mapView.frame)
-            let coordinates = [
-                coordinateBounds.northeast,
-                coordinateBounds.southeast,
-                coordinateBounds.southwest,
-                coordinateBounds.northwest,
-                coordinateBounds.northeast]
+            // Generate a rectangle based on current user location
+            let distance: CLLocationDistance = 1e4
+            let directions: [CLLocationDegrees] = [45, 135, 225, 315, 45]
+            let coordinates = directions.map { location.coordinate(at: distance, facing: $0) }
             region = Region(bbox: coordinates, identifier: "Current location")
         }
         addRegionBoxLine()
@@ -243,7 +250,7 @@ class OfflineRegionsViewController: UIViewController, NavigationMapViewDelegate 
             guard let self = self, let loadOptions = loadOptions else { return }
             // loadTileRegions returns a Cancelable that allows developers to cancel downloading a region
             _ = self.tileStore.loadTileRegion(forId: region.identifier, loadOptions: loadOptions, progress: { progress in
-                print("progress: \(progress)")
+                print(progress)
             }, completion: { result in
                 switch result {
                 case .success(let region):
@@ -283,6 +290,14 @@ class OfflineRegionsViewController: UIViewController, NavigationMapViewDelegate 
             alertController.addAction(approveAction)
             self.present(alertController, animated: true, completion: nil)
         }
+    }
+}
+
+extension OfflineRegionsViewController: NavigationMapViewDelegate {
+    func navigationMapView(_ navigationMapView: NavigationMapView, didSelect route: Route) {
+        guard let index = routeResponse?.routes?.firstIndex(where: { $0 === route }),
+              index != routeIndex else { return }
+        routeIndex = index
     }
 }
 
