@@ -16,7 +16,7 @@ class OfflineRegionsViewController: UIViewController {
     // MARK: Setup variables for Tile Management
     let styleURI: StyleURI = .streets
     var region: Region?
-    let zoomMin: UInt8 = 5
+    let zoomMin: UInt8 = 0
     let zoomMax: UInt8 = 16
     let offlineManager = OfflineManager(resourceOptions: .init(accessToken: NavigationSettings.shared.directions.credentials.accessToken ?? ""))
     let tileStoreConfiguration: TileStoreConfiguration = .default
@@ -34,7 +34,7 @@ class OfflineRegionsViewController: UIViewController {
     var routeResponse: RouteResponse? {
         didSet {
             showRoutes()
-            showStartButton()
+            showStartNavigationAlert()
         }
     }
     
@@ -150,7 +150,7 @@ class OfflineRegionsViewController: UIViewController {
         navigationMapView?.showRouteDurations(along: routes)
     }
     
-    func showStartButton() {
+    func showStartNavigationAlert() {
         let alertController = UIAlertController(title: "Start navigation",
                                                 message: "Turn off network access to start active navigation",
                                                 preferredStyle: .alert)
