@@ -9,142 +9,240 @@ import UIKit
 import MapboxCoreNavigation
 import MapboxNavigationNative
 import MapboxMaps
+import MapboxNavigation
+import MapboxDirections
 
-class OfflineRegionsViewController: UITableViewController {
+class OfflineRegionsViewController: UIViewController {
     // MARK: Setup variables for Tile Management
     let styleURI: StyleURI = .streets
+    var region: Region?
     let zoomMin: UInt8 = 0
     let zoomMax: UInt8 = 16
-    let offlineManager = OfflineManager(resourceOptions: .init(accessToken: ""))
+    let offlineManager = OfflineManager(resourceOptions: .init(accessToken: NavigationSettings.shared.directions.credentials.accessToken ?? ""))
     let tileStoreConfiguration: TileStoreConfiguration = .default
     let tileStoreLocation: TileStoreConfiguration.Location = .default
     var tileStore: TileStore {
         tileStoreLocation.tileStore
     }
     
+    var downloadButton = UIButton()
+    var startButton = UIButton()
+    var navigationMapView: NavigationMapView?
+    var passiveLocationManager: PassiveLocationManager?
+    var options: NavigationRouteOptions?
+    
+    var routeResponse: RouteResponse? {
+        didSet {
+            showRoutes()
+            showStartNavigationAlert()
+        }
+    }
+    
+    var routeIndex: Int = 0 {
+        didSet {
+            showRoutes()
+        }
+    }
+    
     struct Region {
         var bbox: [CLLocationCoordinate2D]
         var identifier: String
     }
-    
-    // Create some hard-coded regions
-    let regions: [Region] = [
-        Region(bbox: [CLLocationCoordinate2DMake(38.7727560655, -77.0424720699),
-                      CLLocationCoordinate2DMake(38.8899646447, -77.1908975165),
-                      CLLocationCoordinate2DMake(39.0083989651, -77.0365213968),
-                      CLLocationCoordinate2DMake(38.8913858126, -76.8880959502),
-                      CLLocationCoordinate2DMake(38.7727560655, -77.0424720699)], identifier: "Washington DC"),
-        
-        Region(bbox: [CLLocationCoordinate2DMake(40.6815166955, -73.9802146272),
-                      CLLocationCoordinate2DMake(40.7032444267, -74.0405682483),
-                      CLLocationCoordinate2DMake(40.8496846662, -73.9487500055),
-                      CLLocationCoordinate2DMake(40.8280047669, -73.8883963845),
-                      CLLocationCoordinate2DMake(40.6815166955, -73.9802146272)], identifier: "New York"),
-        
-        Region(bbox: [CLLocationCoordinate2DMake(37.7055506911, -122.5211407756),
-                      CLLocationCoordinate2DMake(37.7055506911, -122.3500083596),
-                      CLLocationCoordinate2DMake(37.8141659838, -122.3500083596),
-                      CLLocationCoordinate2DMake(37.8141659838, -122.5211407756),
-                      CLLocationCoordinate2DMake(37.7055506911, -122.5211407756)], identifier: "San Francisco"),
-        
-        Region(bbox: [CLLocationCoordinate2DMake(47.5097685046, -122.4384838738),
-                      CLLocationCoordinate2DMake(47.5097685046, -122.2394838301),
-                      CLLocationCoordinate2DMake(47.7405633331, -122.2394838301),
-                      CLLocationCoordinate2DMake(47.7405633331, -122.4384838738),
-                      CLLocationCoordinate2DMake(47.5097685046, -122.4384838738)], identifier: "Seattle")
-    ]
 
-    // MARK: Setup TableView
+    // MARK: Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationMapView()
+        addDownloadButton()
+        addStartButton()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        displayDownloadPopup()
+    func setupNavigationMapView() {
+        navigationMapView = NavigationMapView(frame: view.bounds)
+        navigationMapView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        navigationMapView?.userLocationStyle = .puck2D()
+        navigationMapView?.delegate = self
+        view.addSubview(navigationMapView!)
+        
+        setupGestureRecognizers()
+        
+        passiveLocationManager = PassiveLocationManager()
+        let passiveLocationProvider = PassiveLocationProvider(locationManager: passiveLocationManager!)
+        navigationMapView?.mapView.location.overrideLocationProvider(with: passiveLocationProvider)
+        
+        navigationMapView?.mapView.mapboxMap.onNext(event: .styleLoaded) { _ in
+            self.createRegion()
+        }
     }
     
-    func displayDownloadPopup() {
-        let alert = UIAlertController(title: "Download Regions?", message: "To proceed, you must download tile regions.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in self.downloadTileRegions() }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+    func addDownloadButton() {
+        downloadButton.setTitle("Download Offline Region", for: .normal)
+        downloadButton.backgroundColor = .blue
+        downloadButton.layer.cornerRadius = 5
+        downloadButton.translatesAutoresizingMaskIntoConstraints = false
+        downloadButton.addTarget(self, action: #selector(tappedDownloadButton(sender:)), for: .touchUpInside)
+        view.addSubview(downloadButton)
+        
+        downloadButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true
+        downloadButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        downloadButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        downloadButton.sizeToFit()
+        downloadButton.titleLabel?.font = UIFont.systemFont(ofSize: 25)
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    func addStartButton() {
+        startButton.setTitle("Start Offline Navigation", for: .normal)
+        startButton.backgroundColor = .blue
+        startButton.layer.cornerRadius = 5
+        startButton.translatesAutoresizingMaskIntoConstraints = false
+        startButton.addTarget(self, action: #selector(tappedStartButton(sender:)), for: .touchUpInside)
+        showStartButton(false)
+        view.addSubview(startButton)
+        
+        startButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true
+        startButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        startButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        startButton.sizeToFit()
+        startButton.titleLabel?.font = UIFont.systemFont(ofSize: 25)
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Regions"
+    func showStartButton(_ show: Bool = true) {
+        startButton.isHidden = !show
+        startButton.isEnabled = show
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 75
+    func setupGestureRecognizers() {
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        navigationMapView?.gestureRecognizers?.filter({ $0 is UILongPressGestureRecognizer }).forEach(longPressGestureRecognizer.require(toFail:))
+        navigationMapView?.addGestureRecognizer(longPressGestureRecognizer)
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return regions.count
+    @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        let gestureLocation = gesture.location(in: navigationMapView)
+        guard gesture.state == .began,
+              downloadButton.isHidden == true,
+              let currentCoordinate = passiveLocationManager?.location?.coordinate,
+              let destinationCoordinate = navigationMapView?.mapView.mapboxMap.coordinate(for: gestureLocation) else { return }
+    
+        options = NavigationRouteOptions(coordinates: [currentCoordinate, destinationCoordinate])
+        requestRoute()
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = regions[indexPath.row].identifier
-        return cell
+    @objc func tappedDownloadButton(sender: UIButton) {
+        downloadButton.isHidden = true
+        downloadTileRegion()
     }
 
-    override func tableView(_ tableView: UITableView,
-                            leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        // Refresh action
-        let action = UIContextualAction(style: .normal,
-                                        title: "Refresh") { [weak self] (_, _, completionHandler) in
-                                            self?.handleRefresh(for: indexPath.row)
-                                            completionHandler(true)
+    @objc func tappedStartButton(sender: UIButton) {
+        showStartButton(false)
+        startNavigation()
+    }
+    
+    // MARK: Offline navigation
+    
+    func showRoutes() {
+        guard var routes = routeResponse?.routes, !routes.isEmpty else { return }
+        routes.insert(routes.remove(at: routeIndex), at: 0)
+        navigationMapView?.showsCongestionForAlternativeRoutes = true
+        navigationMapView?.showsRestrictedAreasOnRoute = true
+        navigationMapView?.showcase(routes)
+        navigationMapView?.showRouteDurations(along: routes)
+    }
+    
+    func showStartNavigationAlert() {
+        let alertController = UIAlertController(title: "Start navigation",
+                                                message: "Turn off network access to start active navigation",
+                                                preferredStyle: .alert)
+        let approveAction = UIAlertAction(title: "OK", style: .default, handler: {_ in self.showStartButton()})
+        alertController.addAction(approveAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func requestRoute() {
+        guard let options = options else { return }
+        Directions.shared.calculate(options) { [weak self] (_, result) in
+            switch result {
+            case .failure(let error):
+                print("Failed to request route with error: \(error.localizedDescription)")
+            case .success(let response):
+                guard let strongSelf = self else { return }
+                strongSelf.routeResponse = response
+            }
         }
-        action.backgroundColor = .systemGreen
-        return UISwipeActionsConfiguration(actions: [action])
     }
     
-    override func tableView(_ tableView: UITableView,
-                            trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        // Delete action
-        let action = UIContextualAction(style: .normal,
-                                        title: "Delete") { [weak self] (_, _, completionHandler) in
-                                            self?.handleDelete(for: indexPath.row)
-                                            completionHandler(true)
+    func startNavigation() {
+        guard let response = routeResponse, let options = options else { return }
+        let navigationService = MapboxNavigationService(routeResponse: response,
+                                                        routeIndex: routeIndex,
+                                                        routeOptions: options,
+                                                        customRoutingProvider: NavigationSettings.shared.directions,
+                                                        credentials: NavigationSettings.shared.directions.credentials,
+                                                        simulating: .always)
+        let navigationOptions = NavigationOptions(navigationService: navigationService)
+        let navigationViewController = NavigationViewController(for: response,
+                                                                   routeIndex: routeIndex,
+                                                                   routeOptions: options,
+                                                                   navigationOptions: navigationOptions)
+        navigationViewController.delegate = self
+        navigationViewController.modalPresentationStyle = .fullScreen
+        
+        present(navigationViewController, animated: true) {
+            self.navigationMapView = nil
+            self.passiveLocationManager = nil
         }
-        action.backgroundColor = .systemRed
-        return UISwipeActionsConfiguration(actions: [action])
     }
     
-    // Swipe actions for refreshing and deleting regions
-    func handleRefresh(for index: Int) {
-        update(region: regions[index])
-        print("Refreshed \(regions[index].identifier) region.")
+    // MARK: Create regions
+    
+    func createRegion() {
+        guard let location = passiveLocationManager?.location?.coordinate else { return }
+        if region == nil {
+            // Generate a rectangle based on current user location
+            let distance: CLLocationDistance = 1e4
+            let directions: [CLLocationDegrees] = [45, 135, 225, 315, 45]
+            let coordinates = directions.map { location.coordinate(at: distance, facing: $0) }
+            region = Region(bbox: coordinates, identifier: "Current location")
+        }
+        addRegionBoxLine()
     }
     
-    func handleDelete(for index: Int) {
-        remove(region: regions[index])
-        print("Deleted \(regions[index].identifier) region.")
+    func addRegionBoxLine() {
+        guard let style = navigationMapView?.mapView.mapboxMap.style,
+              let coordinates = region?.bbox else { return }
+        do {
+            let identifier = "regionBox"
+            var source = GeoJSONSource()
+            source.data = .geometry(.lineString(.init(coordinates)))
+            try style.addSource(source, id: identifier)
+            
+            var layer = LineLayer(id: identifier)
+            layer.source = identifier
+            layer.lineWidth = .constant(3.0)
+            layer.lineColor = .constant(.init(.red))
+            try style.addPersistentLayer(layer)
+        } catch {
+            print("Error \(error.localizedDescription) occured while adding box for region boundary.")
+        }
     }
     
-    // MARK: Offline Regions
-    func downloadTileRegions() {
+    // MARK: Download offline Regions
+    
+    func downloadTileRegion() {
         // Create style package
-        guard let stylePackLoadOptions = StylePackLoadOptions(glyphsRasterizationMode: .ideographsRasterizedLocally, metadata: nil) else { return }
-        _ = offlineManager.loadStylePack(for: styleURI, loadOptions: stylePackLoadOptions, completion: { result in
-            // Confirm successful download
+        guard let region = region,
+              let stylePackLoadOptions = StylePackLoadOptions(glyphsRasterizationMode: .ideographsRasterizedLocally, metadata: nil) else { return }
+        _ = offlineManager.loadStylePack(for: styleURI, loadOptions: stylePackLoadOptions, completion: { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let stylePack):
                 print("Style pack \(stylePack.styleURI) downloaded!")
+                self.download(region: region)
             case .failure(let error):
                 print("Error while downloading style pack: \(error).")
             }
         })
-
-        // Load tile region
-        regions.forEach { region in
-            download(region: region)
-        }
     }
     
     func download(region: Region) {
@@ -157,6 +255,7 @@ class OfflineRegionsViewController: UITableViewController {
                 switch result {
                 case .success(let region):
                     print("\(region.id) downloaded!")
+                    self.showDownloadCompletionAlert()
                 case .failure(let error):
                     print("Error while downloading region: \(error)")
                 }
@@ -164,22 +263,11 @@ class OfflineRegionsViewController: UITableViewController {
         }
     }
     
-    func update(region: Region) {
-        // Updating a region is done by the same scenario as downloading a new one
-        download(region: region)
-    }
-    
-    func remove(region: Region) {
-        tileStore.removeTileRegion(forId: region.identifier)
-    }
-    
     // Helper method for creating TileRegionLoadOptions that are needed to download regions
     func tileRegionLoadOptions(for region: Region, completion: @escaping (TileRegionLoadOptions?) -> Void) {
-        let mapsDescriptor = offlineManager.createTilesetDescriptor(for: .init(
-            styleURI: styleURI,
-            zoomRange: zoomMin...zoomMax
-        ))
-        
+        let tilesetDescriptorOptions = TilesetDescriptorOptions(styleURI: styleURI,
+                                                                zoomRange: zoomMin...zoomMax)
+        let mapsDescriptor = offlineManager.createTilesetDescriptor(for: tilesetDescriptorOptions)
         TilesetDescriptorFactory.getLatest { navigationDescriptor in
             completion(
                 TileRegionLoadOptions(
@@ -190,6 +278,34 @@ class OfflineRegionsViewController: UITableViewController {
                     networkRestriction: .none
                 )
             )
+        }
+    }
+    
+    func showDownloadCompletionAlert() {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: "Downloading completed",
+                                                    message: "Long press location inside the box to get directions",
+                                                    preferredStyle: .alert)
+            let approveAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(approveAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+}
+
+extension OfflineRegionsViewController: NavigationMapViewDelegate {
+    func navigationMapView(_ navigationMapView: NavigationMapView, didSelect route: Route) {
+        guard let index = routeResponse?.routes?.firstIndex(where: { $0 === route }),
+              index != routeIndex else { return }
+        routeIndex = index
+    }
+}
+
+extension OfflineRegionsViewController: NavigationViewControllerDelegate {
+    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
+        navigationViewController.dismiss(animated: false) {
+            self.setupNavigationMapView()
+            self.addStartButton()
         }
     }
 }
