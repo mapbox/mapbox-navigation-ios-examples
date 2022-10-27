@@ -12,22 +12,20 @@ import MapboxDirections
 import MapboxMaps
 
 class HistoryRecordingViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate {
-    
     var navigationMapView: NavigationMapView! {
         didSet {
             if let navigationMapView = oldValue {
                 navigationMapView.removeFromSuperview()
             }
             
-            if let navigationMapView = navigationMapView {
-                self.view.addSubview(navigationMapView)
+            if navigationMapView != nil {
                 configure()
             }
         }
     }
     
     private var passiveLocationManager: PassiveLocationManager?
-
+    
     var navigationRouteOptions: NavigationRouteOptions!
     
     var currentRouteIndex = 0 {
@@ -67,32 +65,27 @@ class HistoryRecordingViewController: UIViewController, NavigationMapViewDelegat
     var startButton: UIButton!
     
     let defaultHistoryDirectoryURL: URL = {
-          let basePath: String
-          if let applicationSupportPath =
-              NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first {
-              basePath = applicationSupportPath
-          } else {
-              basePath = NSTemporaryDirectory()
-          }
-          let historyDirectoryURL = URL(fileURLWithPath: basePath, isDirectory: true)
-              .appendingPathComponent("com.mapbox.Example")
-              .appendingPathComponent("NavigationHistory")
+        let basePath: String
+        if let applicationSupportPath =
+            NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first {
+            basePath = applicationSupportPath
+        } else {
+            basePath = NSTemporaryDirectory()
+        }
+        let historyDirectoryURL = URL(fileURLWithPath: basePath, isDirectory: true)
+            .appendingPathComponent("com.mapbox.Example")
+            .appendingPathComponent("NavigationHistory")
         
-          if FileManager.default.fileExists(atPath: historyDirectoryURL.path) == false {
-              try? FileManager.default.createDirectory(at: historyDirectoryURL,
-                                                       withIntermediateDirectories: true,
-                                                       attributes: nil)
-          }
-          return historyDirectoryURL
-      }()
-   
+        if FileManager.default.fileExists(atPath: historyDirectoryURL.path) == false {
+            try? FileManager.default.createDirectory(at: historyDirectoryURL,
+                                                     withIntermediateDirectories: true,
+                                                     attributes: nil)
+        }
+        return historyDirectoryURL
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         if navigationMapView == nil {
             navigationMapView = NavigationMapView(frame: view.bounds)
         }
@@ -108,15 +101,15 @@ class HistoryRecordingViewController: UIViewController, NavigationMapViewDelegat
         
         PassiveLocationManager.stopRecordingHistory { historyFileUrl in
             guard let historyFileUrl = historyFileUrl else { return }
-                print("Free Drive History file has been successfully saved at the path: \(historyFileUrl.path)")
+            print("Free Drive History file has been successfully saved at the path: \(historyFileUrl.path)")
         }
     }
-
+    
     private func configure() {
         PassiveLocationManager.historyDirectoryURL = self.defaultHistoryDirectoryURL
         setupNavigationMapView()
         setupPassiveLocationProvider()
-
+        
         // set long press gesture
         let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         navigationMapView.addGestureRecognizer(gesture)
@@ -133,7 +126,7 @@ class HistoryRecordingViewController: UIViewController, NavigationMapViewDelegat
         startButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
         startButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         view.setNeedsLayout()
-
+        
     }
     
     private func setupPassiveLocationProvider() {
@@ -142,12 +135,12 @@ class HistoryRecordingViewController: UIViewController, NavigationMapViewDelegat
         let passiveLocationProvider = PassiveLocationProvider(locationManager: passiveLocationManager)
         navigationMapView.mapView.location.overrideLocationProvider(with: passiveLocationProvider)
         passiveLocationProvider.startUpdatingLocation()
-        
     }
     
     private func setupNavigationMapView() {
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationMapView.userLocationStyle = .puck2D()
+        navigationMapView.delegate = self
         view.addSubview(navigationMapView)
     }
     
@@ -177,7 +170,7 @@ class HistoryRecordingViewController: UIViewController, NavigationMapViewDelegat
                 print(error.localizedDescription)
             case .success(let response):
                 guard let self = self else { return }
-
+                
                 self.navigationRouteOptions = navigationRouteOptions
                 self.routeResponse = response
                 self.startButton?.isHidden = false
@@ -190,7 +183,7 @@ class HistoryRecordingViewController: UIViewController, NavigationMapViewDelegat
             }
         }
     }
-
+    
     // Override layout lifecycle callback to be able to style the start button.
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -209,17 +202,17 @@ class HistoryRecordingViewController: UIViewController, NavigationMapViewDelegat
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
-
+        
         let navigationOptions = NavigationOptions(navigationService: navigationService)
         let navigationViewController = NavigationViewController(for: routeResponse,
-                                                                   routeIndex: currentRouteIndex,
-                                                                   routeOptions: navigationRouteOptions,
-                                                                   navigationOptions: navigationOptions)
+                                                                routeIndex: currentRouteIndex,
+                                                                routeOptions: navigationRouteOptions,
+                                                                navigationOptions: navigationOptions)
         
         navigationViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen
         navigationViewController.routeLineTracksTraversal = true
-    
+        
         presentAndRemoveNaviagationMapView(navigationViewController)
     }
     
@@ -231,21 +224,25 @@ class HistoryRecordingViewController: UIViewController, NavigationMapViewDelegat
     func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
         RouteController.stopRecordingHistory { historyFileUrl in
             guard let historyFileUrl = historyFileUrl else { return }
-                print("Active Guidance History file has been successfully saved at the path: \(historyFileUrl.path)")
+            print("Active Guidance History file has been successfully saved at the path: \(historyFileUrl.path)")
         }
         dismiss(animated: true, completion: nil)
+        if navigationMapView == nil {
+            navigationMapView = NavigationMapView(frame: view.bounds)
+        }
     }
     
     func presentAndRemoveNaviagationMapView(_ navigationViewController: NavigationViewController,
                                             animated: Bool = true,
                                             completion: CompletionHandler? = nil) {
-        
+
         navigationViewController.modalPresentationStyle = .fullScreen
         present(navigationViewController, animated: animated) {
             completion?()
             self.navigationMapView?.removeFromSuperview()
             self.navigationMapView = nil
             self.passiveLocationManager = nil
+            
             RouteController.historyDirectoryURL = self.defaultHistoryDirectoryURL
             RouteController.startRecordingHistory()
         }
