@@ -106,6 +106,8 @@ class HistoryRecordingViewController: UIViewController, NavigationMapViewDelegat
     }
     
     private func configure() {
+        
+        // Directory setup should be done before `PassiveLocationManager.startRecordingHistory()` call
         PassiveLocationManager.historyDirectoryURL = self.defaultHistoryDirectoryURL
         setupNavigationMapView()
         setupPassiveLocationProvider()
@@ -243,7 +245,10 @@ class HistoryRecordingViewController: UIViewController, NavigationMapViewDelegat
             self.navigationMapView = nil
             self.passiveLocationManager = nil
             
+            // History directory for Active Guidance can be set with `RouteController.historyDirectoryURL`
+            // In this example, this line is not required because the history direcotry has alreday been set by `PassiveLocationManager.historyDirectoryURL`.
             RouteController.historyDirectoryURL = self.defaultHistoryDirectoryURL
+            
             RouteController.startRecordingHistory()
         }
     }
