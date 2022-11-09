@@ -13,6 +13,7 @@
 		2B521D502409240E00984CF8 /* CustomBottomBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B521D4F2409240E00984CF8 /* CustomBottomBannerView.swift */; };
 		2B521D522409242A00984CF8 /* CustomBottomBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */; };
 		2B5470632816C74A0068DA3F /* Custom-RoutingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5470622816C74A0068DA3F /* Custom-RoutingProvider.swift */; };
+		3B39AC1128CB6F7F0052A80E /* History-Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B39AC1028CB6F7F0052A80E /* History-Recording.swift */; };
 		6CD94175657B369FB9C6B8B5 /* Pods_DocsCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9107365E41DB56AF5F37BEE2 /* Pods_DocsCode.framework */; };
 		8A0B182326553482005107DE /* CustomSegue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A0B182226553482005107DE /* CustomSegue.storyboard */; };
 		8A2DFA57261650A60034A87E /* CustomCameraStateTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFA55261650A60034A87E /* CustomCameraStateTransition.swift */; };
@@ -62,6 +63,7 @@
 		2B521D4F2409240E00984CF8 /* CustomBottomBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomBannerView.swift; sourceTree = "<group>"; };
 		2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomBottomBannerView.xib; sourceTree = "<group>"; };
 		2B5470622816C74A0068DA3F /* Custom-RoutingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-RoutingProvider.swift"; sourceTree = "<group>"; };
+		3B39AC1028CB6F7F0052A80E /* History-Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History-Recording.swift"; sourceTree = "<group>"; };
 		751C9DE4E717073D370EB4EF /* Pods-DocsCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocsCode.release.xcconfig"; path = "Target Support Files/Pods-DocsCode/Pods-DocsCode.release.xcconfig"; sourceTree = "<group>"; };
 		8A0B182226553482005107DE /* CustomSegue.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomSegue.storyboard; sourceTree = "<group>"; };
 		8A2DFA55261650A60034A87E /* CustomCameraStateTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraStateTransition.swift; sourceTree = "<group>"; };
@@ -209,7 +211,6 @@
 				E4F99A65CCB2B9CB623270EE /* Pods-Navigation-Examples.debug.xcconfig */,
 				0544DEF056F7B94F491CBD53 /* Pods-Navigation-Examples.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -275,6 +276,7 @@
 				11DC36F126161DAF0042CD4A /* Location-Snapping.swift */,
 				11B6E81626176F3600872E4D /* Upcoming-Intersection.swift */,
 				B4F805ED26791AD900D5F1C8 /* Custom-User-Location.swift */,
+				3B39AC1028CB6F7F0052A80E /* History-Recording.swift */,
 				8AFBF217265E851700468551 /* CustomSegue */,
 				8A2DFA52261650600034A87E /* NavigationCamera */,
 				8AC9129E2494118400B6941E /* TestData */,
@@ -630,6 +632,7 @@
 				8A96379C2492B366008DEF2A /* Route-Deserialization.swift in Sources */,
 				2B521D502409240E00984CF8 /* CustomBottomBannerView.swift in Sources */,
 				B480E428261E4C4600C16FA0 /* Route-Alerts.swift in Sources */,
+				3B39AC1128CB6F7F0052A80E /* History-Recording.swift in Sources */,
 				C58FB8771FE98B0E00C4B491 /* Waypoint-Arrival-Screen.swift in Sources */,
 				C35F1E4D2656967E00EC54CD /* Offline-Regions.swift in Sources */,
 				C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */,
