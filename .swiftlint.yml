@@ -7,3 +7,4 @@ disabled_rules:
   - trailing_whitespace
   - line_length
   - function_body_length
+  - large_tuple

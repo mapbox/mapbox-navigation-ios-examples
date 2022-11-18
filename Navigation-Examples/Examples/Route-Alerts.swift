@@ -29,9 +29,9 @@ class RouteAlertsViewController: UIViewController {
                 }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-                let navigationService = MapboxNavigationService(routeResponse: response,
-                                                                routeIndex: 0,
-                                                                routeOptions: options,
+
+                let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: 0)
+                let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                                 customRoutingProvider: NavigationSettings.shared.directions,
                                                                 credentials: NavigationSettings.shared.directions.credentials,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
@@ -40,10 +40,8 @@ class RouteAlertsViewController: UIViewController {
                 let topAlertsBannerViewController = TopAlertsBarViewController()
                 let navigationOptions = NavigationOptions(navigationService: navigationService,
                                                           topBanner: topAlertsBannerViewController)
-                let navigationViewController = NavigationViewController(for: response,
-                                                                           routeIndex: 0,
-                                                                           routeOptions: options,
-                                                                           navigationOptions: navigationOptions)
+                let navigationViewController = NavigationViewController(for: indexedRouteResponse,
+                                                                        navigationOptions: navigationOptions)
 
                 let parentSafeArea = navigationViewController.view.safeAreaLayoutGuide
                 topAlertsBannerViewController.view.topAnchor.constraint(equalTo: parentSafeArea.topAnchor).isActive = true

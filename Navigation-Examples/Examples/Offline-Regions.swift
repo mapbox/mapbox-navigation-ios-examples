@@ -173,18 +173,15 @@ class OfflineRegionsViewController: UIViewController {
     }
     
     func startNavigation() {
-        guard let response = routeResponse, let options = options else { return }
-        let navigationService = MapboxNavigationService(routeResponse: response,
-                                                        routeIndex: routeIndex,
-                                                        routeOptions: options,
+        guard let response = routeResponse else { return }
+        let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: routeIndex)
+        let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: .always)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: response,
-                                                                   routeIndex: routeIndex,
-                                                                   routeOptions: options,
-                                                                   navigationOptions: navigationOptions)
+        let navigationViewController = NavigationViewController(for: indexedRouteResponse,
+                                                                navigationOptions: navigationOptions)
         navigationViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen
         

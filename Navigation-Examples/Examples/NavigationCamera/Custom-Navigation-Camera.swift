@@ -15,7 +15,6 @@ class CustomNavigationCameraViewController: UIViewController {
     
     var navigationMapView: NavigationMapView!
     var routeResponse: RouteResponse!
-    var navigationRouteOptions: NavigationRouteOptions!
     var startNavigationButton: UIButton!
 
     // MARK: - UIViewController lifecycle methods
@@ -70,18 +69,15 @@ class CustomNavigationCameraViewController: UIViewController {
     }
     
     @objc func startNavigationButtonPressed(_ sender: UIButton) {
-        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
-                                                        routeIndex: 0,
-                                                        routeOptions: navigationRouteOptions,
+        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: 0)
+        let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: routeResponse,
-                                                                   routeIndex: 0,
-                                                                   routeOptions: navigationRouteOptions,
-                                                                   navigationOptions: navigationOptions)
+        let navigationViewController = NavigationViewController(for: indexedRouteResponse,
+                                                                navigationOptions: navigationOptions)
         navigationViewController.modalPresentationStyle = .fullScreen
         
         // Modify default `NavigationViewportDataSource` and `NavigationCameraStateTransition` to change
@@ -102,7 +98,7 @@ class CustomNavigationCameraViewController: UIViewController {
               let origin = navigationMapView.mapView.location.latestLocation?.coordinate else { return }
 
         let destination = navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView))
-        navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, destination])
+        let navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
         Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
             switch result {

@@ -29,9 +29,9 @@ class PredictiveCachingViewController: UIViewController {
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
                 // Since first route is retrieved from response `routeIndex` is set to 0.
-                let navigationService = MapboxNavigationService(routeResponse: response,
-                                                                routeIndex: 0,
-                                                                routeOptions: options,
+
+                let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: 0)
+                let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                                 customRoutingProvider: NavigationSettings.shared.directions,
                                                                 credentials: NavigationSettings.shared.directions.credentials,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
@@ -53,11 +53,8 @@ class PredictiveCachingViewController: UIViewController {
                 
                 let navigationOptions = NavigationOptions(navigationService: navigationService,
                                                           predictiveCacheOptions: predictiveCacheOptions)
-                
-                let navigationViewController = NavigationViewController(for: response,
-                                                                           routeIndex: 0,
-                                                                           routeOptions: options,
-                                                                           navigationOptions: navigationOptions)
+                let navigationViewController = NavigationViewController(for: indexedRouteResponse,
+                                                                        navigationOptions: navigationOptions)
                 navigationViewController.modalPresentationStyle = .fullScreen
                 navigationViewController.routeLineTracksTraversal = true
                 

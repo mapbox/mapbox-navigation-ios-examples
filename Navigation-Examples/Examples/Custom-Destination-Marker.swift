@@ -15,7 +15,6 @@ import MapboxMaps
 class CustomDestinationMarkerController: UIViewController {
     
     var navigationMapView: NavigationMapView!
-    var navigationRouteOptions: NavigationRouteOptions!
     var startNavigationButton: UIButton!
     var routeResponse: RouteResponse!
     
@@ -66,17 +65,13 @@ class CustomDestinationMarkerController: UIViewController {
     }
     
     @objc func tappedButton(_ sender: UIButton) {
-        guard let routeOptions = navigationRouteOptions else { return }
-        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
-                                                        routeIndex: 0,
-                                                        routeOptions: routeOptions,
+        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: 0)
+        let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: routeResponse,
-                                                                routeIndex: 0,
-                                                                routeOptions: routeOptions,
+        let navigationViewController = NavigationViewController(for: indexedRouteResponse,
                                                                 navigationOptions: navigationOptions)
         navigationViewController.modalPresentationStyle = .fullScreen
         navigationViewController.delegate = self
@@ -99,8 +94,7 @@ class CustomDestinationMarkerController: UIViewController {
                 guard let routes = response.routes,
                       let currentRoute = routes.first,
                       let self = self else { return }
-                
-                self.navigationRouteOptions = navigationRouteOptions
+
                 self.routeResponse = response
                 self.startNavigationButton?.isHidden = false
                 
