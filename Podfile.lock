@@ -26,7 +26,7 @@ PODS:
   - MapboxSpeech (2.1.0)
   - Polyline (5.0.2)
   - Solar-dev (3.0.1)
-  - Turf (2.5.0)
+  - Turf (2.6.1)
 
 DEPENDENCIES:
   - MapboxCoreNavigation (~> 2.7.1)
@@ -59,7 +59,7 @@ SPEC CHECKSUMS:
   MapboxSpeech: a3789121e8d91eb9bc9af6ddd60768729a918f71
   Polyline: fce41d72e1146c41c6d081f7656827226f643dff
   Solar-dev: 4612dc9878b9fed2667d23b327f1d4e54e16e8d0
-  Turf: 8adf034c2963a0e587b979c51b5c12c396e29c44
+  Turf: 469ce2c3d22e5e8e4818d5a3b254699a5c89efa4
 
 PODFILE CHECKSUM: c4e2150f75d4b3546f4c9fd7cc9ac2dedcb67a6a
 
