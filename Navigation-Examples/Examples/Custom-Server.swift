@@ -19,7 +19,7 @@ class CustomServerViewController: UIViewController {
         CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
     ])
 
-    weak var navigationViewController: NavigationViewController?
+    var navigationViewController: NavigationViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()

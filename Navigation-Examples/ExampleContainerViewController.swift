@@ -15,6 +15,8 @@ class ExampleContainerViewController: UITableViewController {
     var hasEnteredExample = false
     var pushExampleToViewController = false
     
+    var currentViewController: UIViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = exampleName
@@ -29,8 +31,10 @@ class ExampleContainerViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if hasEnteredExample {
-            if let last = view.subviews.last {
-                last.removeFromSuperview()
+            if let last = currentViewController {
+                last.willMove(toParent: nil)
+                last.view.removeFromSuperview()
+                last.removeFromParent()
                 hasEnteredExample = false
             }
         }
@@ -48,6 +52,8 @@ class ExampleContainerViewController: UITableViewController {
     private func embed(controller: UIViewController, shouldPush: Bool) {
         addChild(controller)
         view.addSubview(controller.view)
+        
+        self.currentViewController = controller
 
         controller.didMove(toParent: self)
         if shouldPush {
