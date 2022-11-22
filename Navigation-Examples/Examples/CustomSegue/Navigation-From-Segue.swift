@@ -9,6 +9,7 @@ import UIKit
 import MapboxNavigation
 import MapboxCoreNavigation
 import MapboxDirections
+import CoreLocation
 
 class SegueViewController: UIViewController {
     

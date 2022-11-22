@@ -10,6 +10,7 @@ import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
 import Turf
+import CoreLocation
 
 class RouteInitializationViewController: UIViewController {
     

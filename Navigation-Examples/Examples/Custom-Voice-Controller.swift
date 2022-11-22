@@ -12,6 +12,7 @@ import MapboxNavigation
 import MapboxDirections
 import MapboxSpeech
 import AVFoundation
+import CoreLocation
 
 class CustomVoiceControllerUI: UIViewController {
     

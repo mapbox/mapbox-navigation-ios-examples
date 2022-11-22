@@ -10,6 +10,7 @@ import UIKit
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
+import CoreLocation
 
 class CustomBarsViewController: UIViewController {
     override func viewDidLoad() {
