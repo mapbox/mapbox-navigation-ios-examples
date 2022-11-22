@@ -14,7 +14,6 @@ import MapboxMaps
 class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate {
     
     var navigationMapView: NavigationMapView!
-    var navigationRouteOptions: MopedRouteOptions!
     
     var routeResponse: RouteResponse? {
         didSet {
@@ -115,20 +114,17 @@ class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, Navi
     }
     
     @objc func tappedStartButton(sender: UIButton) {
-        guard let routeResponse = routeResponse, let navigationRouteOptions = navigationRouteOptions else { return }
+        guard let routeResponse = routeResponse else { return }
 
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
-                                                        routeIndex: 0,
-                                                        routeOptions: navigationRouteOptions,
+        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: 0)
+        let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: routeResponse,
-                                                                   routeIndex: 0,
-                                                                   routeOptions: navigationRouteOptions,
-                                                                   navigationOptions: navigationOptions)
+        let navigationViewController = NavigationViewController(for: indexedRouteResponse,
+                                                                navigationOptions: navigationOptions)
         navigationViewController.delegate = self
 
         present(navigationViewController, animated: true, completion: nil)
@@ -162,8 +158,7 @@ class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, Navi
                 guard let routes = response.routes,
                       let currentRoute = routes.first,
                       let self = self else { return }
-                
-                self.navigationRouteOptions = navigationRouteOptions
+
                 self.routeResponse = response
                 self.startButton?.isHidden = false
                 self.dateTextField?.isHidden = true

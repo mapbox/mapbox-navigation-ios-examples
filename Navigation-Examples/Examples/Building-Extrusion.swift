@@ -134,21 +134,18 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     }
     
     func startNavigation() {
-        guard let routeResponse = routeResponse, let navigationRouteOptions = navigationRouteOptions else {
+        guard let routeResponse = routeResponse else {
             presentAlert(message: "Please select at least one destination coordinate to start navigation.")
             return
         }
 
-        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
-                                                        routeIndex: currentRouteIndex,
-                                                        routeOptions: navigationRouteOptions,
+        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: currentRouteIndex)
+        let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: routeResponse,
-                                                                routeIndex: currentRouteIndex,
-                                                                routeOptions: navigationRouteOptions,
+        let navigationViewController = NavigationViewController(for: indexedRouteResponse,
                                                                 navigationOptions: navigationOptions)
         navigationViewController.routeLineTracksTraversal = true
         navigationViewController.delegate = self

@@ -29,18 +29,15 @@ class CustomStyleUIElements: UIViewController {
                 }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-                let navigationService = MapboxNavigationService(routeResponse: response,
-                                                                routeIndex: 0,
-                                                                routeOptions: routeOptions,
+                let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: 0)
+                let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                                 customRoutingProvider: NavigationSettings.shared.directions,
                                                                 credentials: NavigationSettings.shared.directions.credentials,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 let navigationOptions = NavigationOptions(styles: [CustomDayStyle(), CustomNightStyle()],
                                                           navigationService: navigationService)
-                let navigationViewController = NavigationViewController(for: response,
-                                                                           routeIndex: 0,
-                                                                           routeOptions: routeOptions,
-                                                                           navigationOptions: navigationOptions)
+                let navigationViewController = NavigationViewController(for: indexedRouteResponse,
+                                                                        navigationOptions: navigationOptions)
                 navigationViewController.modalPresentationStyle = .fullScreen
                 // Render part of the route that has been traversed with full transparency, to give the illusion of a disappearing route.
                 navigationViewController.routeLineTracksTraversal = true

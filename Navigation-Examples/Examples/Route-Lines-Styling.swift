@@ -18,8 +18,6 @@ class RouteLinesStylingViewController: UIViewController {
     
     var navigationMapView: NavigationMapView!
     
-    var navigationRouteOptions: NavigationRouteOptions!
-    
     var currentRouteIndex = 0 {
         didSet {
             showCurrentRoute()
@@ -123,19 +121,16 @@ class RouteLinesStylingViewController: UIViewController {
             print("Please select at least one destination coordinate to start navigation.")
             return
         }
-        
-        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
-                                                        routeIndex: currentRouteIndex,
-                                                        routeOptions: navigationRouteOptions,
+
+        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: currentRouteIndex)
+        let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: routeResponse,
-                                                                   routeIndex: currentRouteIndex,
-                                                                   routeOptions: navigationRouteOptions,
-                                                                   navigationOptions: navigationOptions)
+        let navigationViewController = NavigationViewController(for: indexedRouteResponse,
+                                                                navigationOptions: navigationOptions)
         navigationViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen
         
@@ -171,7 +166,6 @@ class RouteLinesStylingViewController: UIViewController {
                 NSLog("Error occured while requesting route: \(error.localizedDescription).")
             case .success(let response):
                 guard let routes = response.routes else { return }
-                self?.navigationRouteOptions = navigationRouteOptions
                 self?.routeResponse = response
                 self?.navigationMapView.show(routes)
                 if let currentRoute = self?.currentRoute {

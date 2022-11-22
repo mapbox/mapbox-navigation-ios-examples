@@ -31,8 +31,7 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
             ])
         }
     }
-    
-    var navigationRouteOptions: NavigationRouteOptions!
+
     var currentRouteIndex = 0 {
         didSet {
             showCurrentRoute()
@@ -112,11 +111,10 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
     }
 
     @objc func tappedButton(sender: UIButton) {
-        guard let routeResponse = routeResponse, let navigationRouteOptions = navigationRouteOptions else { return }
+        guard let routeResponse = routeResponse else { return }
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
-                                                        routeIndex: currentRouteIndex,
-                                                        routeOptions: navigationRouteOptions,
+        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: currentRouteIndex)
+        let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
@@ -125,9 +123,7 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
                                                   // Replace default `NavigationMapView` instance with instance that is used in preview mode.
                                                   navigationMapView: navigationMapView)
         
-        let navigationViewController = NavigationViewController(for: routeResponse,
-                                                                routeIndex: currentRouteIndex,
-                                                                routeOptions: navigationRouteOptions,
+        let navigationViewController = NavigationViewController(for: indexedRouteResponse,
                                                                 navigationOptions: navigationOptions)
         navigationViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen
@@ -187,8 +183,7 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
                 print(error.localizedDescription)
             case .success(let response):
                 guard let self = self else { return }
-                
-                self.navigationRouteOptions = navigationRouteOptions
+
                 self.routeResponse = response
                 self.startButton?.isHidden = false
                 if let routes = self.routes,

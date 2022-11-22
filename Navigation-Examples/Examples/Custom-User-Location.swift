@@ -28,8 +28,6 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
         }
     }
     
-    var navigationRouteOptions: NavigationRouteOptions!
-    
     var routeResponse: RouteResponse? {
         didSet {
             guard let routes = routeResponse?.routes, let currentRoute = routes.first else {
@@ -146,7 +144,6 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
                 self?.waypoints.removeLast()
             case .success(let response):
                 guard let routes = response.routes else { return }
-                self?.navigationRouteOptions = navigationRouteOptions
                 self?.routeResponse = response
                 self?.navigationMapView.show(routes)
                 if let currentRoute = routes.first {
@@ -161,7 +158,7 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
     }
     
     @objc func performAction(_ sender: Any) {
-        guard routeResponse != nil, navigationRouteOptions != nil else {
+        guard routeResponse != nil else {
             let alertController = UIAlertController(title: "Create route",
                                                     message: "Long tap on the map to create a route first.",
                                                     preferredStyle: .alert)
@@ -226,19 +223,16 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
     }
     
     func presentNavigationViewController(_ userLocationStyle: UserLocationStyle? = nil) {
-        guard let routeResponse = routeResponse, let navigationRouteOptions = navigationRouteOptions else { return }
+        guard let routeResponse = routeResponse else { return }
 
-        let navigationService = MapboxNavigationService(routeResponse: routeResponse,
-                                                        routeIndex: 0,
-                                                        routeOptions: navigationRouteOptions,
+        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: 0)
+        let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
-        let navigationViewController = NavigationViewController(for: routeResponse,
-                                                                   routeIndex: 0,
-                                                                   routeOptions: navigationRouteOptions,
-                                                                   navigationOptions: navigationOptions)
+        let navigationViewController = NavigationViewController(for: indexedRouteResponse,
+                                                                navigationOptions: navigationOptions)
         navigationViewController.routeLineTracksTraversal = true
         navigationViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen

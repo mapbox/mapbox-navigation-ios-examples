@@ -29,29 +29,32 @@ class PredictiveCachingViewController: UIViewController {
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
                 // Since first route is retrieved from response `routeIndex` is set to 0.
-                let navigationService = MapboxNavigationService(routeResponse: response,
-                                                                routeIndex: 0,
-                                                                routeOptions: options,
+
+                let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: 0)
+                let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                                 customRoutingProvider: NavigationSettings.shared.directions,
                                                                 credentials: NavigationSettings.shared.directions.credentials,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 
                 // When predictive caching is enabled, the Navigation SDK will create a cache of data within three configurable boundaries.
                 var predictiveCacheOptions = PredictiveCacheOptions()
+                // Predictive cache should be configured separately for navigation and maps
                 // Radius around the user's location. Defaults to 2000 meters.
-                predictiveCacheOptions.routeBufferRadius = 300
+                predictiveCacheOptions.predictiveCacheNavigationOptions.locationOptions.routeBufferRadius = 300
                 // Buffer around the route. Defaults to 500 meters.
-                predictiveCacheOptions.currentLocationRadius = 2000
+                predictiveCacheOptions.predictiveCacheNavigationOptions.locationOptions.currentLocationRadius = 2000
                 // Radius around the destination. Defaults to 5000 meters.
-                predictiveCacheOptions.destinationLocationRadius = 3000
+                predictiveCacheOptions.predictiveCacheNavigationOptions.locationOptions.destinationLocationRadius = 3000
+
+                // You can specify zoom range for map data caching.
+                predictiveCacheOptions.predictiveCacheMapsOptions.zoomRange = 5...12
+                // Location cache properties can also be configured for map data caching.
+                predictiveCacheOptions.predictiveCacheMapsOptions.locationOptions.destinationLocationRadius = 2000
                 
                 let navigationOptions = NavigationOptions(navigationService: navigationService,
                                                           predictiveCacheOptions: predictiveCacheOptions)
-                
-                let navigationViewController = NavigationViewController(for: response,
-                                                                           routeIndex: 0,
-                                                                           routeOptions: options,
-                                                                           navigationOptions: navigationOptions)
+                let navigationViewController = NavigationViewController(for: indexedRouteResponse,
+                                                                        navigationOptions: navigationOptions)
                 navigationViewController.modalPresentationStyle = .fullScreen
                 navigationViewController.routeLineTracksTraversal = true
                 

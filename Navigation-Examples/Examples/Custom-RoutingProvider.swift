@@ -37,19 +37,15 @@ class CustomRoutingProviderViewController: UIViewController {
                 guard let strongSelf = self else {
                     return
                 }
-                
-                let navigationService = MapboxNavigationService(routeResponse: response,
-                                                                routeIndex: 0,
-                                                                routeOptions: options,
-                                                                customRoutingProvider: customRoutingProvider, // passing `customRoutingProvider` to ensure it is used for re-routing and refreshing
+                let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: 0)
+                let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
+                                                                customRoutingProvider: customRoutingProvider,  // passing `customRoutingProvider` to ensure it is used for re-routing and refreshing
                                                                 credentials: NavigationSettings.shared.directions.credentials,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 
                 let navigationOptions = NavigationOptions(navigationService: navigationService)
-                let navigationViewController = NavigationViewController(for: response,
-                                                                           routeIndex: 0,
-                                                                           routeOptions: options,
-                                                                           navigationOptions: navigationOptions)
+                let navigationViewController = NavigationViewController(for: indexedRouteResponse,
+                                                                        navigationOptions: navigationOptions)
                 navigationViewController.modalPresentationStyle = .fullScreen
                 navigationViewController.routeLineTracksTraversal = true
                 
@@ -122,6 +118,11 @@ class CustomProvider: RoutingProvider {
             }
         })
     }
+
+    func calculateRoutes(options: MapboxDirections.RouteOptions,
+                         completionHandler: @escaping IndexedRouteResponseCompletionHandler) -> MapboxCoreNavigation.NavigationProviderRequest? {
+        routeCalculator.calculateRoutes(options: options, completionHandler: completionHandler)
+    }
     
     // Let's make our custom routing provider prevent route refreshes.
     func refreshRoute(indexedRouteResponse: IndexedRouteResponse, fromLegAtIndex: UInt32, completionHandler: @escaping Directions.RouteCompletionHandler) -> NavigationProviderRequest? {
@@ -137,5 +138,17 @@ class CustomProvider: RoutingProvider {
         completionHandler((options, NavigationSettings.shared.directions.credentials),
                             .failure(.unableToRoute))
         return nil
+    }
+
+    func refreshRoute(indexedRouteResponse: MapboxCoreNavigation.IndexedRouteResponse,
+                      fromLegAtIndex startLegIndex: UInt32,
+                      currentRouteShapeIndex: Int,
+                      currentLegShapeIndex: Int,
+                      completionHandler: @escaping MapboxDirections.Directions.RouteCompletionHandler) -> MapboxCoreNavigation.NavigationProviderRequest? {
+        routeCalculator.refreshRoute(indexedRouteResponse: indexedRouteResponse,
+                                     fromLegAtIndex: startLegIndex,
+                                     currentRouteShapeIndex: currentRouteShapeIndex,
+                                     currentLegShapeIndex: currentLegShapeIndex,
+                                     completionHandler: completionHandler)
     }
 }

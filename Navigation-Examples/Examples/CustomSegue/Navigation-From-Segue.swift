@@ -14,8 +14,6 @@ class SegueViewController: UIViewController {
     
     var routeResponse: RouteResponse!
     
-    var navigationRouteOptions: NavigationRouteOptions!
-    
     var navigationOptions: NavigationOptions!
     
     @IBOutlet weak var presentNavigationButton: UIButton!
@@ -27,7 +25,7 @@ class SegueViewController: UIViewController {
         
         let origin = CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648)
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
-        navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, destination])
+        let navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
         Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
             switch result {
@@ -38,9 +36,8 @@ class SegueViewController: UIViewController {
                 
                 self.routeResponse = response
                 
-                let navigationService = MapboxNavigationService(routeResponse: response,
-                                                                routeIndex: 0,
-                                                                routeOptions: self.navigationRouteOptions,
+                let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: 0)
+                let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                                 customRoutingProvider: NavigationSettings.shared.directions,
                                                                 credentials: NavigationSettings.shared.directions.credentials,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
@@ -62,9 +59,8 @@ class SegueViewController: UIViewController {
         switch segue.identifier ?? "" {
         case "NavigationSegue":
             if let navigationViewController = segue.destination as? NavigationViewController {
-                _ = navigationViewController.prepareViewLoading(routeResponse: routeResponse,
-                                                                routeIndex: 0,
-                                                                routeOptions: navigationRouteOptions)
+                let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: 0)
+                _ = navigationViewController.prepareViewLoading(indexedRouteResponse: indexedRouteResponse)
                 // `navigationOptions` property is optional.
                 navigationViewController.navigationOptions = navigationOptions
                 navigationViewController.delegate = self

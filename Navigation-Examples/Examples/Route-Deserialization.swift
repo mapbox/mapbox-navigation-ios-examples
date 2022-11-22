@@ -37,17 +37,14 @@ class RouteDeserializationViewController: UIViewController {
                                               options: .route(routeOptions),
                                               credentials: Directions.shared.credentials)
             
-            let navigationService = MapboxNavigationService(routeResponse: routeResponse,
-                                                            routeIndex: 0,
-                                                            routeOptions: routeOptions,
+            let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: 0)
+            let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                             customRoutingProvider: NavigationSettings.shared.directions,
                                                             credentials: NavigationSettings.shared.directions.credentials,
                                                             simulating: simulationIsEnabled ? .always : .onPoorGPS)
             let navigationOptions = NavigationOptions(navigationService: navigationService)
-            let navigationViewController = NavigationViewController(for: routeResponse,
-                                                                       routeIndex: 0,
-                                                                       routeOptions: routeOptions,
-                                                                       navigationOptions: navigationOptions)
+            let navigationViewController = NavigationViewController(for: indexedRouteResponse,
+                                                                    navigationOptions: navigationOptions)
             navigationViewController.modalPresentationStyle = .fullScreen
             self.present(navigationViewController, animated: true, completion: nil)
         } else {
