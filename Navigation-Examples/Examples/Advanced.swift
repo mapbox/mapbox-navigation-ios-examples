@@ -119,12 +119,8 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         
-        let navigationOptions = NavigationOptions(navigationService: navigationService,
-                                                  // Replace default `NavigationMapView` instance with instance that is used in preview mode.
-                                                  navigationMapView: navigationMapView)
         
-        let navigationViewController = NavigationViewController(for: indexedRouteResponse,
-                                                                navigationOptions: navigationOptions)
+        let navigationViewController = NavigationViewController(navigationService: navigationService)
         navigationViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen
         
@@ -186,10 +182,8 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
 
                 self.routeResponse = response
                 self.startButton?.isHidden = false
-                if let routes = self.routes,
-                   let currentRoute = self.currentRoute {
-                    self.navigationMapView.show(routes)
-                    self.navigationMapView.showWaypoints(on: currentRoute)
+                if let routes = self.routes {
+                    self.navigationMapView.showcase(routes)
                 }
             }
         }
@@ -219,9 +213,6 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
                 // Since `NavigationViewController` assigns `NavigationMapView`'s delegate to itself,
                 // delegate should be re-assigned back to `NavigationMapView` that is used in preview mode.
                 self.navigationMapView.delegate = self
-                
-                // Replace `NavigationMapView` instance with instance that was used in active navigation.
-                self.navigationMapView = navigationViewController.navigationMapView
                 
                 // Since `NavigationViewController` uses `UserPuckCourseView` as a default style
                 // of the user location indicator - revert to back to default look in preview mode.
