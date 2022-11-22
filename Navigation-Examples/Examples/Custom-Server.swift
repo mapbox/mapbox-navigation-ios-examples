@@ -19,7 +19,7 @@ class CustomServerViewController: UIViewController {
         CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
     ])
 
-    var navigationViewController: NavigationViewController?
+    weak var navigationViewController: NavigationViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,7 @@ class CustomServerViewController: UIViewController {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let response):
-                guard let strongSelf = self else {
+                guard let self = self else {
                     return
                 }
                 
@@ -41,12 +41,12 @@ class CustomServerViewController: UIViewController {
                                                                 credentials: NavigationSettings.shared.directions.credentials,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 let navigationOptions = NavigationOptions(navigationService: navigationService)
-                strongSelf.navigationViewController = NavigationViewController(for: indexedRouteResponse,
+                let navigationViewController = NavigationViewController(for: indexedRouteResponse,
                                                                                navigationOptions: navigationOptions)
-                strongSelf.navigationViewController?.modalPresentationStyle = .fullScreen
-                strongSelf.navigationViewController?.delegate = strongSelf
-                
-                strongSelf.present(strongSelf.navigationViewController!, animated: true, completion: nil)
+                navigationViewController.modalPresentationStyle = .fullScreen
+                navigationViewController.delegate = self
+                self.navigationViewController = navigationViewController
+                self.present(navigationViewController, animated: true, completion: nil)
             }
         }
     }
