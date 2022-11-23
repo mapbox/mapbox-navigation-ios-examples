@@ -10,6 +10,7 @@ import UIKit
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
+import CoreLocation
 
 /*
  This example demonstrates how users can control and customize the rerouting process.

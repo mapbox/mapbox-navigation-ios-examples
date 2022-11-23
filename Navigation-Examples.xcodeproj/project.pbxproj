@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,7 +14,6 @@
 		2B521D522409242A00984CF8 /* CustomBottomBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */; };
 		2B5470632816C74A0068DA3F /* Custom-RoutingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5470622816C74A0068DA3F /* Custom-RoutingProvider.swift */; };
 		3B39AC1128CB6F7F0052A80E /* History-Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B39AC1028CB6F7F0052A80E /* History-Recording.swift */; };
-		6CD94175657B369FB9C6B8B5 /* Pods_DocsCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9107365E41DB56AF5F37BEE2 /* Pods_DocsCode.framework */; };
 		8A0B182326553482005107DE /* CustomSegue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A0B182226553482005107DE /* CustomSegue.storyboard */; };
 		8A2DFA57261650A60034A87E /* CustomCameraStateTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFA55261650A60034A87E /* CustomCameraStateTransition.swift */; };
 		8A2DFA58261650A60034A87E /* CustomViewportDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2DFA56261650A60034A87E /* CustomViewportDataSource.swift */; };
@@ -26,7 +25,6 @@
 		8AC9129D2494106100B6941E /* Route-Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC9129C2494106100B6941E /* Route-Initialization.swift */; };
 		8AE033222628EDFF000E7145 /* Route-Lines-Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE033212628EDFF000E7145 /* Route-Lines-Styling.swift */; };
 		8DF510741FEB08F70049DB9C /* Embedded-Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF510731FEB08F70049DB9C /* Embedded-Navigation.swift */; };
-		8DF510751FEB0CA00049DB9C /* MapboxNavigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DF510761FEB0CA00049DB9C /* MapboxNavigation.framework */; };
 		9613F58522E0306500D34E24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961FC4E822E0260A00C72877 /* Assets.xcassets */; };
 		9613F58822E030AC00D34E24 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9613F58622E030AC00D34E24 /* LaunchScreen.storyboard */; };
 		9613F58922E030AC00D34E24 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9613F58722E030AC00D34E24 /* Main.storyboard */; };
@@ -52,11 +50,11 @@
 		C5C0D63820589422003A3B1D /* Custom-Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C0D63720589422003A3B1D /* Custom-Server.swift */; };
 		C5F130A01FE9B44600463E86 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1309F1FE9B44600463E86 /* Constants.swift */; };
 		C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F130A51FEB2D7800463E86 /* Advanced.swift */; };
-		CC6D97FED3D0CBEF7CA47168 /* Pods_Navigation_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8592DC8F0A49F0C2214E1AC /* Pods_Navigation_Examples.framework */; };
+		FCE40785292CF2FD000CFEC3 /* MapboxCoreNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = FCE40784292CF2FD000CFEC3 /* MapboxCoreNavigation */; };
+		FCE40787292CF2FD000CFEC3 /* MapboxNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = FCE40786292CF2FD000CFEC3 /* MapboxNavigation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0544DEF056F7B94F491CBD53 /* Pods-Navigation-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples.release.xcconfig"; path = "Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples.release.xcconfig"; sourceTree = "<group>"; };
 		11B6E81626176F3600872E4D /* Upcoming-Intersection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Upcoming-Intersection.swift"; sourceTree = "<group>"; };
 		11DC36F126161DAF0042CD4A /* Location-Snapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location-Snapping.swift"; sourceTree = "<group>"; };
 		2B521D4D24090A3A00984CF8 /* CustomBarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarsViewController.swift; sourceTree = "<group>"; };
@@ -64,7 +62,6 @@
 		2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomBottomBannerView.xib; sourceTree = "<group>"; };
 		2B5470622816C74A0068DA3F /* Custom-RoutingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-RoutingProvider.swift"; sourceTree = "<group>"; };
 		3B39AC1028CB6F7F0052A80E /* History-Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History-Recording.swift"; sourceTree = "<group>"; };
-		751C9DE4E717073D370EB4EF /* Pods-DocsCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocsCode.release.xcconfig"; path = "Target Support Files/Pods-DocsCode/Pods-DocsCode.release.xcconfig"; sourceTree = "<group>"; };
 		8A0B182226553482005107DE /* CustomSegue.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomSegue.storyboard; sourceTree = "<group>"; };
 		8A2DFA55261650A60034A87E /* CustomCameraStateTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraStateTransition.swift; sourceTree = "<group>"; };
 		8A2DFA56261650A60034A87E /* CustomViewportDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewportDataSource.swift; sourceTree = "<group>"; };
@@ -79,7 +76,6 @@
 		8D6D36A620001F0400C2B61B /* EmbeddedExamples.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EmbeddedExamples.storyboard; sourceTree = "<group>"; };
 		8DF510731FEB08F70049DB9C /* Embedded-Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Embedded-Navigation.swift"; sourceTree = "<group>"; };
 		8DF510761FEB0CA00049DB9C /* MapboxNavigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxNavigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9107365E41DB56AF5F37BEE2 /* Pods_DocsCode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DocsCode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9613F58622E030AC00D34E24 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9613F58722E030AC00D34E24 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		961FC4E722E0260A00C72877 /* DocsCode-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DocsCode-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -88,7 +84,6 @@
 		961FC4F122E0260A00C72877 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		961FC4F222E0260A00C72877 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		961FC4FE22E0265300C72877 /* DocsCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocsCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A8D998B34DD96F479CF96712 /* Pods-DocsCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocsCode.debug.xcconfig"; path = "Target Support Files/Pods-DocsCode/Pods-DocsCode.debug.xcconfig"; sourceTree = "<group>"; };
 		B480E423261E4C3500C16FA0 /* Predictive-Caching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predictive-Caching.swift"; sourceTree = "<group>"; };
 		B480E427261E4C4600C16FA0 /* Route-Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Route-Alerts.swift"; sourceTree = "<group>"; };
 		B4F805ED26791AD900D5F1C8 /* Custom-User-Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-User-Location.swift"; sourceTree = "<group>"; };
@@ -111,8 +106,6 @@
 		C5C0D63720589422003A3B1D /* Custom-Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Server.swift"; sourceTree = "<group>"; };
 		C5F1309F1FE9B44600463E86 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C5F130A51FEB2D7800463E86 /* Advanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advanced.swift; sourceTree = "<group>"; };
-		C8592DC8F0A49F0C2214E1AC /* Pods_Navigation_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E4F99A65CCB2B9CB623270EE /* Pods-Navigation-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +113,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6CD94175657B369FB9C6B8B5 /* Pods_DocsCode.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,8 +120,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DF510751FEB0CA00049DB9C /* MapboxNavigation.framework in Frameworks */,
-				CC6D97FED3D0CBEF7CA47168 /* Pods_Navigation_Examples.framework in Frameworks */,
+				FCE40785292CF2FD000CFEC3 /* MapboxCoreNavigation in Frameworks */,
+				FCE40787292CF2FD000CFEC3 /* MapboxNavigation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,17 +195,6 @@
 			path = NavigationTutorial;
 			sourceTree = "<group>";
 		};
-		A15B2D49443615EF14D2EDD7 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				A8D998B34DD96F479CF96712 /* Pods-DocsCode.debug.xcconfig */,
-				751C9DE4E717073D370EB4EF /* Pods-DocsCode.release.xcconfig */,
-				E4F99A65CCB2B9CB623270EE /* Pods-Navigation-Examples.debug.xcconfig */,
-				0544DEF056F7B94F491CBD53 /* Pods-Navigation-Examples.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		C58FB84D1FE899B800C4B491 = {
 			isa = PBXGroup;
 			children = (
@@ -222,7 +203,6 @@
 				8A5BBF6A2489B0A000FA4960 /* Scripts */,
 				C58FB8571FE899B800C4B491 /* Products */,
 				DE25A5BE57093A8DAF382733 /* Frameworks */,
-				A15B2D49443615EF14D2EDD7 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -289,8 +269,6 @@
 			isa = PBXGroup;
 			children = (
 				8DF510761FEB0CA00049DB9C /* MapboxNavigation.framework */,
-				9107365E41DB56AF5F37BEE2 /* Pods_DocsCode.framework */,
-				C8592DC8F0A49F0C2214E1AC /* Pods_Navigation_Examples.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -302,13 +280,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 961FC51122E0265400C72877 /* Build configuration list for PBXNativeTarget "DocsCode" */;
 			buildPhases = (
-				55257E5545A2F032E687BC09 /* [CP] Check Pods Manifest.lock */,
 				1179FA72263B0735004965CE /* Run SwiftLint */,
 				961FC4FA22E0265300C72877 /* Sources */,
 				961FC4FB22E0265300C72877 /* Frameworks */,
 				961FC4FC22E0265300C72877 /* Resources */,
 				8AAD08F22486DA4700664446 /* Apply Mapbox Access Token */,
-				F950CC2C42695542D911B66E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -323,19 +299,21 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C58FB8681FE899B800C4B491 /* Build configuration list for PBXNativeTarget "Navigation-Examples" */;
 			buildPhases = (
-				681991D14C08B65381FAF053 /* [CP] Check Pods Manifest.lock */,
 				1179FA71263ACDD3004965CE /* Run SwiftLint */,
 				C58FB8521FE899B800C4B491 /* Sources */,
 				C58FB8531FE899B800C4B491 /* Frameworks */,
 				C58FB8541FE899B800C4B491 /* Resources */,
 				C543192F1FFC41470066A20A /* Apply Mapbox Access Token */,
-				891789705D70A1C1104FF552 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "Navigation-Examples";
+			packageProductDependencies = (
+				FCE40784292CF2FD000CFEC3 /* MapboxCoreNavigation */,
+				FCE40786292CF2FD000CFEC3 /* MapboxNavigation */,
+			);
 			productName = "Navigation Examples";
 			productReference = C58FB8561FE899B800C4B491 /* Navigation-Examples.app */;
 			productType = "com.apple.product-type.application";
@@ -371,6 +349,9 @@
 				Base,
 			);
 			mainGroup = C58FB84D1FE899B800C4B491;
+			packageReferences = (
+				FCE40783292CF2FD000CFEC3 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */,
+			);
 			productRefGroup = C58FB8571FE899B800C4B491 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -444,90 +425,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint --strict \nfi  \n";
 		};
-		55257E5545A2F032E687BC09 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-DocsCode-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		681991D14C08B65381FAF053 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Navigation-Examples-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		891789705D70A1C1104FF552 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/MapboxCoreNavigation/MapboxCoreNavigation.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxDirections/MapboxDirections.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxMaps/MapboxMaps.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxNavigation/MapboxNavigation.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxSpeech/MapboxSpeech.framework",
-				"${BUILT_PRODUCTS_DIR}/Polyline/Polyline.framework",
-				"${BUILT_PRODUCTS_DIR}/Solar-dev/Solar.framework",
-				"${BUILT_PRODUCTS_DIR}/Turf/Turf.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxCommon/MapboxCommon.framework/MapboxCommon",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxCoreMaps/MapboxCoreMaps.framework/MapboxCoreMaps",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework/MapboxMobileEvents",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxNavigationNative/MapboxNavigationNative.framework/MapboxNavigationNative",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreNavigation.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxDirections.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMaps.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigation.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxSpeech.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Polyline.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Solar.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Turf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCommon.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreMaps.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigationNative.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		8AAD08F22486DA4700664446 /* Apply Mapbox Access Token */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -561,46 +458,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "$SRCROOT/Scripts/apply-mapbox-access-token.sh\n";
-		};
-		F950CC2C42695542D911B66E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DocsCode/Pods-DocsCode-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/MapboxCoreNavigation/MapboxCoreNavigation.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxDirections/MapboxDirections.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxMaps/MapboxMaps.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxNavigation/MapboxNavigation.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxSpeech/MapboxSpeech.framework",
-				"${BUILT_PRODUCTS_DIR}/Polyline/Polyline.framework",
-				"${BUILT_PRODUCTS_DIR}/Solar-dev/Solar.framework",
-				"${BUILT_PRODUCTS_DIR}/Turf/Turf.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxCommon/MapboxCommon.framework/MapboxCommon",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxCoreMaps/MapboxCoreMaps.framework/MapboxCoreMaps",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework/MapboxMobileEvents",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxNavigationNative/MapboxNavigationNative.framework/MapboxNavigationNative",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreNavigation.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxDirections.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMaps.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigation.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxSpeech.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Polyline.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Solar.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Turf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCommon.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreMaps.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigationNative.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DocsCode/Pods-DocsCode-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -677,14 +534,16 @@
 /* Begin XCBuildConfiguration section */
 		961FC51222E0265400C72877 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A8D998B34DD96F479CF96712 /* Pods-DocsCode.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GJZR2MEM28;
 				INFOPLIST_FILE = DocsCode/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.nav.DocsCode;
@@ -696,14 +555,16 @@
 		};
 		961FC51322E0265400C72877 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 751C9DE4E717073D370EB4EF /* Pods-DocsCode.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GJZR2MEM28;
 				INFOPLIST_FILE = DocsCode/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.nav.DocsCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -820,20 +681,23 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		C58FB8691FE899B800C4B491 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E4F99A65CCB2B9CB623270EE /* Pods-Navigation-Examples.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GJZR2MEM28;
 				INFOPLIST_FILE = "Navigation-Examples/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Mapbox.Navigation-Examples";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -843,13 +707,15 @@
 		};
 		C58FB86A1FE899B800C4B491 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0544DEF056F7B94F491CBD53 /* Pods-Navigation-Examples.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GJZR2MEM28;
 				INFOPLIST_FILE = "Navigation-Examples/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Mapbox.Navigation-Examples";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -888,6 +754,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FCE40783292CF2FD000CFEC3 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mapbox/mapbox-navigation-ios.git";
+			requirement = {
+				kind = exactVersion;
+				version = 2.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FCE40784292CF2FD000CFEC3 /* MapboxCoreNavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FCE40783292CF2FD000CFEC3 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */;
+			productName = MapboxCoreNavigation;
+		};
+		FCE40786292CF2FD000CFEC3 /* MapboxNavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FCE40783292CF2FD000CFEC3 /* XCRemoteSwiftPackageReference "mapbox-navigation-ios" */;
+			productName = MapboxNavigation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C58FB84E1FE899B800C4B491 /* Project object */;
 }

@@ -53,6 +53,8 @@ class RouteLinesStylingViewController: UIViewController {
         navigationMapView.showWaypoints(on: currentRoute)
     }
     
+    var startButton: UIButton!
+    
     // MARK: - UIViewController lifecycle methods
     
     override func viewDidLoad() {
@@ -68,23 +70,32 @@ class RouteLinesStylingViewController: UIViewController {
     func setupNavigationMapView() {
         navigationMapView = NavigationMapView(frame: view.bounds)
         navigationMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        navigationMapView.delegate = self
         navigationMapView.userLocationStyle = .puck2D()
+        navigationMapView.delegate = self
+        
         
         let navigationViewportDataSource = NavigationViewportDataSource(navigationMapView.mapView, viewportDataSourceType: .raw)
         navigationMapView.navigationCamera.viewportDataSource = navigationViewportDataSource
+        changeMapStyle(navigationMapView)
         
         view.addSubview(navigationMapView)
     }
     
     func setupPerformActionBarButtonItem() {
-        let settingsBarButtonItem = UIBarButtonItem(title: NSString(string: "\u{2699}\u{0000FE0E}") as String,
-                                                    style: .plain,
-                                                    target: self,
-                                                    action: #selector(performAction))
-        settingsBarButtonItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 30)], for: .normal)
-        settingsBarButtonItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 30)], for: .highlighted)
-        navigationItem.rightBarButtonItem = settingsBarButtonItem
+        startButton = UIButton()
+        startButton.setTitle("Options", for: .normal)
+        startButton.translatesAutoresizingMaskIntoConstraints = false
+        startButton.backgroundColor = .blue
+        startButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        startButton.layer.cornerRadius = 10
+        startButton.clipsToBounds = true
+        startButton.addTarget(self, action: #selector(performAction(_:)), for: .touchUpInside)
+        startButton.isHidden = true
+        view.addSubview(startButton)
+        
+        startButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        startButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        view.setNeedsLayout()
     }
     
     @objc func performAction(_ sender: Any) {
@@ -131,7 +142,8 @@ class RouteLinesStylingViewController: UIViewController {
         let navigationOptions = NavigationOptions(navigationService: navigationService)
         let navigationViewController = NavigationViewController(for: indexedRouteResponse,
                                                                 navigationOptions: navigationOptions)
-        navigationViewController.delegate = self
+        navigationViewController.routeLineTracksTraversal = true
+        changeMapStyle(navigationViewController.navigationMapView)
         navigationViewController.modalPresentationStyle = .fullScreen
         
         navigationViewController.routeLineTracksTraversal = true
@@ -171,103 +183,39 @@ class RouteLinesStylingViewController: UIViewController {
                 if let currentRoute = self?.currentRoute {
                     self?.navigationMapView.showWaypoints(on: currentRoute)
                 }
+                self?.startButton.isHidden = false
             }
         }
     }
+    
+    func changeMapStyle(_ navigationMapView: NavigationMapView?) {
+        navigationMapView?.traversedRouteColor = .black
+        navigationMapView?.trafficUnknownColor = .red
+        navigationMapView?.trafficLowColor = .red
+        navigationMapView?.trafficUnknownColor = .yellow
+        navigationMapView?.trafficLowColor = .purple
+        navigationMapView?.trafficModerateColor = .green
+        navigationMapView?.trafficHeavyColor = .gray
+        navigationMapView?.trafficSevereColor = .orange
+        navigationMapView?.alternativeTrafficUnknownColor = .systemPink
+        navigationMapView?.alternativeTrafficLowColor = .brown
+        navigationMapView?.alternativeTrafficModerateColor = .cyan
+        navigationMapView?.alternativeTrafficHeavyColor = .magenta
+        navigationMapView?.alternativeTrafficSevereColor = .systemTeal
+        navigationMapView?.routeRestrictedAreaColor = .systemTeal
+        
+        navigationMapView?.routeCasingColor = .red
+        navigationMapView?.routeAlternateColor = .orange
+        navigationMapView?.routeAlternateCasingColor = .brown
+        navigationMapView?.traversedRouteColor = .darkGray
+        navigationMapView?.maneuverArrowColor = .blue
+        navigationMapView?.maneuverArrowStrokeColor = .systemPink
+    }
 }
-
-// MARK: - NavigationMapViewDelegate methods
 
 extension RouteLinesStylingViewController: NavigationMapViewDelegate {
-    
-    func lineWidthExpression(_ multiplier: Double = 1.0) -> Expression {
-        let lineWidthExpression = Exp(.interpolate) {
-            Exp(.linear)
-            Exp(.zoom)
-            // It's possible to change route line width depending on zoom level, by using expression
-            // instead of constant. Navigation SDK for iOS also exposes `RouteLineWidthByZoomLevel`
-            // public property, which contains default values for route lines on specific zoom levels.
-            RouteLineWidthByZoomLevel.multiplied(by: multiplier)
-        }
-        
-        return lineWidthExpression
-    }
-    
+    // Delegate method called when the user selects a route
     func navigationMapView(_ mapView: NavigationMapView, didSelect route: Route) {
-        currentRouteIndex = routes?.firstIndex(of: route) ?? 0
-    }
-    
-    // It's possible to change route line shape in preview mode by adding own implementation to either
-    // `NavigationMapView.navigationMapView(_:shapeFor:)` or `NavigationMapView.navigationMapView(_:casingShapeFor:)`.
-    func navigationMapView(_ navigationMapView: NavigationMapView, shapeFor route: Route) -> LineString? {
-        return route.shape
-    }
-    
-    func navigationMapView(_ navigationMapView: NavigationMapView, casingShapeFor route: Route) -> LineString? {
-        return route.shape
-    }
-    
-    func navigationMapView(_ navigationMapView: NavigationMapView, routeLineLayerWithIdentifier identifier: String, sourceIdentifier: String) -> LineLayer? {
-        var lineLayer = LineLayer(id: identifier)
-        lineLayer.source = sourceIdentifier
-        
-        // `identifier` parameter contains unique identifier of the route layer or its casing.
-        // Such identifier consists of several parts: unique address of route object, whether route is
-        // main or alternative, and whether route is casing or not. For example: identifier for
-        // main route line will look like this: `0x0000600001168000.main.route_line`, and for
-        // alternative route line casing will look like this: `0x0000600001ddee80.alternative.route_line_casing`.
-        lineLayer.lineColor = .constant(.init(identifier.contains("main") ? #colorLiteral(red: 0.337254902, green: 0.6588235294, blue: 0.9843137255, alpha: 1) : #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)))
-        lineLayer.lineWidth = .expression(lineWidthExpression())
-        lineLayer.lineJoin = .constant(.round)
-        lineLayer.lineCap = .constant(.round)
-        
-        return lineLayer
-    }
-    
-    func navigationMapView(_ navigationMapView: NavigationMapView, routeCasingLineLayerWithIdentifier identifier: String, sourceIdentifier: String) -> LineLayer? {
-        var lineLayer = LineLayer(id: identifier)
-        lineLayer.source = sourceIdentifier
-        
-        // Based on information stored in `identifier` property (whether route line is main or not)
-        // route line will be colored differently.
-        lineLayer.lineColor = .constant(.init(identifier.contains("main") ? #colorLiteral(red: 0.1843137255, green: 0.4784313725, blue: 0.7764705882, alpha: 1) : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)))
-        lineLayer.lineWidth = .expression(lineWidthExpression(1.2))
-        lineLayer.lineJoin = .constant(.round)
-        lineLayer.lineCap = .constant(.round)
-        
-        return lineLayer
-    }
-}
-
-// MARK: - NavigationViewControllerDelegate methods
-
-extension RouteLinesStylingViewController: NavigationViewControllerDelegate {
-    
-    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    // Similarly to preview mode, when using `NavigationMapView`, it's possible to change
-    // route line styling during active guidance in `NavigationViewController`.
-    func navigationViewController(_ navigationViewController: NavigationViewController, routeLineLayerWithIdentifier identifier: String, sourceIdentifier: String) -> LineLayer? {
-        var lineLayer = LineLayer(id: identifier)
-        lineLayer.source = sourceIdentifier
-        lineLayer.lineColor = .constant(.init(identifier.contains("main") ? #colorLiteral(red: 0.337254902, green: 0.6588235294, blue: 0.9843137255, alpha: 1) : #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)))
-        lineLayer.lineWidth = .expression(lineWidthExpression())
-        lineLayer.lineJoin = .constant(.round)
-        lineLayer.lineCap = .constant(.round)
-        
-        return lineLayer
-    }
-    
-    func navigationViewController(_ navigationViewController: NavigationViewController, routeCasingLineLayerWithIdentifier identifier: String, sourceIdentifier: String) -> LineLayer? {
-        var lineLayer = LineLayer(id: identifier)
-        lineLayer.source = sourceIdentifier
-        lineLayer.lineColor = .constant(.init(identifier.contains("main") ? #colorLiteral(red: 0.1843137255, green: 0.4784313725, blue: 0.7764705882, alpha: 1) : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)))
-        lineLayer.lineWidth = .expression(lineWidthExpression(1.2))
-        lineLayer.lineJoin = .constant(.round)
-        lineLayer.lineCap = .constant(.round)
-        
-        return lineLayer
+        self.currentRouteIndex = self.routes?.firstIndex(of: route) ?? 0
     }
 }

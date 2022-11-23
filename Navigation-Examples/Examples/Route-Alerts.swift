@@ -79,7 +79,7 @@ class TopAlertsBarViewController: ContainerViewController {
         
         // To change top banner size and position change layout constraints directly.
         let topAlertsBannerViewConstraints: [NSLayoutConstraint] = [
-            topAlertsBannerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            topAlertsBannerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             topAlertsBannerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60),
             topAlertsBannerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60),
             topAlertsBannerView.heightAnchor.constraint(equalToConstant: 100.0),

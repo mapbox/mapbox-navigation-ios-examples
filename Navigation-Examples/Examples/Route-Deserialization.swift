@@ -9,6 +9,7 @@ import UIKit
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxDirections
+import CoreLocation
 
 class RouteDeserializationViewController: UIViewController {
     
