@@ -10,8 +10,7 @@ A collection of examples showing off the [Mapbox Navigation SDK](https://github.
 
 _Installation with CocoaPods_ 
 
-1. `git clone https://github.com/mapbox/mapbox-navigation-ios-examples.git`
-1. `cd mapbox-navigation-ios-examples`
+1. Open project and wait for couple of minutes. SPM need to load mapbox Navigation SDK dependencies. ☕️
 1. Go to your [Mapbox account dashboard](https://account.mapbox.com/) and create an access token that has the `DOWNLOADS:READ` scope. **PLEASE NOTE: This is not the same as your production Mapbox API token. Make sure to keep it private and do not insert it into any Info.plist file.** Create a file named `.netrc` in your home directory if it doesn’t already exist, then add the following lines to the end of the file:
    ```
    machine api.mapbox.com 
@@ -19,7 +18,6 @@ _Installation with CocoaPods_
      password YOUR_SECRET_MAPBOX_TOKEN
    ```
    where _YOUR_SECRET_MAPBOX_TOKEN_ is your Mapbox API token with the `DOWNLOADS:READ` scope. The login should always be `mapbox`. It should not be your personal username used to create the secret token.
-1. Run `pod repo update && pod install` and open the resulting Navigation-Examples.xcworkspace.
 1. Sign up or log in to your Mapbox account and grab a [Mapbox access token](https://www.mapbox.com/help/define-access-token/).
 1. Enter your Mapbox access token into the value of the `MBXAccessToken` key within the Info.plist file. Alternatively, if you plan to use this project as the basis for any open source application, [read this guide](https://docs.mapbox.com/help/troubleshooting/private-access-token-android-and-ios/#ios) to learn how to best protect your access tokens.
 1. Building and run the Navigation-Examples scheme.
