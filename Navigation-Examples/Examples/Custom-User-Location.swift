@@ -174,6 +174,7 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
         let defaultPuck2D: ActionHandler = { _ in self.setupDefaultPuck2D() }
         let invisiblePuck: ActionHandler = { _ in self.setupInvisiblePuck() }
         let puck2D: ActionHandler = { _ in self.setupCustomPuck2D() }
+        let puck3D: ActionHandler = { _ in self.setupPuck3D() }
         let cancel: ActionHandler = { _ in }
         
         let actionPayloads: [(String, UIAlertAction.Style, ActionHandler?)] = [
@@ -181,6 +182,7 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
             ("Default Course View", .default, courseView),
             ("2D Default Puck", .default, defaultPuck2D),
             ("2D Arrow Puck", .default, puck2D),
+            ("3D Car Puck", .default, puck3D),
             ("Cancel", .cancel, cancel)
         ]
         
@@ -219,6 +221,50 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
         }
         
         let userLocationStyle = UserLocationStyle.puck2D(configuration: puck2DConfiguration)
+        presentNavigationViewController(userLocationStyle)
+    }
+    
+    func setupPuck3D() {
+        // It's required to provide a `Puck3DConfiguration` to the `UserLocationStyle.puck3D`, a `gltf` 3D asset will be used as the `Model` source.
+        // NASA's Curiosity rover from https://github.com/nasa/NASA-3D-Resources/blob/463f2b2941e3e95acfcbb12f783070e9d92ee267/3D%20Models/Curiosity%20(Clean)/MSL_clean.blend
+        
+        let uri = Bundle.main.url(forResource: "MSL_clean", withExtension: "gltf")
+        // Instantiating the model. The position is the coordinates of the model in `[longitude, latitude]` format.
+        let myModel = Model(uri: uri,
+                            position: [-122.396152, 37.79129],
+                            orientation: [0, 0, 0])
+        // Setting an expression to scale the model based on camera zoom
+        let scalingExpression = Exp(.interpolate) {
+            Exp(.linear)
+            Exp(.zoom)
+            0
+            Exp(.literal) {
+                [256000.0, 256000.0, 256000.0]
+            }
+            4
+            Exp(.literal) {
+                [40000.0, 40000.0, 40000.0]
+            }
+            8
+            Exp(.literal) {
+                [2000.0, 2000.0, 2000.0]
+            }
+            12
+            Exp(.literal) {
+                [100.0, 100.0, 100.0]
+            }
+            16
+            Exp(.literal) {
+                [10.0, 10.0, 10.0]
+            }
+            20
+            Exp(.literal) {
+                [3.0, 3.0, 3.0]
+            }
+        }
+
+        let puck3DConfiguration = Puck3DConfiguration(model: myModel, modelScale: .expression(scalingExpression))
+        let userLocationStyle = UserLocationStyle.puck3D(configuration: puck3DConfiguration)
         presentNavigationViewController(userLocationStyle)
     }
     
