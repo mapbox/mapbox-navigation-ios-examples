@@ -1,29 +1,29 @@
 PODS:
-  - MapboxCommon (23.1.0)
-  - MapboxCoreMaps (10.9.1):
-    - MapboxCommon (~> 23.1)
+  - MapboxCommon (23.2.1)
+  - MapboxCoreMaps (10.10.0):
+    - MapboxCommon (~> 23.2)
   - MapboxCoreNavigation (2.9.0):
     - MapboxDirections (~> 2.8)
     - MapboxMobileEvents (~> 1.0)
     - MapboxNavigationNative (~> 119.0)
-  - MapboxDirections (2.8.0):
+  - MapboxDirections (2.9.1):
     - Polyline (~> 5.0)
     - Turf (~> 2.6.1)
-  - MapboxMaps (10.9.1):
-    - MapboxCommon (= 23.1.0)
-    - MapboxCoreMaps (= 10.9.1)
-    - MapboxMobileEvents (= 1.0.8)
+  - MapboxMaps (10.10.1):
+    - MapboxCommon (= 23.2.1)
+    - MapboxCoreMaps (= 10.10.0)
+    - MapboxMobileEvents (= 1.0.10)
     - Turf (~> 2.0)
-  - MapboxMobileEvents (1.0.8)
+  - MapboxMobileEvents (1.0.10)
   - MapboxNavigation (2.9.0):
     - MapboxCoreNavigation (= 2.9.0)
     - MapboxMaps (~> 10.9)
     - MapboxMobileEvents (~> 1.0)
     - MapboxSpeech (~> 2.0)
     - Solar-dev (~> 3.0)
-  - MapboxNavigationNative (119.0.3):
+  - MapboxNavigationNative (119.0.6):
     - MapboxCommon (~> 23.1)
-  - MapboxSpeech (2.1.0)
+  - MapboxSpeech (2.1.1)
   - Polyline (5.1.0)
   - Solar-dev (3.0.1)
   - Turf (2.6.1)
@@ -48,15 +48,15 @@ SPEC REPOS:
     - Turf
 
 SPEC CHECKSUMS:
-  MapboxCommon: bfffb68226f650df065cf24e307576267ebc75e8
-  MapboxCoreMaps: c74e3dd1d7d2b8c0ca5503d8c3e8ef79a8feccd5
+  MapboxCommon: 235bb9c27a8985d982e17f216795b1f7ab526782
+  MapboxCoreMaps: 4075a9e415b9b3ab6229d09623fef5f791826a5b
   MapboxCoreNavigation: 82285c8e3d77349bed7e5eae29edc53acd84dbbd
-  MapboxDirections: fa70b4970f974dd39463657d3c2d5cbd0c504b7b
-  MapboxMaps: f5e3858e71a923f0e2fc168a93397cfd98341dc5
-  MapboxMobileEvents: febdd92835daa258ca1c1faad0821c0b3394ef40
+  MapboxDirections: 7bc4a887fd214052c7df5a5ed3f87ea4cbe37e54
+  MapboxMaps: 0c2f7722016bc56aa27b5e6bcf72ae4df7a98670
+  MapboxMobileEvents: de50b3a4de180dd129c326e09cd12c8adaaa46d6
   MapboxNavigation: 34d4b6d7dd311ee595aeae9970dc7f47a118f993
-  MapboxNavigationNative: 1ce837cb25b6b08ec27b111662bee00bfe267e41
-  MapboxSpeech: a3789121e8d91eb9bc9af6ddd60768729a918f71
+  MapboxNavigationNative: 41044955042630f37a14c25a43e6eb412970a40a
+  MapboxSpeech: cd25ef99c3a3d2e0da72620ff558276ea5991a77
   Polyline: 2a1f29f87f8d9b7de868940f4f76deb8c678a5b1
   Solar-dev: 4612dc9878b9fed2667d23b327f1d4e54e16e8d0
   Turf: 469ce2c3d22e5e8e4818d5a3b254699a5c89efa4
