@@ -97,14 +97,7 @@ class ElectronicHorizonEventsViewController: UIViewController {
 
     private func streetName(for edge: RoadGraph.Edge) -> String? {
         let edgeMetadata = passiveLocationManager.roadGraph.edgeMetadata(edgeIdentifier: edge.identifier)
-        return edgeMetadata?.names.first.map { roadName in
-            switch roadName {
-            case .name(let name):
-                return name
-            case .code(let code):
-                return "\(code)"
-            }
-        }
+        return edgeMetadata?.names.first?.text
     }
 
     private func nearestCrossStreetName(from edge: RoadGraph.Edge) -> String? {
