@@ -29,15 +29,14 @@ class CustomRoutingProviderViewController: UIViewController {
         // This example is similar to `BasicViewController` except that we are using our custom `RoutingProvider` implementation for retrieving routes.
         let customRoutingProvider = CustomProvider()
         
-        _ = customRoutingProvider.calculateRoutes(options: options, completionHandler: { [weak self] (_, result) in
+        _ = customRoutingProvider.calculateRoutes(options: options, completionHandler: { [weak self] (result) in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
-            case .success(let response):
+            case .success(let indexedRouteResponse):
                 guard let strongSelf = self else {
                     return
                 }
-                let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: 0)
                 let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                                 customRoutingProvider: customRoutingProvider,  // passing `customRoutingProvider` to ensure it is used for re-routing and refreshing
                                                                 credentials: NavigationSettings.shared.directions.credentials,
