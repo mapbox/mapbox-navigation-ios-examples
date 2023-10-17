@@ -44,7 +44,9 @@ jobs:
             chmod 600 ~/.netrc
       - run:
           name: Install Dependencies
-          command: pod install
+          command: |
+            bundle install
+            bundle exec pod install
       - *install-swiftlint
       - run:
           name: Navigation-Examples
@@ -76,7 +78,9 @@ jobs:
             for ip in $(dig @8.8.8.8 github.com +short); do ssh-keyscan github.com,$ip; ssh-keyscan $ip; done 2>/dev/null >> ~/.ssh/known_hosts
       - run:
           name: Update Dependencies
-          command: pod update
+          command: |
+            bundle install
+            bundle exec pod update
       - run:
           name: Publish update
           command: |
