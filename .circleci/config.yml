@@ -44,14 +44,16 @@ jobs:
             chmod 600 ~/.netrc
       - run:
           name: Install Dependencies
-          command: pod install
+          command: |
+            bundle install
+            bundle exec pod install
       - *install-swiftlint
       - run:
           name: Navigation-Examples
-          command: xcodebuild -workspace Navigation-Examples.xcworkspace -scheme Navigation-Examples -sdk iphonesimulator -configuration Release -destination "platform=iOS Simulator,name=<< parameters.device >>,OS=<< parameters.ios >>" clean build
+          command: xcodebuild -workspace Navigation-Examples.xcworkspace -scheme Navigation-Examples -sdk iphonesimulator -configuration Release -destination "platform=iOS Simulator,name=<< parameters.device >>,OS=<< parameters.ios >>" clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
       - run:
           name: DocsCode
-          command: xcodebuild -workspace Navigation-Examples.xcworkspace -scheme DocsCode -sdk iphonesimulator -configuration Release -destination "platform=iOS Simulator,name=<< parameters.device >>,OS=<< parameters.ios >>" clean build
+          command: xcodebuild -workspace Navigation-Examples.xcworkspace -scheme DocsCode -sdk iphonesimulator -configuration Release -destination "platform=iOS Simulator,name=<< parameters.device >>,OS=<< parameters.ios >>" clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
   update-version-job:
     parameters:
@@ -76,7 +78,9 @@ jobs:
             for ip in $(dig @8.8.8.8 github.com +short); do ssh-keyscan github.com,$ip; ssh-keyscan $ip; done 2>/dev/null >> ~/.ssh/known_hosts
       - run:
           name: Update Dependencies
-          command: pod update
+          command: |
+            bundle install
+            bundle exec pod update
       - run:
           name: Publish update
           command: |
