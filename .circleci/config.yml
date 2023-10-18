@@ -50,10 +50,10 @@ jobs:
       - *install-swiftlint
       - run:
           name: Navigation-Examples
-          command: xcodebuild -workspace Navigation-Examples.xcworkspace -scheme Navigation-Examples -sdk iphonesimulator -configuration Release -destination "platform=iOS Simulator,name=<< parameters.device >>,OS=<< parameters.ios >>" clean build CODE_SIGN_IDENTITY=“” CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          command: xcodebuild -workspace Navigation-Examples.xcworkspace -scheme Navigation-Examples -sdk iphonesimulator -configuration Release -destination "platform=iOS Simulator,name=<< parameters.device >>,OS=<< parameters.ios >>" clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
       - run:
           name: DocsCode
-          command: xcodebuild -workspace Navigation-Examples.xcworkspace -scheme DocsCode -sdk iphonesimulator -configuration Release -destination "platform=iOS Simulator,name=<< parameters.device >>,OS=<< parameters.ios >>" clean build
+          command: xcodebuild -workspace Navigation-Examples.xcworkspace -scheme DocsCode -sdk iphonesimulator -configuration Release -destination "platform=iOS Simulator,name=<< parameters.device >>,OS=<< parameters.ios >>" clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
   update-version-job:
     parameters:
