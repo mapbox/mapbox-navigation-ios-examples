@@ -113,7 +113,7 @@ class ViewController: UIViewController {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let response):
-                guard let route = response.routes?.first, let strongSelf = self else {
+                guard let routes = response.routes, let strongSelf = self else {
                     return
                 }
                 
@@ -123,11 +123,8 @@ class ViewController: UIViewController {
                 // Show the start button
                 strongSelf.startButton?.isHidden = false
                 
-                // Draw the route on the map after creating it
-                strongSelf.drawRoute(route: route)
-                
-                // Show destination waypoint on the map
-                strongSelf.navigationMapView.showWaypoints(on: route)
+                // Showcase the route and destination waypoint, and set camera
+                strongSelf.navigationMapView.showcase(routes, animated: true)
             }
         }
     }
