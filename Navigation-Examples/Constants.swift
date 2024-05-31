@@ -190,5 +190,12 @@ let listOfExamples: [NamedController] = [
         controller: HistoryRecordingViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
+    ),
+    (
+        name: "Zone Avoidance",
+        description: "Demonstrates how to build navigation routes with zone avoidance.",
+        controller: ZoneAvoidanceViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
     )
 ]
