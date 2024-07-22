@@ -12,7 +12,7 @@ import MapboxDirections
 import MapboxNavigationNative
 
 class RouteAlertsViewController: UIViewController {
-    private let routeProvider = MapboxRoutingProvider()
+    private let routingProvider = MapboxRoutingProvider()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,18 +21,18 @@ class RouteAlertsViewController: UIViewController {
         let destination = CLLocationCoordinate2DMake(37.79727245401114, -122.46951395567203)
         let options = NavigationRouteOptions(coordinates: [origin, destination])
         
-        routeProvider.calculateRoutes(options: options) { [weak self] result in
+        routingProvider.calculateRoutes(options: options) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let indexedRouteResponse):
-                guard let strongSelf = self else {
+                guard let self = self else {
                     return
                 }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
                 let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                                customRoutingProvider: NavigationSettings.shared.directions,
+                                                                customRoutingProvider: self.routingProvider,
                                                                 credentials: NavigationSettings.shared.directions.credentials,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 
@@ -48,7 +48,7 @@ class RouteAlertsViewController: UIViewController {
                 
                 navigationViewController.modalPresentationStyle = .fullScreen
                 
-                strongSelf.present(navigationViewController, animated: true)
+                self.present(navigationViewController, animated: true)
             }
         }
     }

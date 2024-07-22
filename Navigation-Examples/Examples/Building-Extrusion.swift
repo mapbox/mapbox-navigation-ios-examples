@@ -12,7 +12,7 @@ import MapboxDirections
 import MapboxMaps
 
 class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate, UIGestureRecognizerDelegate {
-    private let routeProvider = MapboxRoutingProvider()
+    private let routingProvider = MapboxRoutingProvider()
     
     typealias ActionHandler = (UIAlertAction) -> Void
     
@@ -133,7 +133,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         }
 
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                        customRoutingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: routingProvider,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
@@ -206,7 +206,7 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
 
     func requestRoute() {
         let navigationRouteOptions = NavigationRouteOptions(waypoints: waypoints)
-        routeProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
+        routingProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 self?.presentAlert(message: error.localizedDescription)

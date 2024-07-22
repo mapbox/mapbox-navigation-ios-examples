@@ -8,7 +8,7 @@ import Turf
 
 class ViewController: UIViewController {
     // #-code-snippet: navigation vc-variables-swift
-    private let routeProvider = MapboxRoutingProvider()
+    private let routingProvider = MapboxRoutingProvider()
     var navigationMapView: NavigationMapView!
     var navigationViewController: NavigationViewController!
     var indexedRouteResponse: IndexedRouteResponse?
@@ -107,7 +107,7 @@ class ViewController: UIViewController {
         let routeOptions = NavigationRouteOptions(waypoints: [origin, destination], profileIdentifier: .automobileAvoidingTraffic)
 
         // Generate the route object and draw it on the map
-        routeProvider.calculateRoutes(options: routeOptions) { [weak self] result in
+        routingProvider.calculateRoutes(options: routeOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)

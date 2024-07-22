@@ -13,7 +13,7 @@ import MapboxDirections
 import MapboxMaps
 
 class CustomDestinationMarkerController: UIViewController {
-    private let routeProvider = MapboxRoutingProvider()
+    private let routingProvider = MapboxRoutingProvider()
     
     var navigationMapView: NavigationMapView!
     var startNavigationButton: UIButton!
@@ -67,7 +67,7 @@ class CustomDestinationMarkerController: UIViewController {
     
     @objc func tappedButton(_ sender: UIButton) {
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                        customRoutingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: routingProvider,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
@@ -86,7 +86,7 @@ class CustomDestinationMarkerController: UIViewController {
         
         navigationMapView.mapView.mapboxMap.setCamera(to: CameraOptions(center: destination, zoom: 13.0))
         
-        routeProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
+        routingProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 NSLog("Error occured: \(error.localizedDescription).")

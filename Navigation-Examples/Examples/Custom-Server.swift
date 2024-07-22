@@ -13,7 +13,7 @@ import MapboxNavigation
 import MapboxDirections
 
 class CustomServerViewController: UIViewController {
-    private let routeProvider = MapboxRoutingProvider()
+    private let routingProvider = MapboxRoutingProvider()
     
     let routeOptions = NavigationRouteOptions(coordinates: [
         CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648),
@@ -26,27 +26,27 @@ class CustomServerViewController: UIViewController {
         super.viewDidLoad()
         
         let routeOptions = self.routeOptions
-        routeProvider.calculateRoutes(options: routeOptions) { [weak self] result in
+        routingProvider.calculateRoutes(options: routeOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let indexedRouteResponse):
-                guard let strongSelf = self else {
+                guard let self = self else {
                     return
                 }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
                 let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                                customRoutingProvider: NavigationSettings.shared.directions,
+                                                                customRoutingProvider: self.routingProvider,
                                                                 credentials: NavigationSettings.shared.directions.credentials,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 let navigationOptions = NavigationOptions(navigationService: navigationService)
-                strongSelf.navigationViewController = NavigationViewController(for: indexedRouteResponse,
-                                                                               navigationOptions: navigationOptions)
-                strongSelf.navigationViewController?.modalPresentationStyle = .fullScreen
-                strongSelf.navigationViewController?.delegate = strongSelf
-                
-                strongSelf.present(strongSelf.navigationViewController!, animated: true, completion: nil)
+                self.navigationViewController = NavigationViewController(for: indexedRouteResponse,
+                                                                           navigationOptions: navigationOptions)
+                self.navigationViewController?.modalPresentationStyle = .fullScreen
+                self.navigationViewController?.delegate = self
+
+                self.present(self.navigationViewController!, animated: true, completion: nil)
             }
         }
     }
@@ -61,7 +61,7 @@ extension CustomServerViewController: NavigationViewControllerDelegate {
         
         // Here, we are simulating a custom server.
         let routeOptions = NavigationRouteOptions(waypoints: [Waypoint(location: location), self.routeOptions.waypoints.last!])
-        routeProvider.calculateRoutes(options: routeOptions) { [weak self] result in
+        routingProvider.calculateRoutes(options: routeOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)

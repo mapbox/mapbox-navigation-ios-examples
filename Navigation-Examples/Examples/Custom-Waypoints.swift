@@ -13,7 +13,7 @@ import MapboxMaps
 import Turf
 
 class CustomWaypointsViewController: UIViewController {
-    private let routeProvider = MapboxRoutingProvider()
+    private let routingProvider = MapboxRoutingProvider()
     
     var navigationMapView: NavigationMapView!
 
@@ -80,7 +80,7 @@ class CustomWaypointsViewController: UIViewController {
         guard let indexedRouteResponse else { return }
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                        customRoutingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: routingProvider,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
@@ -100,7 +100,7 @@ class CustomWaypointsViewController: UIViewController {
         let cameraOptions = CameraOptions(center: origin, zoom: 13.0)
         self.navigationMapView.mapView.mapboxMap.setCamera(to: cameraOptions)
         
-        routeProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
+        routingProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)

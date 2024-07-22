@@ -57,7 +57,7 @@ class CustomRoutingProviderViewController: UIViewController {
 
 class CustomProvider: RoutingProvider {
     // This can encapsulate any route building engine we need. For simplicity let's use `MapboxRoutingProvider`.
-    let routeProvider = MapboxRoutingProvider()
+    let routingProvider = MapboxRoutingProvider()
     
     // We can also modify the options used to calculate a route.
     func applyOptionsModification(_ options: DirectionsOptions) {
@@ -95,14 +95,14 @@ class CustomProvider: RoutingProvider {
         applyOptionsModification(options)
         
         // Using `MapboxRoutingProvider` also illustrates cases when we need to modify just a part of the route, or dynamically edit `RouteOptions` for each reroute.
-        return routeProvider.calculateRoutes(options: options,
+        return routingProvider.calculateRoutes(options: options,
                                                completionHandler: completionHandler)
     }
     
     func calculateRoutes(options: MatchOptions, completionHandler: @escaping Directions.MatchCompletionHandler) -> NavigationProviderRequest? {
         applyOptionsModification(options)
         
-        return routeProvider.calculateRoutes(options: options,
+        return routingProvider.calculateRoutes(options: options,
                                                completionHandler: { [weak self] (session, result) in
             switch result {
             case .failure(let error):
@@ -121,7 +121,7 @@ class CustomProvider: RoutingProvider {
 
     func calculateRoutes(options: MapboxDirections.RouteOptions,
                          completionHandler: @escaping IndexedRouteResponseCompletionHandler) -> MapboxCoreNavigation.NavigationProviderRequest? {
-        routeProvider.calculateRoutes(options: options, completionHandler: completionHandler)
+        routingProvider.calculateRoutes(options: options, completionHandler: completionHandler)
     }
     
     // Let's make our custom routing provider prevent route refreshes.
@@ -145,7 +145,7 @@ class CustomProvider: RoutingProvider {
                       currentRouteShapeIndex: Int,
                       currentLegShapeIndex: Int,
                       completionHandler: @escaping MapboxDirections.Directions.RouteCompletionHandler) -> MapboxCoreNavigation.NavigationProviderRequest? {
-        routeProvider.refreshRoute(indexedRouteResponse: indexedRouteResponse,
+        routingProvider.refreshRoute(indexedRouteResponse: indexedRouteResponse,
                                      fromLegAtIndex: startLegIndex,
                                      currentRouteShapeIndex: currentRouteShapeIndex,
                                      currentLegShapeIndex: currentLegShapeIndex,

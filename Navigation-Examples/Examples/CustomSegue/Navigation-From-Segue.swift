@@ -11,7 +11,7 @@ import MapboxCoreNavigation
 import MapboxDirections
 
 class SegueViewController: UIViewController {
-    private let routeProvider = MapboxRoutingProvider()
+    private let routingProvider = MapboxRoutingProvider()
     
     var indexedRouteResponse: IndexedRouteResponse!
 
@@ -28,7 +28,7 @@ class SegueViewController: UIViewController {
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
         let navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        routeProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
+        routingProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 NSLog("Error occured: \(error.localizedDescription).")
@@ -38,7 +38,7 @@ class SegueViewController: UIViewController {
                 self.indexedRouteResponse = indexedRouteResponse
 
                 let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                                customRoutingProvider: NavigationSettings.shared.directions,
+                                                                customRoutingProvider: self.routingProvider,
                                                                 credentials: NavigationSettings.shared.directions.credentials,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 self.navigationOptions = NavigationOptions(navigationService: navigationService)

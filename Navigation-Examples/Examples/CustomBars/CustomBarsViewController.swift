@@ -12,7 +12,7 @@ import MapboxNavigation
 import MapboxDirections
 
 class CustomBarsViewController: UIViewController {
-    private let routeProvider = MapboxRoutingProvider()
+    private let routingProvider = MapboxRoutingProvider()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,18 +21,18 @@ class CustomBarsViewController: UIViewController {
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
         let routeOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        routeProvider.calculateRoutes(options: routeOptions) { [weak self] result in
+        routingProvider.calculateRoutes(options: routeOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let indexedRouteResponse):
-                guard let strongSelf = self else {
+                guard let self = self else {
                     return
                 }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
                 let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                                customRoutingProvider: NavigationSettings.shared.directions,
+                                                                customRoutingProvider: self.routingProvider,
                                                                 credentials: NavigationSettings.shared.directions.credentials,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 
@@ -63,7 +63,7 @@ class CustomBarsViewController: UIViewController {
 
                 navigationViewController.modalPresentationStyle = .fullScreen
                 
-                strongSelf.present(navigationViewController, animated: true, completion: nil)
+                self.present(navigationViewController, animated: true, completion: nil)
                 navigationViewController.floatingButtons = []
                 navigationViewController.showsSpeedLimits = false
             }

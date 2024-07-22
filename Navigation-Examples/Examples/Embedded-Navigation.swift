@@ -12,7 +12,7 @@ import MapboxDirections
 import MapboxMaps
 
 class EmbeddedExampleViewController: UIViewController {
-    private let routeProvider = MapboxRoutingProvider()
+    private let routingProvider = MapboxRoutingProvider()
  
     @IBOutlet weak var reroutedLabel: UILabel!
     @IBOutlet weak var enableReroutes: UISwitch!
@@ -35,7 +35,7 @@ class EmbeddedExampleViewController: UIViewController {
     }
 
     func calculateDirections() {
-        routeProvider.calculateRoutes(options: routeOptions) { [weak self] result in
+        routingProvider.calculateRoutes(options: routeOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
@@ -65,7 +65,7 @@ class EmbeddedExampleViewController: UIViewController {
         guard let indexedRouteResponse else { return }
 
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                        customRoutingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: routingProvider,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)

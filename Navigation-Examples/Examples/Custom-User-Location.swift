@@ -14,7 +14,7 @@ import MapboxMaps
 class CustomUserLocationViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate, UIGestureRecognizerDelegate {
     typealias ActionHandler = (UIAlertAction) -> Void
 
-    private let routeProvider = MapboxRoutingProvider()
+    private let routingProvider = MapboxRoutingProvider()
     
     var navigationMapView: NavigationMapView! {
         didSet {
@@ -139,7 +139,7 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
         waypoints.insert(userWaypoint, at: 0)
         let navigationRouteOptions = NavigationRouteOptions(waypoints: waypoints)
         
-        routeProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
+        routingProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
@@ -269,7 +269,7 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
         guard let indexedRouteResponse else { return }
 
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                        customRoutingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: routingProvider,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)

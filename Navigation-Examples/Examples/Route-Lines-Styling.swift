@@ -13,7 +13,7 @@ import MapboxMaps
 import Turf
 
 class RouteLinesStylingViewController: UIViewController {
-    private let routeProvider = MapboxRoutingProvider()
+    private let routingProvider = MapboxRoutingProvider()
     
     typealias ActionHandler = (UIAlertAction) -> Void
     
@@ -118,7 +118,7 @@ class RouteLinesStylingViewController: UIViewController {
         }
 
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                        customRoutingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: routingProvider,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         
@@ -154,7 +154,7 @@ class RouteLinesStylingViewController: UIViewController {
         ]
         
         let navigationRouteOptions = NavigationRouteOptions(waypoints: waypoints)
-        routeProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
+        routingProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 NSLog("Error occured while requesting route: \(error.localizedDescription).")

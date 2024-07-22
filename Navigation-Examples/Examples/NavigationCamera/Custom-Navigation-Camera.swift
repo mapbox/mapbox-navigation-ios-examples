@@ -12,7 +12,7 @@ import MapboxDirections
 import MapboxCoreNavigation
 
 class CustomNavigationCameraViewController: UIViewController {
-    private let routeProvider = MapboxRoutingProvider()
+    private let routingProvider = MapboxRoutingProvider()
     
     var navigationMapView: NavigationMapView!
     var indexedRouteResponse: IndexedRouteResponse!
@@ -71,7 +71,7 @@ class CustomNavigationCameraViewController: UIViewController {
     
     @objc func startNavigationButtonPressed(_ sender: UIButton) {
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                        customRoutingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: routingProvider,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         
@@ -100,7 +100,7 @@ class CustomNavigationCameraViewController: UIViewController {
         let destination = navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView))
         let navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        routeProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
+        routingProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 NSLog("Error occured while requesting route: \(error.localizedDescription).")

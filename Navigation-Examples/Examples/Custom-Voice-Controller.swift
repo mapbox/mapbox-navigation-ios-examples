@@ -14,7 +14,7 @@ import MapboxSpeech
 import AVFoundation
 
 class CustomVoiceControllerUI: UIViewController {
-    private let routeProvider = MapboxRoutingProvider()
+    private let routingProvider = MapboxRoutingProvider()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,7 @@ class CustomVoiceControllerUI: UIViewController {
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
         let routeOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        routeProvider.calculateRoutes(options: routeOptions) { [weak self] result in
+        routingProvider.calculateRoutes(options: routeOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
@@ -36,7 +36,7 @@ class CustomVoiceControllerUI: UIViewController {
     func presentNavigationWithCustomVoiceController(response: IndexedRouteResponse) {
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
         let navigationService = MapboxNavigationService(indexedRouteResponse: response,
-                                                        customRoutingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: routingProvider,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
 
