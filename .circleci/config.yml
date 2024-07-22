@@ -1,5 +1,9 @@
 version: 2.1
 
+orbs:
+  macos: circleci/macos@2.4.1
+  gh: circleci/github-cli@2.0
+
 commands:
   install-mbx-ci:
     steps:
@@ -23,16 +27,16 @@ jobs:
     parameters:
       xcode:
         type: string
-        default: "14.2.0"
+        default: "15.2.0"
       device:
         type: string
-        default: "iPhone 13 Pro"
+        default: "iPhone 15 Pro"
       ios:
         type: string
-        default: "15.5"
+        default: "17.2"
     macos:
       xcode: << parameters.xcode >>
-    resource_class: macos.x86.medium.gen2
+    resource_class: macos.m1.medium.gen1
     steps:
       - checkout
       - run:
@@ -42,6 +46,7 @@ jobs:
             echo "login mapbox" >> ~/.netrc
             echo "password $SDK_REGISTRY_TOKEN" >> ~/.netrc
             chmod 600 ~/.netrc
+      - macos/install-rosetta
       - run:
           name: Install Dependencies
           command: |
@@ -59,7 +64,7 @@ jobs:
     parameters:
       xcode:
         type: string
-        default: "14.2.0"
+        default: "15.2.0"
     macos:
       xcode: << parameters.xcode >>
     steps:
@@ -105,7 +110,7 @@ workflows:
           ios: "15.5"
           device: "iPhone 13 Pro"
       - build-job:
-          name: "Xcode_15.0.0_iOS_17.0"
-          xcode: "15.0.0"
-          ios: "17.0"
-          device: "iPhone 14 Pro"
+          name: "Xcode_15.2.0_iOS_17.2"
+          xcode: "15.2.0"
+          ios: "17.2"
+          device: "iPhone 15 Pro"
