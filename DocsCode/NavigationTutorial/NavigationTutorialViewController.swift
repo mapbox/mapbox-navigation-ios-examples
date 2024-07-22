@@ -8,10 +8,10 @@ import Turf
 
 class ViewController: UIViewController {
     // #-code-snippet: navigation vc-variables-swift
+    private let routeProvider = MapboxRoutingProvider()
     var navigationMapView: NavigationMapView!
     var navigationViewController: NavigationViewController!
-    var routeOptions: NavigationRouteOptions?
-    var routeResponse: RouteResponse?
+    var indexedRouteResponse: IndexedRouteResponse?
     var startButton: UIButton!
     // #-end-code-snippet: navigation vc-variables-swift
 
@@ -87,10 +87,9 @@ class ViewController: UIViewController {
     // #-code-snippet: navigation tapped-button-swift
     // Present the navigation view controller when the start button is tapped
     @objc func tappedButton(sender: UIButton) {
-        guard let routeResponse, let navigationRouteOptions = routeOptions else { return }
-        
-        navigationViewController = NavigationViewController(for: routeResponse, routeIndex: 0,
-                                                                routeOptions: navigationRouteOptions)
+        guard let indexedRouteResponse else { return }
+
+        navigationViewController = NavigationViewController(for: indexedRouteResponse)
         navigationViewController.modalPresentationStyle = .fullScreen
         
         present(navigationViewController, animated: true, completion: nil)
@@ -108,17 +107,16 @@ class ViewController: UIViewController {
         let routeOptions = NavigationRouteOptions(waypoints: [origin, destination], profileIdentifier: .automobileAvoidingTraffic)
 
         // Generate the route object and draw it on the map
-        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+        routeProvider.calculateRoutes(options: routeOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
-            case .success(let response):
-                guard let route = response.routes?.first, let strongSelf = self else {
+            case .success(let indexedRouteResponse):
+                guard let route = indexedRouteResponse.currentRoute, let strongSelf = self else {
                     return
                 }
                 
-                strongSelf.routeResponse = response
-                strongSelf.routeOptions = routeOptions
+                strongSelf.indexedRouteResponse = indexedRouteResponse
                 
                 // Show the start button
                 strongSelf.startButton?.isHidden = false
