@@ -13,6 +13,7 @@ import MapboxNavigation
 import MapboxDirections
 
 class CustomServerViewController: UIViewController {
+    private let routeProvider = MapboxRoutingProvider()
     
     let routeOptions = NavigationRouteOptions(coordinates: [
         CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648),
@@ -25,17 +26,16 @@ class CustomServerViewController: UIViewController {
         super.viewDidLoad()
         
         let routeOptions = self.routeOptions
-        Directions.shared.calculate(routeOptions) { [weak self] (_, result) in
+        routeProvider.calculateRoutes(options: routeOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
-            case .success(let response):
+            case .success(let indexedRouteResponse):
                 guard let strongSelf = self else {
                     return
                 }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-                let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: 0)
                 let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                                 customRoutingProvider: NavigationSettings.shared.directions,
                                                                 credentials: NavigationSettings.shared.directions.credentials,
@@ -61,12 +61,12 @@ extension CustomServerViewController: NavigationViewControllerDelegate {
         
         // Here, we are simulating a custom server.
         let routeOptions = NavigationRouteOptions(waypoints: [Waypoint(location: location), self.routeOptions.waypoints.last!])
-        Directions.shared.calculate(routeOptions) { [weak self] (_, result) in
+        routeProvider.calculateRoutes(options: routeOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let response):
-                guard let routeShape = response.routes?.first?.shape else {
+                guard let routeShape = response.currentRoute?.shape else {
                     return
                 }
                 

@@ -13,6 +13,7 @@ import MapboxDirections
 import MapboxMaps
 
 class WaypointArrivalScreenViewController: UIViewController {
+    private let routeProvider = MapboxRoutingProvider()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,17 +24,16 @@ class WaypointArrivalScreenViewController: UIViewController {
         
         let routeOptions = NavigationRouteOptions(waypoints: [waypointOne, waypointTwo, waypointThree])
         
-        Directions.shared.calculate(routeOptions) { [weak self] (_, result) in
+        routeProvider.calculateRoutes(options: routeOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
-            case .success(let response):
+            case .success(let indexedRouteResponse):
                 guard let strongSelf = self else {
                     return
                 }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-                let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: 0)
                 let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                                 customRoutingProvider: NavigationSettings.shared.directions,
                                                                 credentials: NavigationSettings.shared.directions.credentials,

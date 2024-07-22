@@ -12,6 +12,7 @@ import MapboxDirections
 import MapboxMaps
 
 class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate, UIGestureRecognizerDelegate {
+    private let routeProvider = MapboxRoutingProvider()
     
     typealias ActionHandler = (UIAlertAction) -> Void
     
@@ -19,42 +20,34 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     
     var navigationRouteOptions: NavigationRouteOptions!
     
-    var currentRouteIndex = 0 {
+    var indexedRouteResponse: IndexedRouteResponse? {
         didSet {
-            showCurrentRoute()
-        }
-    }
-
-    var currentRoute: Route? {
-        return routes?[currentRouteIndex]
-    }
-    
-    var routes: [Route]? {
-        return routeResponse?.routes
-    }
-    
-    var routeResponse: RouteResponse? {
-        didSet {
-            currentRouteIndex = 0
-            
-            guard currentRoute != nil else {
+            guard indexedRouteResponse?.currentRoute != nil else {
                 navigationMapView.removeRoutes()
                 navigationMapView.removeWaypoints()
                 waypoints = []
                 return
             }
+            showCurrentRoute()
         }
     }
-    
+
+    var currentRoute: Route? {
+        return indexedRouteResponse?.currentRoute
+    }
+
+    var routes: [Route]? {
+        return indexedRouteResponse?.routeResponse.routes
+    }
+
     func showCurrentRoute() {
         guard let currentRoute = currentRoute else { return }
-        
+
         var routes = [currentRoute]
         routes.append(contentsOf: self.routes!.filter {
             $0 != currentRoute
         })
-        navigationMapView.show(routes)
-        navigationMapView.showWaypoints(on: currentRoute)
+        navigationMapView.showcase(routes)
     }
 
     var waypoints: [Waypoint] = []
@@ -112,8 +105,8 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
         let startNavigation: ActionHandler = { _ in self.startNavigation() }
         let toggleDayNightStyle: ActionHandler = { _ in self.toggleDayNightStyle() }
         let unhighlightBuildings: ActionHandler = { _ in self.unhighlightBuildings() }
-        let removeRoutes: ActionHandler = { _ in self.routeResponse = nil }
-        
+        let removeRoutes: ActionHandler = { _ in self.indexedRouteResponse = nil }
+
         let actions: [(String, UIAlertAction.Style, ActionHandler?)] = [
             ("Start Navigation", .default, startNavigation),
             ("Toggle Day/Night Style", .default, toggleDayNightStyle),
@@ -134,12 +127,11 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     }
     
     func startNavigation() {
-        guard let routeResponse = routeResponse else {
+        guard let indexedRouteResponse else {
             presentAlert(message: "Please select at least one destination coordinate to start navigation.")
             return
         }
 
-        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: currentRouteIndex)
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
@@ -182,7 +174,8 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
         // In case if route is already shown on map do not allow selection of buildings other than final destination.
-        guard currentRoute == nil || navigationRouteOptions == nil else { return }
+        guard indexedRouteResponse?.currentRoute == nil || navigationRouteOptions == nil else { return }
+        
         navigationMapView.highlightBuildings(at: [navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView))], in3D: true)
     }
 
@@ -213,22 +206,16 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
 
     func requestRoute() {
         let navigationRouteOptions = NavigationRouteOptions(waypoints: waypoints)
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
+        routeProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 self?.presentAlert(message: error.localizedDescription)
 
                 // In case if direction calculation failed - remove last destination waypoint.
                 self?.waypoints.removeLast()
-            case .success(let response):
+            case .success(let indexedRouteResponse):
                 self?.navigationRouteOptions = navigationRouteOptions
-                self?.routeResponse = response
-                if let routes = self?.routes {
-                    self?.navigationMapView.show(routes)
-                }
-                if let currentRoute = self?.currentRoute {
-                    self?.navigationMapView.showWaypoints(on: currentRoute)
-                }
+                self?.indexedRouteResponse = indexedRouteResponse
 
                 if let coordinates = self?.waypoints.compactMap({ $0.targetCoordinate }) {
                     self?.navigationMapView.highlightBuildings(at: coordinates, in3D: true)
@@ -240,7 +227,11 @@ class BuildingExtrusionViewController: UIViewController, NavigationMapViewDelega
     // MARK: - NavigationMapViewDelegate methods
     
     func navigationMapView(_ mapView: NavigationMapView, didSelect route: Route) {
-        self.currentRouteIndex = self.routes?.firstIndex(of: route) ?? 0
+        guard let routes = indexedRouteResponse?.routeResponse.routes else { return }
+        
+        let currentRouteIndex = routes.firstIndex(of: route) ?? 0
+        indexedRouteResponse?.routeIndex = currentRouteIndex
+        showCurrentRoute()
     }
     
     // MARK: - NavigationViewControllerDelegate methods

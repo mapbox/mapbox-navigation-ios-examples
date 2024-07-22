@@ -87,7 +87,7 @@ class ViewController: UIViewController {
     // #-code-snippet: navigation tapped-button-swift
     // Present the navigation view controller when the start button is tapped
     @objc func tappedButton(sender: UIButton) {
-        guard let routeResponse = routeResponse, let navigationRouteOptions = routeOptions else { return }
+        guard let routeResponse, let navigationRouteOptions = routeOptions else { return }
         
         navigationViewController = NavigationViewController(for: routeResponse, routeIndex: 0,
                                                                 routeOptions: navigationRouteOptions)

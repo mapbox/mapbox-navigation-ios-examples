@@ -11,6 +11,8 @@ import MapboxNavigation
 import MapboxDirections
 
 class PredictiveCachingViewController: UIViewController {
+    private let routeProvider = MapboxRoutingProvider()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -18,19 +20,17 @@ class PredictiveCachingViewController: UIViewController {
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
         let options = NavigationRouteOptions(coordinates: [origin, destination])
         
-        Directions.shared.calculate(options) { [weak self] (_, result) in
+        routeProvider.calculateRoutes(options: options) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
-            case .success(let response):
+            case .success(let indexedRouteResponse):
                 guard let strongSelf = self else {
                     return
                 }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
                 // Since first route is retrieved from response `routeIndex` is set to 0.
-
-                let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: 0)
                 let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                                 customRoutingProvider: NavigationSettings.shared.directions,
                                                                 credentials: NavigationSettings.shared.directions.credentials,

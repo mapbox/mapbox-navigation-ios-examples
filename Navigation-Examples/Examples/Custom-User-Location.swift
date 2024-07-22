@@ -12,8 +12,9 @@ import MapboxDirections
 import MapboxMaps
 
 class CustomUserLocationViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate, UIGestureRecognizerDelegate {
-    
     typealias ActionHandler = (UIAlertAction) -> Void
+
+    private let routeProvider = MapboxRoutingProvider()
     
     var navigationMapView: NavigationMapView! {
         didSet {
@@ -28,16 +29,17 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
         }
     }
     
-    var routeResponse: RouteResponse? {
+    var indexedRouteResponse: IndexedRouteResponse? {
         didSet {
-            guard let routes = routeResponse?.routes, let currentRoute = routes.first else {
+            guard let indexedRouteResponse,
+                let currentRoute = indexedRouteResponse.currentRoute else {
                 navigationMapView?.removeRoutes()
                 navigationMapView?.removeRouteDurations()
                 navigationMapView?.removeWaypoints()
                 waypoints.removeAll()
                 return
             }
-            navigationMapView.show(routes)
+            navigationMapView.show(indexedRouteResponse)
             navigationMapView.showWaypoints(on: currentRoute)
         }
     }
@@ -137,28 +139,23 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
         waypoints.insert(userWaypoint, at: 0)
         let navigationRouteOptions = NavigationRouteOptions(waypoints: waypoints)
         
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
+        routeProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
                 self?.waypoints.removeLast()
-            case .success(let response):
-                guard let routes = response.routes else { return }
-                self?.routeResponse = response
-                self?.navigationMapView.show(routes)
-                if let currentRoute = routes.first {
-                    self?.navigationMapView.showWaypoints(on: currentRoute)
-                }
+            case .success(let indexedRouteResponse):
+                self?.indexedRouteResponse = indexedRouteResponse
             }
         }
     }
     
     @objc func clearMap(_ sender: Any) {
-        routeResponse = nil
+        indexedRouteResponse = nil
     }
     
     @objc func performAction(_ sender: Any) {
-        guard routeResponse != nil else {
+        guard indexedRouteResponse != nil else {
             let alertController = UIAlertController(title: "Create route",
                                                     message: "Long tap on the map to create a route first.",
                                                     preferredStyle: .alert)
@@ -269,9 +266,8 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
     }
     
     func presentNavigationViewController(_ userLocationStyle: UserLocationStyle? = nil) {
-        guard let routeResponse = routeResponse else { return }
+        guard let indexedRouteResponse else { return }
 
-        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: 0)
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
@@ -295,7 +291,7 @@ class CustomUserLocationViewController: UIViewController, NavigationMapViewDeleg
     }
     
     func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
-        routeResponse = nil
+        indexedRouteResponse = nil
         dismiss(animated: true, completion: nil)
         if navigationMapView == nil {
             navigationMapView = NavigationMapView(frame: view.bounds)

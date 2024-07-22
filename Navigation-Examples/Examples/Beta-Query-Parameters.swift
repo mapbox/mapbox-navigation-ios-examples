@@ -12,12 +12,14 @@ import MapboxDirections
 import MapboxMaps
 
 class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate {
+    private let routeProvider = MapboxRoutingProvider()
     
     var navigationMapView: NavigationMapView!
     
-    var routeResponse: RouteResponse? {
+    var indexedRouteResponse: IndexedRouteResponse? {
         didSet {
-            guard let routes = routeResponse?.routes, let currentRoute = routes.first else {
+            guard let routes = indexedRouteResponse?.routeResponse.routes,
+                  let currentRoute = indexedRouteResponse?.currentRoute else {
                 navigationMapView.removeRoutes()
                 return
             }
@@ -114,10 +116,9 @@ class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, Navi
     }
     
     @objc func tappedStartButton(sender: UIButton) {
-        guard let routeResponse = routeResponse else { return }
+        guard let indexedRouteResponse else { return }
 
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: 0)
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
@@ -150,16 +151,16 @@ class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, Navi
         let destinationWaypoint = Waypoint(coordinate: destination)
         let navigationRouteOptions = MopedRouteOptions(waypoints: [userWaypoint, destinationWaypoint], departTime: dateTextField.text!)
                 
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
+        routeProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
-            case .success(let response):
-                guard let routes = response.routes,
-                      let currentRoute = routes.first,
+            case .success(let indexedRouteResponse):
+                    guard let routes = indexedRouteResponse.routeResponse.routes,
+                      let currentRoute = indexedRouteResponse.currentRoute,
                       let self = self else { return }
 
-                self.routeResponse = response
+                self.indexedRouteResponse = indexedRouteResponse
                 self.startButton?.isHidden = false
                 self.dateTextField?.isHidden = true
                 self.navigationMapView.show(routes)

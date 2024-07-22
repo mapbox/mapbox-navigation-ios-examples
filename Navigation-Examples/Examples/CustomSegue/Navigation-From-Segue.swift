@@ -11,9 +11,10 @@ import MapboxCoreNavigation
 import MapboxDirections
 
 class SegueViewController: UIViewController {
+    private let routeProvider = MapboxRoutingProvider()
     
-    var routeResponse: RouteResponse!
-    
+    var indexedRouteResponse: IndexedRouteResponse!
+
     var navigationOptions: NavigationOptions!
     
     @IBOutlet weak var presentNavigationButton: UIButton!
@@ -27,16 +28,15 @@ class SegueViewController: UIViewController {
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
         let navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
+        routeProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 NSLog("Error occured: \(error.localizedDescription).")
-            case .success(let response):
+            case .success(let indexedRouteResponse):
                 guard let self = self else { return }
                 
-                self.routeResponse = response
-                
-                let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: 0)
+                self.indexedRouteResponse = indexedRouteResponse
+
                 let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                                 customRoutingProvider: NavigationSettings.shared.directions,
                                                                 credentials: NavigationSettings.shared.directions.credentials,
@@ -59,7 +59,6 @@ class SegueViewController: UIViewController {
         switch segue.identifier ?? "" {
         case "NavigationSegue":
             if let navigationViewController = segue.destination as? NavigationViewController {
-                let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: 0)
                 _ = navigationViewController.prepareViewLoading(indexedRouteResponse: indexedRouteResponse)
                 // `navigationOptions` property is optional.
                 navigationViewController.navigationOptions = navigationOptions

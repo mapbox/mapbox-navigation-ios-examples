@@ -13,38 +13,28 @@ import MapboxMaps
 import Turf
 
 class CustomWaypointsViewController: UIViewController {
+    private let routeProvider = MapboxRoutingProvider()
     
     var navigationMapView: NavigationMapView!
-    
-    var currentRouteIndex = 0 {
-        didSet {
-            showCurrentRoute()
-        }
-    }
 
     var routes: [Route]? {
-        return routeResponse?.routes
+        return indexedRouteResponse?.routeResponse.routes
     }
     
-    var routeResponse: RouteResponse? {
+    var indexedRouteResponse: IndexedRouteResponse? {
         didSet {
             guard routes != nil else {
                 navigationMapView.removeRoutes()
                 return
             }
-            currentRouteIndex = 0
+            showCurrentRoute()
         }
     }
     
     func showCurrentRoute() {
-        guard let currentRoute = routes?[currentRouteIndex] else { return }
-        
-        var routes = [currentRoute]
-        routes.append(contentsOf: self.routes!.filter {
-            $0 != currentRoute
-        })
-        navigationMapView.show(routes)
-        navigationMapView.showWaypoints(on: currentRoute)
+        guard let indexedRouteResponse else { return }
+
+        navigationMapView.show(indexedRouteResponse)
     }
     
     var startButton: UIButton!
@@ -87,10 +77,8 @@ class CustomWaypointsViewController: UIViewController {
     }
 
     @objc func tappedButton(sender: UIButton) {
-        guard let routeResponse = routeResponse else { return }
+        guard let indexedRouteResponse else { return }
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-
-        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: currentRouteIndex)
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
@@ -112,19 +100,16 @@ class CustomWaypointsViewController: UIViewController {
         let cameraOptions = CameraOptions(center: origin, zoom: 13.0)
         self.navigationMapView.mapView.mapboxMap.setCamera(to: cameraOptions)
         
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
+        routeProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
-            case .success(let response):
-                guard let routes = response.routes,
-                      let currentRoute = routes.first,
+            case .success(let indexedRouteResponse):
+                guard indexedRouteResponse.currentRoute != nil,
                       let self = self else { return }
 
-                self.routeResponse = response
+                self.indexedRouteResponse = indexedRouteResponse
                 self.startButton?.isHidden = false
-                self.navigationMapView.show(routes)
-                self.navigationMapView.showWaypoints(on: currentRoute)
             }
         }
     }

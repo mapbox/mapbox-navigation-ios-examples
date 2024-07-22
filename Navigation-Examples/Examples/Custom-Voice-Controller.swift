@@ -14,6 +14,7 @@ import MapboxSpeech
 import AVFoundation
 
 class CustomVoiceControllerUI: UIViewController {
+    private let routeProvider = MapboxRoutingProvider()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +23,7 @@ class CustomVoiceControllerUI: UIViewController {
         let destination = CLLocationCoordinate2DMake(37.76556957793795, -122.42409811526268)
         let routeOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        Directions.shared.calculate(routeOptions) { [weak self] (_, result) in
+        routeProvider.calculateRoutes(options: routeOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
@@ -32,10 +33,9 @@ class CustomVoiceControllerUI: UIViewController {
         }
     }
 
-    func presentNavigationWithCustomVoiceController(response: RouteResponse) {
+    func presentNavigationWithCustomVoiceController(response: IndexedRouteResponse) {
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: 0)
-        let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
+        let navigationService = MapboxNavigationService(indexedRouteResponse: response,
                                                         customRoutingProvider: NavigationSettings.shared.directions,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
@@ -54,7 +54,7 @@ class CustomVoiceControllerUI: UIViewController {
                                                   voiceController: routeVoiceController)
 
         // Create `NavigationViewController` with the custom `NavigationOptions`.
-        let navigationViewController = NavigationViewController(for: indexedRouteResponse,
+        let navigationViewController = NavigationViewController(for: response,
                                                                 navigationOptions: navigationOptions)
         navigationViewController.modalPresentationStyle = .fullScreen
 
