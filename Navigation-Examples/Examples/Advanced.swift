@@ -12,6 +12,7 @@ import MapboxDirections
 import MapboxMaps
 
 class AdvancedViewController: UIViewController, NavigationMapViewDelegate, NavigationViewControllerDelegate {
+    private let routingProvider = MapboxRoutingProvider()
     
     var navigationMapView: NavigationMapView! {
         didSet {
@@ -31,33 +32,29 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
             ])
         }
     }
-
-    var currentRouteIndex = 0 {
+    
+    var indexedRouteResponse: IndexedRouteResponse? {
         didSet {
+            guard indexedRouteResponse?.currentRoute != nil else {
+                navigationMapView.removeRoutes()
+                navigationMapView.removeWaypoints()
+                return
+            }
             showCurrentRoute()
         }
     }
+
     var currentRoute: Route? {
-        return routes?[currentRouteIndex]
+        return indexedRouteResponse?.currentRoute
     }
-    
+
     var routes: [Route]? {
-        return routeResponse?.routes
+        return indexedRouteResponse?.routeResponse.routes
     }
-    
-    var routeResponse: RouteResponse? {
-        didSet {
-            guard currentRoute != nil else {
-                navigationMapView.removeRoutes()
-                return
-            }
-            currentRouteIndex = 0
-        }
-    }
-    
+
     func showCurrentRoute() {
         guard let currentRoute = currentRoute else { return }
-        
+
         var routes = [currentRoute]
         routes.append(contentsOf: self.routes!.filter {
             $0 != currentRoute
@@ -111,16 +108,16 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
     }
 
     @objc func tappedButton(sender: UIButton) {
-        guard let routeResponse = routeResponse else { return }
+        guard let indexedRouteResponse else { return }
+
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: currentRouteIndex)
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                        customRoutingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: routingProvider,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         
+        // Replace default `NavigationMapView` instance with instance that is used in preview mode.
         let navigationOptions = NavigationOptions(navigationService: navigationService,
-                                                  // Replace default `NavigationMapView` instance with instance that is used in preview mode.
                                                   navigationMapView: navigationMapView)
         
         let navigationViewController = NavigationViewController(for: indexedRouteResponse,
@@ -177,27 +174,26 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
         
         let navigationRouteOptions = NavigationRouteOptions(waypoints: [userWaypoint, destinationWaypoint])
         
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
+        routingProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
-            case .success(let response):
-                guard let self = self else { return }
+            case .success(let indexedRouteResponse):
+                guard let self else { return }
 
-                self.routeResponse = response
+                self.indexedRouteResponse = indexedRouteResponse
                 self.startButton?.isHidden = false
-                if let routes = self.routes,
-                   let currentRoute = self.currentRoute {
-                    self.navigationMapView.show(routes)
-                    self.navigationMapView.showWaypoints(on: currentRoute)
-                }
             }
         }
     }
     
     // Delegate method called when the user selects a route
     func navigationMapView(_ mapView: NavigationMapView, didSelect route: Route) {
-        self.currentRouteIndex = self.routes?.firstIndex(of: route) ?? 0
+        guard let routes = indexedRouteResponse?.routeResponse.routes else { return }
+
+        let currentRouteIndex = routes.firstIndex(of: route) ?? 0
+        indexedRouteResponse?.routeIndex = currentRouteIndex
+        showCurrentRoute()
     }
     
     func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {

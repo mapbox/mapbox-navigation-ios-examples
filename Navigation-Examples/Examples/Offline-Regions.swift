@@ -13,6 +13,8 @@ import MapboxNavigation
 import MapboxDirections
 
 class OfflineRegionsViewController: UIViewController {
+    private let routingProvider = MapboxRoutingProvider()
+
     // MARK: Setup variables for Tile Management
     let styleURI: StyleURI = .streets
     var region: Region?
@@ -161,13 +163,13 @@ class OfflineRegionsViewController: UIViewController {
     
     func requestRoute() {
         guard let options = options else { return }
-        Directions.shared.calculate(options) { [weak self] (_, result) in
+        routingProvider.calculateRoutes(options: options) { [weak self] result in
             switch result {
             case .failure(let error):
                 print("Failed to request route with error: \(error.localizedDescription)")
-            case .success(let response):
+            case .success(let indexedRouteResponse):
                 guard let strongSelf = self else { return }
-                strongSelf.routeResponse = response
+                strongSelf.routeResponse = indexedRouteResponse.routeResponse
             }
         }
     }
@@ -176,7 +178,7 @@ class OfflineRegionsViewController: UIViewController {
         guard let response = routeResponse else { return }
         let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: routeIndex)
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                        customRoutingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: routingProvider,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: .always)
         let navigationOptions = NavigationOptions(navigationService: navigationService)

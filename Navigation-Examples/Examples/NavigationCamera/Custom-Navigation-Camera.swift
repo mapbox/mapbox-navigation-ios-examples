@@ -12,9 +12,10 @@ import MapboxDirections
 import MapboxCoreNavigation
 
 class CustomNavigationCameraViewController: UIViewController {
+    private let routingProvider = MapboxRoutingProvider()
     
     var navigationMapView: NavigationMapView!
-    var routeResponse: RouteResponse!
+    var indexedRouteResponse: IndexedRouteResponse!
     var startNavigationButton: UIButton!
 
     // MARK: - UIViewController lifecycle methods
@@ -69,9 +70,8 @@ class CustomNavigationCameraViewController: UIViewController {
     }
     
     @objc func startNavigationButtonPressed(_ sender: UIButton) {
-        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: 0)
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                        customRoutingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: routingProvider,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         
@@ -100,17 +100,16 @@ class CustomNavigationCameraViewController: UIViewController {
         let destination = navigationMapView.mapView.mapboxMap.coordinate(for: gesture.location(in: navigationMapView.mapView))
         let navigationRouteOptions = NavigationRouteOptions(coordinates: [origin, destination])
         
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
+        routingProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 NSLog("Error occured while requesting route: \(error.localizedDescription).")
-            case .success(let response):
-                guard let route = response.routes?.first else { return }
-                
+            case .success(let indexedRouteResponse):
+                guard indexedRouteResponse.currentRoute != nil else { return }
+
                 self?.startNavigationButton.isHidden = false
-                self?.routeResponse = response
-                self?.navigationMapView.show([route])
-                self?.navigationMapView.showWaypoints(on: route)
+                self?.indexedRouteResponse = indexedRouteResponse
+                self?.navigationMapView.show(indexedRouteResponse)
             }
         }
     }

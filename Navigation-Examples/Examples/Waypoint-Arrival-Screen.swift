@@ -13,6 +13,7 @@ import MapboxDirections
 import MapboxMaps
 
 class WaypointArrivalScreenViewController: UIViewController {
+    private let routingProvider = MapboxRoutingProvider()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,28 +24,27 @@ class WaypointArrivalScreenViewController: UIViewController {
         
         let routeOptions = NavigationRouteOptions(waypoints: [waypointOne, waypointTwo, waypointThree])
         
-        Directions.shared.calculate(routeOptions) { [weak self] (_, result) in
+        routingProvider.calculateRoutes(options: routeOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
-            case .success(let response):
-                guard let strongSelf = self else {
+            case .success(let indexedRouteResponse):
+                guard let self else {
                     return
                 }
                 
                 // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-                let indexedRouteResponse = IndexedRouteResponse(routeResponse: response, routeIndex: 0)
                 let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                                customRoutingProvider: NavigationSettings.shared.directions,
+                                                                customRoutingProvider: self.routingProvider,
                                                                 credentials: NavigationSettings.shared.directions.credentials,
                                                                 simulating: simulationIsEnabled ? .always : .onPoorGPS)
                 let navigationOptions = NavigationOptions(navigationService: navigationService)
                 let navigationViewController = NavigationViewController(for: indexedRouteResponse,
                                                                         navigationOptions: navigationOptions)
                 navigationViewController.modalPresentationStyle = .fullScreen
-                navigationViewController.delegate = strongSelf
-                
-                strongSelf.present(navigationViewController, animated: true, completion: nil)
+                navigationViewController.delegate = self
+
+                self.present(navigationViewController, animated: true, completion: nil)
             }
         }
     }

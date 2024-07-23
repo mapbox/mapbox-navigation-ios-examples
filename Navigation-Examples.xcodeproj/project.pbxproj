@@ -350,7 +350,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1530;
 				ORGANIZATIONNAME = Mapbox;
 				TargetAttributes = {
 					961FC4FD22E0265300C72877 = {

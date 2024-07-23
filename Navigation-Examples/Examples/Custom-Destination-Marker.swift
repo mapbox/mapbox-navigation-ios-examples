@@ -13,11 +13,12 @@ import MapboxDirections
 import MapboxMaps
 
 class CustomDestinationMarkerController: UIViewController {
+    private let routingProvider = MapboxRoutingProvider()
     
     var navigationMapView: NavigationMapView!
     var startNavigationButton: UIButton!
-    var routeResponse: RouteResponse!
-    
+    var indexedRouteResponse: IndexedRouteResponse!
+
     // MARK: - UIViewController lifecycle methods
     
     override func viewDidLoad() {
@@ -65,9 +66,8 @@ class CustomDestinationMarkerController: UIViewController {
     }
     
     @objc func tappedButton(_ sender: UIButton) {
-        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: 0)
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                        customRoutingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: routingProvider,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
@@ -86,16 +86,16 @@ class CustomDestinationMarkerController: UIViewController {
         
         navigationMapView.mapView.mapboxMap.setCamera(to: CameraOptions(center: destination, zoom: 13.0))
         
-        Directions.shared.calculate(navigationRouteOptions) { [weak self] (_, result) in
+        routingProvider.calculateRoutes(options: navigationRouteOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 NSLog("Error occured: \(error.localizedDescription).")
-            case .success(let response):
-                guard let routes = response.routes,
-                      let currentRoute = routes.first,
-                      let self = self else { return }
+            case .success(let indexedRouteResponse):
+                guard let routes = indexedRouteResponse.routeResponse.routes,
+                      let currentRoute = indexedRouteResponse.currentRoute,
+                      let self else { return }
 
-                self.routeResponse = response
+                self.indexedRouteResponse = indexedRouteResponse
                 self.startNavigationButton?.isHidden = false
                 
                 self.navigationMapView.show(routes)

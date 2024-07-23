@@ -12,11 +12,13 @@ import MapboxDirections
 import MapboxMaps
 
 class EmbeddedExampleViewController: UIViewController {
+    private let routingProvider = MapboxRoutingProvider()
  
     @IBOutlet weak var reroutedLabel: UILabel!
     @IBOutlet weak var enableReroutes: UISwitch!
     @IBOutlet weak var container: UIView!
-    var routeResponse: RouteResponse?
+
+    var indexedRouteResponse: IndexedRouteResponse?
 
     lazy var routeOptions: NavigationRouteOptions = {
         let origin = CLLocationCoordinate2DMake(37.77440680146262, -122.43539772352648)
@@ -33,16 +35,16 @@ class EmbeddedExampleViewController: UIViewController {
     }
 
     func calculateDirections() {
-        Directions.shared.calculate(routeOptions) { [weak self] (_, result) in
+        routingProvider.calculateRoutes(options: routeOptions) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
-            case .success(let response):
+            case .success(let indexedRouteResponse):
                 guard let strongSelf = self else {
                     return
                 }
                 
-                strongSelf.routeResponse = response
+                strongSelf.indexedRouteResponse = indexedRouteResponse
                 strongSelf.startEmbeddedNavigation()
             }
         }
@@ -60,10 +62,10 @@ class EmbeddedExampleViewController: UIViewController {
     
     func startEmbeddedNavigation() {
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
-        guard let routeResponse = routeResponse else { return }
-        let indexedRouteResponse = IndexedRouteResponse(routeResponse: routeResponse, routeIndex: 0)
+        guard let indexedRouteResponse else { return }
+
         let navigationService = MapboxNavigationService(indexedRouteResponse: indexedRouteResponse,
-                                                        customRoutingProvider: NavigationSettings.shared.directions,
+                                                        customRoutingProvider: routingProvider,
                                                         credentials: NavigationSettings.shared.directions.credentials,
                                                         simulating: simulationIsEnabled ? .always : .onPoorGPS)
         let navigationOptions = NavigationOptions(navigationService: navigationService)
