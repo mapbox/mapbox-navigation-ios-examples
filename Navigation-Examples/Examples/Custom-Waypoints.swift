@@ -106,7 +106,7 @@ class CustomWaypointsViewController: UIViewController {
                 print(error.localizedDescription)
             case .success(let indexedRouteResponse):
                 guard indexedRouteResponse.currentRoute != nil,
-                      let self = self else { return }
+                      let self else { return }
 
                 self.indexedRouteResponse = indexedRouteResponse
                 self.startButton?.isHidden = false

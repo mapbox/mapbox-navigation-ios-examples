@@ -165,7 +165,7 @@ class HistoryRecordingViewController: UIViewController, NavigationMapViewDelegat
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let indexedRouteResponse):
-                guard let self = self, indexedRouteResponse.currentRoute != nil else { return }
+                guard let self, indexedRouteResponse.currentRoute != nil else { return }
 
                 self.indexedRouteResponse = indexedRouteResponse
                 self.startButton?.isHidden = false

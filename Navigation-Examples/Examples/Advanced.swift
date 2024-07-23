@@ -179,7 +179,7 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let indexedRouteResponse):
-                guard let self = self else { return }
+                guard let self else { return }
 
                 self.indexedRouteResponse = indexedRouteResponse
                 self.startButton?.isHidden = false

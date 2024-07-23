@@ -33,7 +33,7 @@ class SegueViewController: UIViewController {
             case .failure(let error):
                 NSLog("Error occured: \(error.localizedDescription).")
             case .success(let indexedRouteResponse):
-                guard let self = self else { return }
+                guard let self else { return }
                 
                 self.indexedRouteResponse = indexedRouteResponse
 

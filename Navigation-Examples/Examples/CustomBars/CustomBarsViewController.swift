@@ -26,7 +26,7 @@ class CustomBarsViewController: UIViewController {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let indexedRouteResponse):
-                guard let self = self else {
+                guard let self else {
                     return
                 }
                 

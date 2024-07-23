@@ -93,7 +93,7 @@ class CustomDestinationMarkerController: UIViewController {
             case .success(let indexedRouteResponse):
                 guard let routes = indexedRouteResponse.routeResponse.routes,
                       let currentRoute = indexedRouteResponse.currentRoute,
-                      let self = self else { return }
+                      let self else { return }
 
                 self.indexedRouteResponse = indexedRouteResponse
                 self.startNavigationButton?.isHidden = false

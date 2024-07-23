@@ -158,7 +158,7 @@ class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, Navi
             case .success(let indexedRouteResponse):
                     guard let routes = indexedRouteResponse.routeResponse.routes,
                       let currentRoute = indexedRouteResponse.currentRoute,
-                      let self = self else { return }
+                      let self else { return }
 
                 self.indexedRouteResponse = indexedRouteResponse
                 self.startButton?.isHidden = false
