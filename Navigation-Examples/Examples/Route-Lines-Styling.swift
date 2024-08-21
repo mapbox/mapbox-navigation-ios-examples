@@ -168,8 +168,7 @@ class RouteLinesStylingViewController: UIViewController {
 // MARK: - NavigationMapViewDelegate methods
 
 extension RouteLinesStylingViewController: NavigationMapViewDelegate {
-    
-    func lineWidthExpression(_ multiplier: Double = 1.0) -> Expression {
+    func lineWidthExpression(_ multiplier: Double = 1.0) -> MapboxMaps.Expression {
         let lineWidthExpression = Exp(.interpolate) {
             Exp(.linear)
             Exp(.zoom)
