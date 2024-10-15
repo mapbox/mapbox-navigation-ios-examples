@@ -54,6 +54,7 @@
 		C5F130A01FE9B44600463E86 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F1309F1FE9B44600463E86 /* Constants.swift */; };
 		C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F130A51FEB2D7800463E86 /* Advanced.swift */; };
 		CC6D97FED3D0CBEF7CA47168 /* Pods_Navigation_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8592DC8F0A49F0C2214E1AC /* Pods_Navigation_Examples.framework */; };
+		DFC7EE142C0A22DC00266857 /* Zone-Avoidance.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC7EE132C0A22DC00266857 /* Zone-Avoidance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,6 +115,7 @@
 		C5F1309F1FE9B44600463E86 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C5F130A51FEB2D7800463E86 /* Advanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advanced.swift; sourceTree = "<group>"; };
 		C8592DC8F0A49F0C2214E1AC /* Pods_Navigation_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFC7EE132C0A22DC00266857 /* Zone-Avoidance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Zone-Avoidance.swift"; sourceTree = "<group>"; };
 		E4F99A65CCB2B9CB623270EE /* Pods-Navigation-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Navigation-Examples/Pods-Navigation-Examples.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -280,6 +282,7 @@
 				11B6E81626176F3600872E4D /* Upcoming-Intersection.swift */,
 				B4F805ED26791AD900D5F1C8 /* Custom-User-Location.swift */,
 				3B39AC1028CB6F7F0052A80E /* History-Recording.swift */,
+				DFC7EE132C0A22DC00266857 /* Zone-Avoidance.swift */,
 				8AFBF217265E851700468551 /* CustomSegue */,
 				8A2DFA52261650600034A87E /* NavigationCamera */,
 				8AC9129E2494118400B6941E /* TestData */,
@@ -622,6 +625,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFC7EE142C0A22DC00266857 /* Zone-Avoidance.swift in Sources */,
 				C5F130A01FE9B44600463E86 /* Constants.swift in Sources */,
 				8A2DFA6C261651600034A87E /* Custom-Navigation-Camera.swift in Sources */,
 				11DC36F226161DAF0042CD4A /* Location-Snapping.swift in Sources */,
