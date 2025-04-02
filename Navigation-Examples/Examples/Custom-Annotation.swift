@@ -14,8 +14,11 @@ import UIKit
 class CustomRouteAnnotationViewController: UIViewController {
     private let routingProvider = MapboxRoutingProvider()
 
-    var navigationMapView: NavigationMapView!
-    var indexedRouteResponse: IndexedRouteResponse? {
+    private var mapRouteAnnotationManager: CustomRouteAnnotationManager?
+    private var activeGuidanceRouteAnnotationManager: CustomRouteAnnotationManager?
+
+    private var navigationMapView: NavigationMapView!
+    private var indexedRouteResponse: IndexedRouteResponse? {
         didSet {
             guard indexedRouteResponse?.currentRoute != nil else {
                 navigationMapView.removeRoutes()
@@ -30,6 +33,12 @@ class CustomRouteAnnotationViewController: UIViewController {
         guard let indexedRouteResponse else { return }
 
         navigationMapView.showcase(indexedRouteResponse)
+        if let mainRoute = indexedRouteResponse.currentRoute {
+            mapRouteAnnotationManager?.showRouteAnnotation(
+                mainRoute: mainRoute,
+                alternatives: indexedRouteResponse.parseAlternativeRoutes()
+            )
+        }
     }
 
     var startButton: UIButton!
@@ -59,6 +68,8 @@ class CustomRouteAnnotationViewController: UIViewController {
 
         let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         navigationMapView.addGestureRecognizer(gesture)
+
+        mapRouteAnnotationManager = CustomRouteAnnotationManager(navigationMapView: navigationMapView)
     }
 
     private func configureStartButton() {
@@ -90,6 +101,10 @@ class CustomRouteAnnotationViewController: UIViewController {
                                                                 navigationOptions: navigationOptions)
         navigationViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen
+        navigationViewController.navigationMapView?.showsRelativeDurationOnContinuousAlternativeRoutes = false
+        if let view = navigationViewController.navigationMapView {
+            activeGuidanceRouteAnnotationManager = CustomRouteAnnotationManager(navigationMapView: view)
+        }
 
         startButton.isHidden = true
         present(navigationViewController, animated: true, completion: nil)
@@ -137,7 +152,38 @@ extension CustomRouteAnnotationViewController: NavigationViewControllerDelegate 
     func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling _: Bool) {
         navigationViewController.dismiss(animated: true)
         startButton.isHidden = false
-        // Showcase originally requested routes.
         showCurrentRoute()
+    }
+
+    func navigationViewController(
+        _ navigationViewController: NavigationViewController,
+        didUpdateAlternatives updatedAlternatives: [AlternativeRoute],
+        removedAlternatives: [AlternativeRoute]
+    ) {
+        let mainRoute = navigationViewController.navigationService.routeProgress.route
+        activeGuidanceRouteAnnotationManager?.showRouteAnnotation(
+            mainRoute: mainRoute,
+            alternatives: updatedAlternatives
+        )
+    }
+
+    func navigationViewController(
+        _ navigationViewController: NavigationViewController,
+        didRerouteAlong route: Route
+    ) {
+        activeGuidanceRouteAnnotationManager?.showRouteAnnotation(
+            mainRoute: route,
+            alternatives: navigationViewController.continuousAlternatives
+        )
+    }
+
+    func navigationViewController(
+        _ navigationViewController: NavigationViewController,
+        didRefresh routeProgress: RouteProgress
+    ) {
+        activeGuidanceRouteAnnotationManager?.showRouteAnnotation(
+            mainRoute: routeProgress.route,
+            alternatives: navigationViewController.continuousAlternatives
+        )
     }
 }

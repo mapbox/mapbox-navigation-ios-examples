@@ -60,6 +60,7 @@ class AdvancedViewController: UIViewController, NavigationMapViewDelegate, Navig
             $0 != currentRoute
         })
         navigationMapView.showcase(routes)
+        navigationMapView.showRouteDurations(along: routes)
     }
     
     var startButton: UIButton!

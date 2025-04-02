@@ -14,6 +14,7 @@
 		2B521D522409242A00984CF8 /* CustomBottomBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */; };
 		2B5470632816C74A0068DA3F /* Custom-RoutingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5470622816C74A0068DA3F /* Custom-RoutingProvider.swift */; };
 		2C8A772F2D9BDD0700CC37EB /* Custom-Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8A772E2D9BDD0700CC37EB /* Custom-Annotation.swift */; };
+		2CE6621B2D9C33D200E1D9E8 /* NavigationMapView+RouteAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE6621A2D9C33C300E1D9E8 /* NavigationMapView+RouteAnnotation.swift */; };
 		3B39AC1128CB6F7F0052A80E /* History-Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B39AC1028CB6F7F0052A80E /* History-Recording.swift */; };
 		6CD94175657B369FB9C6B8B5 /* Pods_DocsCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9107365E41DB56AF5F37BEE2 /* Pods_DocsCode.framework */; };
 		8A0B182326553482005107DE /* CustomSegue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A0B182226553482005107DE /* CustomSegue.storyboard */; };
@@ -66,6 +67,7 @@
 		2B521D512409242A00984CF8 /* CustomBottomBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomBottomBannerView.xib; sourceTree = "<group>"; };
 		2B5470622816C74A0068DA3F /* Custom-RoutingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-RoutingProvider.swift"; sourceTree = "<group>"; };
 		2C8A772E2D9BDD0700CC37EB /* Custom-Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom-Annotation.swift"; sourceTree = "<group>"; };
+		2CE6621A2D9C33C300E1D9E8 /* NavigationMapView+RouteAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationMapView+RouteAnnotation.swift"; sourceTree = "<group>"; };
 		3B39AC1028CB6F7F0052A80E /* History-Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History-Recording.swift"; sourceTree = "<group>"; };
 		751C9DE4E717073D370EB4EF /* Pods-DocsCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocsCode.release.xcconfig"; path = "Target Support Files/Pods-DocsCode/Pods-DocsCode.release.xcconfig"; sourceTree = "<group>"; };
 		8A0B182226553482005107DE /* CustomSegue.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomSegue.storyboard; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				C346744D263C57610068A65E /* Beta-Query-Parameters.swift */,
 				8A33629524E4844E0086C647 /* Building-Extrusion.swift */,
 				2C8A772E2D9BDD0700CC37EB /* Custom-Annotation.swift */,
+				2CE6621A2D9C33C300E1D9E8 /* NavigationMapView+RouteAnnotation.swift */,
 				C52BAA772040D5030086EC6B /* Custom-Destination-Marker.swift */,
 				2B5470622816C74A0068DA3F /* Custom-RoutingProvider.swift */,
 				C5C0D63720589422003A3B1D /* Custom-Server.swift */,
@@ -645,6 +648,7 @@
 				C5F130A61FEB2D7800463E86 /* Advanced.swift in Sources */,
 				C58FB86C1FE89CEC00C4B491 /* ExampleContainerViewController.swift in Sources */,
 				8AC9129D2494106100B6941E /* Route-Initialization.swift in Sources */,
+				2CE6621B2D9C33D200E1D9E8 /* NavigationMapView+RouteAnnotation.swift in Sources */,
 				C59094C3203E3B9100EB2417 /* Custom-Voice-Controller.swift in Sources */,
 				C52BAA782040D5030086EC6B /* Custom-Destination-Marker.swift in Sources */,
 				8DF510741FEB08F70049DB9C /* Embedded-Navigation.swift in Sources */,
