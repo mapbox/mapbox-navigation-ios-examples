@@ -78,7 +78,7 @@ class CustomRouteAnnotationViewController: UIViewController {
         startButton.translatesAutoresizingMaskIntoConstraints = false
         startButton.backgroundColor = .blue
         startButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
-        startButton.addTarget(self, action: #selector(tappedButton(sender:)), for: .touchUpInside)
+        startButton.addTarget(self, action: #selector(startButtonTapped(sender:)), for: .touchUpInside)
         startButton.isHidden = true
         startButton.layer.cornerRadius = 15
         startButton.clipsToBounds = true
@@ -88,7 +88,7 @@ class CustomRouteAnnotationViewController: UIViewController {
         startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
 
-    @objc func tappedButton(sender: UIButton) {
+    @objc func startButtonTapped(sender: UIButton) {
         guard let indexedRouteResponse else { return }
 
         // For demonstration purposes, simulate locations if the Simulate Navigation option is on.
@@ -144,7 +144,6 @@ class CustomRouteAnnotationViewController: UIViewController {
 extension CustomRouteAnnotationViewController: NavigationMapViewDelegate {
     func navigationMapView(_: NavigationMapView, didSelect alternative: AlternativeRoute) {
         indexedRouteResponse = alternative.indexedRouteResponse
-        showCurrentRoute()
     }
 }
 
