@@ -32,7 +32,7 @@ let listOfExamples: [NamedController] = [
     ),
     (
         name: "Custom Route Annotation",
-        description: "Demonstrates how to pcustomize route annotation.",
+        description: "Demonstrates how to customize route annotations.",
         controller: CustomRouteAnnotationViewController.self,
         storyboard: nil,
         pushExampleToViewController: true
