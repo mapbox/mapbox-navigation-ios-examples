@@ -31,6 +31,13 @@ let listOfExamples: [NamedController] = [
         pushExampleToViewController: false
     ),
     (
+        name: "Custom Route Annotation",
+        description: "Demonstrates how to customize route annotations.",
+        controller: CustomRouteAnnotationViewController.self,
+        storyboard: nil,
+        pushExampleToViewController: true
+    ),
+    (
         name: "Custom Destination Marker",
         description: "Use a custom image for styling the destination marker.",
         controller: CustomDestinationMarkerController.self,
