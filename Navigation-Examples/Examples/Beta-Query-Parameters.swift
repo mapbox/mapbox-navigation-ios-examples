@@ -175,30 +175,49 @@ class BetaQueryViewController: UIViewController, NavigationMapViewDelegate, Navi
 }
 
 class MopedRouteOptions: NavigationRouteOptions {
-    var departureTime: String!
-    
-    // add departureTime to URLQueryItems
+    enum CodingKeys: String, CodingKey {
+        case departureTime = "depart_at"
+    }
+    var departureTime: String?
+
+    // Add departureTime to URLQueryItems
     override var urlQueryItems: [URLQueryItem] {
         var items = super.urlQueryItems
-        items.append(URLQueryItem(name: "depart_at", value: departureTime))
+        let parameter = URLQueryItem(name: CodingKeys.departureTime.rawValue, value: departureTime)
+        items.append(parameter)
         return items
     }
     
-    // create initializer to take in the departure time
+    // Create initializer to take in the departure time
     public init(waypoints: [Waypoint], departTime: String) {
         departureTime = departTime
         super.init(waypoints: waypoints)
     }
-    
-    required init(from decoder: Decoder) throws {
-        fatalError("init(from:) has not been implemented")
+
+    // Implement decoding, so the custom parameter is preserved when copying the options
+    required init(from decoder: any Decoder) throws {
+        try super.init(from: decoder)
+
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        departureTime = try container.decodeIfPresent(String.self, forKey: .departureTime)
     }
-    
-    required init(waypoints: [Waypoint], profileIdentifier: ProfileIdentifier? = .automobileAvoidingTraffic) {
-        fatalError("init(waypoints:profileIdentifier:) has not been implemented")
+
+    // Implement decoding, so the custom parameter is preserved when copying the options
+    override func encode(to encoder: any Encoder) throws {
+        try super.encode(to: encoder)
+
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(departureTime, forKey: .departureTime)
     }
-    
-    required init(waypoints: [Waypoint], profileIdentifier: ProfileIdentifier? = .automobileAvoidingTraffic, queryItems: [URLQueryItem]? = nil) {
-        fatalError("init(waypoints:profileIdentifier:queryItems:) has not been implemented")
+
+    // Set the custom parameter value from the queryItems parameter, so it is preserved on reroute requests
+    required init(
+        waypoints: [Waypoint],
+        profileIdentifier: ProfileIdentifier? = .automobileAvoidingTraffic,
+        queryItems: [URLQueryItem]? = nil) {
+            let mappedUrlItem = queryItems?.first(where: { $0.name == CodingKeys.departureTime.stringValue })
+            self.departureTime = mappedUrlItem?.value
+
+            super.init(waypoints: waypoints, profileIdentifier: profileIdentifier, queryItems: queryItems)
     }
 }
