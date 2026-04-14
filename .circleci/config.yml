@@ -28,16 +28,16 @@ jobs:
     parameters:
       xcode:
         type: string
-        default: "15.2.0"
+        default: "15.4.0"
       device:
         type: string
         default: "iPhone 15 Pro"
       ios:
         type: string
-        default: "17.2"
+        default: "17.5"
     macos:
       xcode: << parameters.xcode >>
-    resource_class: macos.m1.medium.gen1
+    resource_class: m4pro.medium
     steps:
       - checkout
       - run:
@@ -65,7 +65,7 @@ jobs:
     parameters:
       xcode:
         type: string
-        default: "15.2.0"
+        default: "15.4.0"
     macos:
       xcode: << parameters.xcode >>
     steps:
@@ -106,12 +106,12 @@ workflows:
   workflow:
     jobs:
       - build-job:
-          name: "Xcode_14.2.0_iOS_15.5"
-          xcode: "14.2.0"
+          name: "Xcode_14.3.1_iOS_15.5"
+          xcode: "14.3.1"
           ios: "15.5"
           device: "iPhone 13 Pro"
       - build-job:
-          name: "Xcode_15.2.0_iOS_17.2"
-          xcode: "15.2.0"
-          ios: "17.2"
+          name: "Xcode_15.4.0_iOS_17.5"
+          xcode: "15.4.0"
+          ios: "17.5"
           device: "iPhone 15 Pro"
